@@ -505,6 +505,29 @@ $ROUTES = [
             ['id' => 'ZZ', 'name' => 'ZZ', 'abbr' => 'ZZ', 'km' => 270],
         ]
     ],
+    'seebahn' => [
+        'id' => 'seebahn',
+        'name' => 'Seebahn (Kilchberg)',
+        'stations' => [
+            ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0.34],
+            ['id' => 'ZWIE', 'name' => 'Wiedikon', 'abbr' => 'ZWIE', 'km' => 2.93],
+            ['id' => 'ZEN', 'name' => 'Enge', 'abbr' => 'ZEN', 'km' => 3.93],
+            ['id' => 'ZWOL', 'name' => 'Wollishofen', 'abbr' => 'ZWOL', 'km' => 5.81],
+            ['id' => 'KIL', 'name' => 'Kilchberg', 'abbr' => 'KIL', 'km' => 8.86],
+            ['id' => 'RUES', 'name' => 'Rüschlikon', 'abbr' => 'RUES', 'km' => 10.64],
+        ]
+    ],
+    'zimmerberg' => [
+        'id' => 'zimmerberg',
+        'name' => 'Zimmerberg',
+        'stations' => [
+            ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0.34],
+            ['id' => 'ZAU', 'name' => 'Aussersihl', 'abbr' => 'ZAU', 'km' => 1.96],
+			['id' => 'ZKOL', 'name' => 'Kollerwiese', 'abbr' => 'ZKOL', 'km' => 3.41],
+			['id' => 'NIDO', 'name' => 'Nidelbad Ost', 'abbr' => 'NIDO', 'km' => 9.68],
+            ['id' => 'TW', 'name' => 'Thalwil', 'abbr' => 'TW', 'km' => 12.09],
+        ]
+    ],
     'glattalbahn' => [
         'id' => 'glattalbahn',
         'name' => 'Glattal (ZUE-HI)',

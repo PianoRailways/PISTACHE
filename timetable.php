@@ -203,12 +203,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $departureSoll = $fields['departure'] ?? '';
                     $departureIst = $fields['actual_departure'] ?? '';
                     
-                    // WICHTIG: Wenn ! am Anfang (Fixverspätung), nicht mit Diskris evaluieren
-                    $isFixed = preg_match('/^\s*!\s*\+?\d+/i', $flags);
-                    
                     // Dispo-Kriterium berechnet hier die neue IST-Abfahrt (Prognose)
-                    // Aber NICHT, wenn ! gesetzt ist (Fixverspätung)
-                    if (!empty($flags) && !empty($departureSoll) && !$isFixed) {
+                    if (!empty($flags) && !empty($departureSoll)) {
                         $departureIst = evaluateDispoCriteria($db, $st_id, $flags, $departureSoll, $departureIst);
                     }
 
@@ -307,26 +303,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'get_all_data') {
         $route_id = $_POST['route_id'] ?? '';
         $current_route_stations = [];
-        if (isset($ROUTES[$route_id]['stations'])) {
-            foreach ($ROUTES[$route_id]['stations'] as $st) {
-                $current_route_stations[] = $st['id'];
+        
+        // Spezialfall: Freier Editor
+        if ($route_id === 'free') {
+            // Hole alle Züge mit route_id='free'
+            $stmt = $db->prepare("SELECT id, train_number FROM trains WHERE route_id = ? ORDER BY CAST(train_number AS INTEGER) ASC");
+            $stmt->execute(['free']);
+            $trains = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            // Normaler Workflow: Route-basiert
+            if (isset($ROUTES[$route_id]['stations'])) {
+                foreach ($ROUTES[$route_id]['stations'] as $st) {
+                    $current_route_stations[] = $st['id'];
+                }
             }
-        }
-        if (empty($current_route_stations)) {
-            echo json_encode([]);
-            exit;
-        }
+            if (empty($current_route_stations)) {
+                echo json_encode([]);
+                exit;
+            }
 
-        $placeholders = implode(',', array_fill(0, count($current_route_stations), '?'));
-        $query = "SELECT DISTINCT t.id, t.train_number 
-                  FROM trains t
-                  JOIN timetable tt ON t.id = tt.train_id
-                  WHERE tt.station_id IN ($placeholders)
-                  ORDER BY t.train_number ASC";
-                  
-        $stmt = $db->prepare($query);
-        $stmt->execute($current_route_stations);
-        $trains = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $placeholders = implode(',', array_fill(0, count($current_route_stations), '?'));
+            $query = "SELECT DISTINCT t.id, t.train_number 
+                      FROM trains t
+                      JOIN timetable tt ON t.id = tt.train_id
+                      WHERE tt.station_id IN ($placeholders)
+                      ORDER BY t.train_number ASC";
+                      
+            $stmt = $db->prepare($query);
+            $stmt->execute($current_route_stations);
+            $trains = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
         $all_data = [];
         foreach ($trains as $t) {
@@ -402,16 +408,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="panel">
         <h2>Strecke & Zug wählen</h2>
-        <div class="form-row" style="display: flex; gap: 20px; align-items: flex-end;">
+        <div class="form-row" style="display: flex; gap: 20px; align-items: flex-end; margin-bottom: 15px; flex-wrap: wrap;">
             
-            <div class="form-group">
+            <div class="form-group" style="flex: 1; min-width: 200px;">
                 <label for="route_filter">Strecke suchen:</label>
                 <input type="text" id="route_filter" placeholder="Z.B. Mil..." onkeyup="filterRoutes()" style="width: 100%; box-sizing: border-box;">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="flex: 1; min-width: 200px;">
                 <label for="route_select">Strecke:</label>
                 <select id="route_select" onchange="switchRoute()">
+                    <option value="">-- Strecke wählen --</option>
                     <?php foreach ($ROUTES as $id => $r): ?>
                         <?php 
                         $searchTerms = [];
@@ -429,6 +436,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </select>
             </div>
+
+
             
             <div class="form-group">
                 <label for="train_select">Vorhandene Züge:</label>
@@ -446,6 +455,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" id="train_number" inputmode="numeric" pattern="[0-9]*" maxlength="6" 
                            placeholder="z.B. 421" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                     <button type="submit">Editor öffnen</button>
+                                <button type="button" style="background-color: #8b5cf6;" 
+                    onclick="activateFreeEditor()">📝 Freier Editor</button>
                 </form>
             </div>
         </div>
@@ -466,7 +477,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="successor_sts_zid">Nachfolger-ZID:</label>
                     <input type="text" id="successor_sts_zid" placeholder="z.B. 126275" style="width: 100px;">
                 </div>
-                <button type="button" onclick="saveTrainLink()" style="background-color: #059669; color: white;">
+                <button class="form-group" type="button" onclick="saveTrainLink()" style="background-color: #059669; color: white;">
                     Verkettung
                 </button>
             </div>
@@ -494,6 +505,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit">Fahrplan speichern</button>
                 <button type="button" style="background-color: #64748b; color: white;" onclick="closeEditor()">Abbrechen</button>
                 <button type="button" id="delete_train_btn" style="background-color: #d9534f; color: white;" onclick="deleteCurrentTrain()">Zug löschen</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FREIER EDITOR PANEL -->
+    <div id="free_editor_panel" class="panel hidden">
+        <h2>📝 Freier Fahrplan-Editor</h2>
+        <p style="color: #666; margin-bottom: 15px;">Erstelle einen Fahrplan ohne vordefinierte Route. Stationen werden manuell hinzugefügt.</p>
+        
+        <button type="button" style="background-color: #64748b; color: white; margin-bottom: 15px;" onclick="closeFreeEditor()">← Zurück zur Routenauswahl</button>
+        <input type="hidden" id="free_editor_train_id">
+        
+        <div style="margin-bottom: 15px; padding: 10px; background: var(--bg-th); border-radius: 4px;">
+            <label>Zugnummer:</label>
+            <input type="text" id="free_train_number" inputmode="numeric" pattern="[0-9]*" maxlength="6" 
+                   placeholder="z.B. 421" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="width: 100px;">
+            <button type="button" onclick="loadFreeEditorTrain()" style="background-color: #3b82f6; color: white; margin-left: 10px;">Zug laden/erstellen</button>
+        </div>
+
+        <div style="margin-bottom: 15px; padding: 10px; background: var(--bg-th); border-radius: 4px;">
+            <label for="station_input">Station hinzufügen (Kürzel):</label>
+            <div style="display: flex; gap: 5px; margin-top: 8px;">
+                <input type="text" id="station_input" placeholder="z.B. ZF, BRIT, etc." list="all_stations_list" 
+                       style="flex: 1; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
+                <datalist id="all_stations_list"></datalist>
+                <button type="button" onclick="addStationToFreeEditor()" style="background-color: #10b981; color: white;">+ Station</button>
+            </div>
+        </div>
+
+        <form id="free_timetable_form" onsubmit="saveFreeTimetable(event)">
+            <table id="free_editor_table">
+                <thead>
+                    <tr>
+                        <th>Bahnhof</th>
+                        <th>Gleis</th>
+                        <th>Ankunft (Soll)</th>
+                        <th>Ist-Ankunft</th>
+                        <th>Abfahrt (Soll)</th>
+                        <th>Ist-Abfahrt</th>
+                        <th>Flags</th>
+                        <th>Bemerkung</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                <button type="submit">Fahrplan speichern</button>
+                <button type="button" style="background-color: #64748b; color: white;" onclick="closeFreeEditor()">Abbrechen</button>
             </div>
         </form>
     </div>
@@ -553,6 +614,300 @@ function filterRoutes() {
     if (firstVisibleOption && select.value !== firstVisibleOption.value) {
         select.value = firstVisibleOption.value;
         switchRoute(); 
+    }
+}
+
+// ========================================================================
+// FREIER EDITOR FUNKTIONEN
+// ========================================================================
+let freeEditorStations = []; // Speichert die Stationen im freien Editor
+
+function initializeAllStationsList() {
+    const datalist = document.getElementById('all_stations_list');
+    const allAbbrs = new Set();
+    
+    // Sammle alle Stationskürzeln aus routesConfig
+    for (const routeId in routesConfig) {
+        const route = routesConfig[routeId];
+        if (route.stations) {
+            route.stations.forEach(st => {
+                allAbbrs.add(st.abbr);
+            });
+        }
+    }
+    
+    // Füge sie zur Datalist hinzu
+    datalist.innerHTML = '';
+    allAbbrs.forEach(abbr => {
+        const option = document.createElement('option');
+        option.value = abbr;
+        datalist.appendChild(option);
+    });
+}
+
+function activateFreeEditor() {
+    freeEditorStations = [];
+    document.getElementById('editor_panel').classList.add('hidden');
+    document.getElementById('free_editor_panel').classList.remove('hidden');
+    document.getElementById('free_train_number').value = '';
+    document.getElementById('free_editor_train_id').value = '';
+    document.getElementById('free_timetable_form').querySelector('tbody').innerHTML = '';
+    document.getElementById('station_input').value = '';
+    initializeAllStationsList();
+}
+
+function closeFreeEditor() {
+    document.getElementById('free_editor_panel').classList.add('hidden');
+    document.getElementById('route_select').value = '';
+    document.getElementById('train_number').value = '';
+    currentRouteId = '';
+}
+
+async function loadFreeEditorTrain() {
+    const trainNum = document.getElementById('free_train_number').value.trim();
+    if (!trainNum) {
+        alert('Bitte gib eine Zugnummer ein');
+        return;
+    }
+    
+    // Im freien Editor verwenden wir "free" als route_id
+    const formData = new FormData();
+    formData.append('action', 'get_or_create_train');
+    formData.append('train_number', trainNum);
+    formData.append('route_id', 'free');
+    
+    try {
+        const res = await fetch('', { method: 'POST', body: formData });
+        const data = await res.json();
+        
+        if (data.error) {
+            alert('Fehler: ' + data.error);
+            return;
+        }
+        
+        if (data.train) {
+            document.getElementById('free_editor_train_id').value = data.train.id;
+            
+            // Laden der existierenden Stationen und Fahrplandaten
+            freeEditorStations = [];
+            const tbody = document.getElementById('free_timetable_form').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            if (data.timetable) {
+                Object.keys(data.timetable).forEach(stId => {
+                    const info = data.timetable[stId];
+                    // Suche den vollständigen Stationsnamen
+                    let stationName = stId;
+                    let stationAbbr = stId;
+                    
+                    for (const routeId in routesConfig) {
+                        const route = routesConfig[routeId];
+                        if (route.stations) {
+                            const found = route.stations.find(s => s.id === stId);
+                            if (found) {
+                                stationName = found.name;
+                                stationAbbr = found.abbr;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    freeEditorStations.push({
+                        id: stId,
+                        name: stationName,
+                        abbr: stationAbbr,
+                        track: info.track || '',
+                        arrival: info.arrival || '',
+                        departure: info.departure || '',
+                        actual_arrival: info.actual_arrival || '',
+                        actual_departure: info.actual_departure || '',
+                        flags: info.flags || '',
+                        remarks: info.remarks || ''
+                    });
+                });
+                
+                renderFreeEditorTable();
+            }
+            
+            alert(`Zug ${trainNum} geladen (Route: free)`);
+        }
+    } catch (err) {
+        console.error('Fehler beim Laden:', err);
+        alert('Verbindungsfehler beim Laden des Zuges');
+    }
+}
+
+function addStationToFreeEditor() {
+    const input = document.getElementById('station_input').value.trim().toUpperCase();
+    if (!input) return;
+    
+    // Suche die Station in allen Routen
+    let stationFound = null;
+    for (const routeId in routesConfig) {
+        const route = routesConfig[routeId];
+        if (route.stations) {
+            const found = route.stations.find(s => s.abbr.toUpperCase() === input);
+            if (found) {
+                stationFound = found;
+                break;
+            }
+        }
+    }
+    
+    if (!stationFound) {
+        alert(`Station mit Kürzel "${input}" nicht gefunden`);
+        return;
+    }
+    
+    // Prüfe ob Station schon existiert
+    if (freeEditorStations.find(st => st.id === stationFound.id)) {
+        alert('Diese Station ist bereits im Fahrplan');
+        return;
+    }
+    
+    // Füge hinzu
+    freeEditorStations.push({
+        id: stationFound.id,
+        name: stationFound.name,
+        abbr: stationFound.abbr,
+        track: '',
+        arrival: '',
+        departure: '',
+        actual_arrival: '',
+        actual_departure: '',
+        flags: '',
+        remarks: ''
+    });
+    
+    renderFreeEditorTable();
+    document.getElementById('station_input').value = '';
+}
+
+function renderFreeEditorTable() {
+    const tbody = document.getElementById('free_editor_table').querySelector('tbody');
+    tbody.innerHTML = '';
+
+    freeEditorStations.forEach((st, index) => {
+        const tr = document.createElement('tr');
+        tr.id = `free_row_${st.id}`;
+        
+        // Drag & Drop Attribute aktivieren
+        tr.draggable = true;
+        tr.style.cursor = 'move';
+        
+        // WICHTIG: Name von "free_stations" zu "stations" geändert, damit PHP es speichert!
+        tr.innerHTML = `
+            <td style="padding: 5px;"><strong class="drag-handle">☰</strong> ${st.name} (${st.abbr})</td>
+            <td><input type="text" name="stations[${st.id}][track]" value="${st.track}" size="3"></td>
+            <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}"></td>
+            <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}"></td>
+            <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}"></td>
+            <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}"></td>
+            <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" size="5" placeholder="X(Znr)"></td>
+            <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" size="10"></td>
+            <td><button type="button" style="background-color: #d9534f; color: white; padding: 4px 8px; border:none; border-radius:3px; cursor:pointer;" 
+                        onclick="removeStationFromFreeEditor('${st.id}')">Entf</button></td>
+        `;
+
+        // Drag & Drop Events anheften
+        tr.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', index);
+            tr.classList.add('dragging');
+        });
+
+        tr.addEventListener('dragend', () => {
+            tr.classList.remove('dragging');
+            // Nach dem Drop: Array im Speicher anhand der neuen DOM-Reihenfolge synchronisieren
+            reorderFreeEditorStationsArray();
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    // Eventlistener für das Platzieren (Drop-Zone) auf dem gesamten tbody
+    tbody.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const draggingRow = tbody.querySelector('.dragging');
+        const afterElement = getDragAfterElement(tbody, e.clientY);
+        if (afterElement == null) {
+            tbody.appendChild(draggingRow);
+        } else {
+            tbody.insertBefore(draggingRow, afterElement);
+        }
+    });
+}
+
+// Hilfsfunktion: Berechnet, vor welche Zeile das Element geschoben wird
+function getDragAfterElement(tbody, y) {
+    const draggableElements = [...tbody.querySelectorAll('tr:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+// Synchronisiert die Reihenfolge im internen Array, damit beim nächsten Hinzufügen nichts verrückt spielt
+function reorderFreeEditorStationsArray() {
+    const tbody = document.getElementById('free_editor_table').querySelector('tbody');
+    const newOrderedIds = [...tbody.querySelectorAll('tr')].map(tr => tr.id.replace('free_row_', ''));
+    
+    const reordered = [];
+    newOrderedIds.forEach(id => {
+        const found = freeEditorStations.find(st => st.id === id);
+        if (found) reordered.push(found);
+    });
+    freeEditorStations = reordered;
+}
+
+function removeStationFromFreeEditor(stationId) {
+    // 1. Suche die Zeile im DOM
+    const row = document.getElementById(`free_row_${stationId}`);
+    if (row) {
+        // 2. Alle Input-Felder komplett leeren, damit die PHP-Logik (isEmpty) greift
+        const inputs = row.querySelectorAll('input');
+        inputs.forEach(input => input.value = '');
+
+        // 3. Die Zeile visuell verstecken, damit sie für den Nutzer "gelöscht" ist
+        row.style.display = 'none';
+    }
+
+    // 4. Aus dem internen JavaScript-Array entfernen, 
+    // damit die Station bei Bedarf wieder neu hinzugefügt werden kann
+    freeEditorStations = freeEditorStations.filter(st => st.id !== stationId);
+}
+
+async function saveFreeTimetable(e) {
+    e.preventDefault();
+    
+    const trainId = document.getElementById('free_editor_train_id').value;
+    if (!trainId) {
+        alert('Bitte lade oder erstelle erst einen Zug');
+        return;
+    }
+    
+    const formData = new FormData(document.getElementById('free_timetable_form'));
+    formData.append('action', 'save_timetable');
+    formData.append('train_id', trainId);
+    
+    try {
+        const res = await fetch('', { method: 'POST', body: formData });
+        const data = await res.json();
+        
+        if (data.success) {
+            alert('Fahrplan gespeichert!');
+            closeFreeEditor();
+        } else {
+            alert('Fehler beim Speichern: ' + (data.error || 'Unbekannter Fehler'));
+        }
+    } catch (err) {
+        console.error('Fehler beim Speichern:', err);
+        alert('Verbindungsfehler beim Speichern');
     }
 }
 </script>

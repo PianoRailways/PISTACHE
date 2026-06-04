@@ -144,6 +144,12 @@ async function loadTrain() {
     const trainNumberInput = document.getElementById('train_number').value.trim();
     if (!trainNumberInput) return;
     
+    // Im normalen Editor muss eine Route ausgewählt sein
+    if (!currentRouteId) {
+        alert('Bitte wähle eine Strecke aus oder nutze den "Freien Editor"');
+        return;
+    }
+    
     const formData = new FormData();
     formData.append('action', 'get_or_create_train');
     formData.append('train_number', trainNumberInput);
@@ -481,7 +487,7 @@ async function renderGraph() {
         ctx.setLineDash([]); 
         drawPointChain(istPoints);
 
-        // --- 3. SCHRITT: Zugnummer am ersten sichtbaren Punkt platzieren ---
+// --- 3. SCHRITT: Zugnummer am ersten sichtbaren Punkt platzieren ---
         const firstVisibleIst = istPoints.find(p => p.y !== null);
         if (firstVisibleIst) {
             ctx.fillStyle = baseColor;
@@ -491,24 +497,25 @@ async function renderGraph() {
         }
     });
     
+    // Zeichenzustand für globale Elemente zurücksetzen
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
 
-// ==========================================
+    // ==========================================
     // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
     // ==========================================
     (function drawCurrentTimeLine() {
         const now = new Date();
         
-        // 1. Hole die aktuelle PC-Zeit in Minuten (11:26 = 686 Minuten)
+        // 1. Hole die aktuelle PC-Zeit in Minuten
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
         
-        // 2. Addiere das STS-Offset (+180 Minuten für 14:26)
-        const simOffset = -420; 
+        // 2. Das aktuell aktive STS-Offset dynamisch aus dem UI auslesen
+        const offsetInput = document.getElementById('sts_offset');
+        const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0; 
         
         let currentTotalMinutes = localTotalMinutes + simOffset;
-        if (currentTotalMinutes < 0) currentTotalMinutes += 1440;
-        currentTotalMinutes = currentTotalMinutes % 1440; // Verhindert Werte über 24 Std.
+        currentTotalMinutes = ((currentTotalMinutes % 1440) + 1440) % 1440; // Verhindert Werte über 24 Std. und negative Minuten
 
         // 3. Sichtbaren Bereich des Diagramms auslesen
         const startVal = document.getElementById('graph_start')?.value || "11:00";
@@ -520,7 +527,7 @@ async function renderGraph() {
         const startMinutes = startH * 60 + startM;
         const endMinutes = endH * 60 + endM;
 
-        // 4. Prüfen, ob die STS-Zeit (14:26) im sichtbaren Fenster (11:00 - 17:00) liegt
+        // 4. Prüfen, ob die STS-Zeit im sichtbaren Fenster liegt
         if (currentTotalMinutes >= startMinutes && currentTotalMinutes <= endMinutes) {
             const y = getY(currentTotalMinutes);
 
@@ -553,7 +560,7 @@ async function renderGraph() {
             }
         }
     })();
-}
+} // <--- Hier endet die Funktion renderGraph() sauber
 
 function updateTrainList(trains) {
     const listContainer = document.getElementById('active_train_list');
@@ -655,13 +662,17 @@ function getTrainColor(trainNumber, trainName) {
     return '#64748b'; // Standardfarbe für alles andere
 }
 // Konfiguration: Zeitversatz zur Systemzeit in Minuten
-const SIM_OFFSET_MINUTES = 180; // Prüfe hier, ob das wirklich -420 sein soll!
 
+// Ermittelt die aktuelle Simulationszeit basierend auf dem gewählten UI-Offset
 function getSimTime() {
     const now = new Date();
-    // Die Berechnung ist korrekt, sie nimmt die aktuelle PC-Zeit und addiert den Offset
-    const totalMinutes = (now.getHours() * 60) + now.getMinutes() + SIM_OFFSET_MINUTES;
-    const simMinutes = (totalMinutes % 1440 + 1440) % 1440;
+    
+    // Dynamisch das aktuelle Offset aus der UI holen
+    const offsetInput = document.getElementById('sts_offset');
+    const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+
+    const totalMinutes = (now.getHours() * 60) + now.getMinutes() + simOffset;
+    const simMinutes = ((totalMinutes % 1440) + 1440) % 1440;
     
     const h = Math.floor(simMinutes / 60);
     const m = simMinutes % 60;

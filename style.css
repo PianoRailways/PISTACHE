@@ -1,4 +1,4 @@
-/* Farbvariablen für den automatischen Wechsel */
+/* Farbvariablen fÃ¼r den automatischen Wechsel */
 :root {
     --bg-main: #f4f6f9;
     --bg-panel: #ffffff;
@@ -17,7 +17,7 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-main: #0f172a;       /* Passt exakt zur JavaScript-Abfrage für das Canvas */
+        --bg-main: #0f172a;       /* Passt exakt zur JavaScript-Abfrage fÃ¼r das Canvas */
         --bg-panel: #1e293b;
         --bg-input: #0f172a;
         --bg-th: #1e293b;
@@ -97,8 +97,8 @@ button {
     background: var(--accent);
     color: white;
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 4px 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
     transition: background 0.2s;
@@ -138,7 +138,7 @@ canvas {
     height: auto;
 }
 
-/* Layout für Zuglisten und Seitenleisten */
+/* Layout fÃ¼r Zuglisten und Seitenleisten */
 .editor-layout {
     display: flex;
     gap: 20px;
@@ -192,4 +192,15 @@ canvas {
 
 .invalid-schedule {
     background-color: rgba(220, 38, 38, 0.2) !important;
+}
+
+tr.dragging {
+    opacity: 0.5;
+    background-color: #f1f5f9;
+    border: 2px dashed #cbd5e1;
+}
+.drag-handle {
+    color: #94a3b8;
+    margin-right: 5px;
+    cursor: move;
 }
