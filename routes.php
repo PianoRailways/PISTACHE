@@ -621,6 +621,38 @@ $ROUTES = [
             ['id' => 'WE', 'name' => 'Wettingen', 'abbr' => 'WE', 'km' => 91.6],
         ]
     ],
+    'ebikon' => [
+        'id' => 'ebikon',
+        'name' => 'Ebikon',
+        'stations' => [
+            ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => -66.74],
+            ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => -64.04],
+            ['id' => 'EBI', 'name' => 'Ebikon', 'abbr' => 'EBI', 'km' => -58.57],
+            ['id' => 'BURN', 'name' => 'Buchrain', 'abbr' => 'BURN', 'km' => -57.07],
+            ['id' => 'LBD', 'name' => 'Root D4', 'abbr' => 'LBD', 'km' => -55.26],
+            ['id' => 'GSK', 'name' => 'Gisikon-Root', 'abbr' => 'GSK', 'km' => -52.82],
+            ['id' => 'RK', 'name' => 'Rotkreuz', 'abbr' => 'RK', 'km' => -49],
+            ['id' => 'BRGL', 'name' => 'Brüglen', 'abbr' => 'BRGL', 'km' => -46.1],
+            ['id' => 'MKR', 'name' => 'Meierskappel-Risch', 'abbr' => 'MKR', 'km' => -45.1],
+            ['id' => 'IM', 'name' => 'Immensee', 'abbr' => 'IM', 'km' => -41.8],
+            ['id' => 'BRM', 'name' => 'Brunnmatt', 'abbr' => 'BRM', 'km' => -37.77],
+            ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => -33.2],
+        ]
+    ],
+    'verkehrshaus' => [
+        'id' => 'verkehrshaus',
+        'name' => 'Verkehrshaus am See',
+        'stations' => [
+            ['id' => 'LZVH', 'name' => 'Verkehrshaus', 'abbr' => 'LZVH', 'km' => 6.1],
+            ['id' => 'MEGZ', 'name' => 'Meggen Zentrum', 'abbr' => 'MEGZ', 'km' => 9.5],
+            ['id' => 'MEG', 'name' => 'Meggen', 'abbr' => 'MEG', 'km' => 10.7],
+            ['id' => 'MERL', 'name' => 'Merlischachen', 'abbr' => 'MERL', 'km' => 13.6],
+            ['id' => 'KUE', 'name' => 'Küssnacht', 'abbr' => 'KUE', 'km' => 16.2],
+            ['id' => 'IM', 'name' => 'Immensee', 'abbr' => 'IM', 'km' => 19.2],
+            ['id' => 'BRM', 'name' => 'Brunnmatt', 'abbr' => 'BRM', 'km' => 23.23],
+            ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => 27.8],
+        ]
+    ],
     'gottardo-berg-komplett' => [
         'id' => 'gottardo-berg-komplett',
         'name' => 'Gotthard-Berg (GD-GIU)',
@@ -675,9 +707,6 @@ $ROUTES = [
             ['id' => 'FA', 'name' => 'Faido', 'abbr' => 'FA', 'km' => 106],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
-            ['id' => 'OS', 'name' => 'Osogna-Cresciano', 'abbr' => 'OS', 'km' => 137.96],
-            ['id' => 'CLA', 'name' => 'Claro', 'abbr' => 'CLA', 'km' => 143.47],
-            ['id' => 'CAST', 'name' => 'Castione-Arbedo', 'abbr' => 'CAST', 'km' => 147.27],
         ]
     ],
     'abs' => [
