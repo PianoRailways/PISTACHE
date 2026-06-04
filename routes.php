@@ -709,6 +709,24 @@ $ROUTES = [
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
         ]
     ],
+    'gäu' => [
+        'id' => 'gäu',
+        'name' => 'Gäu',
+        'stations' => [
+            ['id' => 'SO', 'name' => 'Solothurn', 'abbr' => 'SO', 'km' => -73.8],
+            ['id' => 'LUT', 'name' => 'Lutbach-Attisholz', 'abbr' => 'LUT', 'km' => -70.4],
+            ['id' => 'DN', 'name' => 'Deitingen', 'abbr' => 'DN', 'km' => -67.6],
+            ['id' => 'WAA', 'name' => 'Wangen an der Aare', 'abbr' => 'WAA', 'km' => -64.3],
+            ['id' => 'NB', 'name' => 'Niederipp', 'abbr' => 'NB', 'km' => -58.6],
+            ['id' => 'OEN', 'name' => 'Oensingen', 'abbr' => 'OEN', 'km' => -56.6],
+            ['id' => 'OB', 'name' => 'Oberbuchsiten', 'abbr' => 'OB', 'km' => -51.4],
+            ['id' => 'EG', 'name' => 'Egerkingen', 'abbr' => 'EG', 'km' => -49.1],
+            ['id' => 'HRK', 'name' => 'Härkingen Post', 'abbr' => 'HRK', 'km' => -47],
+            ['id' => 'HAE', 'name' => 'Hägendorf', 'abbr' => 'HAE', 'km' => -45.3],
+            ['id' => 'WBO', 'name' => 'Wangen b.O.', 'abbr' => 'WBO', 'km' => -43],
+            ['id' => 'OLH', 'name' => 'Hammer', 'abbr' => 'OLH', 'km' => -40.6],
+        ]
+    ],
     'abs' => [
         'id' => 'abs',
         'name' => '450 ABS',
