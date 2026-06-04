@@ -77,7 +77,7 @@ def parse_delay(verspaetung_str):
 def main():
     global SPIELER_NAME, STELLWERK_NAME
     print("==========================================================")
-    print("      Stellwerksim zu RCS Bridge (USER-LOGGING ACTIVE)    ")
+    print("      Stellwerksim zu RCS Bridge (ALL-TRAINS ACTIVE)      ")
     print("==========================================================")
     print(f"Verbinde zu lokalem STS-Spiel ({STS_HOST}:{STS_PORT})...")
     
@@ -119,7 +119,7 @@ def main():
             info_root = ET.fromstring(info_data.strip())
             if info_root.tag == "anlageninfo":
                 STELLWERK_NAME = info_root.get('name', 'Unbekanntes Stellwerk')
-                SPIELER_NAME = info_root.get('user', 'Unbekannter Spieler')
+                SPIELER_NAME = info_root.get('user', 'PISTACHE-Client')
                 print(f"🌍 Spielsitzung erkannt!")
                 print(f"   -> Stellwerk: {STELLWERK_NAME}")
                 print(f"   -> Spieler:   {SPIELER_NAME}")
@@ -159,9 +159,34 @@ def main():
                             aktuelles_gleis = details_root.get('gleis', '')
                             sichtbar = details_root.get('sichtbar', 'false')
                             
+                            delay_minutes = parse_delay(verspaetung_str)
+                            
                             if sichtbar == 'true' and aktuelles_gleis:
-                                delay_minutes = parse_delay(verspaetung_str)
+                                print(f"   [ZUG AKTIV] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}")
                                 send_to_rcs(zid, aktuelles_gleis, delay_minutes)
+                                
+                            elif sichtbar == 'false':
+                                # Fahrplan für den noch unsichtbaren Zug abrufen
+                                s.sendall(f"<zugfahrplan zid='{zid}' />\n".encode('utf-8'))
+                                fahrplan_data = read_xml_response(s, expected_end_tag="</zugfahrplan>")
+                                
+                                station_placeholder = None
+                                if fahrplan_data:
+                                    try:
+                                        fplan_root = ET.fromstring(fahrplan_data.strip())
+                                        erster_halt = fplan_root.find('halt')
+                                        if erster_halt is not None:
+                                            station_placeholder = erster_halt.get('mgl')
+                                    except Exception:
+                                        pass
+                                
+                                # Nur senden, wenn der erste Halt im Fahrplan ermittelt werden konnte
+                                if station_placeholder:
+                                    print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, gemeldet an: {station_placeholder}")
+                                    send_to_rcs(zid, station_placeholder, delay_minutes)
+                                else:
+                                    print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, aber noch kein Fahrplanhalt verfügbar. Überspringe...")
+                                
             except Exception as e:
                 print(f"❌ Fehler in Schleife: {e}")
 
