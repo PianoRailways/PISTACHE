@@ -1,0 +1,1963 @@
+[2026-06-02 23:09:45] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:10:45] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:11:45] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:12:45] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:13:45] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:14:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:14:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:15:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:16:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:16:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:17:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:17:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:18:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:18:46] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:18:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:18:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:19:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:19:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:19:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:19:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:20:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:20:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:20:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:20:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:21:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:21:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:21:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:21:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:21:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:22:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:22:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:22:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:22:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:22:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:23:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:23:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:23:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:23:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:23:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:24:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:24:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:24:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:24:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:24:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:24:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:25:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:29:47] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 6427 an TH auf +12 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 6727 an SWB auf +1 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 822 an EIN auf +4 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 827 an TH auf +0 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 375 an EIN auf +66 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 978 an TH auf +1 Min gesetzt.
+[2026-06-02 23:30:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:30:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:30:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:30:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:30:48] 🎉 DB-UPDATE: Zug 975 an TH auf +3 Min gesetzt.
+[2026-06-02 23:31:48] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:48] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:31:48] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:31:48] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:31:48] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 6427 an TH auf +12 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 6727 an SWB auf +1 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 822 an EIN auf +4 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 43230 an EIN auf +-3 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 827 an TH auf +0 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 375 an EIN auf +66 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 978 an TH auf +1 Min gesetzt.
+[2026-06-02 23:31:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:31:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:31:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:31:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:31:49] 🎉 DB-UPDATE: Zug 975 an TH auf +4 Min gesetzt.
+[2026-06-02 23:32:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:32:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:32:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:32:49] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:32:49] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:49] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:32:49] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:32:49] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:32:49] 🎉 DB-UPDATE: Zug 6427 an TH auf +13 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 6727 an TH auf +2 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 822 an EIN auf +4 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 43230 an EIN auf +-3 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 827 an TH auf +0 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 375 an EIN auf +66 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 978 an TH auf +1 Min gesetzt.
+[2026-06-02 23:32:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:32:50] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:32:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:32:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:32:50] 🎉 DB-UPDATE: Zug 975 an EIN auf +5 Min gesetzt.
+[2026-06-02 23:33:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:33:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:33:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:33:50] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:33:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:33:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:33:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:33:50] 🎉 DB-UPDATE: Zug 6427 an TH auf +14 Min gesetzt.
+[2026-06-02 23:33:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:33:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:33:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:33:50] 🎉 DB-UPDATE: Zug 6727 an TH auf +2 Min gesetzt.
+[2026-06-02 23:33:50] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:50] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:33:50] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:33:50] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:33:50] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:33:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:33:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:33:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:33:51] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:33:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:33:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:33:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:33:51] 🎉 DB-UPDATE: Zug 827 an TH auf +0 Min gesetzt.
+[2026-06-02 23:33:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:51] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:33:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:33:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:33:51] 🎉 DB-UPDATE: Zug 375 an EIN auf +66 Min gesetzt.
+[2026-06-02 23:33:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:33:51] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:33:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:33:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:33:51] 🎉 DB-UPDATE: Zug 975 an EIN auf +5 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 6727 an TH auf +2 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 42579 an TH auf +9 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 375 an EIN auf +66 Min gesetzt.
+[2026-06-02 23:34:51] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:51] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-02 23:34:51] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-02 23:34:51] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-02 23:34:51] 🎉 DB-UPDATE: Zug 6728 an SWB auf +8 Min gesetzt.
+[2026-06-02 23:34:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:34:52] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:34:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:34:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:34:52] 🎉 DB-UPDATE: Zug 975 an EIN auf +5 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 6727 an TH auf +3 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 42579 an TH auf +9 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 6728 an STEF auf +8 Min gesetzt.
+[2026-06-02 23:35:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:35:52] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:35:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:35:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:35:52] 🎉 DB-UPDATE: Zug 975 an EIN auf +5 Min gesetzt.
+[2026-06-02 23:36:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:36:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:36:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:36:52] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:36:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:36:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:36:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:36:52] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:36:52] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:52] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:36:52] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:36:52] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:36:52] 🎉 DB-UPDATE: Zug 42579 an TH auf +9 Min gesetzt.
+[2026-06-02 23:36:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:36:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:36:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:36:53] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:36:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:36:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:36:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:36:53] 🎉 DB-UPDATE: Zug 6428 an TH auf +0 Min gesetzt.
+[2026-06-02 23:36:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:53] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:36:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:36:53] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:36:53] 🎉 DB-UPDATE: Zug 6728 an STEF auf +8 Min gesetzt.
+[2026-06-02 23:36:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:36:53] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:36:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:36:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:36:53] 🎉 DB-UPDATE: Zug 975 an EIN auf +5 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 15463 an TH auf +0 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 42579 an TH auf +9 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 6428 an TH auf +0 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 6728 an STEF auf +8 Min gesetzt.
+[2026-06-02 23:37:53] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:37:53] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:37:53] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:37:53] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:37:53] 🎉 DB-UPDATE: Zug 975 an EIN auf +5 Min gesetzt.
+[2026-06-02 23:38:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:38:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:38:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:38:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:38:54] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:38:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:38:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:38:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:38:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:38:54] 🎉 DB-UPDATE: Zug 42579 an TH auf +9 Min gesetzt.
+[2026-06-02 23:38:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:38:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:38:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:38:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:38:54] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:38:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:38:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:38:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:38:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:38:54] 🎉 DB-UPDATE: Zug 6428 an TH auf +0 Min gesetzt.
+[2026-06-02 23:38:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:38:54] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-02 23:38:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-02 23:38:54] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-02 23:38:54] 🎉 DB-UPDATE: Zug 6728 an LAED auf +8 Min gesetzt.
+[2026-06-02 23:39:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:39:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:39:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:39:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:39:54] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:39:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:39:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:39:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:39:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:39:54] 🎉 DB-UPDATE: Zug 42579 an TH auf +9 Min gesetzt.
+[2026-06-02 23:39:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:39:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:39:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:39:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:39:54] 🎉 DB-UPDATE: Zug 43230 an TH auf +-3 Min gesetzt.
+[2026-06-02 23:39:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:39:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:39:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:39:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:39:54] 🎉 DB-UPDATE: Zug 40429 an TH auf +8 Min gesetzt.
+[2026-06-02 23:39:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:39:54] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:39:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:39:54] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:39:54] 🎉 DB-UPDATE: Zug 6428 an TH auf +0 Min gesetzt.
+[2026-06-02 23:39:54] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:39:54] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-02 23:39:54] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-02 23:39:54] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-02 23:39:54] 🎉 DB-UPDATE: Zug 6728 an LAED auf +8 Min gesetzt.
+[2026-06-02 23:40:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:40:55] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:40:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:40:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:40:55] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:40:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:40:55] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:40:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:40:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:40:55] 🎉 DB-UPDATE: Zug 42579 an EIN auf +8 Min gesetzt.
+[2026-06-02 23:40:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:40:55] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:40:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:40:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:40:55] 🎉 DB-UPDATE: Zug 43230 an TH auf +0 Min gesetzt.
+[2026-06-02 23:40:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:40:55] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:40:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:40:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:40:55] 🎉 DB-UPDATE: Zug 40429 an TH auf +8 Min gesetzt.
+[2026-06-02 23:40:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:40:55] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:40:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:40:55] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:40:55] 🎉 DB-UPDATE: Zug 6428 an STEF auf +0 Min gesetzt.
+[2026-06-02 23:40:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:40:55] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:40:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:40:55] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:40:55] 🎉 DB-UPDATE: Zug 6728 an HMB auf +9 Min gesetzt.
+[2026-06-02 23:41:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:41:55] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:41:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:41:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:41:55] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:41:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:41:55] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:41:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:41:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:41:55] 🎉 DB-UPDATE: Zug 42579 an EIN auf +8 Min gesetzt.
+[2026-06-02 23:41:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:41:55] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:41:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:41:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:41:55] 🎉 DB-UPDATE: Zug 43230 an TH auf +0 Min gesetzt.
+[2026-06-02 23:41:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:41:55] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:41:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:41:55] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:41:55] 🎉 DB-UPDATE: Zug 40429 an TH auf +8 Min gesetzt.
+[2026-06-02 23:41:55] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:41:55] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:41:55] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:41:55] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:41:55] 🎉 DB-UPDATE: Zug 6428 an STEF auf +0 Min gesetzt.
+[2026-06-02 23:42:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:42:56] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:42:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:42:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:42:56] 🎉 DB-UPDATE: Zug 15162 an TH auf +0 Min gesetzt.
+[2026-06-02 23:42:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:42:56] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:42:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:42:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:42:56] 🎉 DB-UPDATE: Zug 42579 an EIN auf +8 Min gesetzt.
+[2026-06-02 23:42:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:42:56] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:42:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:42:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:42:56] 🎉 DB-UPDATE: Zug 40429 an TH auf +8 Min gesetzt.
+[2026-06-02 23:42:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:42:56] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:42:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:42:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:42:56] 🎉 DB-UPDATE: Zug 15163 an TH auf +1 Min gesetzt.
+[2026-06-02 23:42:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:42:56] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:42:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:42:56] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:42:56] 🎉 DB-UPDATE: Zug 6428 an STEF auf +0 Min gesetzt.
+[2026-06-02 23:43:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:43:56] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:43:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:43:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:43:56] 🎉 DB-UPDATE: Zug 42579 an EIN auf +8 Min gesetzt.
+[2026-06-02 23:43:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:43:56] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:43:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:43:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:43:56] 🎉 DB-UPDATE: Zug 40429 an TH auf +8 Min gesetzt.
+[2026-06-02 23:43:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:43:56] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:43:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:43:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:43:56] 🎉 DB-UPDATE: Zug 15163 an TH auf +1 Min gesetzt.
+[2026-06-02 23:43:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:43:56] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-02 23:43:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-02 23:43:56] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-02 23:43:56] 🎉 DB-UPDATE: Zug 6428 an LAED auf +0 Min gesetzt.
+[2026-06-02 23:43:56] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:43:56] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:43:56] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:43:56] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:43:56] 🎉 DB-UPDATE: Zug 46429 an TH auf +0 Min gesetzt.
+[2026-06-02 23:44:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:44:57] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:44:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:44:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:44:57] 🎉 DB-UPDATE: Zug 42579 an EIN auf +8 Min gesetzt.
+[2026-06-02 23:44:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:44:57] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:44:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:44:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:44:57] 🎉 DB-UPDATE: Zug 40429 an EIN auf +6 Min gesetzt.
+[2026-06-02 23:44:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:44:57] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:44:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:44:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:44:57] 🎉 DB-UPDATE: Zug 15163 an TH auf +1 Min gesetzt.
+[2026-06-02 23:44:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:44:57] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-02 23:44:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-02 23:44:57] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-02 23:44:57] 🎉 DB-UPDATE: Zug 6428 an LAED auf +0 Min gesetzt.
+[2026-06-02 23:44:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:44:57] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:44:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:44:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:44:57] 🎉 DB-UPDATE: Zug 46429 an TH auf +0 Min gesetzt.
+[2026-06-02 23:45:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:45:57] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:45:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:45:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:45:57] 🎉 DB-UPDATE: Zug 42182 an EIN auf +13 Min gesetzt.
+[2026-06-02 23:45:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:45:57] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:45:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:45:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:45:57] 🎉 DB-UPDATE: Zug 40429 an EIN auf +6 Min gesetzt.
+[2026-06-02 23:45:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:45:57] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:45:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:45:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:45:57] 🎉 DB-UPDATE: Zug 15163 an TH auf +1 Min gesetzt.
+[2026-06-02 23:45:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:45:57] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:45:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:45:57] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:45:57] 🎉 DB-UPDATE: Zug 6428 an HMB auf +0 Min gesetzt.
+[2026-06-02 23:45:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:45:57] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:45:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:45:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:45:57] 🎉 DB-UPDATE: Zug 46429 an TH auf +0 Min gesetzt.
+[2026-06-02 23:46:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:46:57] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:46:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:46:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:46:57] 🎉 DB-UPDATE: Zug 42182 an EIN auf +13 Min gesetzt.
+[2026-06-02 23:46:57] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:46:57] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:46:57] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:46:57] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:46:57] 🎉 DB-UPDATE: Zug 40429 an EIN auf +6 Min gesetzt.
+[2026-06-02 23:46:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:46:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:46:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:46:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:46:58] 🎉 DB-UPDATE: Zug 15163 an TH auf +1 Min gesetzt.
+[2026-06-02 23:46:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:46:58] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:46:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:46:58] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:46:58] 🎉 DB-UPDATE: Zug 6428 an HMB auf +0 Min gesetzt.
+[2026-06-02 23:46:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:46:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:46:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:46:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:46:58] 🎉 DB-UPDATE: Zug 46429 an TH auf +0 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 16456 an TH auf +0 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 40429 an EIN auf +6 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 15163 an TH auf +1 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 6428 an HMB auf +0 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 46429 an TH auf +0 Min gesetzt.
+[2026-06-02 23:47:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:47:58] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:47:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:47:58] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:47:58] 🎉 DB-UPDATE: Zug 6627 an HMB auf +1 Min gesetzt.
+[2026-06-02 23:48:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:58] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:48:58] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:48:58] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:48:58] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:48:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:59] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:48:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:48:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:48:59] 🎉 DB-UPDATE: Zug 16456 an TH auf +0 Min gesetzt.
+[2026-06-02 23:48:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:59] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:48:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:48:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:48:59] 🎉 DB-UPDATE: Zug 40429 an EIN auf +6 Min gesetzt.
+[2026-06-02 23:48:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:59] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:48:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:48:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:48:59] 🎉 DB-UPDATE: Zug 15163 an TH auf +2 Min gesetzt.
+[2026-06-02 23:48:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:59] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:48:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:48:59] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:48:59] 🎉 DB-UPDATE: Zug 6428 an HMB auf +0 Min gesetzt.
+[2026-06-02 23:48:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:59] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:48:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:48:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:48:59] 🎉 DB-UPDATE: Zug 46429 an EIN auf +0 Min gesetzt.
+[2026-06-02 23:48:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:48:59] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:48:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:48:59] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:48:59] 🎉 DB-UPDATE: Zug 6627 an HMB auf +1 Min gesetzt.
+[2026-06-02 23:49:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:49:59] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:49:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:49:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:49:59] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:49:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:49:59] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:49:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:49:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:49:59] 🎉 DB-UPDATE: Zug 16456 an TH auf +0 Min gesetzt.
+[2026-06-02 23:49:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:49:59] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:49:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:49:59] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:49:59] 🎉 DB-UPDATE: Zug 6428 an HMB auf +1 Min gesetzt.
+[2026-06-02 23:49:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:49:59] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:49:59] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:49:59] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:49:59] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:50:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:50:00] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:50:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:50:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:50:00] 🎉 DB-UPDATE: Zug 46429 an EIN auf +0 Min gesetzt.
+[2026-06-02 23:50:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:50:00] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:50:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:50:00] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:50:00] 🎉 DB-UPDATE: Zug 6627 an HMB auf +1 Min gesetzt.
+[2026-06-02 23:51:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:51:00] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:51:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:51:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:51:00] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:51:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:51:00] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:51:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:51:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:51:00] 🎉 DB-UPDATE: Zug 16456 an TH auf +0 Min gesetzt.
+[2026-06-02 23:51:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:51:00] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:51:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:51:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:51:00] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:51:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:51:00] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:51:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:51:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:51:00] 🎉 DB-UPDATE: Zug 46429 an EIN auf +0 Min gesetzt.
+[2026-06-02 23:51:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:51:00] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:51:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:51:00] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:51:00] 🎉 DB-UPDATE: Zug 6627 an HMB auf +3 Min gesetzt.
+[2026-06-02 23:51:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:51:00] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:51:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:51:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:51:00] 🎉 DB-UPDATE: Zug 43626 an EIN auf +-9 Min gesetzt.
+[2026-06-02 23:52:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:52:00] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:52:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:52:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:52:00] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:52:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:52:00] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:52:00] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:52:00] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:52:00] 🎉 DB-UPDATE: Zug 16456 an TH auf +1 Min gesetzt.
+[2026-06-02 23:52:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:52:01] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:52:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:52:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:52:01] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:52:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:52:01] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:52:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:52:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:52:01] 🎉 DB-UPDATE: Zug 46429 an EIN auf +0 Min gesetzt.
+[2026-06-02 23:52:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:52:01] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-02 23:52:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-02 23:52:01] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-02 23:52:01] 🎉 DB-UPDATE: Zug 6627 an HMB auf +3 Min gesetzt.
+[2026-06-02 23:52:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:52:01] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:52:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:52:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:52:01] 🎉 DB-UPDATE: Zug 43626 an EIN auf +-9 Min gesetzt.
+[2026-06-02 23:53:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:53:01] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:53:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:53:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:53:01] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:53:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:53:01] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:53:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:53:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:53:01] 🎉 DB-UPDATE: Zug 16456 an TH auf +2 Min gesetzt.
+[2026-06-02 23:53:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:53:01] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:53:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:53:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:53:01] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:53:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:53:01] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:53:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:53:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:53:01] 🎉 DB-UPDATE: Zug 46429 an EIN auf +0 Min gesetzt.
+[2026-06-02 23:53:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:53:01] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-02 23:53:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-02 23:53:01] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-02 23:53:01] 🎉 DB-UPDATE: Zug 6627 an LAED auf +4 Min gesetzt.
+[2026-06-02 23:53:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:53:01] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:53:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:53:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:53:01] 🎉 DB-UPDATE: Zug 43626 an TH auf +-10 Min gesetzt.
+[2026-06-02 23:54:01] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:54:01] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:54:01] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:54:01] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:54:01] 🎉 DB-UPDATE: Zug 42182 an TH auf +13 Min gesetzt.
+[2026-06-02 23:54:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:54:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:54:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:54:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:54:02] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:54:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:54:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:54:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:54:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:54:02] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-02 23:54:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:54:02] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-02 23:54:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-02 23:54:02] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-02 23:54:02] 🎉 DB-UPDATE: Zug 6627 an LAED auf +4 Min gesetzt.
+[2026-06-02 23:54:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:54:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:54:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:54:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:54:02] 🎉 DB-UPDATE: Zug 43626 an TH auf +-10 Min gesetzt.
+[2026-06-02 23:55:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:55:02] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-02 23:55:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-02 23:55:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-02 23:55:02] 🎉 DB-UPDATE: Zug 4176 an EIN auf +2 Min gesetzt.
+[2026-06-02 23:55:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:55:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:55:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:55:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:55:02] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:55:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:55:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:55:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:55:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:55:02] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-02 23:55:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:55:02] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:55:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:55:02] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:55:02] 🎉 DB-UPDATE: Zug 6627 an STEF auf +4 Min gesetzt.
+[2026-06-02 23:55:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:55:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:55:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:55:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:55:02] 🎉 DB-UPDATE: Zug 43626 an TH auf +-10 Min gesetzt.
+[2026-06-02 23:56:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:56:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:56:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:56:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:56:02] 🎉 DB-UPDATE: Zug 4176 an TH auf +1 Min gesetzt.
+[2026-06-02 23:56:02] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:56:02] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:56:02] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:56:02] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:56:02] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:56:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:56:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:56:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:56:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:56:03] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-02 23:56:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:56:03] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-02 23:56:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-02 23:56:03] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-02 23:56:03] 🎉 DB-UPDATE: Zug 6627 an STEF auf +4 Min gesetzt.
+[2026-06-02 23:56:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:56:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:56:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:56:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:56:03] 🎉 DB-UPDATE: Zug 43626 an TH auf +-10 Min gesetzt.
+[2026-06-02 23:57:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:57:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:57:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:57:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:57:03] 🎉 DB-UPDATE: Zug 4179 an TH auf +1 Min gesetzt.
+[2026-06-02 23:57:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:57:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:57:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:57:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:57:03] 🎉 DB-UPDATE: Zug 4176 an TH auf +1 Min gesetzt.
+[2026-06-02 23:57:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:57:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:57:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:57:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:57:03] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:57:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:57:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:57:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:57:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:57:03] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-02 23:57:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:57:03] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-02 23:57:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-02 23:57:03] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-02 23:57:03] 🎉 DB-UPDATE: Zug 6627 an SWB auf +4 Min gesetzt.
+[2026-06-02 23:57:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:57:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:57:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:57:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:57:03] 🎉 DB-UPDATE: Zug 43626 an TH auf +-10 Min gesetzt.
+[2026-06-02 23:58:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:58:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:58:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:58:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:58:03] 🎉 DB-UPDATE: Zug 4179 an TH auf +1 Min gesetzt.
+[2026-06-02 23:58:03] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:58:03] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:58:03] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:58:03] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:58:03] 🎉 DB-UPDATE: Zug 4176 an TH auf +1 Min gesetzt.
+[2026-06-02 23:58:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:58:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:58:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:58:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:58:04] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:58:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:58:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:58:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:58:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:58:04] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-02 23:58:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:58:04] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-02 23:58:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-02 23:58:04] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-02 23:58:04] 🎉 DB-UPDATE: Zug 6627 an SWB auf +5 Min gesetzt.
+[2026-06-02 23:58:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:58:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:58:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:58:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:58:04] 🎉 DB-UPDATE: Zug 43626 an TH auf +-10 Min gesetzt.
+[2026-06-02 23:59:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:59:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:59:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:59:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:59:04] 🎉 DB-UPDATE: Zug 4179 an TH auf +1 Min gesetzt.
+[2026-06-02 23:59:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:59:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:59:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:59:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:59:04] 🎉 DB-UPDATE: Zug 4176 an TH auf +1 Min gesetzt.
+[2026-06-02 23:59:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:59:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:59:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:59:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:59:04] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-02 23:59:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:59:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:59:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:59:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:59:04] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-02 23:59:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-02 23:59:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-02 23:59:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-02 23:59:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-02 23:59:04] 🎉 DB-UPDATE: Zug 6627 an TH auf +5 Min gesetzt.
+[2026-06-03 00:00:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:00:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:00:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:00:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:00:04] 🎉 DB-UPDATE: Zug 4179 an TH auf +1 Min gesetzt.
+[2026-06-03 00:00:04] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:00:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:00:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:00:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:00:04] 🎉 DB-UPDATE: Zug 627 an TH auf +10 Min gesetzt.
+[2026-06-03 00:00:04] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:04] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:04] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:04] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:04] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:00:04] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:00:04] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:00:04] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:00:04] 🎉 DB-UPDATE: Zug 4176 an TH auf +1 Min gesetzt.
+[2026-06-03 00:00:04] 🔄 KASKADE: Nachfolgezug 40429, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:00:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:00:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:00:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:00:05] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:00:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:00:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:00:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:00:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:00:05] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:00:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:00:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:00:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:00:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:00:05] 🎉 DB-UPDATE: Zug 6627 an TH auf +5 Min gesetzt.
+[2026-06-03 00:00:05] 🔄 KASKADE: Nachfolgezug 46429, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:05] 🔄 KASKADE: Nachfolgezug 179, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:00:05] 🔄 KASKADE: Nachfolgezug 2935, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:00:05] 🔄 KASKADE: Nachfolgezug 627, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:01:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:01:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:01:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:01:05] 🎉 DB-UPDATE: Zug 4179 an TH auf +1 Min gesetzt.
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:01:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:01:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:01:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:01:05] 🎉 DB-UPDATE: Zug 627 an TH auf +10 Min gesetzt.
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:01:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:01:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:01:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:01:05] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:01:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:01:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:01:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:01:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:01:05] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:01:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:01:05] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:01:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:01:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:01:05] 🎉 DB-UPDATE: Zug 6627 an TH auf +5 Min gesetzt.
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 46429, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 179, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 2935, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:01:05] 🔄 KASKADE: Nachfolgezug 627, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:05] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:02:05] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:02:05] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:02:05] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:02:05] 🎉 DB-UPDATE: Zug 4179 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:02:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:02:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:02:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:02:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:02:06] 🎉 DB-UPDATE: Zug 627 an TH auf +10 Min gesetzt.
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:02:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:02:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:02:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:02:06] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:02:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:02:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:02:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:02:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:02:06] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:02:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:02:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:02:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:02:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:02:06] 🎉 DB-UPDATE: Zug 6627 an TH auf +5 Min gesetzt.
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 46429, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 179, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 2935, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:02:06] 🔄 KASKADE: Nachfolgezug 627, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:03:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:03:06] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:03:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:03:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:03:06] 🎉 DB-UPDATE: Zug 4179 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:03:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:03:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:03:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:03:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:03:06] 🎉 DB-UPDATE: Zug 627 an TH auf +10 Min gesetzt.
+[2026-06-03 00:03:06] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:03:06] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:03:06] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:03:06] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:03:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:03:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:03:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:03:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:03:06] 🎉 DB-UPDATE: Zug 6630 an TH auf +0 Min gesetzt.
+[2026-06-03 00:03:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:03:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:03:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:03:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:03:06] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:03:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:03:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:03:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:03:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:03:06] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:04:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:04:06] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:04:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:04:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:04:06] 🎉 DB-UPDATE: Zug 4179 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:04:06] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:04:06] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:04:06] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:04:06] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:04:06] 🎉 DB-UPDATE: Zug 627 an TH auf +10 Min gesetzt.
+[2026-06-03 00:04:06] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:04:06] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:04:06] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:04:06] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:04:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:04:07] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-03 00:04:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-03 00:04:07] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-03 00:04:07] 🎉 DB-UPDATE: Zug 6630 an SWB auf +0 Min gesetzt.
+[2026-06-03 00:04:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:04:07] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:04:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:04:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:04:07] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:04:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:04:07] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:04:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:04:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:04:07] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:05:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:05:07] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:05:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:05:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:05:07] 🎉 DB-UPDATE: Zug 4179 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:05:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:05:07] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:05:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:05:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:05:07] 🎉 DB-UPDATE: Zug 627 an EIN auf +10 Min gesetzt.
+[2026-06-03 00:05:07] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:05:07] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:05:07] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:05:07] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:05:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:05:07] DEBUG: Suche Station mit Kürzel: 'SWB' in Route 'thun'
+[2026-06-03 00:05:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'SWB'...
+[2026-06-03 00:05:07] DEBUG: Station global in Route 'thun-etb' gefunden (ID: SWB).
+[2026-06-03 00:05:07] 🎉 DB-UPDATE: Zug 6630 an SWB auf +1 Min gesetzt.
+[2026-06-03 00:05:07] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:05:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:05:07] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:05:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:05:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:05:07] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:05:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:05:07] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:05:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:05:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:05:07] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:06:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:06:07] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:06:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:06:07] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:06:07] 🎉 DB-UPDATE: Zug 627 an EIN auf +10 Min gesetzt.
+[2026-06-03 00:06:07] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:06:07] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:06:07] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:06:07] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:06:07] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:06:07] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:06:07] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:06:07] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:06:08] 🎉 DB-UPDATE: Zug 6630 an STEF auf +1 Min gesetzt.
+[2026-06-03 00:06:08] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:06:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:06:08] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:06:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:06:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:06:08] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:06:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:06:08] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:06:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:06:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:06:08] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:07:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:07:08] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:07:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:07:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:07:08] 🎉 DB-UPDATE: Zug 627 an EIN auf +10 Min gesetzt.
+[2026-06-03 00:07:08] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:07:08] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:07:08] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:07:08] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:07:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:07:08] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:07:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:07:08] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:07:08] 🎉 DB-UPDATE: Zug 6630 an STEF auf +1 Min gesetzt.
+[2026-06-03 00:07:08] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:07:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:07:08] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:07:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:07:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:07:08] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:07:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:07:08] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:07:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:07:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:07:08] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:08:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:08:08] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:08:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:08:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:08:08] 🎉 DB-UPDATE: Zug 627 an EIN auf +10 Min gesetzt.
+[2026-06-03 00:08:08] 🔄 KASKADE: Nachfolgezug 264, Verspätung: +10 Min, Aufholreserve: +1 Min
+[2026-06-03 00:08:08] 🔄 KASKADE: Nachfolgezug 164, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:08:08] 🔄 KASKADE: Nachfolgezug 4179, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:08:08] 🔄 KASKADE: Nachfolgezug 6831, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:08:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:08:08] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-03 00:08:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-03 00:08:08] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-03 00:08:08] 🎉 DB-UPDATE: Zug 6630 an LAED auf +1 Min gesetzt.
+[2026-06-03 00:08:08] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:08:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:08:08] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:08:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:08:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:08:08] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:08:08] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:08:08] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:08:08] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:08:08] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:08:08] 🎉 DB-UPDATE: Zug 16465 an TH auf +0 Min gesetzt.
+[2026-06-03 00:09:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:09:09] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-03 00:09:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-03 00:09:09] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-03 00:09:09] 🎉 DB-UPDATE: Zug 6630 an LAED auf +1 Min gesetzt.
+[2026-06-03 00:09:09] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:09:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:09:09] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:09:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:09:09] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:09:09] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:09:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:09:09] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:09:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:09:09] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:09:09] 🎉 DB-UPDATE: Zug 16465 an TH auf +1 Min gesetzt.
+[2026-06-03 00:09:09] 🔄 KASKADE: Nachfolgezug 6429, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:10:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:10:09] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:10:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:10:09] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:10:09] 🎉 DB-UPDATE: Zug 6630 an HMB auf +1 Min gesetzt.
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:10:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:10:09] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:10:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:10:09] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:10:09] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:10:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:10:09] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:10:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:10:09] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:10:09] 🎉 DB-UPDATE: Zug 16465 an TH auf +2 Min gesetzt.
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 6429, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:10:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:10:09] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:10:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:10:09] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:10:09] 🎉 DB-UPDATE: Zug 43623 an TH auf +11 Min gesetzt.
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +5 Min, Aufholreserve: +4 Min
+[2026-06-03 00:10:09] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:11:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:11:09] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:11:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:11:09] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:11:09] 🎉 DB-UPDATE: Zug 6429 an HMB auf +3 Min gesetzt.
+[2026-06-03 00:11:09] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:11:09] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:11:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:11:09] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:11:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:11:09] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:11:09] 🎉 DB-UPDATE: Zug 6630 an HMB auf +1 Min gesetzt.
+[2026-06-03 00:11:09] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:11:09] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:11:09] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:11:09] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:11:09] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:11:09] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:11:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:11:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:11:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:11:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:11:10] 🎉 DB-UPDATE: Zug 16465 an TH auf +3 Min gesetzt.
+[2026-06-03 00:11:10] 🔄 KASKADE: Nachfolgezug 6429, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:11:10] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:11:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:11:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:11:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:11:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:11:10] 🎉 DB-UPDATE: Zug 43623 an TH auf +11 Min gesetzt.
+[2026-06-03 00:11:10] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:11:10] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:11:10] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +5 Min, Aufholreserve: +4 Min
+[2026-06-03 00:11:10] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:12:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:12:10] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:12:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:12:10] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:12:10] 🎉 DB-UPDATE: Zug 6429 an HMB auf +3 Min gesetzt.
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:12:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:12:10] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:12:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:12:10] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:12:10] 🎉 DB-UPDATE: Zug 6630 an HMB auf +0 Min gesetzt.
+[2026-06-03 00:12:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:12:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:12:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:12:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:12:10] 🎉 DB-UPDATE: Zug 15164 an TH auf +0 Min gesetzt.
+[2026-06-03 00:12:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:12:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:12:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:12:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:12:10] 🎉 DB-UPDATE: Zug 16465 an TH auf +4 Min gesetzt.
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 6429, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:12:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:12:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:12:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:12:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:12:10] 🎉 DB-UPDATE: Zug 43623 an TH auf +11 Min gesetzt.
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +5 Min, Aufholreserve: +4 Min
+[2026-06-03 00:12:10] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:13:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:13:10] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:13:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:13:10] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:13:10] 🎉 DB-UPDATE: Zug 6429 an HMB auf +3 Min gesetzt.
+[2026-06-03 00:13:10] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:13:10] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:13:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:13:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:13:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:13:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:13:10] 🎉 DB-UPDATE: Zug 15161 an TH auf +1 Min gesetzt.
+[2026-06-03 00:13:10] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:13:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:13:10] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:13:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:13:10] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:13:10] 🎉 DB-UPDATE: Zug 6630 an HMB auf +1 Min gesetzt.
+[2026-06-03 00:13:10] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:13:10] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:13:10] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:13:10] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:13:10] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:13:10] 🎉 DB-UPDATE: Zug 16465 an TH auf +5 Min gesetzt.
+[2026-06-03 00:13:10] 🔄 KASKADE: Nachfolgezug 6429, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:13:10] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:13:11] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:13:11] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:13:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:13:11] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:13:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:13:11] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:13:11] 🎉 DB-UPDATE: Zug 43623 an TH auf +11 Min gesetzt.
+[2026-06-03 00:13:11] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:13:11] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:13:11] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +5 Min, Aufholreserve: +4 Min
+[2026-06-03 00:13:11] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:14:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:14:11] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-03 00:14:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-03 00:14:11] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-03 00:14:11] 🎉 DB-UPDATE: Zug 6429 an LAED auf +3 Min gesetzt.
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:14:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:14:11] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:14:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:14:11] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:14:11] 🎉 DB-UPDATE: Zug 15161 an TH auf +1 Min gesetzt.
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:14:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:14:11] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:14:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:14:11] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:14:11] 🎉 DB-UPDATE: Zug 43623 an TH auf +11 Min gesetzt.
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +5 Min, Aufholreserve: +4 Min
+[2026-06-03 00:14:11] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:15:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:15:11] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-03 00:15:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-03 00:15:11] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-03 00:15:11] 🎉 DB-UPDATE: Zug 6429 an LAED auf +3 Min gesetzt.
+[2026-06-03 00:15:11] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:15:11] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:15:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:15:11] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:15:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:15:11] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:15:11] 🎉 DB-UPDATE: Zug 15161 an TH auf +1 Min gesetzt.
+[2026-06-03 00:15:11] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:15:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:15:11] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:15:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:15:11] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:15:11] 🎉 DB-UPDATE: Zug 43623 an EIN auf +10 Min gesetzt.
+[2026-06-03 00:15:11] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +10 Min, Aufholreserve: +2 Min
+[2026-06-03 00:15:11] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +8 Min, Aufholreserve: +2 Min
+[2026-06-03 00:15:11] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +4 Min, Aufholreserve: +4 Min
+[2026-06-03 00:16:11] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:16:11] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:16:11] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:16:11] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:16:11] 🎉 DB-UPDATE: Zug 6429 an STEF auf +2 Min gesetzt.
+[2026-06-03 00:16:11] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:16:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:16:12] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:16:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:16:12] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:16:12] 🎉 DB-UPDATE: Zug 15161 an TH auf +1 Min gesetzt.
+[2026-06-03 00:16:12] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:16:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:16:12] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:16:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:16:12] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:16:12] 🎉 DB-UPDATE: Zug 43623 an EIN auf +10 Min gesetzt.
+[2026-06-03 00:16:12] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +10 Min, Aufholreserve: +2 Min
+[2026-06-03 00:16:12] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +8 Min, Aufholreserve: +2 Min
+[2026-06-03 00:16:12] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +4 Min, Aufholreserve: +4 Min
+[2026-06-03 00:17:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:17:12] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:17:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:17:12] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:17:12] 🎉 DB-UPDATE: Zug 6429 an STEF auf +2 Min gesetzt.
+[2026-06-03 00:17:12] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:17:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:17:12] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:17:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:17:12] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:17:12] 🎉 DB-UPDATE: Zug 15161 an TH auf +1 Min gesetzt.
+[2026-06-03 00:17:12] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:17:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:17:12] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:17:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:17:12] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:17:12] 🎉 DB-UPDATE: Zug 43623 an EIN auf +11 Min gesetzt.
+[2026-06-03 00:17:12] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:17:12] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:17:12] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +5 Min, Aufholreserve: +4 Min
+[2026-06-03 00:17:12] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:18:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:18:12] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:18:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:18:12] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:18:12] 🎉 DB-UPDATE: Zug 6429 an STEF auf +3 Min gesetzt.
+[2026-06-03 00:18:12] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:18:12] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:18:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:18:12] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:18:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:18:12] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:18:12] 🎉 DB-UPDATE: Zug 40426 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:18:12] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:18:12] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:18:12] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:18:12] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:18:12] 🎉 DB-UPDATE: Zug 15161 an TH auf +2 Min gesetzt.
+[2026-06-03 00:18:12] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:18:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:18:13] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:18:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:18:13] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:18:13] 🎉 DB-UPDATE: Zug 43623 an EIN auf +12 Min gesetzt.
+[2026-06-03 00:18:13] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +12 Min, Aufholreserve: +2 Min
+[2026-06-03 00:18:13] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +10 Min, Aufholreserve: +2 Min
+[2026-06-03 00:18:13] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +6 Min, Aufholreserve: +4 Min
+[2026-06-03 00:18:13] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:19:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:19:13] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:19:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:19:13] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:19:13] 🎉 DB-UPDATE: Zug 6429 an STEF auf +4 Min gesetzt.
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:19:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:19:13] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:19:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:19:13] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:19:13] 🎉 DB-UPDATE: Zug 40426 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:19:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:19:13] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:19:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:19:13] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:19:13] 🎉 DB-UPDATE: Zug 15161 an TH auf +3 Min gesetzt.
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 6778, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:19:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:19:13] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:19:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:19:13] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:19:13] 🎉 DB-UPDATE: Zug 43623 an EIN auf +13 Min gesetzt.
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +13 Min, Aufholreserve: +2 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +11 Min, Aufholreserve: +2 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +7 Min, Aufholreserve: +4 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:19:13] 🔄 KASKADE: Nachfolgezug 4231, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:20:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:20:13] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:20:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:20:13] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:20:13] 🎉 DB-UPDATE: Zug 6429 an STEF auf +5 Min gesetzt.
+[2026-06-03 00:20:13] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +5 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:13] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:20:13] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:20:13] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:20:13] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:20:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:20:13] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:20:13] 🎉 DB-UPDATE: Zug 6729 an HMB auf +0 Min gesetzt.
+[2026-06-03 00:20:13] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:20:13] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:20:13] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:20:13] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:20:13] 🎉 DB-UPDATE: Zug 40426 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:20:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:20:14] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:20:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:20:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:20:14] 🎉 DB-UPDATE: Zug 15161 an TH auf +4 Min gesetzt.
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 6778, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 40424, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:20:14] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:20:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:20:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:20:14] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:20:14] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:20:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:20:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:20:14] 🎉 DB-UPDATE: Zug 43623 an EIN auf +14 Min gesetzt.
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +14 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +12 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +8 Min, Aufholreserve: +4 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 4231, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:20:14] 🔄 KASKADE: Nachfolgezug 46084, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:14] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:21:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:21:14] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:21:14] 🎉 DB-UPDATE: Zug 6429 an STEF auf +5 Min gesetzt.
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +5 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:14] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:21:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:21:14] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:21:14] 🎉 DB-UPDATE: Zug 6729 an HMB auf +0 Min gesetzt.
+[2026-06-03 00:21:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:14] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:21:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:21:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:21:14] 🎉 DB-UPDATE: Zug 40426 an TH auf +1 Min gesetzt.
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:21:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:14] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:21:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:21:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:21:14] 🎉 DB-UPDATE: Zug 15161 an TH auf +4 Min gesetzt.
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 6778, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 40424, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:14] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:21:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:21:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:21:14] 🎉 DB-UPDATE: Zug 824 an TH auf +0 Min gesetzt.
+[2026-06-03 00:21:14] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:14] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:21:14] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:21:14] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:21:14] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:21:14] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:21:15] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:21:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:21:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:21:15] 🎉 DB-UPDATE: Zug 43623 an EIN auf +14 Min gesetzt.
+[2026-06-03 00:21:15] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +14 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:15] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +12 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:15] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +8 Min, Aufholreserve: +4 Min
+[2026-06-03 00:21:15] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:21:15] 🔄 KASKADE: Nachfolgezug 4231, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:21:15] 🔄 KASKADE: Nachfolgezug 46084, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 6429 an TH auf +6 Min gesetzt.
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +6 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'HMB' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'HMB'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-etb' gefunden (ID: HMB).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 6729 an HMB auf +0 Min gesetzt.
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 40426 an TH auf +1 Min gesetzt.
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 15161 an TH auf +4 Min gesetzt.
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 6778, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 40424, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 824 an TH auf +0 Min gesetzt.
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:22:15] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:22:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:22:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:22:15] 🎉 DB-UPDATE: Zug 43623 an EIN auf +14 Min gesetzt.
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +14 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +12 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +8 Min, Aufholreserve: +4 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 4231, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:22:15] 🔄 KASKADE: Nachfolgezug 46084, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:23:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:23:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:23:15] 🎉 DB-UPDATE: Zug 6429 an TH auf +6 Min gesetzt.
+[2026-06-03 00:23:15] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +6 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:15] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:23:15] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:23:15] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:15] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-03 00:23:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-03 00:23:15] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-03 00:23:15] 🎉 DB-UPDATE: Zug 6729 an LAED auf +0 Min gesetzt.
+[2026-06-03 00:23:15] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:15] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:23:15] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:23:15] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:23:16] 🎉 DB-UPDATE: Zug 40426 an TH auf +1 Min gesetzt.
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:23:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:23:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:23:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:23:16] 🎉 DB-UPDATE: Zug 15161 an TH auf +5 Min gesetzt.
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +5 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 6778, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 40424, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:23:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:23:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:23:16] 🎉 DB-UPDATE: Zug 824 an TH auf +0 Min gesetzt.
+[2026-06-03 00:23:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:23:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:23:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:23:16] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:23:16] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:23:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:23:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:23:16] 🎉 DB-UPDATE: Zug 43623 an EIN auf +14 Min gesetzt.
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +14 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +12 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +8 Min, Aufholreserve: +4 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 4231, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:23:16] 🔄 KASKADE: Nachfolgezug 46084, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:24:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:24:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:24:16] 🎉 DB-UPDATE: Zug 6429 an TH auf +6 Min gesetzt.
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +6 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:16] DEBUG: Suche Station mit Kürzel: 'LAED' in Route 'thun'
+[2026-06-03 00:24:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'LAED'...
+[2026-06-03 00:24:16] DEBUG: Station global in Route 'thun-etb' gefunden (ID: LAED).
+[2026-06-03 00:24:16] 🎉 DB-UPDATE: Zug 6729 an LAED auf +0 Min gesetzt.
+[2026-06-03 00:24:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:24:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:24:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:24:16] 🎉 DB-UPDATE: Zug 40426 an TH auf +1 Min gesetzt.
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:24:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:24:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:24:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:24:16] 🎉 DB-UPDATE: Zug 15161 an TH auf +6 Min gesetzt.
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 43230, Verspätung: +6 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 6778, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 40424, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:16] 🔄 KASKADE: Nachfolgezug 275, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:24:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:16] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:24:16] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:24:16] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:24:16] 🎉 DB-UPDATE: Zug 824 an TH auf +0 Min gesetzt.
+[2026-06-03 00:24:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:24:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:24:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:24:17] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:24:17] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:24:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:24:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:24:17] 🎉 DB-UPDATE: Zug 43623 an EIN auf +14 Min gesetzt.
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +14 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +12 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 31732, Verspätung: +8 Min, Aufholreserve: +4 Min
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 2932, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 4231, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:24:17] 🔄 KASKADE: Nachfolgezug 46084, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:25:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:25:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:25:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:25:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:25:17] 🎉 DB-UPDATE: Zug 6429 an TH auf +6 Min gesetzt.
+[2026-06-03 00:25:17] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +6 Min, Aufholreserve: +2 Min
+[2026-06-03 00:25:17] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:25:17] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:25:17] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:25:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:25:17] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:25:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:25:17] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:25:17] 🎉 DB-UPDATE: Zug 6729 an STEF auf +0 Min gesetzt.
+[2026-06-03 00:25:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:25:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:25:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:25:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:25:17] 🎉 DB-UPDATE: Zug 15166 an TH auf +0 Min gesetzt.
+[2026-06-03 00:25:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:25:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:25:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:25:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:25:17] 🎉 DB-UPDATE: Zug 40426 an TH auf +1 Min gesetzt.
+[2026-06-03 00:25:17] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:25:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:25:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:25:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:25:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:25:17] 🎉 DB-UPDATE: Zug 824 an TH auf +0 Min gesetzt.
+[2026-06-03 00:25:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:25:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:25:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:25:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:25:17] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:25:17] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:26:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:26:17] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:26:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:26:17] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:26:17] 🎉 DB-UPDATE: Zug 6429 an TH auf +7 Min gesetzt.
+[2026-06-03 00:26:17] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +7 Min, Aufholreserve: +2 Min
+[2026-06-03 00:26:17] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:26:17] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:26:17] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:26:17] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:26:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:26:17] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:26:17] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:26:17] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:26:17] 🎉 DB-UPDATE: Zug 6729 an STEF auf +0 Min gesetzt.
+[2026-06-03 00:26:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:26:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:26:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:26:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:26:18] 🎉 DB-UPDATE: Zug 15166 an TH auf +0 Min gesetzt.
+[2026-06-03 00:26:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:26:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:26:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:26:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:26:18] 🎉 DB-UPDATE: Zug 40426 an TH auf +2 Min gesetzt.
+[2026-06-03 00:26:18] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:26:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:26:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:26:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:26:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:26:18] 🎉 DB-UPDATE: Zug 824 an TH auf +0 Min gesetzt.
+[2026-06-03 00:26:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:26:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:26:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:26:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:26:18] 🎉 DB-UPDATE: Zug 977 an TH auf +2 Min gesetzt.
+[2026-06-03 00:26:18] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +2 Min, Aufholreserve: +2 Min
+[2026-06-03 00:27:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:27:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:27:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:27:18] 🎉 DB-UPDATE: Zug 6429 an TH auf +8 Min gesetzt.
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +8 Min, Aufholreserve: +2 Min
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +6 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +5 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:18] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:27:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:27:18] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:27:18] 🎉 DB-UPDATE: Zug 6729 an STEF auf +0 Min gesetzt.
+[2026-06-03 00:27:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:27:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:27:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:27:18] 🎉 DB-UPDATE: Zug 15166 an TH auf +0 Min gesetzt.
+[2026-06-03 00:27:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:27:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:27:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:27:18] 🎉 DB-UPDATE: Zug 40426 an TH auf +3 Min gesetzt.
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:27:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:27:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:27:18] 🎉 DB-UPDATE: Zug 824 an TH auf +1 Min gesetzt.
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 266, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:18] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:27:18] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:27:18] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:27:18] 🎉 DB-UPDATE: Zug 977 an TH auf +3 Min gesetzt.
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +3 Min, Aufholreserve: +2 Min
+[2026-06-03 00:27:18] 🔄 KASKADE: Nachfolgezug 824, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:27:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:27:19] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:27:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:27:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:27:19] 🎉 DB-UPDATE: Zug 829 an EIN auf +1 Min gesetzt.
+[2026-06-03 00:27:19] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 6429 an TH auf +9 Min gesetzt.
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 15164, Verspätung: +9 Min, Aufholreserve: +2 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 15265, Verspätung: +7 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 15167, Verspätung: +6 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 40426, Verspätung: +5 Min, Aufholreserve: +2 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +3 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +1 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'STEF' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'STEF'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-etb' gefunden (ID: STEF).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 6729 an STEF auf +0 Min gesetzt.
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 15166 an TH auf +0 Min gesetzt.
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 980 an EIN auf +0 Min gesetzt.
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 40426 an TH auf +4 Min gesetzt.
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 279, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 43623, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 829, Verspätung: +1 Min, Aufholreserve: +2 Min
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 15458 an TH auf +9 Min gesetzt.
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 6729, Verspätung: +9 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 977, Verspätung: +8 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +6 Min, Aufholreserve: +2 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 824, Verspätung: +4 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 266, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 824 an TH auf +2 Min gesetzt.
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 266, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:19] DEBUG: Suche Station mit Kürzel: 'TH' in Route 'thun'
+[2026-06-03 00:28:19] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'TH'...
+[2026-06-03 00:28:19] DEBUG: Station global in Route 'thun-aare' gefunden (ID: TH).
+[2026-06-03 00:28:19] 🎉 DB-UPDATE: Zug 977 an TH auf +4 Min gesetzt.
+[2026-06-03 00:28:19] 🔄 KASKADE: Nachfolgezug 43628, Verspätung: +4 Min, Aufholreserve: +2 Min
+[2026-06-03 00:28:20] 🔄 KASKADE: Nachfolgezug 824, Verspätung: +2 Min, Aufholreserve: +1 Min
+[2026-06-03 00:28:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-03 00:28:20] DEBUG: Suche Station mit Kürzel: 'EIN' in Route 'thun'
+[2026-06-03 00:28:20] DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für 'EIN'...
+[2026-06-03 00:28:20] DEBUG: Station global in Route 'thun-aare' gefunden (ID: EIN).
+[2026-06-03 00:28:20] 🎉 DB-UPDATE: Zug 829 an EIN auf +1 Min gesetzt.
+[2026-06-03 00:28:20] 🔄 KASKADE: Nachfolgezug 4078, Verspätung: +1 Min, Aufholreserve: +2 Min

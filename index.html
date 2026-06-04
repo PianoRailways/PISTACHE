@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>STS: Bildfahrplan Manu-Live</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { margin: 20px; background: #0f172a; color: #f8fafc; font-family: sans-serif; }
+        
+        /* Das Haupt-Layout erzwingt, dass beide Spalten die gleiche Höhe einnehmen */
+        .main-layout { 
+            display: flex; 
+            gap: 20px; 
+            max-width: 1600px; 
+            margin: 0 auto; 
+            align-items: stretch; /* WICHTIG: Dehnt alle Kind-Elemente auf die exakt gleiche Höhe */
+        }
+        
+        /* Die linke Spalte wächst flexibel und bildet die Basis für die Gesamthöhe */
+        .left-content { 
+            flex: 1; 
+            min-width: 0; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Das linke Panel dehnt sich ebenfalls aus, falls nötig */
+        .panel { 
+            background: #1e293b; 
+            border: 1px solid #334155; 
+            padding: 20px; 
+            border-radius: 8px; 
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1 { color: #f1f5f9; font-size: 24px; margin: 0; }
+        label { color: #94a3b8; font-size: 14px; }
+        select, input[type="time"], button { 
+            background: #334155; 
+            color: #fff; 
+            border: 1px solid #475569; 
+            padding: 8px 12px; 
+            border-radius: 4px; 
+            font-size: 14px;
+        }
+        button { cursor: pointer; background: #475569; font-weight: bold; }
+        button:hover { background: #64748b; }
+        canvas { background: #1e293b; border: 1px solid #475569; border-radius: 4px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="main-layout">
+    
+    <div class="left-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1>Bildfahrplan manuelle Betriebslenkung</h1>
+            <div style="font-size: 14px; color: #94a3b8;">
+                Status: <span style="color: #10b981; font-weight: bold;">● LIVE</span> (Zuschauermodus)
+            </div>
+        </div>
+
+        <div class="panel">
+            <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+                <label>
+                    Strecke suchen:
+                    <input type="text" id="route_filter" placeholder="Z.B. Mil..." onkeyup="filterRoutes()" style="width: 150px;">
+                </label>
+                <label>
+                    Strecke:
+                    <select id="route_select" onchange="loadAndRenderGraph()">
+                    </select>
+                </label>
+                <label>
+                    STS-Offset (Min):
+                    <input type="number" id="sts_offset" value="180" min="-600" max="600" style="width: 60px;" onchange="updateAutoScroll()">
+                </label>
+                <label style="display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" id="auto_scroll_check" checked onchange="updateAutoScroll()">
+                    Auto-Scroll
+                </label>
+                <button onclick="loadAndRenderGraph()">Aktualisieren</button>
+            </div>
+            
+            <div style="width: 100%; flex: 1;">
+                <canvas id="graphCanvas" width="800" height="500" style="margin-top: 0; width: 100%; height: auto; display: block;"></canvas>
+            </div>
+            
+            <!-- Hidden inputs for auto-scroll (needed by app.js) -->
+            <input type="time" id="graph_start" value="11:45" style="display: none;">
+            <input type="time" id="graph_end" value="16:00" style="display: none;">
+        </div>
+    </div>
+    
+    <div id="ticker_panel" style="flex: 0 0 300px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; margin-top: 44px;">
+        <h2 style="color: #f1f5f9; font-size: 16px; margin: 0 0 15px 0; border-bottom: 1px solid #334155; padding-bottom: 10px;">Letzte Änderungen</h2>
+        <ul id="ticker_list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; overflow-y: auto; flex: 1; max-height: 820px;">
+        </ul>
+    </div>
+</div>
+
+<div id="editor_panel" style="display: none;">
+    <div id="timetable_body"></div> </div>
+<form id="timetable_form" style="display: none;"></form>
+<select id="route_filter" style="display: none;"></select>
+
+<script>
+var ROUTES = {};          
+var routesConfig = {};    
+var activeTrains = [];    
+var autoScrollInterval = null;
+
+// Globale Funktion für Auto-Scroll
+function updateAutoScroll() {
+    const checkbox = document.getElementById('auto_scroll_check');
+    
+    if (checkbox.checked) {
+        // Auto-Scroll aktiviert: Sofort einmal ausführen und dann periodisch
+        applyAutoScroll();
+        
+        // Dann alle 10 Sekunden aktualisieren
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(applyAutoScroll, 10000);
+    } else {
+        // Auto-Scroll deaktiviert
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+    }
+}
+
+function applyAutoScroll() {
+    const offsetMinutes = parseInt(document.getElementById('sts_offset').value || 180, 10);
+    
+    // Aktuelle PC-Zeit holen
+    const now = new Date();
+    const pcMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    // STS-Zeit = PC-Zeit + Offset
+    const stsMinutes = (pcMinutes + offsetMinutes + 1440) % 1440;
+    
+    // Fenster: -10 Min bis +60 Min zur STS-Zeit
+    const startMinutes = (stsMinutes - 10 + 1440) % 1440;
+    const endMinutes = (stsMinutes + 60 + 1440) % 1440;
+    
+    // In HH:MM konvertieren
+    const startHours = Math.floor(startMinutes / 60);
+    const startMins = startMinutes % 60;
+    const endHours = Math.floor(endMinutes / 60);
+    const endMins = endMinutes % 60;
+    
+    const startTime = `${String(startHours).padStart(2, '0')}:${String(startMins).padStart(2, '0')}`;
+    const endTime = `${String(endHours).padStart(2, '0')}:${String(endMins).padStart(2, '0')}`;
+    
+    // In die Input-Felder schreiben
+    document.getElementById('graph_start').value = startTime;
+    document.getElementById('graph_end').value = endTime;
+    
+    // Graph neu rendern
+    if (typeof loadAndRenderGraph === 'function') {
+        loadAndRenderGraph();
+    }
+}
+</script>
+
+<script src="app.js"></script>
+
+<script>
+async function initZuschauer() {
+    const formData = new FormData();
+    formData.append('action', 'get_routes');
+    
+    try {
+        const res = await fetch('timetable.php', { method: 'POST', body: formData });
+        const routesData = await res.json();
+        
+        ROUTES = routesData;
+        routesConfig = routesData;
+        
+        const selector = document.getElementById('route_select');
+        selector.innerHTML = '';
+        
+        let firstId = null;
+        for (const [id, route] of Object.entries(routesConfig)) {
+            if (!firstId) firstId = id;
+            const opt = document.createElement('option');
+            opt.value = id;
+            opt.innerText = route.name;
+            
+            const searchTerms = [];
+            if (route.stations && Array.isArray(route.stations)) {
+                route.stations.forEach(st => {
+                    searchTerms.push(st.name);
+                    searchTerms.push(st.abbr);
+                });
+            }
+            opt.setAttribute('data-search', searchTerms.join(' '));
+            
+            selector.appendChild(opt);
+        }
+        
+        if (firstId) {
+            currentRouteId = firstId; 
+            selector.value = firstId;
+        }
+        
+        if (typeof switchRoute === 'function') {
+            switchRoute();
+        }
+        
+        // Daten holen und zeichnen
+        await loadAndRenderGraph();
+        await loadAndRenderTicker();
+        
+        // Starte Auto-Scroll NACH dem ersten Render
+        updateAutoScroll();
+        
+        // Auto-Refresh alle 30 Sekunden
+        setInterval(() => {
+            loadAndRenderGraph();
+            loadAndRenderTicker();
+        }, 30000);
+
+    } catch (e) {
+        console.error("Fehler beim Initialisieren der Zuschaueransicht:", e);
+    }
+}
+
+async function loadAndRenderGraph() {
+    const routeSelect = document.getElementById('route_select');
+    if (!routeSelect || !routeSelect.value) return;
+    
+    currentRouteId = routeSelect.value; 
+    
+    const formData = new FormData();
+    formData.append('action', 'get_all_data');
+    formData.append('route_id', currentRouteId);
+
+    try {
+        const res = await fetch('timetable.php', { method: 'POST', body: formData });
+        const trainsData = await res.json();
+        
+        activeTrains = trainsData;
+        
+        if (typeof renderGraph === 'function') {
+            renderGraph();
+        }
+    } catch (e) {
+        console.error("Fehler beim Laden der Fahrplandaten für Zuschauer:", e);
+    }
+}
+
+async function loadAndRenderTicker() {
+    const formData = new FormData();
+    formData.append('action', 'get_audit_log');
+
+    try {
+        const res = await fetch('timetable.php', { method: 'POST', body: formData });
+        const logs = await res.json();
+        
+        const list = document.getElementById('ticker_list');
+        if (!list) return;
+        
+        list.innerHTML = '';
+        
+        if (!logs || logs.length === 0) {
+            list.innerHTML = '<li style="color: #64748b; font-style: italic;">Noch keine Änderungen erfasst.</li>';
+            return;
+        }
+
+        logs.forEach(log => {
+            const li = document.createElement('li');
+            li.style.padding = '8px 10px';
+            li.style.background = '#0f172a';
+            li.style.border = '1px solid #334155';
+            li.style.borderRadius = '4px';
+            li.style.lineHeight = '1.4';
+            
+            const logZeit = log.zeit ?? log.timestamp ?? 'Unbekannt';
+            
+            li.innerHTML = `
+                <span style="color: #64748b; font-weight: bold; font-family: monospace;">[${logZeit}]</span> 
+                Zug <strong style="color: #38bdf8;">${log.train_number}</strong> <br>
+                <span style="color: #94a3b8;">Disponent:</span> <span style="color: #f1f5f9;">${log.username}</span>
+            `;
+            list.appendChild(li);
+        });
+    } catch (e) {
+        console.error("Fehler beim Laden des Tickers:", e);
+    }
+}
+
+function switchRouteAndLoad() {
+    const routeSelect = document.getElementById('route_select');
+    if (routeSelect) {
+        currentRouteId = routeSelect.value;
+    }
+    if (typeof switchRoute === 'function') {
+        switchRoute();
+    }
+    loadAndRenderGraph();
+}
+
+const originalFetch = window.fetch;
+window.fetch = function(url, options) {
+    if (url === '') url = 'timetable.php';
+    return originalFetch(url, options);
+};
+
+window.onload = initZuschauer;
+
+function filterRoutes() {
+    const filterValue = document.getElementById('route_filter').value.toLowerCase();
+    const select = document.getElementById('route_select');
+    const options = select.options;
+    
+    let firstVisibleOption = null;
+
+    for (let i = 0; i < options.length; i++) {
+        const option = options[i];
+        const routeName = option.text.toLowerCase();
+        const stationTerms = option.getAttribute('data-search') ? option.getAttribute('data-search').toLowerCase() : '';
+        
+        if (routeName.includes(filterValue) || stationTerms.includes(filterValue)) {
+            option.style.display = "";
+            if (!firstVisibleOption) {
+                firstVisibleOption = option;
+            }
+        } else {
+            option.style.display = "none";
+        }
+    }
+
+    if (firstVisibleOption && select.value !== firstVisibleOption.value) {
+        select.value = firstVisibleOption.value;
+        loadAndRenderGraph(); 
+    }
+}
+</script>
+</body>
+</html>
