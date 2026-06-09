@@ -48,10 +48,10 @@
         button { cursor: pointer; background: #475569; font-weight: bold; }
         button:hover { background: #64748b; }
         canvas { background: #1e293b; border: 1px solid #475569; border-radius: 4px; display: block; }
-		
-		.hidden {
-			display: none !important;
-			}
+        
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -77,42 +77,41 @@
                     <select id="route_select" onchange="loadAndRenderGraph()">
                     </select>
                 </label>
-<label>
-    Modus:
-    <select id="time_mode" onchange="updateTimeMode()">
-        <option value="auto" selected>Auto-Scroll</option>
-        <option value="fixed">Fixes Fenster</option>
-    </select>
-</label>
+                <label>
+                    Modus:
+                    <select id="time_mode" onchange="updateTimeMode()">
+                        <option value="auto" selected>Auto-Scroll</option>
+                        <option value="fixed">Fixes Fenster</option>
+                    </select>
+                </label>
 
-<label>
-    Zeitbasis:
-    <select id="time_basis" onchange="updateTimeMode()">
-        <option value="instanz1" selected>STS Instanz 1</option>
-        <option value="instanz2">STS Instanz 2</option>
-        <option value="manual">Eigenes Offset / Zeit</option>
-    </select>
-</label>
+                <label>
+                    Zeitbasis:
+                    <select id="time_basis" onchange="updateTimeMode()">
+                        <option value="instanz1" selected>STS Instanz 1</option>
+                        <option value="instanz2">STS Instanz 2</option>
+                        <option value="manual">Eigenes Offset / Zeit</option>
+                    </select>
+                </label>
 
-<label id="offset_container" style="display: none;">
-    STS-Offset (Min):
-    <input type="number" id="sts_offset" value="180" min="-600" max="600" style="width: 60px;" onchange="applyAutoScroll()">
-</label>
+                <label id="offset_container" style="display: none;">
+                    STS-Offset (Min):
+                    <input type="number" id="sts_offset" value="180" min="-600" max="600" style="width: 60px;" onchange="applyAutoScroll()">
+                </label>
 
-<div id="fixed_time_container" style="display: none; gap: 10px; align-items: center;">
-    <label>
-        Von:
-        <input type="time" id="graph_start" value="11:45" onchange="loadAndRenderGraph()">
-    </label>
-    <label>
-        Bis:
-        <input type="time" id="graph_end" value="16:00" onchange="loadAndRenderGraph()">
-    </label>
-</div>
+                <div id="fixed_time_container" style="display: none; gap: 10px; align-items: center;">
+                    <label>
+                        Von:
+                        <input type="time" id="graph_start" value="11:45" onchange="loadAndRenderGraph()">
+                    </label>
+                    <label>
+                        Bis:
+                        <input type="time" id="graph_end" value="16:00" onchange="loadAndRenderGraph()">
+                    </label>
+                </div>
 
-<button onclick="loadAndRenderGraph()">Aktualisieren</button>
-<button type="button" id="toggle_ticker_btn" onclick="toggleTicker()" style="background: #334155;">Ticker ausblenden</button>
-
+                <button onclick="loadAndRenderGraph()">Aktualisieren</button>
+                <button type="button" id="toggle_ticker_btn" onclick="toggleTicker()" style="background: #10b981;">Ticker einblenden</button>
 
             </div>
             
@@ -120,13 +119,12 @@
                 <canvas id="graphCanvas" width="800" height="500" style="margin-top: 0; width: 100%; height: auto; display: block;"></canvas>
             </div>
             
-            <!-- Hidden inputs for auto-scroll (needed by app.js) -->
             <input type="time" id="graph_start" value="11:45" style="display: none;">
             <input type="time" id="graph_end" value="16:00" style="display: none;">
         </div>
     </div>
     
-    <div id="ticker_panel" style="flex: 0 0 300px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; margin-top: 44px;">
+    <div id="ticker_panel" class="hidden" style="flex: 0 0 300px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; margin-top: 44px;">
         <h2 style="color: #f1f5f9; font-size: 16px; margin: 0 0 15px 0; border-bottom: 1px solid #334155; padding-bottom: 10px;">Letzte Änderungen</h2>
         <ul id="ticker_list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; overflow-y: auto; flex: 1; max-height: 820px;">
         </ul>
@@ -143,6 +141,17 @@ var ROUTES = {};
 var routesConfig = {};    
 var activeTrains = [];    
 var autoScrollInterval = null;
+
+// Hilfsfunktion zur Manipulation der URL-Parameter ohne Neuladen
+function updateUrlParameter(key, value) {
+    const url = new window.URL(window.location.href);
+    if (value) {
+        url.searchParams.set(key, value);
+    } else {
+        url.searchParams.delete(key);
+    }
+    window.history.replaceState({}, '', url.toString());
+}
 
 function updateTimeMode() {
     const mode = document.getElementById('time_mode').value;
@@ -208,7 +217,7 @@ function applyAutoScroll() {
         
         // Wenn Instanz 2 gewählt ist, liegt diese zeitlich 6 Stunden (+360 Minuten) weiter vorn
         if (basis === 'instanz2') {
-            calculatedOffset += 360;
+            calculatedOffset += 840;
         }
         
         // Auf den Bereich -720 bis +720 Minuten normalisieren
@@ -259,24 +268,44 @@ async function initZuschauer() {
         const selector = document.getElementById('route_select');
         selector.innerHTML = '';
         
-        // --- NEU: URL-Parameter auslesen ---
+        // --- URL-Parameter auslesen ---
         const urlParams = new URLSearchParams(window.location.search);
         const paramRoute = urlParams.get('route')?.toLowerCase(); // Sucht nach ?route=...
+        const paramTicker = urlParams.get('ticker')?.toLowerCase(); // Sucht nach ?ticker=...
+        
+        // Ticker-Sichtbarkeit über URL initialisieren
+        const ticker = document.getElementById('ticker_panel');
+        const tickerBtn = document.getElementById('toggle_ticker_btn');
+        if (ticker && tickerBtn && paramTicker === 'visible') {
+            ticker.classList.remove('hidden');
+            tickerBtn.innerText = 'Ticker ausblenden';
+            tickerBtn.style.background = '#334155';
+        }
         
         let firstId = null;
         let matchedId = null;
+        let exactMatchFound = false; // Verhindert das Überschreiben durch Teilwörter oder Gegenrichtungen
 
         for (const [id, route] of Object.entries(routesConfig)) {
             if (!firstId) firstId = id;
             
-            // Prüfen, ob die ID oder der Name zum URL-Parameter passt
-            if (paramRoute && (id.toLowerCase() === paramRoute || route.name.toLowerCase().includes(paramRoute))) {
-                matchedId = id;
+            // Logik für die Routen-Ermittlung über die URL
+            if (paramRoute && !exactMatchFound) {
+                // 1. Priorität: Exakter Treffer bei der ID oder beim vollständigen Namen
+                if (id.toLowerCase() === paramRoute || route.name.toLowerCase() === paramRoute) {
+                    matchedId = id;
+                    exactMatchFound = true; // Suchergebnis einfrieren
+                } 
+                // 2. Priorität: Teilstring im Namen (nur nutzen, solange kein exakter Match existiert)
+                else if (route.name.toLowerCase().includes(paramRoute)) {
+                    matchedId = id;
+                }
             }
 
             const opt = document.createElement('option');
             opt.value = id;
-            opt.innerText = route.name;
+            // ID wird hinten angehängt
+            opt.innerText = `${route.name} [${id}]`;
             
             const searchTerms = [];
             if (route.stations && Array.isArray(route.stations)) {
@@ -297,6 +326,8 @@ async function initZuschauer() {
         } else if (firstId) {
             currentRouteId = firstId; 
             selector.value = firstId;
+            // Wenn kein Parameter übergeben wurde, setzen wir die Standard-ID in die URL
+            updateUrlParameter('route', firstId);
         }
         
         if (typeof switchRoute === 'function') {
@@ -326,6 +357,9 @@ async function loadAndRenderGraph() {
     if (!routeSelect || !routeSelect.value) return;
     
     currentRouteId = routeSelect.value; 
+    
+    // URL-Parameter synchronisieren, wenn der Nutzer im Dropdown wählt
+    updateUrlParameter('route', currentRouteId);
     
     const formData = new FormData();
     formData.append('action', 'get_all_data');
@@ -389,6 +423,7 @@ function switchRouteAndLoad() {
     const routeSelect = document.getElementById('route_select');
     if (routeSelect) {
         currentRouteId = routeSelect.value;
+        updateUrlParameter('route', currentRouteId);
     }
     if (typeof switchRoute === 'function') {
         switchRoute();
@@ -439,18 +474,17 @@ function toggleTicker() {
     if (!ticker || !button) return;
     
     if (ticker.classList.contains('hidden')) {
-        // Ticker wieder anzeigen
         ticker.classList.remove('hidden');
         button.innerText = 'Ticker ausblenden';
         button.style.background = '#334155';
+        updateUrlParameter('ticker', 'visible');
     } else {
-        // Ticker ausblenden
         ticker.classList.add('hidden');
         button.innerText = 'Ticker einblenden';
-        button.style.background = '#10b981'; // Wechselt auf grün, wenn ausgeblendet, als visueller Hinweis
+        button.style.background = '#10b981';
+        updateUrlParameter('ticker', null);
     }
     
-    // Nach dem Ändern der Breite den Graph neu zeichnen, damit das Canvas die neue Breite nutzt
     if (typeof loadAndRenderGraph === 'function') {
         loadAndRenderGraph();
     }
