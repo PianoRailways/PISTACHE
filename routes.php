@@ -250,6 +250,26 @@ $ROUTES = [
 			['id' => 'WH', 'name' => 'Wolhusen', 'abbr' => 'WH', 'km' => 39.32],
         ]
     ],
+    'rm-huttwil' => [
+        'id' => 'rm-huttwil',
+        'name' => 'Langenthal - Huttwil - Gettnau',
+        'stations' => [
+            ['id' => 'LTH', 'name' => 'Langenthal', 'abbr' => 'LTH', 'km' => 0],
+            ['id' => 'LTHS', 'name' => 'Langenthal Süd', 'abbr' => 'LTHS', 'km' => 1.62],
+            ['id' => 'LOTZ', 'name' => 'Lotzwil', 'abbr' => 'LOTZ', 'km' => 3.42],
+            ['id' => 'GUBU', 'name' => 'Gutenburg', 'abbr' => 'GUBU', 'km' => 4.39],
+            ['id' => 'MADI', 'name' => 'Madiswil', 'abbr' => 'MADI', 'km' => 6.04],
+            ['id' => 'LHO', 'name' => 'Lindenholz', 'abbr' => 'LHO', 'km' => 7.52],
+            ['id' => 'KDI', 'name' => 'Kleindietwil', 'abbr' => 'KDI', 'km' => 8.44],
+            ['id' => 'RBA', 'name' => 'Rohrbach', 'abbr' => 'RBA', 'km' => 10.54],
+            ['id' => 'HWIL', 'name' => 'Huttwil', 'abbr' => 'HWIL', 'km' => 14.09],
+			['id' => 'GOND', 'name' => 'Gondiswil', 'abbr' => 'GOND', 'km' => 18.03],
+			['id' => 'HUEW', 'name' => 'Hüswil West', 'abbr' => 'HUEW', 'km' => 19],
+			['id' => 'HUE', 'name' => 'Hüswil', 'abbr' => 'HUE', 'km' => 19.81],
+			['id' => 'ZELL', 'name' => 'ZELL', 'abbr' => 'ZELL', 'km' => 21.69],
+			['id' => 'GET', 'name' => 'Gettnau', 'abbr' => 'GET', 'km' => 25.17],
+        ]
+    ],
     'Langetental' => [
         'id' => 'Langetental',
         'name' => 'Langetental',
