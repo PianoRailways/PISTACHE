@@ -981,6 +981,60 @@ $ROUTES = [
             ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => 92.85],
         ]
     ],
+    'doubs' => [
+        'id' => 'doubs',
+        'name' => 'Doubs',
+        'stations' => [
+            ['id' => 'BN', 'name' => 'BN', 'abbr' => 'BN', 'km' => 405.7],
+            ['id' => 'BN2', 'name' => 'BN2', 'abbr' => 'BN2', 'km' => 406.1],
+            ['id' => 'BN bif', 'name' => 'BN bif', 'abbr' => 'BN bif', 'km' => 407.1],
+            ['id' => 'RBE', 'name' => 'RBE', 'abbr' => 'RBE', 'km' => 414.5],
+            ['id' => 'NOV', 'name' => 'NOV', 'abbr' => 'NOV', 'km' => 416.4],
+            ['id' => 'DLZ', 'name' => 'DLZ', 'abbr' => 'DLZ', 'km' => 421.7],
+            ['id' => 'LJY', 'name' => 'LJY', 'abbr' => 'LJY', 'km' => 423.5],
+            ['id' => 'DOU', 'name' => 'DOU', 'abbr' => 'DOU', 'km' => 428],
+            ['id' => 'BDA', 'name' => 'BDA', 'abbr' => 'BDA', 'km' => 437.9],
+            ['id' => 'HYP', 'name' => 'HYP', 'abbr' => 'HYP', 'km' => 444.8],
+            ['id' => 'CVL', 'name' => 'CVL', 'abbr' => 'CVL', 'km' => 453.5],
+            ['id' => 'CVLbis', 'name' => 'CVLbis', 'abbr' => 'CVLbis', 'km' => 454],
+            ['id' => 'POM', 'name' => 'POM', 'abbr' => 'POM', 'km' => 456.96],
+            ['id' => 'RAN', 'name' => 'RAN', 'abbr' => 'RAN', 'km' => 460.6],
+            ['id' => 'ISD', 'name' => 'ISD', 'abbr' => 'ISD', 'km' => 463.3],
+            ['id' => 'SMD', 'name' => 'SMD', 'abbr' => 'SMD', 'km' => 468.9],
+            ['id' => 'CFT', 'name' => 'CFT', 'abbr' => 'CFT', 'km' => 472.2],
+            ['id' => 'VJT', 'name' => 'VJT', 'abbr' => 'VJT', 'km' => 478.8],
+            ['id' => 'MBD', 'name' => 'MBD', 'abbr' => 'MBD', 'km' => 483.9],
+        ]
+    ],
+    'montbeliard-doubs' => [
+        'id' => 'montbeliard-doubs',
+        'name' => 'Montbéliard (Doubs)',
+        'stations' => [
+            ['id' => 'VJT', 'name' => 'VJT', 'abbr' => 'VJT', 'km' => 478.8],
+            ['id' => 'bif AUD', 'name' => 'bif AUD', 'abbr' => 'bif AUD', 'km' => 482.2],
+            ['id' => 'MBD', 'name' => 'MBD', 'abbr' => 'MBD', 'km' => 483.9],
+            ['id' => 'MBDx', 'name' => 'MBDx', 'abbr' => 'MBDx', 'km' => 485],
+            ['id' => 'MBDy', 'name' => 'MBDy', 'abbr' => 'MBDy', 'km' => 485.5],
+            ['id' => 'HCT', 'name' => 'HCT', 'abbr' => 'HCT', 'km' => 491.7],
+            ['id' => 'BFTS', 'name' => 'BFTS', 'abbr' => 'BFTS', 'km' => 499.8],
+            ['id' => 'BFT', 'name' => 'BFT', 'abbr' => 'BFT', 'km' => 501.5],
+            ['id' => 'CMF', 'name' => 'CMF', 'abbr' => 'CMF', 'km' => 507.3],
+            ['id' => 'PZC', 'name' => 'PZC', 'abbr' => 'PZC', 'km' => 513.1],
+            ['id' => 'MVX', 'name' => 'MVX', 'abbr' => 'MVX', 'km' => 515.6],
+            ['id' => 'VDX', 'name' => 'VDX', 'abbr' => 'VDX', 'km' => 518.4],
+            ['id' => 'DAN', 'name' => 'DAN', 'abbr' => 'DAN', 'km' => 523.8],
+            ['id' => 'BLF', 'name' => 'BLF', 'abbr' => 'BLF', 'km' => 526.4],
+            ['id' => 'ALK', 'name' => 'ALK', 'abbr' => 'ALK', 'km' => 533.1],
+            ['id' => 'WHM', 'name' => 'WHM', 'abbr' => 'WHM', 'km' => 536.2],
+            ['id' => 'TGH', 'name' => 'TGH', 'abbr' => 'TGH', 'km' => 537.7],
+            ['id' => 'IFH', 'name' => 'IFH', 'abbr' => 'IFH', 'km' => 540.8],
+            ['id' => 'ZIL', 'name' => 'ZIL', 'abbr' => 'ZIL', 'km' => 543.7],
+            ['id' => 'FXL', 'name' => 'FXL', 'abbr' => 'FXL', 'km' => 544.7],
+            ['id' => 'BPW', 'name' => 'BPW', 'abbr' => 'BPW', 'km' => 547.2],
+            ['id' => 'HNR', 'name' => 'HNR', 'abbr' => 'HNR', 'km' => 549.32],
+            ['id' => 'MSE', 'name' => 'MSE', 'abbr' => 'MSE', 'km' => 550.6],
+        ]
+    ],
     'unterbruch' => [
         'id' => '999',
         'name' => '< ----------------------------------------- >',
@@ -989,6 +1043,7 @@ $ROUTES = [
             ['id' => 'B', 'name' => 'Bethal', 'abbr' => 'BBB', 'km' => 10],
         ]
     ],
+
 ];
 
 // =========================================================================
@@ -996,19 +1051,23 @@ $ROUTES = [
 // =========================================================================
 $routes_to_reverse = [];
 foreach ($ROUTES as $id => $route) {
-    if (strpos($id, '-reverse') === false && strpos($id, '-reversed') === false) {
+    // Doppelten Code bereinigt
+    if (strpos($id, '-inv') === false) {
         $routes_to_reverse[$id] = $route;
     }
 }
 
 foreach ($routes_to_reverse as $id => $route) {
-    $reversed_id = $id . '-reverse';
+    $reversed_id = $id . '-inv';
     $reversed_stations = array_reverse($route['stations']);
     $max_km = max(array_column($route['stations'], 'km'));
+    
     foreach ($reversed_stations as &$station) {
-        $station['km'] = $max_km - $station['km'];
+        // Subtraktion durchführen und auf maximal 3 Nachkommastellen runden
+        $station['km'] = round($max_km - $station['km'], 3);
     }
     unset($station);
+    
     $ROUTES[$reversed_id] = [
         'id' => $reversed_id,
         'name' => $route['name'] . ' (inverted)',
