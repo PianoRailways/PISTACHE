@@ -565,6 +565,58 @@ $ROUTES = [
             ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => 129.77],
         ]
     ],
+    'züriberg-z' => [
+        'id' => 'züriberg-z',
+        'name' => 'Züriberg',
+        'stations' => [
+            ['id' => 'ZAS', 'name' => 'Altstetten', 'abbr' => 'ZAS', 'km' => 95.72],
+            ['id' => 'ZHER', 'name' => 'Herdern', 'abbr' => 'ZHER', 'km' => 96.81],
+            ['id' => 'ZHDB', 'name' => 'Hardbrücke', 'abbr' => 'ZHDB', 'km' => 97.97],
+            ['id' => 'ZMUS', 'name' => 'Museumsstrasse', 'abbr' => 'ZMUS', 'km' => 99.84],
+            ['id' => 'ZSTH', 'name' => 'Stadelhofen', 'abbr' => 'ZSTH', 'km' => 101.59],
+            ['id' => 'ZHOT', 'name' => 'Hottingen', 'abbr' => 'ZHOT', 'km' => 102.71],
+            ['id' => 'STET', 'name' => 'Stettbach', 'abbr' => 'STET', 'km' => 106.94],
+            ['id' => 'NGUT', 'name' => 'Neugut', 'abbr' => 'NGUT', 'km' => 108.01],
+            ['id' => 'DUE', 'name' => 'Dübendorf', 'abbr' => 'DUE', 'km' => 108.9],
+            ['id' => 'DTL', 'name' => 'Dietlikon', 'abbr' => 'DTL', 'km' => 111.1],
+        ]
+    ],
+    'züriberg-zk' => [
+        'id' => 'züriberg-zk',
+        'name' => 'Züriberg-Tiefenbrunnen',
+        'stations' => [
+            ['id' => 'ZAS', 'name' => 'Altstetten', 'abbr' => 'ZAS', 'km' => 95.72],
+            ['id' => 'ZHER', 'name' => 'Herdern', 'abbr' => 'ZHER', 'km' => 96.81],
+            ['id' => 'ZHDB', 'name' => 'Hardbrücke', 'abbr' => 'ZHDB', 'km' => 97.97],
+            ['id' => 'ZMUS', 'name' => 'Museumsstrasse', 'abbr' => 'ZMUS', 'km' => 99.84],
+            ['id' => 'ZSTH', 'name' => 'Stadelhofen', 'abbr' => 'ZSTH', 'km' => 101.59],
+            ['id'=> 'ZTB', 'name' => 'Tiefenbrunnen', 'abbr' => 'ZTB', 'km' => 103.79],
+            ['id'=> 'ZK', 'name' => 'Zollikon', 'abbr' => 'ZK', 'km' => 105.39],
+        ]
+    ],
+    'zollikon' => [
+        'id' => 'zollikon',
+        'name' => 'Rechtes Seeufer',
+        'stations' => [
+            ['id' => 'ZMUS', 'name' => 'Museumsstrasse', 'abbr' => 'ZMUS', 'km' => 3.95],
+            ['id' => 'ZSTH', 'name' => 'Stadelhofen', 'abbr' => 'ZSTH', 'km' => 5.7],
+            ['id'=> 'ZTB', 'name' => 'Tiefenbrunnen', 'abbr' => 'ZTB', 'km' => 7.9],
+            ['id'=> 'ZK', 'name' => 'Zollikon', 'abbr' => 'ZK', 'km' => 9.5],
+            ['id'=> 'KGO', 'name' => 'Goldbach', 'abbr' => 'KGO', 'km' => 10.8],
+            ['id'=> 'KUES', 'name' => 'Küsnacht Goldbach', 'abbr' => 'KUES', 'km' => 11.7],
+            ['id'=> 'ERLB', 'name' => 'Erlenbach', 'abbr' => 'ERLB', 'km' => 13.5],
+            ['id'=> 'WIN', 'name' => 'Winkel', 'abbr' => 'WIN', 'km' => 14.6],
+            ['id'=> 'HERL', 'name' => 'Herrliberg', 'abbr' => 'HERL', 'km' => 16.6],
+            ['id'=> 'ML', 'name' => 'Männedorf', 'abbr' => 'ML', 'km' => 19.4],
+            ['id'=> 'UET', 'name' => 'Uetikon', 'abbr' => 'UET', 'km' => 22.4],
+            ['id'=> 'MAEN', 'name' => 'Männedorf', 'abbr' => 'MAEN', 'km' => 23.6],
+            ['id'=> 'STAE', 'name' => 'Stäfa', 'abbr' => 'STAE', 'km' => 26.4],
+            ['id'=> 'UER', 'name' => 'Uerikon', 'abbr' => 'UER', 'km' => 28.9],
+            ['id'=> 'FB', 'name' => 'Feldbach', 'abbr' => 'FB', 'km' => 31.4],
+            ['id'=> 'KPT', 'name' => 'Kempraten', 'abbr' => 'KPT', 'km' => 33.8],
+            ['id'=> 'RW', 'name' => 'Rapperswil', 'abbr' => 'RW', 'km' => 35.9],
+        ]
+    ],
     'züriberg-r' => [
         'id' => 'züriberg-r',
         'name' => 'Altstetten-Rapperswil',
