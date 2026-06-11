@@ -541,7 +541,7 @@ $ROUTES = [
             ['id' => 'UST', 'name' => 'Uster', 'abbr' => 'UST', 'km' => -81.35],
             ['id' => 'AAT', 'name' => 'Aathal', 'abbr' => 'AAT', 'km' => -77.38],
             ['id' => 'WZ', 'name' => 'Wetzikon', 'abbr' => 'WZ', 'km' => -74.51],
-            ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => 70.07],
+            ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => -70.07],
         ]
     ],
     'züriberg-h' => [
