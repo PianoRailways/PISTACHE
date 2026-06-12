@@ -573,21 +573,13 @@ if ($action === 'save_timetable') {
             <table id="free_editor_table">
                 <thead>
                     <tr>
-                        <th>Bahnhof</th>
-                        <th>Gleis</th>
-                        <th>Ankunft (Soll)</th>
-                        <th>Ist-Ankunft</th>
-                        <th>Verspätung</th>
-                        <th>Abfahrt (Soll)</th>
-                        <th>Ist-Abfahrt</th>
-                        <th>Verspätung</th>
-                        <th>Flags</th>
-                        <th>Bemerkung</th>
-                        <th>clear</th>
+                        <th>Bahnhof</th><th>Gl.</th>
+                        <th>Ank (Soll)</th><th>Ist</th><th>Versp.</th>
+                        <th>Abf (Soll)</th><th>Ist</th><th>Versp.</th>
+                        <th>Flags</th><th>Bemerkung</th><th></th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
             <div style="margin-top: 15px; display: flex; gap: 10px;">
                 <button type="submit">Fahrplan speichern</button>
@@ -832,17 +824,22 @@ function renderFreeEditorTable() {
         tr.draggable = true;
         tr.style.cursor = 'move';
         
-        // WICHTIG: Name von "free_stations" zu "stations" geändert, damit PHP es speichert!
+        // Innerhalb von renderFreeEditorTable()
         tr.innerHTML = `
-            <td style="padding: 5px;"><strong class="drag-handle">☰</strong> ${st.name} (${st.abbr})</td>
-            <td><input type="text" name="stations[${st.id}][track]" value="${st.track}" size="3"></td>
-            <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}"></td>
-            <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}"></td>
-            <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}"></td>
-            <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}"></td>
-            <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" size="5" placeholder="X(Znr)"></td>
-            <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" size="10"></td>
-            <td><button type="button" style="background-color: #d9534f; color: white; padding: 4px 8px; border:none; border-radius:3px; cursor:pointer;" 
+            <td style="padding: 5px; width: 200px;"><strong class="drag-handle">☰</strong> ${st.name} (${st.abbr})</td>
+            <td style="width: 50px;"><input type="text" name="stations[${st.id}][track]" value="${st.track}" style="width: 40px;"></td>
+            
+            <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            <td><input type="number" id="delay_arr_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'arr', 'delay')"></td>
+            <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            
+            <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            <td><input type="number" id="delay_dep_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'dep', 'delay')"></td>
+            <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            
+            <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" style="width: 80px;" placeholder="X(Znr)"></td>
+            <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" style="width: 100px;"></td>
+            <td><button type="button" style="background-color: #d9534f; color: white; border:none; padding: 4px 8px; cursor:pointer;" 
                         onclick="removeStationFromFreeEditor('${st.id}')">Entf</button></td>
         `;
 
