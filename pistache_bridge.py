@@ -3,13 +3,14 @@ import xml.etree.ElementTree as ET
 import requests
 import time
 import sys
+import re
 
 # =========================================================================
 # KONFIGURATION
 # =========================================================================
 STS_HOST = "127.0.0.1"
 STS_PORT = 3691
-RCS_URL = "https://rcs.stellwerksim.ch/pistache.php"
+RCS_URL = "https://rcs.stellwerksim.ch/dev/pistache.php"
 POLLING_INTERVAL = 60
 DEBUG_XML = True
 # =========================================================================
@@ -17,16 +18,27 @@ DEBUG_XML = True
 SPIELER_NAME = "Unbekannter Spieler"
 STELLWERK_NAME = "Unbekanntes Stellwerk"
 
-def send_to_rcs(sts_zid, station_abbr, delay):
+def extract_station_abbr(gleis_str):
+    """Extrahiert Stationsabbreviatur aus Gleisnummer: HWIL3 -> HWIL"""
+    if not gleis_str:
+        return None
+    match = re.match(r'^([A-Z]+)', gleis_str.strip())
+    if match:
+        return match.group(1)
+    return None
+
+def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False):
+    """Sendet Zugdaten an RCS mit amgleis Status."""
     payload = {
         'action': 'plugin_update_delay',
         'sts_zid': str(sts_zid),
         'station_abbr': str(station_abbr),
         'delay': int(delay),
+        'am_gleis': '1' if am_gleis else '0',
         'sts_user': SPIELER_NAME,
         'sts_sim': STELLWERK_NAME
     }
-    print(f"   [POST] Sende an RCS -> ZID: {sts_zid}, Halt: {station_abbr}, Verspätung: {delay} Min...")
+    print(f"   [POST] Sende an RCS -> ZID: {sts_zid}, Halt: {station_abbr}, Verspätung: {delay} Min (Am Gleis: {am_gleis})...")
     try:
         response = requests.post(RCS_URL, data=payload, timeout=8)
         if response.status_code == 200:
@@ -45,9 +57,9 @@ def send_to_rcs(sts_zid, station_abbr, delay):
         print(f"   -> ❌ [NETZWERKFEHLER] Verbindung fehlgeschlagen: {e}")
 
 def read_xml_response(sock, expected_end_tag=None):
-    """ Liest Daten blockweise. Schützt vor unendlichem Hängen durch Timeout. """
+    """ Liest Daten blockweise mit Timeout-Schutz """
     buffer = ""
-    sock.settimeout(5.0) # 5 Sekunden Netzwerk-Timeout beim Lesen
+    sock.settimeout(5.0)
     try:
         while True:
             chunk = sock.recv(4096).decode('utf-8')
@@ -89,13 +101,11 @@ def main():
         print(f"[Fehler] Keine Verbindung zum STS-Spiel: {e}")
         sys.exit(1)
 
-    # 1. Willkommens-Status (Code 300) einlesen und wegarbeiten
     print("[STS] Warte auf Willkommensnachricht...")
     init_msg = read_xml_response(s, expected_end_tag="</status>")
     if init_msg:
         print(f"[STS Empfangen] {init_msg.strip()}")
 
-    # 2. Registrieren (MUSS zwingend als Erstes passieren!)
     print("[STS Senden] Registriere das RCS-Plugin...")
     register_xml = "<register name='RCS-Pistache-Bridge' autor='Dispo' version='1.6' protokoll='1' text='Live-Exporter' />\n"
     s.sendall(register_xml.encode('utf-8'))
@@ -105,11 +115,10 @@ def main():
         print(f"[STS Empfangen] {reg_status.strip()}")
     
     if not reg_status or "code='220'" not in reg_status:
-        print("[Fehler] Registrierung wurde vom Simulator verweigert oder kam nicht an!")
+        print("[Fehler] Registrierung wurde vom Simulator verweigert!")
         s.close()
         return
 
-    # 3. Erst JETZT, nach erfolgreicher Registrierung, darf die Anlageninfo abgefragt werden
     print("[STS Senden] <anlageninfo />")
     s.sendall(b"<anlageninfo />\n")
     info_data = read_xml_response(s, expected_end_tag="</anlageninfo>")
@@ -125,11 +134,9 @@ def main():
                 print(f"   -> Spieler:   {SPIELER_NAME}")
         except Exception as ex:
             print(f"⚠️ Konnte Anlageninfo nicht parsen: {ex}")
-    else:
-        print("⚠️ Keine Anlageninfo erhalten. Fahre mit Standardnamen fort.")
 
     print("\n[Bereit] Starte Überwachungsschleife...")
-    s.settimeout(None) # Timeout für die Dauerschleife wieder deaktivieren
+    s.settimeout(None)
 
     try:
         while True:
@@ -158,15 +165,22 @@ def main():
                             verspaetung_str = details_root.get('verspaetung', '0')
                             aktuelles_gleis = details_root.get('gleis', '')
                             sichtbar = details_root.get('sichtbar', 'false')
+                            am_gleis_status = details_root.get('amgleis', 'false') == 'true'
                             
                             delay_minutes = parse_delay(verspaetung_str)
                             
+                            # ===== SICHTBARE ZÜGE =====
                             if sichtbar == 'true' and aktuelles_gleis:
-                                print(f"   [ZUG AKTIV] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}")
-                                send_to_rcs(zid, aktuelles_gleis, delay_minutes)
+                                station_abbr = extract_station_abbr(aktuelles_gleis)
                                 
+                                if station_abbr:
+                                    print(f"   [ZUG AKTIV] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis} → {station_abbr} (Am Gleis: {am_gleis_status})")
+                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=am_gleis_status)
+                                else:
+                                    print(f"   [ZUG AKTIV, WARNUNG] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}, aber konnte keine Abbr extrahieren")
+                                
+                            # ===== UNSICHTBARE ZÜGE (VORLAUF) =====
                             elif sichtbar == 'false':
-                                # Fahrplan für den noch unsichtbaren Zug abrufen
                                 s.sendall(f"<zugfahrplan zid='{zid}' />\n".encode('utf-8'))
                                 fahrplan_data = read_xml_response(s, expected_end_tag="</zugfahrplan>")
                                 
@@ -180,12 +194,11 @@ def main():
                                     except Exception:
                                         pass
                                 
-                                # Nur senden, wenn der erste Halt im Fahrplan ermittelt werden konnte
                                 if station_placeholder:
                                     print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, gemeldet an: {station_placeholder}")
-                                    send_to_rcs(zid, station_placeholder, delay_minutes)
+                                    send_to_rcs(zid, station_placeholder, delay_minutes, am_gleis=False)
                                 else:
-                                    print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, aber noch kein Fahrplanhalt verfügbar. Überspringe...")
+                                    print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, aber kein Fahrplanhalt verfügbar.")
                                 
             except Exception as e:
                 print(f"❌ Fehler in Schleife: {e}")

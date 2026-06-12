@@ -191,6 +191,139 @@ function minutesToTime($m) {
     return sprintf("%02d:%02d", $h, $min);
 }
 
+/**
+ * Propagiert die Verspätung eines Zuges auf alle nachfolgenden Halte der GLEICHEN Route.
+ * Nutzt 90% Aufholreserve wie in app.js propagateForward()
+ */
+function propagateDelayForward($db, $train_id, $modified_station_id, $routes_config, $is_am_gleis = false) {
+    global $write_log;
+    
+    // Aktuelle Uhrzeit im Minutentakt holen (z. B. "14:35" -> 875)
+    $current_time_str = date('H:i');
+    $current_time_min = timeToMinutes($current_time_str);
+    
+    write_log("🔄 PROPAGATION: Starte zeitabhängige Verspätungs-Propagation ab Station $modified_station_id (Aktuelle Uhrzeit: $current_time_str)");
+    
+    // 1. Hole alle Halte des Zuges (chronologisch)
+    $stmt = $db->prepare("
+        SELECT station_id, arrival, departure, actual_arrival, actual_departure, remarks
+        FROM timetable 
+        WHERE train_id = ? 
+        ORDER BY id ASC
+    ");
+    $stmt->execute([$train_id]);
+    $all_stops = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if (empty($all_stops)) return;
+    
+    // 2. Finde den Index der modifizierten Station
+    $modified_index = null;
+    foreach ($all_stops as $i => $stop) {
+        if ($stop['station_id'] === $modified_station_id) {
+            $modified_index = $i;
+            break;
+        }
+    }
+    
+    if ($modified_index === null) return;
+    
+    // 3. Bestimme die aktuelle Verspätung an der modifizierten Station
+    $mod_stop = $all_stops[$modified_index];
+    $soll_dep_mod = timeToMinutes($mod_stop['departure']);
+    $act_dep_mod = timeToMinutes($mod_stop['actual_departure']);
+    
+    if ($soll_dep_mod === 0 || $act_dep_mod === 0) {
+        $soll_dep_mod = timeToMinutes($mod_stop['arrival']);
+        $act_dep_mod = timeToMinutes($mod_stop['actual_arrival']);
+    }
+    
+    $current_delay = $act_dep_mod - $soll_dep_mod;
+    write_log("   Ausgangsverspätung an Station $modified_station_id: $current_delay Min.");
+    
+    // 4. Propagiere die Verspätung für alle nachfolgenden Halte
+    for ($i = $modified_index + 1; $i < count($all_stops); $i++) {
+        $stop = $all_stops[$i];
+        $station_id = $stop['station_id'];
+        
+        $sollArr = timeToMinutes($stop['arrival']);
+        $sollDep = timeToMinutes($stop['departure']);
+        
+        if ($sollArr === 0 && $sollDep === 0) continue;
+        
+        // ZEIT-CHECK: Bestimme, wann der Zug hier voraussichtlich abfahren soll.
+        // Wenn bereits eine berechnete Ist-Zeit existiert, nehmen wir diese, sonst die Soll-Zeit.
+        $predicted_dep_min = (!empty($stop['actual_departure'])) ? timeToMinutes($stop['actual_departure']) : $sollDep;
+        if ($predicted_dep_min === 0) {
+            $predicted_dep_min = (!empty($stop['actual_arrival'])) ? timeToMinutes($stop['actual_arrival']) : $sollArr;
+        }
+        
+        // Wenn die vorausberechnete Abfahrt in der Vergangenheit liegt, wird der Halt geschützt.
+        if ($predicted_dep_min < $current_time_min) {
+            write_log("   ⏭️ ÜBERSPRUNGEN: Halt $station_id liegt zeitlich in der Vergangenheit (Erwartete Abfahrt: " . minutesToTime($predicted_dep_min) . ").");
+            
+            // Basis-Verspätung für die folgenden Stationen anhand dieses vergangenen Haltes aktualisieren
+            $effective_soll = ($sollDep > 0) ? $sollDep : $sollArr;
+            if ($predicted_dep_min > 0 && $effective_soll > 0) {
+                $current_delay = $predicted_dep_min - $effective_soll;
+            }
+            continue;
+        }
+        
+        // --- 5. Aufholreserve berechnen ---
+        if ($current_delay > 0 && $i > 0) {
+            $prev_soll_dep = timeToMinutes($all_stops[$i-1]['departure']);
+            // Fallback, falls der vorherige Halt keine Abfahrtszeit hatte (Anfangsstation o.ä.)
+            if ($prev_soll_dep === 0) {
+                $prev_soll_dep = timeToMinutes($all_stops[$i-1]['arrival']);
+            }
+            
+            if ($prev_soll_dep > 0 && $sollArr > $prev_soll_dep) {
+                $section_travel_time = $sollArr - $prev_soll_dep;
+                $recovery = max(0, intval(round($section_travel_time * 0.07)));
+                $current_delay = max(0, $current_delay - $recovery);
+            }
+        }
+        
+        // --- 6. Neue Ist-Zeiten unter Berücksichtigung der Mindesthalthaltezeit berechnen ---
+        // Wenn keine Soll-Ankunft existiert (z.B. Startbahnhof), nutzen wir die Soll-Abfahrt als Basis
+        $baseArr = ($sollArr > 0) ? $sollArr : $sollDep;
+        $newArrMin = $baseArr + $current_delay;
+        
+        // Mindesthaltzeit aus dem Plan berechnen (0 bei reinen Ankunfts-/Abfahrtshalten)
+        $min_stoptime = ($sollDep > 0 && $sollArr > 0) ? max(0, $sollDep - $sollArr) : 0;
+        
+        // Neue Abfahrt erzwingt den Mindesthalt nach der tatsächlichen Ankunft
+        if ($sollDep > 0) {
+            $newDepMin = max($sollDep + $current_delay, $newArrMin + $min_stoptime);
+            $current_delay = $newDepMin - $sollDep;
+        } else {
+            // Reiner Ankunftsbahnhof (Endstation)
+            $newDepMin = $newArrMin;
+        }
+        
+        $actual_arrival = ($sollArr > 0) ? minutesToTime($newArrMin) : null;
+        $actual_departure = ($sollDep > 0) ? minutesToTime($newDepMin) : null;
+        
+        // --- 7. Update in die Datenbank ---
+        $stmtUpdate = $db->prepare("
+            UPDATE timetable 
+            SET actual_arrival = ?, actual_departure = ?, remarks = ?
+            WHERE train_id = ? AND station_id = ?
+        ");
+        $stmtUpdate->execute([
+            $actual_arrival,
+            $actual_departure,
+            "Propagiert (Verspätung: +" . $current_delay . " Min)",
+            $train_id,
+            $station_id
+        ]);
+        
+        $log_arr = $actual_arrival ?? "--:--";
+        $log_dep = $actual_departure ?? "--:--";
+        write_log("   📍 Zukünftiger Halt $station_id: Neu Ankunft $log_arr, Abfahrt $log_dep (+$current_delay Min)");
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input_raw = file_get_contents('php://input');
     $input_data = json_decode($input_raw, true);
@@ -301,32 +434,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // 4. Ist-Zeiten für den aktuellen Bahnhof berechnen
-        $actual_arrival = addMinutes($timetable_entry['arrival'], $delay);
-        $actual_departure = addMinutes($timetable_entry['departure'], $delay);
+        // 3.6 AMGLEIS PRÜFUNG: Wenn am_gleis=true, ändere nur die Abfahrtszeit!
+        $am_gleis = $_POST['am_gleis'] ?? $input_data['am_gleis'] ?? '0';
+        $am_gleis_flag = ($am_gleis === '1' || $am_gleis === true);
 
-        // 5. In die Datenbank schreiben
-        $stmtUpdate = $db->prepare("
-            UPDATE timetable 
-            SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? 
-            WHERE train_id = ? AND station_id = ?
-        ");
-        $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $train_id, $station_id]);
+        // 4. Ist-Zeiten für den aktuellen Bahnhof berechnen
+        if ($am_gleis_flag) {
+            // Zug ist bereits am Gleis → nur Abfahrtszeit ändern, Ankunftszeit bleibt gleich!
+            $actual_arrival = null; // Nicht ändern
+            $actual_departure = addMinutes($timetable_entry['departure'], $delay);
+            write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$delay Min)");
+        } else {
+            // Zug kommt noch an → beide Zeiten ändern
+            $actual_arrival = addMinutes($timetable_entry['arrival'], $delay);
+            $actual_departure = addMinutes($timetable_entry['departure'], $delay);
+            write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$delay Min)");
+        }
+
+        // 5. In die Datenbank schreiben (mit Conditional Updates für NULL-Werte)
+        if ($am_gleis_flag) {
+            // Nur Abfahrt ändern (Ankunft bleibt unverändert)
+            $stmtUpdate = $db->prepare("
+                UPDATE timetable 
+                SET actual_departure = ?, track = ?, remarks = ? 
+                WHERE train_id = ? AND station_id = ?
+            ");
+            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $train_id, $station_id]);
+        } else {
+            // Beide ändern (normal)
+            $stmtUpdate = $db->prepare("
+                UPDATE timetable 
+                SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? 
+                WHERE train_id = ? AND station_id = ?
+            ");
+            $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $train_id, $station_id]);
+        }
         
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
 
-        // Trigger die Verspätungs-Kaskade für Nachfolgerzüge (netzwerkweit)
-        recalculateDelayCascade($db, $sts_zid, $delay);
+        // 1. Propagiere die Verspätung auf alle nachfolgenden Halte des GLEICHEN Zuges
+        propagateDelayForward($db, $train_id, $station_id, $ROUTES);
+        
+        // 2. Optional: Cascade für Nachfolgerzug (nur wenn successor_sts_zid existiert)
+        // Das werden wir separat aktivieren wenn nötig
+        // recalculateDelayCascade($db, $sts_zid, $delay);
 
-        // 6. Audit-Log schreiben
+        // 6. Audit-Log schreiben (mit echtem Error-Handling)
         try {
             $sts_user = $_POST['sts_user'] ?? $input_data['sts_user'] ?? '';
             $sts_sim = $_POST['sts_sim'] ?? $input_data['sts_sim'] ?? '';
             $log_username = (!empty($sts_user) && !empty($sts_sim)) ? "$sts_user ($sts_sim)" : "STS-Plugin";
 
             $stmtLog = $db->prepare("INSERT INTO audit_log (train_number, username, timestamp) VALUES (?, ?, ?)");
-            $stmtLog->execute([$train_num, $log_username, date('Y-m-d H:i:s')]);
-        } catch (Exception $logEx) {}
+            $result = $stmtLog->execute([$train_num, $log_username, date('Y-m-d H:i:s')]);
+            
+            if ($result) {
+                write_log("✓ Audit-Log geschrieben: $train_num von $log_username");
+            } else {
+                write_log("✗ FEHLER beim Schreiben des Audit-Logs für Zug $train_num");
+            }
+        } catch (Exception $logEx) {
+            write_log("✗ EXCEPTION beim Audit-Log: " . $logEx->getMessage());
+        }
 
         echo json_encode(['success' => true, 'message' => "Daten verarbeitet und Kaskade für Nachfolger berechnet."]);
         exit;
