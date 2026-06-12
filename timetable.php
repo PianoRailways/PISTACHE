@@ -523,12 +523,14 @@ if ($action === 'save_timetable') {
                         <th>Bahnhof</th>
                         <th>Gleis</th>
                         <th>Ankunft (Soll)</th>
-                        <th>Ist-Ankunft / Verspätung</th>
+                        <th>Ist-Ankunft</th>
+                        <th>Verspätung</th>
                         <th>Abfahrt (Soll)</th>
-                        <th>Ist-Abfahrt / Verspätung</th>
+                        <th>Ist-Abfahrt</th>
+                        <th>Verspätung</th>
                         <th>Flags</th>
                         <th>Bemerkung</th>
-                        <th></th>
+                        <th>clear</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -575,11 +577,13 @@ if ($action === 'save_timetable') {
                         <th>Gleis</th>
                         <th>Ankunft (Soll)</th>
                         <th>Ist-Ankunft</th>
+                        <th>Verspätung</th>
                         <th>Abfahrt (Soll)</th>
                         <th>Ist-Abfahrt</th>
+                        <th>Verspätung</th>
                         <th>Flags</th>
                         <th>Bemerkung</th>
-                        <th></th>
+                        <th>clear</th>
                     </tr>
                 </thead>
                 <tbody>
