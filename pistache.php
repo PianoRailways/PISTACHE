@@ -148,7 +148,12 @@ function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $s
     write_log("🔄 PROPAGATION (7% RESERVE): Starte für $logIdent ab Station $modified_station_id");
     
     // Lade ALLE Halte des Zuges (chronologisch)
-    $stmt = $db->prepare("SELECT id, station_id, arrival, departure, actual_arrival, actual_departure, flags FROM timetable WHERE train_id = ? ORDER BY id ASC");
+	$stmt = $db->prepare("
+		SELECT id, station_id, arrival, departure, actual_arrival, actual_departure, flags 
+		FROM timetable 
+		WHERE train_id = ? 
+		ORDER BY COALESCE(arrival, departure) ASC
+	");
     $stmt->execute([$train_id]);
     $all_stops = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
