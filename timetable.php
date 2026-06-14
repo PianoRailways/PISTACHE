@@ -166,13 +166,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if ($action === 'save_timetable') {
+if ($action === 'save_timetable') {
         $train_id = intval($_POST['train_id'] ?? 0);
         $data = $_POST['stations'] ?? [];
 
         $db->beginTransaction();
         try {
-// Bereite das Insert/Update und ein Delete-Statement vor
+            // Bereite das Insert/Update und ein Delete-Statement vor
             $stmtUpsert = $db->prepare("
                 INSERT INTO timetable (train_id, station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -189,16 +189,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtDelete = $db->prepare("DELETE FROM timetable WHERE train_id = ? AND station_id = ?");
 
             foreach ($data as $st_id => $fields) {
-                // Prüfen, ob die Zeile komplett leer gecleart wurde
+                // Prüfen, ob die Zeile komplett leer gecleart/gelöscht wurde
                 $isEmpty = empty($fields['arrival']) && empty($fields['departure']) && empty($fields['track']) && 
                            empty($fields['actual_arrival']) && empty($fields['actual_departure']) && 
                            empty($fields['flags']) && empty($fields['remarks']);
 
                 if ($isEmpty) {
-                    // WICHTIG: Wenn alles leer ist, löschen wir den alten Eintrag aus der Datenbank!
                     $stmtDelete->execute([$train_id, $st_id]);
                 } else {
-                    // Wenn mindestens ein Feld Daten enthält, wird gespeichert/aktualisiert
                     $flags = $fields['flags'] ?? '';
                     $departureSoll = $fields['departure'] ?? '';
                     $departureIst = $fields['actual_departure'] ?? '';
@@ -222,13 +220,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            // Audit-Log schreiben
-            $stmtTrain = $db->prepare("SELECT train_number, successor_sts_zid FROM trains WHERE id = ?");
+            // Stammdaten des Zuges laden
+            $stmtTrain = $db->prepare("SELECT train_number, successor_sts_zid, sts_zid, route_id FROM trains WHERE id = ?");
             $stmtTrain->execute([$train_id]);
             $trainData = $stmtTrain->fetch(PDO::FETCH_ASSOC);
-            $trainNum = $trainData['train_number'];
-            $successorStsZid = $trainData['successor_sts_zid'];
+            
+            $trainNum = $trainData['train_number'] ?? '';
+            $successorStsZid = $trainData['successor_sts_zid'] ?? '';
+            $current_sts_zid = $trainData['sts_zid'] ?? '';
+            $route_id = $trainData['route_id'] ?? '';
 
+            // Audit-Log schreiben
             $username = $_COOKIE['username'] ?? 'Unbekannt';
             if (trim($username) === '') { $username = 'Unbekannt'; }
             $localTimestamp = date('Y-m-d H:i:s');
@@ -236,55 +238,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtLog = $db->prepare("INSERT INTO audit_log (train_number, username, timestamp) VALUES (?, ?, ?)");
             $stmtLog->execute([$trainNum, $username, $localTimestamp]);
 
-            // Verspätungspropagierung (unverändert)
-            if (!empty($successorStsZid)) {
-                $stmtSuccessor = $db->prepare("SELECT id FROM trains WHERE sts_zid = ?");
-                $stmtSuccessor->execute([$successorStsZid]);
-                $successorTrain = $stmtSuccessor->fetch(PDO::FETCH_ASSOC);
-                
-                if ($successorTrain) {
-                    $successorTrainId = $successorTrain['id'];
-                    
-                    $stmtDelay = $db->prepare("
-                        SELECT 
-                            AVG(
-                                CAST(
-                                    CASE 
-                                        WHEN actual_departure != '' AND departure != '' THEN
-                                            (CAST(substr(actual_departure, 1, 2) as INTEGER) * 60 + CAST(substr(actual_departure, 4, 2) as INTEGER)) -
-                                            (CAST(substr(departure, 1, 2) as INTEGER) * 60 + CAST(substr(departure, 4, 2) as INTEGER))
-                                        ELSE 0
-                                    END AS INTEGER
-                                )
-                            ) as avg_delay
-                        FROM timetable 
-                        WHERE train_id = ? AND actual_departure != ''
+            // --- INTELLIGENTE VERSPÄTUNGSPROPAGIERUNG & KASKADE ---
+
+            // Ersten Halt des Zuges ermitteln, um die Berechnung von vorne zu starten
+            // Wir sortieren nach Ankunft/Abfahrt, um auch im freien Editor chronologisch zu bleiben
+            $stmtFirst = $db->prepare("
+                SELECT station_id FROM timetable 
+                WHERE train_id = ? 
+                ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC 
+                LIMIT 1
+            ");
+            $stmtFirst->execute([$train_id]);
+            $first_station_id = $stmtFirst->fetchColumn();
+
+            if ($first_station_id) {
+                // Dynamische Konfiguration für den Berechnungsalgorithmus bestimmen
+                $current_config = $routes_config ?? $routesConfig ?? $ROUTES ?? [];
+
+                // FALLBACK FÜR FREIEN EDITOR: Wenn die Route 'free' ist, existiert sie nicht in der Config.
+                // Wir bauen uns hier temporär ein virtuelles Streckenband aus den vorhandenen Stationen.
+                if ($route_id === 'free' || !isset($current_config[$route_id])) {
+                    $stmtAllStops = $db->prepare("
+                        SELECT station_id FROM timetable 
+                        WHERE train_id = ? 
+                        ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC
                     ");
-                    $stmtDelay->execute([$train_id]);
-                    $delayData = $stmtDelay->fetch(PDO::FETCH_ASSOC);
-                    $avgDelay = intval($delayData['avg_delay'] ?? 0);
+                    $stmtAllStops->execute([$train_id]);
+                    $virtualStations = [];
                     
-                    if ($avgDelay != 0) {
-                        $stmtUpdateSuccessor = $db->prepare("
-                            UPDATE timetable 
-                            SET 
-                                actual_arrival = CASE 
-                                    WHEN arrival != '' THEN printf('%02d:%02d', 
-                                        (CAST(substr(arrival, 1, 2) as INTEGER) * 60 + CAST(substr(arrival, 4, 2) as INTEGER) + ?) / 60,
-                                        (CAST(substr(arrival, 1, 2) as INTEGER) * 60 + CAST(substr(arrival, 4, 2) as INTEGER) + ?) % 60
-                                    )
-                                    ELSE ''
-                                END,
-                                actual_departure = CASE 
-                                    WHEN departure != '' THEN printf('%02d:%02d',
-                                        (CAST(substr(departure, 1, 2) as INTEGER) * 60 + CAST(substr(departure, 4, 2) as INTEGER) + ?) / 60,
-                                        (CAST(substr(departure, 1, 2) as INTEGER) * 60 + CAST(substr(departure, 4, 2) as INTEGER) + ?) % 60
-                                    )
-                                    ELSE ''
-                                END
-                            WHERE train_id = ?
-                        ");
-                        $stmtUpdateSuccessor->execute([$avgDelay, $avgDelay, $avgDelay, $avgDelay, $successorTrainId]);
+                    // Wir lesen alle Stationen dieses freien Zuges aus
+                    while ($stId = $stmtAllStops->fetchColumn()) {
+                        $virtualStations[] = ['id' => $stId];
+                    }
+                    
+                    // Injiziere die temporäre Route in den Konfigurations-Pool
+                    $route_id = ($route_id === 'free') ? 'free_temp_route' : $route_id;
+                    $current_config[$route_id] = ['stations' => $virtualStations];
+                    
+                    // Update der temporären Route im Objekt, falls die Funktion die route_id aus der DB nachlädt
+                    $db->prepare("UPDATE trains SET route_id = ? WHERE id = ?")->execute([$route_id, $train_id]);
+                }
+
+                // Gesamte Fahrt des Zuges durchrechnen (Quelle 'M' für Manueller Editor)
+                if (function_exists('propagateDelayForward')) {
+                    propagateDelayForward($db, $train_id, $first_station_id, $current_config, 'M');
+                }
+
+                // Wenn wir für den freien Editor die ID temporär verbogen haben, stellen wir sie jetzt unbemerkt zurück
+                if ($route_id === 'free_temp_route') {
+                    $db->prepare("UPDATE trains SET route_id = 'free' WHERE id = ?")->execute([$train_id]);
+                }
+            }
+
+            // 2. Kaskade für verkettete Nachfolgezüge anstoßen
+            if (!empty($current_sts_zid) && function_exists('recalculateDelayCascade')) {
+                // Die neu berechnete Endverspätung an der letzten Betriebsstelle holen
+                $stmtLastStop = $db->prepare("
+                    SELECT departure, arrival, actual_departure, actual_arrival FROM timetable 
+                    WHERE train_id = ? 
+                    ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, id DESC 
+                    LIMIT 1
+                ");
+                $stmtLastStop->execute([$train_id]);
+                $last_stop = $stmtLastStop->fetch(PDO::FETCH_ASSOC);
+
+                if ($last_stop) {
+                    // Verwende eine sichere Inline-Konvertierung, falls timeToMinutes() im Scope fehlt
+                    $toMin = function($tStr) {
+                        if (empty($tStr)) return 0;
+                        $p = explode(':', $tStr);
+                        return (count($p) >= 2) ? (intval($p[0]) * 60 + intval($p[1])) : 0;
+                    };
+
+                    $soll_time = !empty($last_stop['departure']) ? $toMin($last_stop['departure']) : $toMin($last_stop['arrival']);
+                    $act_time = !empty($last_stop['actual_departure']) ? $toMin($last_stop['actual_departure']) : $toMin($last_stop['actual_arrival']);
+                    
+                    if ($soll_time > 0 && $act_time > 0) {
+                        $final_delay = $act_time - $soll_time;
+                        if ($final_delay > 0) {
+                            recalculateDelayCascade($db, $current_sts_zid, $final_delay);
+                        }
                     }
                 }
             }
@@ -495,7 +528,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th>Ist-Abfahrt / Verspätung</th>
                         <th>Flags</th>
                         <th>Bemerkung</th>
-                        <th></th>
+                        <th>clear</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -538,19 +571,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <table id="free_editor_table">
                 <thead>
                     <tr>
-                        <th>Bahnhof</th>
-                        <th>Gleis</th>
-                        <th>Ankunft (Soll)</th>
-                        <th>Ist-Ankunft</th>
-                        <th>Abfahrt (Soll)</th>
-                        <th>Ist-Abfahrt</th>
-                        <th>Flags</th>
-                        <th>Bemerkung</th>
-                        <th></th>
+                        <th>Bahnhof</th><th>Gl.</th>
+                        <th>Ank (Soll)</th><th>Ist</th><th>Versp.</th>
+                        <th>Abf (Soll)</th><th>Ist</th><th>Versp.</th>
+                        <th>Flags</th><th>Bemerkung</th><th></th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
             <div style="margin-top: 15px; display: flex; gap: 10px;">
                 <button type="submit">Fahrplan speichern</button>
@@ -795,17 +822,22 @@ function renderFreeEditorTable() {
         tr.draggable = true;
         tr.style.cursor = 'move';
         
-        // WICHTIG: Name von "free_stations" zu "stations" geändert, damit PHP es speichert!
+        // Innerhalb von renderFreeEditorTable()
         tr.innerHTML = `
-            <td style="padding: 5px;"><strong class="drag-handle">☰</strong> ${st.name} (${st.abbr})</td>
-            <td><input type="text" name="stations[${st.id}][track]" value="${st.track}" size="3"></td>
-            <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}"></td>
-            <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}"></td>
-            <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}"></td>
-            <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}"></td>
-            <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" size="5" placeholder="X(Znr)"></td>
-            <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" size="10"></td>
-            <td><button type="button" style="background-color: #d9534f; color: white; padding: 4px 8px; border:none; border-radius:3px; cursor:pointer;" 
+            <td style="padding: 5px; width: 200px;"><strong class="drag-handle">☰</strong> ${st.name} (${st.abbr})</td>
+            <td style="width: 50px;"><input type="text" name="stations[${st.id}][track]" value="${st.track}" style="width: 40px;"></td>
+            
+            <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            <td><input type="number" id="delay_arr_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'arr', 'delay')"></td>
+            
+            <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            <td><input type="number" id="delay_dep_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'dep', 'delay')"></td>
+            
+            <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" style="width: 80px;" placeholder="X(Znr)"></td>
+            <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" style="width: 100px;"></td>
+            <td><button type="button" style="background-color: #d9534f; color: white; border:none; padding: 4px 8px; cursor:pointer;" 
                         onclick="removeStationFromFreeEditor('${st.id}')">Entf</button></td>
         `;
 
