@@ -197,9 +197,9 @@ while ($row = $incidents_res->fetchArray(SQLITE3_ASSOC)) {
             <div>
                 <label for="type">Meldungstyp:</label>
                 <select id="type" name="type">
+                    <option value="disruption">Störung (Rot)</option>
                     <option value="info">Vorinformation (Blau)</option>
                     <option value="construction">Bauarbeiten (Orange)</option>
-                    <option value="disruption">Störung (Rot)</option>
                 </select>
             </div>
         </div>
@@ -225,10 +225,10 @@ while ($row = $incidents_res->fetchArray(SQLITE3_ASSOC)) {
         </select>
 
         <label for="reason">Grund / Ursache:</label>
-        <input type="text" id="reason" name="reason" required>
+        <input type="text" id="reason" name="reason" required placeholder="z.B. Enten in Gleisnähe">
 
         <label for="impact">Auswirkungen / Folgeinfos (optional):</label>
-        <input type="text" id="impact" name="impact" placeholder="z.B. Es ist noch mit Folgeverspätungen zu rechnen.">
+        <input type="text" id="impact" name="impact" placeholder="z.B. Es ist mit Verspätungen zu rechnen.">
 
         <div class="row">
             <div>

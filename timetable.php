@@ -52,11 +52,11 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
     UNIQUE(train_id, station_id)
 )");
-
+//Diskri
 function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr, $actualDepartureStr) {
     if (empty($flags)) return $actualDepartureStr;
 
-    if (!preg_match('/^(X|V|C[4-7]?)\((\d+)\)/i', trim($flags), $matches)) {
+    if (!preg_match('/^(X|V|C(?:10|[1-9])?)\((\d+)\)/i', trim($flags), $matches)) {
         return $actualDepartureStr; 
     }
 
@@ -64,9 +64,11 @@ function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr
     $conflictTrainNum = $matches[2];
 
     $buffer = 0;
-    if ($type === 'V')  $buffer = 2;
-    if ($type === 'C')  $buffer = 3;
-    if (preg_match('/^C([4-7])$/', $type, $cMatches)) {
+    if ($type === 'V') {
+        $buffer = 2;
+    } elseif ($type === 'C' || preg_match('/^C([1-3])$/', $type)) {
+        $buffer = 3;
+    } elseif (preg_match('/^C([4-7])$/', $type, $cMatches)) {
         $buffer = intval($cMatches[1]);
     }
 
@@ -559,6 +561,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <canvas id="graphCanvas" width="1200" height="800"></canvas>
     </div>
+
+    <!-- Keyboard Shortcuts Legende -->
+    <div id="keyboard_legend" style="position: fixed; bottom: 20px; right: 20px; background: rgba(30, 30, 30, 0.95); color: #fff; padding: 12px 16px; border-radius: 6px; font-size: 12px; font-family: monospace; border: 1px solid #555; z-index: 9999; line-height: 1.6;">
+        <div style="font-weight: bold; margin-bottom: 6px; border-bottom: 1px solid #666; padding-bottom: 6px;">Tastenkombinationen:</div>
+        <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">R</kbd> Route suchen</div>
+        <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">T</kbd> Zug suchen</div>
+        <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">F</kbd> Freier Editor</div>
+        <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Shift+F</kbd> Zu Flags</div>
+        <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Esc</kbd> Schliessen</div>
+    </div>
 </div>
 
 <script src="app.js"></script>
@@ -607,6 +619,96 @@ function filterRoutes() {
         select.value = firstVisibleOption.value;
         switchRoute(); 
     }
+}
+
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', (e) => {
+    // Nicht triggern wenn man in Textfeldern tippt (ausser Escape)
+    const isInInput = document.activeElement.tagName === 'INPUT' || 
+                      document.activeElement.tagName === 'TEXTAREA' ||
+                      document.activeElement.tagName === 'SELECT';
+    
+    const key = e.key.toLowerCase();
+    
+    // R - Route Filter fokussieren
+    if (key === 'r' && !isInInput) {
+        e.preventDefault();
+        document.getElementById('route_filter').focus();
+        document.getElementById('route_filter').select();
+    }
+    
+    // T - Zug-Nummer fokussieren
+    if (key === 't' && !isInInput) {
+        e.preventDefault();
+        document.getElementById('train_number').focus();
+        document.getElementById('train_number').select();
+    }
+    
+    // F - Freier Editor öffnen (nur wenn kein Input aktiv)
+    if (key === 'f' && !isInInput && !e.shiftKey) {
+        e.preventDefault();
+        activateFreeEditor();
+    }
+    
+    // Shift+F - Zu Flags springen
+    if (key === 'f' && e.shiftKey) {
+        e.preventDefault();
+        jumpToFlags();
+    }
+    
+    // Escape - Editor/Dialog schliessen
+    if (key === 'escape') {
+        e.preventDefault();
+        const editorPanel = document.getElementById('editor_panel');
+        const freeEditorPanel = document.getElementById('free_editor_panel');
+        
+        if (!editorPanel.classList.contains('hidden')) {
+            closeEditor();
+        } else if (!freeEditorPanel.classList.contains('hidden')) {
+            closeFreeEditor();
+        }
+    }
+});
+
+// Hilfsfunktion: Zu Flags springen
+function jumpToFlags() {
+    const editorPanel = document.getElementById('editor_panel');
+    const freeEditorPanel = document.getElementById('free_editor_panel');
+    
+    let firstFlagInput = null;
+    
+    // Normale Editor-Tabelle
+    if (!editorPanel.classList.contains('hidden')) {
+        firstFlagInput = editorPanel.querySelector('#editor_table input[name*="flags"]');
+    }
+    
+    // Freier Editor-Tabelle
+    if (!freeEditorPanel.classList.contains('hidden')) {
+        firstFlagInput = freeEditorPanel.querySelector('#free_editor_table input[name*="flags"]');
+    }
+    
+    if (firstFlagInput) {
+        firstFlagInput.focus();
+        firstFlagInput.select();
+        // Scrolle zum Input
+        firstFlagInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// Overwrite: activateFreeEditor - mit sofortigem Fokus auf Zugnummerfeld
+const originalActivateFreeEditor = activateFreeEditor;
+if (originalActivateFreeEditor) {
+    activateFreeEditor = function() {
+        originalActivateFreeEditor();
+        // Nach dem Öffnen sofort das Zugnummerfeld fokussieren
+        setTimeout(() => {
+            const trainNumberField = document.getElementById('free_train_number');
+            if (trainNumberField) {
+                trainNumberField.focus();
+                trainNumberField.select();
+            }
+        }, 50);
+    };
 }
 </script>
 </body>

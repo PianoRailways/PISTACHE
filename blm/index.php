@@ -39,20 +39,33 @@ if ($time_filter === 'custom' && !empty($start_filter) && !empty($end_filter)) {
 }
 
 $results = $stmt->execute();
+
+// weils eine Vorwärtsschleife (Forward-Only) bei SQLite3 ist, sammeln wir die Ergebnisse 
+// zuerst in ein Array, um die Anzahl vorab für den <title> bestimmen zu können.
+$rows = [];
+$disturbance_count = 0;
+
+while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
+    $rows[] = $row;
+    // Zähle nur relevante, aktive Einschränkungen für den Tab-Badge
+    if ($row['type'] === 'disruption' || $row['type'] === 'construction') {
+        $disturbance_count++;
+    }
+}
+$has_entries = !empty($rows);
 ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-	<meta http-equiv="refresh" content="60">
-    <title>RCS Betriebslagemonitor</title>
+    <meta http-equiv="refresh" content="60">
+    <title><?php echo $disturbance_count > 0 ? "({$disturbance_count}) " : ""; ?>RCS Betriebslagemonitor</title>
+    <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
     <style>
-        body { font-family: Helvetica Neue, sans-serif; background: #e6e6e6; margin: 0; padding: 20px; color: #fff; }
         body { margin: 20px; background: #0f172a; color: #f8fafc; font-family: sans-serif; }
         
-        /* Container für die Ladeleiste */
         .countdown-container {
-            max-width: 930px; /* Filter-Panel Breite (900px + 2x15px Padding) */
+            max-width: 930px;
             margin: 0 auto;
             height: 4px;
             background: #222;
@@ -61,7 +74,6 @@ $results = $stmt->execute();
             overflow: hidden;
         }
 
-        /* Der eigentliche rote Animationsbalken */
         .countdown-bar {
             height: 100%;
             background: #eb0000;
@@ -69,59 +81,53 @@ $results = $stmt->execute();
             animation: countdown 60s linear forwards;
         }
 
-        /* Animations-Profil: Von 100% Breite auf 0% */
         @keyframes countdown {
             from { width: 100%; }
             to { width: 0%; }
         }
-
-        /* Filter-Panel leicht angepasst (obere Ecken abgerundet, damit es mit dem Balken abschliesst) */
         
-/* Der fixierte Footer-Container */
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #222222; /* Dunkler Hintergrund passend zum Filter-Panel */
-    border-top: 2px solid #eb0000; /* Rote Trennlinie im SBB-Stil */
-    padding: 15px 0;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 9999; /* Stellt sicher, dass der Footer über allen Störungsmeldungen liegt */
-}
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #222222;
+            border-top: 2px solid #eb0000;
+            padding: 15px 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+        }
 
-/* Inhalt im Footer */
-.footer-panel {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column; /* Ändert die Ausrichtung auf vertikal */
-    align-items: center;    /* Zentriert den Inhalt weiterhin */
-    gap: 5px;              /* Abstand zwischen den beiden Zeilen */
-}
+        .footer-panel {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
 
-.footer-panel p {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-}
+        .footer-panel p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+        }
 
-/* Link-Styling für den Wechsel zur report.php */
-.footer-panel a {
-    color: #ffffff;
-    text-decoration: none;
-    background: #eb0000;
-    padding: 6px 15px;
-    border-radius: 3px;
-    margin-left: 10px;
-    transition: background 0.2s ease;
-}
+        .footer-panel a {
+            color: #ffffff;
+            text-decoration: none;
+            background: #eb0000;
+            padding: 6px 15px;
+            border-radius: 3px;
+            margin-left: 10px;
+            transition: background 0.2s ease;
+        }
 
-.footer-panel a:hover {
-    background: #c50000;
-}
+        .footer-panel a:hover {
+            background: #c50000;
+        }
 		
         .filter-panel { background: #1e293b; padding: 15px; margin-bottom: 20px; border-radius: 4px; display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
         .filter-panel label { font-size: 12px; font-weight: bold; display: block; margin-bottom: 5px; color: #fff; }
@@ -136,7 +142,6 @@ footer {
         
         .monitor-body { padding: 15px 20px 25px 20px; position: relative; }
         
-        /* 'resolved' nutzt die gleichen blauen CSS-Eigenschaften wie 'info' */
         .type-info, .type-resolved { background: #1a2a6c; }
         .type-construction { background: #d96b00; }
         .type-disruption { background: #d30000; }
@@ -157,8 +162,7 @@ footer {
 
         .no-data { color: #333; text-align: center; padding: 20px; font-weight: normal; }
     </style>
-	<script>
-        // Präziser Reload nach exakt 60 Sekunden, synchron zur CSS-Animation
+    <script>
         setTimeout(function() {
             window.location.reload();
         }, 60000);
@@ -211,22 +215,15 @@ footer {
 </div>
 
 <?php 
-// ==========================================
-// DEINE INFO-TEXTE FÜR DIE DEFAULT-PAGE
-// ==========================================
 $fun_facts = [
     "Der Gotthard-Basistunnel ist mit 57 Kilometern der längste Eisenbahntunnel der Welt.",
     "Der Taktfahrplan sorgt in der Schweiz seit 1982 für lückenlose Anschlüsse.",
-	"Im StellwerkSim gibt es über 100 Schweizer Stellwerke.",
+    "Im StellwerkSim gibt es über 100 Schweizer Stellwerke.",
 ];
 
-// Zufälligen Text auswählen
 $random_fact = $fun_facts[array_rand($fun_facts)];
 
-$has_entries = false;
-while ($row = $results->fetchArray(SQLITE3_ASSOC)): 
-    $has_entries = true;
-    
+foreach ($rows as $row): 
     $is_resolved = ($row['type'] === 'resolved');
     
     if ($is_resolved) {
@@ -285,7 +282,7 @@ while ($row = $results->fetchArray(SQLITE3_ASSOC)):
     </div>
 </div>
 
-<?php endwhile; ?>
+<?php endforeach; ?>
 
 
 <?php if (!$has_entries): ?>
@@ -318,6 +315,45 @@ while ($row = $results->fetchArray(SQLITE3_ASSOC)):
         </div>
     </div>
 <?php endif; ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const count = <?php echo $disturbance_count; ?>;
+    
+    if (count > 0) {
+        const favicon = document.getElementById('favicon');
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+
+        // Basis-Quadrat für das Favicon zeichnen
+        ctx.fillStyle = '#1e293b'; 
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Text-Hintergrund "RCS"
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillText('RCS', 4, 20);
+
+        // Roter Alarmkreis oben rechts
+        ctx.beginPath();
+        ctx.arc(24, 8, 8, 0, 2 * Math.PI);
+        ctx.fillStyle = '#eb0000';
+        ctx.fill();
+
+        // Zahl in den Kreis schreiben
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(count > 9 ? '9+' : count, 24, 8);
+
+        // Favicon austauschen
+        favicon.href = canvas.toDataURL('image/png');
+    }
+});
+</script>
 
 </body>
 <footer>
