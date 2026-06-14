@@ -864,6 +864,7 @@ $ROUTES = [
             ['id' => 'RO', 'name' => 'Rodi-Fiesso', 'abbr' => 'RO', 'km' => 97.84],
             ['id' => 'PARD', 'name' => 'Pardorea', 'abbr' => 'PARD', 'km' => 101.93],
             ['id' => 'FA', 'name' => 'Faido', 'abbr' => 'FA', 'km' => 106],
+            ['id' => 'LAV', 'name' => 'Lavorgo', 'abbr' => 'LAV', 'km' => 112.6],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
             ['id' => 'OS', 'name' => 'Osogna-Cresciano', 'abbr' => 'OS', 'km' => 137.96],
@@ -893,6 +894,7 @@ $ROUTES = [
             ['id' => 'RO', 'name' => 'Rodi-Fiesso', 'abbr' => 'RO', 'km' => 97.84],
             ['id' => 'PARD', 'name' => 'Pardorea', 'abbr' => 'PARD', 'km' => 101.93],
             ['id' => 'FA', 'name' => 'Faido', 'abbr' => 'FA', 'km' => 106],
+            ['id' => 'LAV', 'name' => 'Lavorgo', 'abbr' => 'LAV', 'km' => 112.6],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
         ]
