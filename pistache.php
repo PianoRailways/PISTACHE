@@ -134,7 +134,7 @@ function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_d
 
 // =========================================================================
 // 7%-RESERVE-PROPAGATION MIT STANDZEIT-BERÜCKSICHTIGUNG
-// (Analog zu JavaScript propagateTravelTimeWithReserve() im Free Editor)
+// JEDESMAL NEU BERECHNEN - AUSSER BEI HALTE MIT "!"
 // =========================================================================
 function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $source_tag = 'P') {
     global $write_log;
@@ -186,6 +186,12 @@ function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $s
         // Skip wenn keine Zeiten
         if (empty($sollArrStr) && empty($sollDepStr)) continue;
         
+        // 🔒 SCHUTZ: Wenn dieser Halt mit "!" geschützt ist, stoppt Propagation hier
+        if (isHaltProtected($flags)) {
+            write_log("🔒 GESCHÜTZT: Halt $stId mit ! in Flags → wird nicht berechnet, Propagation stoppt");
+            break;
+        }
+        
         $sollArrMin = timeToMinutes($sollArrStr);
         $sollDepMin = timeToMinutes($sollDepStr);
         
@@ -211,8 +217,9 @@ function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $s
             $standzeit = $sollDepMin - $sollArrMin;
         }
         
-        // IST-Abfahrt berechnen
-        if ($istDepMin === null && $i > 0) {
+        // 🔧 BERECHNE IST-ABFAHRT IMMER NEU (auch wenn bereits Werte vorhanden sind!)
+        // Das ist der Key-Change: Nicht nur wenn $istDepMin === null, sondern IMMER
+        if ($i > 0) {
             $prevStop = $all_stops[$i - 1];
             $prevSollDepStr = $prevStop['departure'];
             $prevSollDepMin = timeToMinutes($prevSollDepStr);
@@ -249,7 +256,7 @@ function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $s
             $istDepMin = $sollDepMin + $adjusted_delay;
         }
         
-        // In DB schreiben
+        // 💾 IN DB SCHREIBEN - IMMER (überschreibt auch bereits vorhandene Werte)
         $actualArr = ($sollArrMin !== null) ? minutesToTime($istArrMin) : null;
         $actualDep = ($sollDepMin !== null) ? minutesToTime($istDepMin) : null;
         
@@ -261,7 +268,7 @@ function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $s
             $timetable_id
         ]);
         
-        write_log("   ✓ Halt $stId: Ank=$actualArr, Abf=$actualDep");
+        write_log("   ✓ Halt $stId: Ank=$actualArr, Abf=$actualDep (neu berechnet)");
     }
 }
 
@@ -452,7 +459,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
 
-        // 7%-RESERVE-PROPAGATION FÜR GANZE FAHRT
+        // 7%-RESERVE-PROPAGATION FÜR GANZE FAHRT (JEDESMAL NEU)
         propagateTravelTimeWithReserve($db, $train_id, $station_id);
         
         // Optional: Cascade für Nachfolgerzug
@@ -476,7 +483,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("✗ EXCEPTION beim Audit-Log: " . $logEx->getMessage());
         }
 
-        echo json_encode(['success' => true, 'message' => "Fahrt mit 7%-Reserve berechnet und propagiert."]);
+        echo json_encode(['success' => true, 'message' => "Fahrt mit 7%-Reserve neu berechnet und propagiert."]);
         exit;
     }
 
