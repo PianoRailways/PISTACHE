@@ -627,6 +627,31 @@ $ROUTES = [
 			['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 73.82],
         ]
     ],
+    'rheintal' => [
+        'id' => 'rheintal',
+        'name' => 'rheintal',
+        'stations' => [
+            ['id' => 'SA', 'name' => 'SA', 'abbr' => 'SA', 'km' => 0.17],
+            ['id' => 'TRUE', 'name' => 'TRUE', 'abbr' => 'TRUE', 'km' => 4.3],
+            ['id' => 'WEI', 'name' => 'WEI', 'abbr' => 'WEI', 'km' => 7.05],
+            ['id' => 'SEV', 'name' => 'SEV', 'abbr' => 'SEV', 'km' => 10.95],
+            ['id' => 'RAEF', 'name' => 'RAEF', 'abbr' => 'RAEF', 'km' => 13.76],
+            ['id' => 'BU', 'name' => 'BU', 'abbr' => 'BU', 'km' => 15.87],
+            ['id' => 'HAG', 'name' => 'HAG', 'abbr' => 'HAG', 'km' => 20.39],
+            ['id' => 'SAS', 'name' => 'SAS', 'abbr' => 'SAS', 'km' => 24.57],
+            ['id' => 'RTH', 'name' => 'RTH', 'abbr' => 'RTH', 'km' => 30.23],
+            ['id' => 'ORT', 'name' => 'ORT', 'abbr' => 'ORT', 'km' => 35.32],
+            ['id' => 'ALT', 'name' => 'ALT', 'abbr' => 'ALT', 'km' => 41.18],
+            ['id' => 'REB', 'name' => 'REB', 'abbr' => 'REB', 'km' => 44.29],
+            ['id' => 'HEBG', 'name' => 'HEBG', 'abbr' => 'HEBG', 'km' => 47.93],
+            ['id' => 'AUSG', 'name' => 'AUSG', 'abbr' => 'AUSG', 'km' => 51.05],
+            ['id' => 'SMG', 'name' => 'SMG', 'abbr' => 'SMG', 'km' => 53.82],
+            ['id' => 'RCK', 'name' => 'RCK', 'abbr' => 'RCK', 'km' => 57.83],
+            ['id' => 'STA', 'name' => 'STA', 'abbr' => 'STA', 'km' => 62.8],
+            ['id' => 'RS', 'name' => 'RS', 'abbr' => 'RS', 'km' => 65.05],
+            ['id' => 'RSST', 'name' => 'RSST', 'abbr' => 'RSST', 'km' => 66.27],
+        ]
+    ],
     'frick' => [
         'id' => 'frick',
         'name' => 'Bözberg',
