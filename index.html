@@ -37,7 +37,7 @@
         
         h1 { color: #f1f5f9; font-size: 24px; margin: 0; }
         label { color: #94a3b8; font-size: 14px; }
-        select, input[type="time"], button { 
+        select, input[type="time"], button, form { 
             background: #334155; 
             color: #fff; 
             border: 1px solid #475569; 
@@ -45,8 +45,19 @@
             border-radius: 4px; 
             font-size: 14px;
         }
-        button { cursor: pointer; background: #475569; font-weight: bold; }
-        button:hover { background: #64748b; }
+        button, form { cursor: pointer; background: #475569; font-weight: bold; }
+
+        .button-a a {
+            color: #ffffff;
+            text-decoration: none;
+            background: #eb0000;
+            padding: 6px 15px;
+            border-radius: 6px;
+            margin-left: 5px;
+            transition: background 0.2s ease;
+        }
+
+        button:hover, form:hover { background: #64748b; }
         canvas { background: #1e293b; border: 1px solid #475569; border-radius: 4px; display: block; }
         
         .hidden {
@@ -61,6 +72,7 @@
     <div class="left-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h1>Bildfahrplan manuelle Betriebslenkung</h1>
+			<div class="button-a"><a href="./blm">Zum&nbsp;Betriebslagemonitor</a></div>
             <div style="font-size: 14px; color: #94a3b8;">
                 Status: <span style="color: #10b981; font-weight: bold;">● LIVE</span> (Zuschauermodus)
             </div>
@@ -124,9 +136,9 @@
         </div>
     </div>
     
-    <div id="ticker_panel" class="hidden" style="flex: 0 0 300px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; margin-top: 44px;">
+	<div id="ticker_panel" class="hidden" style="flex: 0 0 300px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; margin-top: 44px; max-height: 850px; overflow: hidden;">
         <h2 style="color: #f1f5f9; font-size: 16px; margin: 0 0 15px 0; border-bottom: 1px solid #334155; padding-bottom: 10px;">Letzte Änderungen</h2>
-        <ul id="ticker_list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; overflow-y: auto; flex: 1; max-height: 820px;">
+        <ul id="ticker_list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; overflow-y: auto; flex: 1;">
         </ul>
     </div>
 </div>
