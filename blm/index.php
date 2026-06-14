@@ -96,7 +96,9 @@ footer {
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Ändert die Ausrichtung auf vertikal */
+    align-items: center;    /* Zentriert den Inhalt weiterhin */
+    gap: 5px;              /* Abstand zwischen den beiden Zeilen */
 }
 
 .footer-panel p {
@@ -319,9 +321,9 @@ while ($row = $results->fetchArray(SQLITE3_ASSOC)):
 
 </body>
 <footer>
-	<div class="footer-panel">
-		<p>Betriebslage anpassen oder neue Störung erfassen? <a href="./report">Hier klicken</a></p>
-		<p>StiTz-Nummer der Hotline: 7863</p>
-	</div>
+    <div class="footer-panel">
+        <p>Betriebslage anpassen oder neue Störung erfassen?<a href="./report">Hier klicken</a></p>
+        <p>StiTz-Nummer der Hotline: 7863</p>
+    </div>
 </footer>
 </html>
