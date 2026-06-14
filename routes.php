@@ -617,6 +617,30 @@ $ROUTES = [
             ['id' => 'RK', 'name' => 'Rotkreuz', 'abbr' => 'RK', 'km' => 39.39],
         ]
     ],
+'thalwil-arth-goldau' => [
+    'id' => 'thalwil-arth-goldau',
+    'name' => 'Thalwil - Zug - Arth-Goldau',
+    'stations' => [
+        ['id' => 'TW', 'name' => 'Thalwil', 'abbr' => 'TW', 'km' => 0],
+        ['id' => 'ORDD', 'name' => 'Oberrieden Dorf', 'abbr' => 'ORDD', 'km' => 2.43],
+        ['id' => 'HGO', 'name' => 'Horgen Oberdorf', 'abbr' => 'HGO', 'km' => 4.73],
+        ['id' => 'SBG', 'name' => 'Sihlbrugg', 'abbr' => 'SBG', 'km' => 7.83],
+        ['id' => 'LITT', 'name' => 'Litti', 'abbr' => 'LITT', 'km' => 11.95],
+        ['id' => 'BAA', 'name' => 'Baar', 'abbr' => 'BAA', 'km' => 14.52],
+        ['id' => 'BAAN', 'name' => 'Neufeld', 'abbr' => 'BAAN', 'km' => 15.51],
+        ['id' => 'BAAL', 'name' => 'Lindenpark', 'abbr' => 'BAAL', 'km' => 16.11],
+        ['id' => 'ZG', 'name' => 'Zug', 'abbr' => 'ZG', 'km' => 17.13],
+        ['id' => 'ZGPP', 'name' => 'Postplatz', 'abbr' => 'ZGPP', 'km' => 17.73],
+        ['id' => 'ZGCA', 'name' => 'Casino', 'abbr' => 'ZGCA', 'km' => 18.53],
+        ['id' => 'ZGFR', 'name' => 'Fridbach', 'abbr' => 'ZGFR', 'km' => 19.23],
+        ['id' => 'ZGO', 'name' => 'Oberwil', 'abbr' => 'ZGO', 'km' => 20.27],
+        ['id' => 'WCHN', 'name' => 'Walchwil Nord', 'abbr' => 'WCHN', 'km' => 24.63],
+        ['id' => 'WCHO', 'name' => 'Hörndli', 'abbr' => 'WCHO', 'km' => 25.13],
+        ['id' => 'WCHW', 'name' => 'Walchwil', 'abbr' => 'WCHW', 'km' => 26.58],
+        ['id' => 'GDMF', 'name' => 'Mühlefluh', 'abbr' => 'GDMF', 'km' => 31.68],
+        ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => 32.90],
+    ]
+],
     'glattalbahn' => [
         'id' => 'glattalbahn',
         'name' => 'Glattal (ZUE-HI)',
