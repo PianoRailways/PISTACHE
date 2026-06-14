@@ -52,11 +52,11 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
     UNIQUE(train_id, station_id)
 )");
-
+//Diskri
 function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr, $actualDepartureStr) {
     if (empty($flags)) return $actualDepartureStr;
 
-    if (!preg_match('/^(X|V|C[4-7]?)\((\d+)\)/i', trim($flags), $matches)) {
+    if (!preg_match('/^(X|V|C(?:10|[1-9])?)\((\d+)\)/i', trim($flags), $matches)) {
         return $actualDepartureStr; 
     }
 
@@ -64,9 +64,11 @@ function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr
     $conflictTrainNum = $matches[2];
 
     $buffer = 0;
-    if ($type === 'V')  $buffer = 2;
-    if ($type === 'C')  $buffer = 3;
-    if (preg_match('/^C([4-7])$/', $type, $cMatches)) {
+    if ($type === 'V') {
+        $buffer = 2;
+    } elseif ($type === 'C' || preg_match('/^C([1-3])$/', $type)) {
+        $buffer = 3;
+    } elseif (preg_match('/^C([4-7])$/', $type, $cMatches)) {
         $buffer = intval($cMatches[1]);
     }
 
