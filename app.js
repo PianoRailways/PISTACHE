@@ -357,29 +357,55 @@ async function renderGraph() {
         return paddingTop + ((minutes - startMin) / totalVisibleMinutes) * graphHeight;
     }
 
-    ctx.strokeStyle = '#e2e8f0';
+    // Raster: Stunden- und 5-Minuten-Linien
     ctx.lineWidth = 1;
     ctx.fillStyle = '#64748b';
     ctx.font = '10px sans-serif';
     
-    const startHour = Math.floor(startMin / 60);
-    const endHour = Math.ceil(endMin / 60);
+    // Runden auf das nächste 5-Minuten-Intervall im sichtbaren Bereich
+    const first5Min = Math.ceil(startMin / 5) * 5;
 
-    for (let h = startHour; h <= endHour; h++) {
-        const y = getY(h * 60);
+    for (let m = first5Min; m <= endMin; m += 5) {
+        const y = getY(m);
         if (y === null) continue;
 
+        // Unterscheidung zwischen voller Stunde (markant, durchgezogen) und 5-Minuten-Takt (fein, gestrichelt)
+        if (m % 60 === 0) {
+            ctx.strokeStyle = '#e2e8f0'; // Helles Grau für Stunden
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]); // Durchgezogene Linie für volle Stunden
+        } else {
+            // Sichtbares, aber dezentes Grau für Zwischenlinien im Darkmode angepasst
+            ctx.strokeStyle = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)') ? '#334155' : '#cbd5e1';
+            ctx.lineWidth = 0.75;
+            ctx.setLineDash([4, 4]); // Gestrichelte Linie für die 5-Minuten-Schritte
+        }
+
+        // Horizontale Linie auf der exakten Höhe zeichnen
         ctx.beginPath();
         ctx.moveTo(paddingLeft, y);
         ctx.lineTo(paddingLeft + graphWidth, y);
         ctx.stroke();
         
+        // Beschriftung formatieren
+        let timeString = '';
+        if (m % 60 === 0) {
+            timeString = `${Math.floor(m / 60)}:00`; // Volle Stunde, z.B. "12:00"
+        } else {
+            timeString = `:${String(m % 60).padStart(2, '0')}`; // Nur Minuten, z.B. ":05"
+        }
+
+        // Text links und rechts auf der exakten Höhe platzieren
         ctx.textAlign = 'right';
-        ctx.fillText(`${h}:00`, paddingLeft - 10, y + 4);
+        ctx.fillText(timeString, paddingLeft - 10, y + 4);
         ctx.textAlign = 'left';
-        ctx.fillText(`${h}:00`, paddingLeft + graphWidth + 10, y + 4);
+        ctx.fillText(timeString, paddingLeft + graphWidth + 10, y + 4);
     }
 
+    // Linienstil für die nachfolgenden Zeichnungen (Bahnhöfe, Züge, Zeitlinie) zurücksetzen
+    ctx.setLineDash([]);
+
+    // Raster: Bahnhofslinien
     stations.forEach((st) => {
         const x = getX(st.km);
         const isDarkMode = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)');
@@ -401,6 +427,7 @@ async function renderGraph() {
         ctx.fillText(`km ${st.km}`, x, paddingTop - 40);
     });
 
+    // Zuglinien zeichnen
     trains.forEach((train) => {
         const baseColor = getTrainColor(train.train_number, train.name);
         
@@ -480,9 +507,11 @@ async function renderGraph() {
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
 
+    // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
     (function drawCurrentTimeLine() {
         const now = new Date();
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
+        
         const offsetInput = document.getElementById('sts_offset');
         const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0; 
         
@@ -504,7 +533,7 @@ async function renderGraph() {
             if (y !== null) {
                 ctx.save();
                 ctx.beginPath();
-                ctx.strokeStyle = '#FFDE15';
+                ctx.strokeStyle = '#FFDE15'; 
                 ctx.lineWidth = 2;
                 ctx.setLineDash([6, 4]);
                 
@@ -522,7 +551,6 @@ async function renderGraph() {
                 const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
                 
                 ctx.fillText(timeString, paddingLeft - 10, y);
-                
                 ctx.restore();
             }
         }
