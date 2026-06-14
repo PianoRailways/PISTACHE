@@ -1036,9 +1036,27 @@ $ROUTES = [
             ['id' => 'LB', 'name' => 'Lenzburg', 'abbr' => 'LB', 'km' => 74.5],
         ]
     ],
+    'rootsee' => [
+        'id' => 'rootsee',
+        'name' => 'Ebikon – Rotkreuz – Arth-Goldau',
+        'stations' => [
+            ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => -66.74],
+            ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => -64.04],
+            ['id' => 'EBI', 'name' => 'Ebikon', 'abbr' => 'EBI', 'km' => -58.57],
+            ['id' => 'BURN', 'name' => 'Buchrain', 'abbr' => 'BURN', 'km' => -57.07],
+            ['id' => 'LBD', 'name' => 'Root D4', 'abbr' => 'LBD', 'km' => -55.26],
+            ['id' => 'GSK', 'name' => 'Gisikon-Root', 'abbr' => 'GSK', 'km' => -52.82],
+            ['id' => 'RK', 'name' => 'Rotkreuz', 'abbr' => 'RK', 'km' => -49],
+            ['id' => 'BRGL', 'name' => 'Brüglen', 'abbr' => 'BRGL', 'km' => -46.1],
+            ['id' => 'MKR', 'name' => 'Meierskappel-Risch', 'abbr' => 'MKR', 'km' => -45.1],
+            ['id' => 'IM', 'name' => 'Immensee', 'abbr' => 'IM', 'km' => -41.8],
+            ['id' => 'BRM', 'name' => 'Brunnmatt', 'abbr' => 'BRM', 'km' => -37.77],
+            ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => -33.2],
+        ]
+    ],
     'ebikon' => [
         'id' => 'ebikon',
-        'name' => 'Ebikon',
+        'name' => 'Luzern – Rotkreuz – Arth-Goldau',
         'stations' => [
             ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => -66.74],
             ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => -64.04],
