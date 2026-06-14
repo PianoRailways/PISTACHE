@@ -165,7 +165,7 @@ $ROUTES = [
             ['id' => 'OBBI', 'name' => 'Oberbipp', 'abbr' => 'OBBI', 'km' => 11.71],
             ['id' => 'OPIN', 'name' => 'Oberbipp Industrie', 'abbr' => 'OPIN', 'km' => 12.405],
             ['id' => 'BULI', 'name' => 'Buchli', 'abbr' => 'BULI', 'km' => 13.1],
-            ['id' => 'NB A', 'name' => 'Unbekannt', 'abbr' => 'NB A', 'km' => 14.54],
+            ['id' => 'NB A', 'name' => 'Niederbipp', 'abbr' => 'NB A', 'km' => 14.54],
             ['id' => 'NIIN A', 'name' => 'Niederbipp Industrie', 'abbr' => 'NIIN', 'km' => 15.5],
             ['id' => 'OEEN', 'name' => 'Oensingen', 'abbr' => 'OEEN', 'km' => 17],
         ]
@@ -579,6 +579,9 @@ $ROUTES = [
         'id' => 'Zugersee',
         'name' => 'Zugersee',
         'stations' => [
+            ['id' => 'BAA', 'name' => 'Baar', 'abbr' => 'BAA', 'km' => -2,61],
+            ['id' => 'BAAN', 'name' => 'Neufeld', 'abbr' => 'BAAN', 'km' => -1.62],
+            ['id' => 'BAAL', 'name' => 'Lindenpark', 'abbr' => 'BAAL', 'km' => -1.02],
             ['id' => 'ZG', 'name' => 'Zug', 'abbr' => 'ZG', 'km' => 0],
             ['id' => 'ZGPP', 'name' => 'Postplatz', 'abbr' => 'ZGPP', 'km' => 0.6],
             ['id' => 'ZGCA', 'name' => 'Casino', 'abbr' => 'ZGCA', 'km' => 1.4],
