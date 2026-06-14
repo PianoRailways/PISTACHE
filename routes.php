@@ -1020,6 +1020,22 @@ $ROUTES = [
             ['id' => 'WE', 'name' => 'Wettingen', 'abbr' => 'WE', 'km' => 91.6],
         ]
     ],
+    'nazeli' => [
+        'id' => 'nazeli-relevant',
+        'name' => 'Zofingen - Lenzburg (Nationalbahn)',
+        'stations' => [
+            ['id' => 'ZF', 'name' => 'Zofingen', 'abbr' => 'ZF', 'km' => 50.8],
+            ['id' => 'KGD', 'name' => 'Küngoldingen', 'abbr' => 'KGD', 'km' => 53.1],
+            ['id' => 'WAST', 'name' => 'Walterswil-Striegel', 'abbr' => 'WAST', 'km' => 55.7],
+            ['id' => 'SAF', 'name' => 'Safenwil', 'abbr' => 'SAF', 'km' => 57.4],
+            ['id' => 'KKO', 'name' => 'Kölliken Oberdorf', 'abbr' => 'KKO', 'km' => 60.1],
+            ['id' => 'KK', 'name' => 'Kölliken', 'abbr' => 'KK', 'km' => 61.7],
+            ['id' => 'OEF', 'name' => 'Oberentfelden', 'abbr' => 'OEF', 'km' => 64.7],
+            ['id' => 'SUHR', 'name' => 'Suhr', 'abbr' => 'SUHR', 'km' => 67.5],
+            ['id' => 'HU', 'name' => 'Hunzenschwil', 'abbr' => 'HU', 'km' => 71.0],
+            ['id' => 'LB', 'name' => 'Lenzburg', 'abbr' => 'LB', 'km' => 74.5],
+        ]
+    ],
     'ebikon' => [
         'id' => 'ebikon',
         'name' => 'Ebikon',
