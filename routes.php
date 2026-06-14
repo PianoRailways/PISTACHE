@@ -264,9 +264,9 @@ $ROUTES = [
         ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => 95.09],
     ]
 ],
-'entlebuch' => [
-    'id' => 'entlebuch',
-    'name' => 'Entlebuch',
+'langnau' => [
+    'id' => 'langnau',
+    'name' => 'Langnau',
     'stations' => [
         ['id' => 'GUE', 'name' => 'Gümligen', 'abbr' => 'GUE', 'km' => 7.69],
         ['id' => 'WB', 'name' => 'Worb SBB', 'abbr' => 'WB', 'km' => 12.99],
@@ -1020,7 +1020,7 @@ $ROUTES = [
             ['id' => 'WE', 'name' => 'Wettingen', 'abbr' => 'WE', 'km' => 91.6],
         ]
     ],
-    'nazeli' => [
+    'nazeli-rel' => [
         'id' => 'nazeli-relevant',
         'name' => 'Zofingen - Lenzburg (Nationalbahn)',
         'stations' => [
@@ -1034,32 +1034,6 @@ $ROUTES = [
             ['id' => 'SUHR', 'name' => 'Suhr', 'abbr' => 'SUHR', 'km' => 67.5],
             ['id' => 'HU', 'name' => 'Hunzenschwil', 'abbr' => 'HU', 'km' => 71.0],
             ['id' => 'LB', 'name' => 'Lenzburg', 'abbr' => 'LB', 'km' => 74.5],
-        ]
-    ],
-    'seetal' => [
-        'id' => 'seetal',
-        'name' => 'Seetal',
-        'stations' => [
-            ['id'=> 'EBR','name'=> 'Emmenbrücke', 'abbr' => 'EBR', 'km' => 0],
-            ['id'=> 'GSAG','name'=> 'Gersag', 'abbr' => 'GSAG', 'km' => 1.03],
-            ['id' => 'WAB', 'name' => 'Waldibrücke', 'abbr' => 'WAB', 'km' => 5.59],
-            ['id' => 'ESB', 'name' => 'Eschenbach', 'abbr' => 'ESB', 'km' => 8.51],
-            ['id' => 'BLL', 'name' => 'Ballwil', 'abbr' => 'BLL', 'km' => 10.99],
-            ['id' => 'HOSA', 'name' => 'Schönau', 'abbr' => 'HOSA', 'km' => 12.87],
-            ['id' => 'HO', 'name' => 'Hochdorf', 'abbr' => 'HO', 'km' => 13.71],
-            ['id' => 'BLGK', 'name' => 'Baldegg Kloster', 'abbr' => 'BLGK', 'km' => 15.38],
-            ['id' => 'BLG', 'name' => 'Baldegg', 'abbr' => 'BLG', 'km' => 15.93],
-            ['id' => 'GELF', 'name' => 'Gelfingen', 'abbr' => 'GELF', 'km' => 19.37],
-            ['id' => 'HIK', 'name' => 'Hitzkirch', 'abbr' => 'HIK', 'km' => 20.79],
-            ['id' => 'ESEE', 'name' => 'Ermensee', 'abbr' => 'ESEE', 'km' => 21.87],
-            ['id' => 'MO', 'name' => 'Mosen', 'abbr' => 'MO', 'km' => 24.14],
-            ['id' => 'BW', 'name' => 'Beinwil am See', 'abbr' => 'BW', 'km' => 27.2],
-            ['id' => 'BWL', 'name' => 'Boniswil', 'abbr' => 'BWL', 'km' => 29.52],
-            ['id' => 'BONI', 'name' => 'Boniswil', 'abbr' => 'BONI', 'km' => 33.08],
-            ['id' => 'HD', 'name' => 'Hallwil-Dürrenäsch', 'abbr' => 'HD', 'km' => 34.61],
-            ['id' => 'SE', 'name' => 'Seon', 'abbr' => 'SE', 'km' => 36.86],
-            ['id' => 'SENO', 'name' => 'Seon Nord', 'abbr' => 'SENO', 'km' => 37.65],
-            ['id'=> 'LB', 'name' => 'Lenburg', 'abbr' => 'LB', 'km '=> 42.12],
         ]
     ],
     'ebikon' => [
@@ -1667,6 +1641,32 @@ $ROUTES = [
             ['id' => 'BPW', 'name' => 'BPW', 'abbr' => 'BPW', 'km' => 547.2],
             ['id' => 'HNR', 'name' => 'HNR', 'abbr' => 'HNR', 'km' => 549.32],
             ['id' => 'MSE', 'name' => 'MSE', 'abbr' => 'MSE', 'km' => 550.6],
+        ]
+    ],
+    'seetal' => [
+        'id' => 'seetal',
+        'name' => 'Seetal',
+        'stations' => [
+            ['id'=> 'EBR', 'name'=> 'Emmenbrücke', 'abbr' => 'EBR', 'km' => 0],
+            ['id'=> 'GSAG', 'name'=> 'Gersag', 'abbr' => 'GSAG', 'km' => 1.03],
+            ['id' => 'WAB', 'name' => 'Waldibrücke', 'abbr' => 'WAB', 'km' => 5.59],
+            ['id' => 'ESB', 'name' => 'Eschenbach', 'abbr' => 'ESB', 'km' => 8.51],
+            ['id' => 'BLL', 'name' => 'Ballwil', 'abbr' => 'BLL', 'km' => 10.99],
+            ['id' => 'HOSA', 'name' => 'Schönau', 'abbr' => 'HOSA', 'km' => 12.87],
+            ['id' => 'HO', 'name' => 'Hochdorf', 'abbr' => 'HO', 'km' => 13.71],
+            ['id' => 'BLGK', 'name' => 'Baldegg Kloster', 'abbr' => 'BLGK', 'km' => 15.38],
+            ['id' => 'BLG', 'name' => 'Baldegg', 'abbr' => 'BLG', 'km' => 15.93],
+            ['id' => 'GELF', 'name' => 'Gelfingen', 'abbr' => 'GELF', 'km' => 19.37],
+            ['id' => 'HIK', 'name' => 'Hitzkirch', 'abbr' => 'HIK', 'km' => 20.79],
+            ['id' => 'ESEE', 'name' => 'Ermensee', 'abbr' => 'ESEE', 'km' => 21.87],
+            ['id' => 'MO', 'name' => 'Mosen', 'abbr' => 'MO', 'km' => 24.14],
+            ['id' => 'BW', 'name' => 'Beinwil am See', 'abbr' => 'BW', 'km' => 27.2],
+            ['id' => 'BWL', 'name' => 'Boniswil', 'abbr' => 'BWL', 'km' => 29.52],
+            ['id' => 'BONI', 'name' => 'Boniswil', 'abbr' => 'BONI', 'km' => 33.08],
+            ['id' => 'HD', 'name' => 'Hallwil-Dürrenäsch', 'abbr' => 'HD', 'km' => 34.61],
+            ['id' => 'SE', 'name' => 'Seon', 'abbr' => 'SE', 'km' => 36.86],
+            ['id' => 'SENO', 'name' => 'Seon Nord', 'abbr' => 'SENO', 'km' => 37.65],
+            ['id'=> 'LB', 'name' => 'Lenburg', 'abbr' => 'LB', 'km' => 42.12],
         ]
     ],
     'unterbruch' => [
