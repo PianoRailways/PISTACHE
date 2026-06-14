@@ -828,12 +828,12 @@ function renderFreeEditorTable() {
             <td style="width: 50px;"><input type="text" name="stations[${st.id}][track]" value="${st.track}" style="width: 40px;"></td>
             
             <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
-            <td><input type="number" id="delay_arr_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'arr', 'delay')"></td>
             <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            <td><input type="number" id="delay_arr_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'arr', 'delay')"></td>
             
             <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
-            <td><input type="number" id="delay_dep_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'dep', 'delay')"></td>
             <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            <td><input type="number" id="delay_dep_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'dep', 'delay')"></td>
             
             <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" style="width: 80px;" placeholder="X(Znr)"></td>
             <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" style="width: 100px;"></td>
