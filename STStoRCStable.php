@@ -194,9 +194,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $parts = explode(' ', $gleisSpalte, 2);
             $station_id = $parts[0];
             $track = $parts[1];
-        } elseif (preg_match('/^([A-Za-z]+)(\d+)$/', $gleisSpalte, $matches)) {
-            $station_id = $matches[1];
-            $track = $matches[2];
+        } elseif (preg_match('/^([A-Za-z]+)(\d+)([A-Za-z]?)$/', $gleisSpalte, $matches)) {
+            // $matches[2] ist die Zahl, $matches[3] ist das optionale Suffix (z.B. G)
+            $track = $matches[2] . $matches[3];
         }
 
         // SPALTEN 4, 5: Ankunft, Abfahrt
