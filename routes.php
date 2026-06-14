@@ -1881,6 +1881,28 @@ $ROUTES = [
             ['id'=> 'LB', 'name' => 'Lenburg', 'abbr' => 'LB', 'km' => 42.12],
         ]
     ],
+    'flums' => [
+        'id' => 'flums',
+        'name' => 'Flums',
+        'stations' => [
+            ['id' => 'ZB', 'name' => 'Ziegelbrücke', 'abbr' => 'ZB', 'km' => -33.6],
+            ['id' => 'WN', 'name' => 'Weesen', 'abbr' => 'WN', 'km' => -30.7],
+            ['id' => 'MH', 'name' => 'Mühlehorn', 'abbr' => 'MH', 'km' => -24.5],
+            ['id' => 'TIEF', 'name' => 'Tiefenwinkel', 'abbr' => 'TIEF', 'km' => -23.3],
+            ['id' => 'MG', 'name' => 'Murg', 'abbr' => 'MG', 'km' => -21.2],
+            ['id' => 'UNT', 'name' => 'Unterterzen', 'abbr' => 'UNT', 'km' => -18.1],
+            ['id' => 'MOLS', 'name' => 'Mols', 'abbr' => 'MOLS', 'km' => -16.4],
+            ['id' => 'WAL', 'name' => 'Walenstadt', 'abbr' => 'WAL', 'km' => -13.5],
+            ['id' => 'FMS', 'name' => 'Flums', 'abbr' => 'FMS', 'km' => -9.7],
+            ['id' => 'MELS', 'name' => 'Mels', 'abbr' => 'MELS', 'km' => -2.6],
+            ['id' => 'SA', 'name' => 'Sargans', 'abbr' => 'SA', 'km' => 0],
+            ['id' => 'BRAG', 'name' => 'Bad-Ragaz', 'abbr' => 'BRAG', 'km' => 5.74],
+            ['id' => 'MF', 'name' => 'Maienfeld', 'abbr' => 'MF', 'km' => 7.17],
+            ['id' => 'LQ', 'name' => 'Landquart', 'abbr' => 'LQ', 'km' => 12.32],
+            ['id' => 'ZIZS', 'name' => 'Zizers SBB', 'abbr' => 'ZIZS', 'km' => 16.26],
+            ['id' => 'CH', 'name' => 'Chur', 'abbr' => 'CH', 'km' => 25.72],
+        ]
+    ],
     'unterbruch' => [
         'id' => '999',
         'name' => '< ----------------------------------------- >',
