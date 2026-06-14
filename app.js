@@ -110,12 +110,10 @@ function buildEditorTable() {
     });
 }
 
-// NEU: Clear-Funktion für eine Zeile
 function clearRow(stationId) {
     const form = document.getElementById('timetable_form');
     if (!form) return;
 
-    // Alle Felder für diese Station clearen
     const fields = [
         `stations[${stationId}][track]`,
         `stations[${stationId}][arrival]`,
@@ -131,7 +129,6 @@ function clearRow(stationId) {
         if (field) field.value = '';
     });
 
-    // Auch die Delay-Felder clearen
     const delayArrField = document.getElementById(`delay_arr_${stationId}`);
     const delayDepField = document.getElementById(`delay_dep_${stationId}`);
     if (delayArrField) delayArrField.value = '';
@@ -144,7 +141,6 @@ async function loadTrain() {
     const trainNumberInput = document.getElementById('train_number').value.trim();
     if (!trainNumberInput) return;
     
-    // Im normalen Editor muss eine Route ausgewählt sein
     if (!currentRouteId) {
         alert('Bitte wähle eine Strecke aus oder nutze den "Freien Editor"');
         return;
@@ -163,14 +159,11 @@ async function loadTrain() {
             document.getElementById('current_train_id').value = data.train.id;
             document.getElementById('current_train_num').innerText = data.train.train_number;
             
-            // STS-Links setzen
             document.getElementById('sts_zid').value = data.train.sts_zid || '';
             document.getElementById('successor_sts_zid').value = data.train.successor_sts_zid || '';
             
-            // Editor-Tabelle aufbauen
             buildEditorTable();
             
-            // Tabellendaten mit Schleife befüllen
             if (data.timetable) {
                 Object.keys(data.timetable).forEach(stId => {
                     const info = data.timetable[stId];
@@ -242,7 +235,6 @@ async function saveTimetable(e) {
     
     if (data.success) {
         renderGraph();
-        // Schließt den Editor nach dem erfolgreichen Speichern
         document.getElementById('editor_panel').classList.add('hidden');
     } else {
         alert('Fehler beim Speichern: ' + (data.error || 'Unbekannter Fehler'));
@@ -267,34 +259,35 @@ function minutesToTime(totalMinutes) {
 }
 
 function recalcRow(stationId, type, trigger) {
-    const form = document.getElementById('timetable_form');
-    const stations = routesConfig[currentRouteId].stations;
+    const isFree = !document.getElementById('editor_panel').classList.contains('hidden') ? false : true;
+    const form = isFree ? document.getElementById('free_timetable_form') : document.getElementById('timetable_form');
+    
+    const stations = isFree ? freeEditorStations : (routesConfig[currentRouteId]?.stations || []);
     const currentIndex = stations.findIndex(s => s.id === stationId);
     if (currentIndex === -1) return;
 
-    // 1. Behandlung: Manuelle Änderung vs. Delay-Feld Änderung
+    const prefix = type === 'arr' ? 'arrival' : 'departure';
+    const istField = form.querySelector(`[name="stations[${stationId}][actual_${prefix}]"]`);
+    const sollField = form.querySelector(`[name="stations[${stationId}][${prefix}]"]`);
+    const delayField = document.getElementById(`delay_${type}_${stationId}`);
+    
     if (trigger === 'delay') {
-        const prefix = type === 'arr' ? 'arrival' : 'departure';
-        const istField = form.querySelector(`[name="stations[${stationId}][actual_${prefix}]"]`);
-        const sollField = form.querySelector(`[name="stations[${stationId}][${prefix}]"]`);
-        const delayField = document.getElementById(`delay_${type}_${stationId}`);
-        
         if (istField && sollField && delayField) {
-            istField.value = minutesToTime(timeToMinutes(sollField.value) + parseInt(delayField.value || 0, 10));
+            const sollMin = timeToMinutes(sollField.value);
+            if (sollMin !== null) {
+                istField.value = minutesToTime(sollMin + parseInt(delayField.value || 0, 10));
+            }
         }
     } else if (trigger === 'time') {
-        // Manuelle Zeiteingabe: Delay neu berechnen, damit es zur Zeit passt
-        const prefix = type === 'arr' ? 'arrival' : 'departure';
-        const istField = form.querySelector(`[name="stations[${stationId}][actual_${prefix}]"]`);
-        const sollField = form.querySelector(`[name="stations[${stationId}][${prefix}]"]`);
-        const delayField = document.getElementById(`delay_${type}_${stationId}`);
-        
         if (istField && sollField && delayField) {
-            delayField.value = timeToMinutes(istField.value) - timeToMinutes(sollField.value);
+            const sollMin = timeToMinutes(sollField.value);
+            const istMin = timeToMinutes(istField.value);
+            if (sollMin !== null && istMin !== null) {
+                delayField.value = istMin - sollMin;
+            }
         }
     }
 
-    // 2. NEUER SCHRITT: Wenn Ankunftszeit geändert wurde, Abfahrtszeit validieren
     if (type === 'arr' && trigger === 'time') {
         const actualArrivalField = form.querySelector(`[name="stations[${stationId}][actual_arrival]"]`);
         const actualDepartureField = form.querySelector(`[name="stations[${stationId}][actual_departure]"]`);
@@ -305,10 +298,8 @@ function recalcRow(stationId, type, trigger) {
             const arrivalTime = timeToMinutes(actualArrivalField.value);
             const departureTime = timeToMinutes(actualDepartureField.value);
             
-            // Wenn Abfahrtszeit gesetzt ist und vor Ankunftszeit liegt, Abfahrtszeit auf Ankunftszeit setzen
             if (arrivalTime !== null && departureTime !== null && departureTime < arrivalTime) {
                 actualDepartureField.value = actualArrivalField.value;
-                // Delay für Abfahrt neu berechnen
                 if (sollDepartureField && delayDepartureField) {
                     delayDepartureField.value = timeToMinutes(actualDepartureField.value) - timeToMinutes(sollDepartureField.value);
                 }
@@ -316,8 +307,9 @@ function recalcRow(stationId, type, trigger) {
         }
     }
 
-    // 3. Kaskade erst ab der NÄCHSTEN Station starten
-    propagateForward(currentIndex + 1);
+    if (!isFree && typeof propagateForward === 'function') {
+        propagateForward(currentIndex + 1);
+    }
 }
 
 async function renderGraph() {
@@ -365,7 +357,6 @@ async function renderGraph() {
         return paddingTop + ((minutes - startMin) / totalVisibleMinutes) * graphHeight;
     }
 
-    // Raster: Stundenlinien
     ctx.strokeStyle = '#e2e8f0';
     ctx.lineWidth = 1;
     ctx.fillStyle = '#64748b';
@@ -389,7 +380,6 @@ async function renderGraph() {
         ctx.fillText(`${h}:00`, paddingLeft + graphWidth + 10, y + 4);
     }
 
-    // Raster: Bahnhofslinien
     stations.forEach((st) => {
         const x = getX(st.km);
         const isDarkMode = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)');
@@ -411,11 +401,9 @@ async function renderGraph() {
         ctx.fillText(`km ${st.km}`, x, paddingTop - 40);
     });
 
-    // Zuglinien zeichnen
     trains.forEach((train) => {
         const baseColor = getTrainColor(train.train_number, train.name);
         
-        // Alle Halte sammeln, die auf dieser Route existieren
         const validStops = train.stops
             .map(stop => {
                 const st = stations.find(s => s.id === stop.station_id);
@@ -425,14 +413,12 @@ async function renderGraph() {
 
         if (validStops.length < 2) return;
 
-        // Chronologisch nach Zeit sortieren, damit die Fahrtrichtung vollkommen egal ist
         validStops.sort((a, b) => {
             const timeA = timeToMinutes(a.stop.departure || a.stop.arrival);
             const timeB = timeToMinutes(b.stop.departure || b.stop.arrival);
             return timeA - timeB;
         });
 
-        // --- Punkte generieren für SOLL ---
         const sollPoints = [];
         validStops.forEach(item => {
             const x = getX(item.km);
@@ -443,7 +429,6 @@ async function renderGraph() {
             if (depMin !== null) sollPoints.push({ x, y: getY(depMin) });
         });
 
-        // --- Punkte generieren für IST ---
         const istPoints = [];
         validStops.forEach(item => {
             const x = getX(item.km);
@@ -454,13 +439,11 @@ async function renderGraph() {
             if (depMin !== null) istPoints.push({ x, y: getY(depMin) });
         });
 
-        // HILFSFUNKTION: Zeichnet eine durchgehende Punktkette
         function drawPointChain(points) {
             let started = false;
             ctx.beginPath();
             points.forEach(p => {
                 if (p.y === null) {
-                    // Punkt liegt ausserhalb des sichtbaren Zeitfensters -> Linie trennen
                     started = false; 
                     return;
                 }
@@ -474,20 +457,17 @@ async function renderGraph() {
             ctx.stroke();
         }
 
-        // --- 1. SCHRITT: Soll-Fahrplan verblasst zeichnen ---
         ctx.strokeStyle = baseColor;
         ctx.globalAlpha = 0.5; 
         ctx.lineWidth = 1.5;
         ctx.setLineDash([4, 4]); 
         drawPointChain(sollPoints);
 
-        // --- 2. SCHRITT: Tatsächlicher Fahrplan (Ist) zeichnen ---
         ctx.globalAlpha = 1.0; 
         ctx.lineWidth = 2.5;
         ctx.setLineDash([]); 
         drawPointChain(istPoints);
 
-// --- 3. SCHRITT: Zugnummer am ersten sichtbaren Punkt platzieren ---
         const firstVisibleIst = istPoints.find(p => p.y !== null);
         if (firstVisibleIst) {
             ctx.fillStyle = baseColor;
@@ -497,27 +477,18 @@ async function renderGraph() {
         }
     });
     
-    // Zeichenzustand für globale Elemente zurücksetzen
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
 
-    // ==========================================
-    // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
-    // ==========================================
     (function drawCurrentTimeLine() {
         const now = new Date();
-        
-        // 1. Hole die aktuelle PC-Zeit in Minuten
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
-        
-        // 2. Das aktuell aktive STS-Offset dynamisch aus dem UI auslesen
         const offsetInput = document.getElementById('sts_offset');
         const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0; 
         
         let currentTotalMinutes = localTotalMinutes + simOffset;
-        currentTotalMinutes = ((currentTotalMinutes % 1440) + 1440) % 1440; // Verhindert Werte über 24 Std. und negative Minuten
+        currentTotalMinutes = ((currentTotalMinutes % 1440) + 1440) % 1440;
 
-        // 3. Sichtbaren Bereich des Diagramms auslesen
         const startVal = document.getElementById('graph_start')?.value || "11:00";
         const endVal = document.getElementById('graph_end')?.value || "17:00";
 
@@ -527,18 +498,16 @@ async function renderGraph() {
         const startMinutes = startH * 60 + startM;
         const endMinutes = endH * 60 + endM;
 
-        // 4. Prüfen, ob die STS-Zeit im sichtbaren Fenster liegt
         if (currentTotalMinutes >= startMinutes && currentTotalMinutes <= endMinutes) {
             const y = getY(currentTotalMinutes);
 
             if (y !== null) {
                 ctx.save();
                 ctx.beginPath();
-                ctx.strokeStyle = '#FFDE15'; // Schönes STS-Gelb
+                ctx.strokeStyle = '#FFDE15';
                 ctx.lineWidth = 2;
                 ctx.setLineDash([6, 4]);
                 
-                // Zeichne die Linie von ganz links nach ganz rechts auf der korrekten Höhe (y)
                 ctx.moveTo(paddingLeft, y);
                 ctx.lineTo(paddingLeft + graphWidth, y);
                 ctx.stroke();
@@ -548,19 +517,17 @@ async function renderGraph() {
                 ctx.textAlign = 'right';
                 ctx.textBaseline = 'middle';
                 
-                // Uhrzeit exakt anhand der berechneten STS-Minuten anzeigen
                 const displayHours = Math.floor(currentTotalMinutes / 60);
                 const displayMinutes = currentTotalMinutes % 60;
                 const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
                 
-                // Text links neben die Linie platzieren
                 ctx.fillText(timeString, paddingLeft - 10, y);
                 
                 ctx.restore();
             }
         }
     })();
-} // <--- Hier endet die Funktion renderGraph() sauber
+}
 
 function updateTrainList(trains) {
     const listContainer = document.getElementById('active_train_list');
@@ -659,15 +626,11 @@ function getTrainColor(trainNumber, trainName) {
             if (rule.type === 'lessThan' && num < rule.filter) return colorMap[rule.color];
         }
     }
-    return '#64748b'; // Standardfarbe für alles andere
+    return '#64748b';
 }
-// Konfiguration: Zeitversatz zur Systemzeit in Minuten
 
-// Ermittelt die aktuelle Simulationszeit basierend auf dem gewählten UI-Offset
 function getSimTime() {
     const now = new Date();
-    
-    // Dynamisch das aktuelle Offset aus der UI holen
     const offsetInput = document.getElementById('sts_offset');
     const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
 
@@ -682,7 +645,6 @@ function getSimTime() {
 
 function setNow(stationId, fieldName) {
     const form = document.getElementById('timetable_form');
-    // WICHTIG: Hier wird jetzt deine globale Funktion aufgerufen
     const timeString = getSimTime(); 
     
     const field = form.querySelector(`[name="stations[${stationId}][${fieldName}]"]`);
@@ -716,9 +678,7 @@ function propagateForward(startIndex) {
     const form = document.getElementById('timetable_form');
     const stations = routesConfig[currentRouteId].stations;
     
-    // Anker finden (letzte valide Zeit VOR dem Startpunkt)
     let lastDepartureTime = 0;
-    // Wir suchen bei der Station kurz vor dem Startpunkt
     for (let i = startIndex - 1; i >= 0; i--) {
         const depVal = form.querySelector(`[name="stations[${stations[i].id}][actual_departure]"]`)?.value;
         const depTime = timeToMinutes(depVal);
@@ -728,7 +688,6 @@ function propagateForward(startIndex) {
         }
     }
 
-    // Laufzeit-Basis finden
     let lastValidSollDep = null;
     for (let i = startIndex - 1; i >= 0; i--) {
         const depVal = form.querySelector(`[name="stations[${stations[i].id}][departure]"]`)?.value;
@@ -738,7 +697,6 @@ function propagateForward(startIndex) {
         }
     }
 
-    // Durch die nachfolgenden Stationen iterieren
     for (let i = startIndex; i < stations.length; i++) {
         const st = stations[i];
         const sollArr = timeToMinutes(form.querySelector(`[name="stations[${st.id}][arrival]"]`)?.value);
@@ -801,5 +759,398 @@ async function saveTrainLink() {
     } catch (err) {
         console.error('Fehler beim Speichern der Zugverkettung:', err);
         alert('Verbindungsfehler beim Speichern der Zugverkettung');
+    }
+}
+
+// ========================================================================
+// PROPAGATION MIT 7%-RESERVE & STANDZEIT-BERÜCKSICHTIGUNG
+// ========================================================================
+
+/**
+ * propagateTravelTimeWithReserve()
+ * 
+ * Propagiert die ganze Fahrt durch den Zug mit folgender Logik:
+ * - Berechnet die SOLL-Fahrzeit zwischen zwei Haltestellen
+ * - Anwendet 7% Reserve: Fahrzeit darf maximal um 7% kürzer sein
+ * - Berücksichtigt die Standzeit (Arrival bis Departure) an jeder Station
+ * - Propagiert die Ist-Zeiten über die ganze Fahrt
+ */
+function propagateTravelTimeWithReserve() {
+    const form = document.getElementById('free_timetable_form');
+    if (!form) return;
+
+    // Durchgehe alle Stationen in Reihenfolge
+    for (let i = 0; i < freeEditorStations.length; i++) {
+        const currentStation = freeEditorStations[i];
+        const stId = currentStation.id;
+
+        // Lese Soll-Ankunft und Soll-Abfahrt
+        const sollArrStr = form.querySelector(`[name="stations[${stId}][arrival]"]`)?.value;
+        const sollDepStr = form.querySelector(`[name="stations[${stId}][departure]"]`)?.value;
+
+        // Wenn keine Abfahrt/Ankunft: überspring
+        if (!sollArrStr && !sollDepStr) continue;
+
+        const sollArrMin = timeToMinutes(sollArrStr);
+        const sollDepMin = timeToMinutes(sollDepStr);
+
+        // ---  IST-Zeiten auslesen ---
+        const istArrField = form.querySelector(`[name="stations[${stId}][actual_arrival]"]`);
+        const istDepField = form.querySelector(`[name="stations[${stId}][actual_departure]"]`);
+        let istArrMin = timeToMinutes(istArrField?.value);
+        let istDepMin = timeToMinutes(istDepField?.value);
+
+        // Wenn Ankunft fehlt, von vorheriger Abfahrt übernehmen
+        if (istArrMin === null && i > 0) {
+            const prevStation = freeEditorStations[i - 1];
+            const prevDepField = form.querySelector(`[name="stations[${prevStation.id}][actual_departure]"]`);
+            istArrMin = timeToMinutes(prevDepField?.value);
+            if (istArrMin !== null && istArrField) {
+                istArrField.value = minutesToTime(istArrMin);
+            }
+        }
+
+        // Wenn Ankunft immer noch null, skip
+        if (istArrMin === null) continue;
+
+        // Standzeit berechnen (Soll-Soll)
+        let standzeit = 0;
+        if (sollArrMin !== null && sollDepMin !== null && sollDepMin >= sollArrMin) {
+            standzeit = sollDepMin - sollArrMin;
+        }
+
+        // IST-Abfahrt berechnen
+        if (istDepMin === null) {
+            // Es gibt noch keine Ist-Abfahrt: wird aus Fahrzeit + Standzeit berechnet
+            if (i > 0) {
+                // Hole die vorige Soll-Abfahrt und Ist-Abfahrt
+                const prevStation = freeEditorStations[i - 1];
+                const prevSollDepStr = form.querySelector(`[name="stations[${prevStation.id}][departure]"]`)?.value;
+                const prevIstDepField = form.querySelector(`[name="stations[${prevStation.id}][actual_departure]"]`);
+                const prevIstDepMin = timeToMinutes(prevIstDepField?.value);
+
+                if (prevIstDepMin !== null && prevSollDepStr) {
+                    const prevSollDepMin = timeToMinutes(prevSollDepStr);
+
+                    // Soll-Fahrzeit
+                    const sollFahrtzeit = (sollArrMin !== null) 
+                        ? (sollArrMin - prevSollDepMin) 
+                        : (sollDepMin - prevSollDepMin);
+
+                    if (sollFahrtzeit > 0) {
+                        // 7% Reserve: Minimum-Fahrzeit = Sollfahrzeit * 0.93
+                        const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
+
+                        // Ist-Fahrzeit basierend auf bisher eingegeben Ist-Ankunft
+                        const istFahrtzeit = istArrMin - prevIstDepMin;
+
+                        // Verwende Max: entweder die eingegebene Ist-Fahrzeit oder Minimum (mit 7% Reserve)
+                        const effektiveFahrtzeit = Math.max(istFahrtzeit, minFahrtzeit);
+
+                        // Neue Ist-Ankunft berechnen
+                        istArrMin = prevIstDepMin + effektiveFahrtzeit;
+                        if (istArrField) {
+                            istArrField.value = minutesToTime(istArrMin);
+                        }
+                    }
+                }
+            }
+
+            // Jetzt Ist-Abfahrt = Ist-Ankunft + Standzeit
+            istDepMin = istArrMin + standzeit;
+            if (istDepField) {
+                istDepField.value = minutesToTime(istDepMin);
+            }
+        }
+
+        // Delay-Felder aktualisieren
+        const delayArrField = document.getElementById(`delay_arr_${stId}`);
+        const delayDepField = document.getElementById(`delay_dep_${stId}`);
+
+        if (sollArrMin !== null && delayArrField) {
+            delayArrField.value = istArrMin - sollArrMin;
+        }
+        if (sollDepMin !== null && delayDepField) {
+            delayDepField.value = istDepMin - sollDepMin;
+        }
+    }
+}
+
+// ========================================================================
+// FREIER EDITOR FUNKTIONEN
+// ========================================================================
+let freeEditorStations = [];
+
+function initializeAllStationsList() {
+    const datalist = document.getElementById('all_stations_list');
+    const allAbbrs = new Set();
+    
+    for (const routeId in routesConfig) {
+        const route = routesConfig[routeId];
+        if (route.stations) {
+            route.stations.forEach(st => {
+                allAbbrs.add(st.abbr);
+            });
+        }
+    }
+    
+    datalist.innerHTML = '';
+    allAbbrs.forEach(abbr => {
+        const option = document.createElement('option');
+        option.value = abbr;
+        datalist.appendChild(option);
+    });
+}
+
+function activateFreeEditor() {
+    freeEditorStations = [];
+    document.getElementById('editor_panel').classList.add('hidden');
+    document.getElementById('free_editor_panel').classList.remove('hidden');
+    document.getElementById('free_train_number').value = '';
+    document.getElementById('free_editor_train_id').value = '';
+    document.getElementById('free_timetable_form').querySelector('tbody').innerHTML = '';
+    document.getElementById('station_input').value = '';
+    initializeAllStationsList();
+}
+
+function closeFreeEditor() {
+    document.getElementById('free_editor_panel').classList.add('hidden');
+    document.getElementById('route_select').value = '';
+    document.getElementById('train_number').value = '';
+    currentRouteId = '';
+}
+
+async function loadFreeEditorTrain() {
+    const trainNum = document.getElementById('free_train_number').value.trim();
+    if (!trainNum) {
+        alert('Bitte gib eine Zugnummer ein');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('action', 'get_or_create_train');
+    formData.append('train_number', trainNum);
+    formData.append('route_id', 'free');
+    
+    try {
+        const res = await fetch('', { method: 'POST', body: formData });
+        const data = await res.json();
+        
+        if (data.error) {
+            alert('Fehler: ' + data.error);
+            return;
+        }
+        
+        if (data.train) {
+            document.getElementById('free_editor_train_id').value = data.train.id;
+            
+            freeEditorStations = [];
+            const tbody = document.getElementById('free_timetable_form').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            if (data.timetable) {
+                Object.keys(data.timetable).forEach(stId => {
+                    const info = data.timetable[stId];
+                    let stationName = stId;
+                    let stationAbbr = stId;
+                    
+                    for (const routeId in routesConfig) {
+                        const route = routesConfig[routeId];
+                        if (route.stations) {
+                            const found = route.stations.find(s => s.id === stId);
+                            if (found) {
+                                stationName = found.name;
+                                stationAbbr = found.abbr;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    freeEditorStations.push({
+                        id: stId,
+                        name: stationName,
+                        abbr: stationAbbr,
+                        track: info.track || '',
+                        arrival: info.arrival || '',
+                        departure: info.departure || '',
+                        actual_arrival: info.actual_arrival || '',
+                        actual_departure: info.actual_departure || '',
+                        flags: info.flags || '',
+                        remarks: info.remarks || ''
+                    });
+                });
+                
+                renderFreeEditorTable();
+            }
+        }
+    } catch (err) {
+        console.error('Fehler beim Laden:', err);
+        alert('Verbindungsfehler beim Laden des Zuges');
+    }
+}
+
+function addStationToFreeEditor() {
+    const input = document.getElementById('station_input').value.trim().toUpperCase();
+    if (!input) return;
+    
+    let stationFound = null;
+    for (const routeId in routesConfig) {
+        const route = routesConfig[routeId];
+        if (route.stations) {
+            const found = route.stations.find(s => s.abbr.toUpperCase() === input);
+            if (found) {
+                stationFound = found;
+                break;
+            }
+        }
+    }
+    
+    if (!stationFound) {
+        alert(`Station mit Kürzel "${input}" nicht gefunden`);
+        return;
+    }
+    
+    if (freeEditorStations.find(st => st.id === stationFound.id)) {
+        alert('Diese Station ist bereits im Fahrplan');
+        return;
+    }
+    
+    freeEditorStations.push({
+        id: stationFound.id,
+        name: stationFound.name,
+        abbr: stationFound.abbr,
+        track: '',
+        arrival: '',
+        departure: '',
+        actual_arrival: '',
+        actual_departure: '',
+        flags: '',
+        remarks: ''
+    });
+    
+    renderFreeEditorTable();
+    document.getElementById('station_input').value = '';
+}
+
+function renderFreeEditorTable() {
+    const tbody = document.getElementById('free_editor_table').querySelector('tbody');
+    tbody.innerHTML = '';
+
+    freeEditorStations.forEach((st, index) => {
+        const tr = document.createElement('tr');
+        tr.id = `free_row_${st.id}`;
+        
+        tr.draggable = true;
+        tr.style.cursor = 'move';
+        
+        tr.innerHTML = `
+            <td style="padding: 5px; width: 200px;"><strong class="drag-handle">☰</strong> ${st.name} (${st.abbr})</td>
+            <td style="width: 50px;"><input type="text" name="stations[${st.id}][track]" value="${st.track}" style="width: 40px;"></td>
+            
+            <td><input type="time" name="stations[${st.id}][arrival]" value="${st.arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            <td><input type="time" name="stations[${st.id}][actual_arrival]" value="${st.actual_arrival}" onchange="recalcRow('${st.id}', 'arr', 'time')"></td>
+            <td><input type="number" id="delay_arr_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'arr', 'delay')"></td>
+            
+            <td><input type="time" name="stations[${st.id}][departure]" value="${st.departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            <td><input type="time" name="stations[${st.id}][actual_departure]" value="${st.actual_departure}" onchange="recalcRow('${st.id}', 'dep', 'time')"></td>
+            <td><input type="number" id="delay_dep_${st.id}" placeholder="0" style="width: 50px;" oninput="recalcRow('${st.id}', 'dep', 'delay')"></td>
+            
+            <td><input type="text" name="stations[${st.id}][flags]" value="${st.flags}" style="width: 80px;" placeholder="X(Znr)"></td>
+            <td><input type="text" name="stations[${st.id}][remarks]" value="${st.remarks}" style="width: 100px;"></td>
+            <td><button type="button" style="background-color: #d9534f; color: white; border:none; padding: 4px 8px; cursor:pointer;" 
+                        onclick="removeStationFromFreeEditor('${st.id}')">Entf</button></td>
+        `;
+
+        tr.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', index);
+            tr.classList.add('dragging');
+        });
+
+        tr.addEventListener('dragend', () => {
+            tr.classList.remove('dragging');
+            reorderFreeEditorStationsArray();
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    tbody.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const draggingRow = tbody.querySelector('.dragging');
+        const afterElement = getDragAfterElement(tbody, e.clientY);
+        if (afterElement == null) {
+            tbody.appendChild(draggingRow);
+        } else {
+            tbody.insertBefore(draggingRow, afterElement);
+        }
+    });
+}
+
+function getDragAfterElement(tbody, y) {
+    const draggableElements = [...tbody.querySelectorAll('tr:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function reorderFreeEditorStationsArray() {
+    const tbody = document.getElementById('free_editor_table').querySelector('tbody');
+    const newOrderedIds = [...tbody.querySelectorAll('tr')].map(tr => tr.id.replace('free_row_', ''));
+    
+    const reordered = [];
+    newOrderedIds.forEach(id => {
+        const found = freeEditorStations.find(st => st.id === id);
+        if (found) reordered.push(found);
+    });
+    freeEditorStations = reordered;
+}
+
+function removeStationFromFreeEditor(stationId) {
+    const row = document.getElementById(`free_row_${stationId}`);
+    if (row) {
+        const inputs = row.querySelectorAll('input');
+        inputs.forEach(input => input.value = '');
+        row.style.display = 'none';
+    }
+
+    freeEditorStations = freeEditorStations.filter(st => st.id !== stationId);
+}
+
+async function saveFreeTimetable(e) {
+    e.preventDefault();
+    
+    const trainId = document.getElementById('free_editor_train_id').value;
+    if (!trainId) {
+        alert('Bitte lade oder erstelle erst einen Zug');
+        return;
+    }
+    
+    // ÄNDERUNG: Propagiere die Fahrzeit mit 7%-Reserve vor dem Speichern
+    propagateTravelTimeWithReserve();
+    
+    const formData = new FormData(document.getElementById('free_timetable_form'));
+    formData.append('action', 'save_timetable');
+    formData.append('train_id', trainId);
+    
+    try {
+        const res = await fetch('', { method: 'POST', body: formData });
+        const data = await res.json();
+        
+        if (data.success) {
+            alert('Fahrplan gespeichert!');
+            closeFreeEditor();
+        } else {
+            alert('Fehler beim Speichern: ' + (data.error || 'Unbekannter Fehler'));
+        }
+    } catch (err) {
+        console.error('Fehler beim Speichern:', err);
+        alert('Verbindungsfehler beim Speichern');
     }
 }
