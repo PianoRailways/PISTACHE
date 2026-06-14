@@ -92,6 +92,7 @@ $has_entries = !empty($rows);
             left: 0;
             width: 100%;
             background: #222222;
+            margin-top: 40px;
             border-top: 2px solid #eb0000;
             padding: 15px 0;
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
