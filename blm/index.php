@@ -60,7 +60,7 @@ $has_entries = !empty($rows);
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="60">
     <title><?php echo $disturbance_count > 0 ? "({$disturbance_count}) " : ""; ?>RCS Betriebslagemonitor</title>
-    <link id="favicon" rel="icon" type="image/png" href="favicon.png">
+    <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
     <style>
         body { margin: 20px; background: #0f172a; color: #f8fafc; font-family: sans-serif; }
         
