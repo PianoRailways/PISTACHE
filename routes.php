@@ -647,9 +647,9 @@ $ROUTES = [
             ['id' => 'RSST', 'name' => 'RSST', 'abbr' => 'RSST', 'km' => 66.27],
         ]
     ],
-    'rheintal-sargans' => [
-        'id' => 'rheintal-sargans',
-        'name' => 'Rheintal-Sargans',
+    'gonzen-rt' => [
+        'id' => 'gonzen-rt',
+        'name' => 'Gonzen-RT',
         'stations' => [
             ['id' => 'SA', 'name' => 'SA', 'abbr' => 'SA', 'km' => 0.17],
             ['id' => 'TRUE', 'name' => 'TRUE', 'abbr' => 'TRUE', 'km' => 4.3],
