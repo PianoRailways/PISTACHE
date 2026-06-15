@@ -781,19 +781,71 @@ $ROUTES = [
         'id' => 'areuse',
         'name' => 'Areuse',
         'stations' => [
-            ['id' => 'NE', 'name' => 'NE', 'abbr' => 'NE', 'km' => 0],
-            ['id' => 'NEVA', 'name' => 'NEVA', 'abbr' => 'NEVA', 'km' => 1.33],
-            ['id' => 'NESE', 'name' => 'NESE', 'abbr' => 'NESE', 'km' => 2.9],
-            ['id' => 'AUV', 'name' => 'AUV', 'abbr' => 'AUV', 'km' => 4.98],
-            ['id' => 'BOLE', 'name' => 'BOLE', 'abbr' => 'BOLE', 'km' => 8.37],
-            ['id' => 'CDM', 'name' => 'CDM', 'abbr' => 'CDM', 'km' => 13.65],
-            ['id' => 'NOI', 'name' => 'NOI', 'abbr' => 'NOI', 'km' => 18.11],
-            ['id' => 'TR', 'name' => 'TR', 'abbr' => 'TR', 'km' => 22.45],
-            ['id' => 'PRST', 'name' => 'PRST', 'abbr' => 'PRST', 'km' => 24.69],
-            ['id' => 'CVTR', 'name' => 'CVTR', 'abbr' => 'CVTR', 'km' => 26.47],
-            ['id' => 'MOT', 'name' => 'MOT', 'abbr' => 'MOT', 'km' => 28.87],
-            ['id' => 'FLE', 'name' => 'FLE', 'abbr' => 'FLE', 'km' => 31.3],
-            ['id' => 'BT', 'name' => 'BT', 'abbr' => 'BT', 'km' => 34.43],
+            ['id' => 'NE', 'name' => 'Neuchâtel', 'abbr' => 'NE', 'km' => 0],
+            ['id' => 'NEVA', 'name' => 'Vauseyon', 'abbr' => 'NEVA', 'km' => 1.33],
+            ['id' => 'NESE', 'name' => 'Serrières', 'abbr' => 'NESE', 'km' => 2.9],
+            ['id' => 'AUV', 'name' => 'Auvernier', 'abbr' => 'AUV', 'km' => 4.98],
+            ['id' => 'BOLE', 'name' => 'Bôle', 'abbr' => 'BOLE', 'km' => 8.37],
+            ['id' => 'CDM', 'name' => 'Champ-du-Moulin', 'abbr' => 'CDM', 'km' => 13.65],
+            ['id' => 'NOI', 'name' => 'Noiraigue', 'abbr' => 'NOI', 'km' => 18.11],
+            ['id' => 'TR', 'name' => 'Travers', 'abbr' => 'TR', 'km' => 22.45],
+            ['id' => 'PRST', 'name' => 'La Presta Mines dasphalte', 'abbr' => 'PRST', 'km' => 24.69],
+            ['id' => 'CVTR', 'name' => 'Couvet TR', 'abbr' => 'CVTR', 'km' => 26.47],
+            ['id' => 'MOT', 'name' => 'Môtiers', 'abbr' => 'MOT', 'km' => 28.87],
+            ['id' => 'FLE', 'name' => 'Fleurier', 'abbr' => 'FLE', 'km' => 31.3],
+            ['id' => 'BT', 'name' => 'Buttes', 'abbr' => 'BT', 'km' => 34.43],
+        ]
+    ],
+    'areuse-f' => [
+        'id' => 'areuse-f',
+        'name' => 'Neuchatel - Travers - Pontarlier',
+        'stations' => [
+            ['id' => 'NE', 'name' => 'Neuchâtel', 'abbr' => 'NE', 'km' => 0],
+            ['id' => 'NEVA', 'name' => 'Vauseyon', 'abbr' => 'NEVA', 'km' => 1.33],
+            ['id' => 'NESE', 'name' => 'Serrières', 'abbr' => 'NESE', 'km' => 2.9],
+            ['id' => 'AUV', 'name' => 'Auvernier', 'abbr' => 'AUV', 'km' => 4.98],
+            ['id' => 'BOLE', 'name' => 'Bôle', 'abbr' => 'BOLE', 'km' => 8.37],
+            ['id' => 'CDM', 'name' => 'Champ-du-Moulin', 'abbr' => 'CDM', 'km' => 13.65],
+            ['id' => 'NOI', 'name' => 'Noiraigue', 'abbr' => 'NOI', 'km' => 18.11],
+            ['id' => 'TR', 'name' => 'Travers', 'abbr' => 'TR', 'km' => 22.45],
+            ['id' => 'CVT', 'name' => 'Couvet CFF', 'abbr' => 'CVT', 'km' => 26.04],
+            ['id' => 'BOV', 'name' => 'Boveresse', 'abbr' => 'BOV', 'km' => 29.47],
+            ['id' => 'LBA', 'name' => 'Les Bayards', 'abbr' => 'LBA', 'km' => 35.9],
+            ['id' => 'VER', 'name' => 'Les Verrieres', 'abbr' => 'VER', 'km' => 39.36],
+            ['id' => 'VERF', 'name' => 'Frontière', 'abbr' => 'VERF', 'km' => 41.07],
+            ['id' => 'PTL', 'name' => 'Pontarlier (PONF)', 'abbr' => 'PTL', 'km' => 52.35],
+        ]
+    ],
+    'pontarlier' => [
+        'id' => 'pontarlier',
+        'name' => 'Pontarlier',
+        'stations' => [
+            ['id' => 'VER', 'name' => 'Les Verrieres', 'abbr' => 'VER', 'km' => -466.55],
+            ['id' => 'VERF', 'name' => 'Frontière', 'abbr' => 'VERF', 'km' => -464.84],
+            ['id' => 'PTL', 'name' => 'Pontalier (PONF)', 'abbr' => 'PTL', 'km' => -453.56],
+            ['id' => 'XCB', 'name' => 'Sainte-Colombe (STCO)', 'abbr' => 'XCB', 'km' => -446.17],
+            ['id' => 'RIW', 'name' => 'La Rivière (LARI)', 'abbr' => 'RIW', 'km' => -441.73],
+            ['id' => 'FRA', 'name' => 'Frasne (FRAS)', 'abbr' => 'FRA', 'km' => -437.15],
+            ['id' => 'JOX', 'name' => 'La Joux', 'abbr' => 'JOX', 'km' => -423.221],
+        ]
+    ],
+    'brassus' => [
+        'id' => 'brassus',
+        'name' => 'Le Brassus',
+        'stations' => [
+            ['id' => 'BRA', 'name' => 'Le Brassus', 'abbr' => 'BRA', 'km' => -24.46],
+            ['id' => 'CLM', 'name' => 'Chez-le-Maître', 'abbr' => 'CLM', 'km' => -23],
+            ['id' => 'CLME', 'name' => 'Chez-le-Maître École', 'abbr' => 'CLME', 'km' => -22.8],
+            ['id' => 'SEN', 'name' => 'Le Sentier-lOrient', 'abbr' => 'SEN', 'km' => -21.65],
+            ['id' => 'SGO', 'name' => 'Le Solliat-La Golisse', 'abbr' => 'SGO', 'km' => -20.5],
+            ['id' => 'RCY', 'name' => 'Le Rocheray', 'abbr' => 'RCY', 'km' => -19.06],
+            ['id' => 'EDR', 'name' => 'Les Esserts-de-Rive', 'abbr' => 'EDR', 'km' => -17.9],
+            ['id' => 'LIEU', 'name' => 'Le Lieu', 'abbr' => 'LIEU', 'km' => -15.45],
+            ['id' => 'SEC', 'name' => 'Le Séchey', 'abbr' => 'SEC', 'km' => -13.26],
+            ['id' => 'CHB', 'name' => 'Les Charbonnières', 'abbr' => 'CHB', 'km' => -12.19],
+            ['id' => 'PT', 'name' => 'Le Pont', 'abbr' => 'PT', 'km' => -11.29],
+            ['id' => 'DAY', 'name' => 'Le Day', 'abbr' => 'DAY', 'km' => -2.81],
+            ['id' => 'VAL', 'name' => 'Vallorbe', 'abbr' => 'VAL', 'km' => 0.34],
         ]
     ],
     'tpf-sud' => [
@@ -905,6 +957,50 @@ $ROUTES = [
             ['id' => 'ZWOL', 'name' => 'Wollishofen', 'abbr' => 'ZWOL', 'km' => 5.81],
             ['id' => 'KIL', 'name' => 'Kilchberg', 'abbr' => 'KIL', 'km' => 8.86],
             ['id' => 'RUES', 'name' => 'Rüschlikon', 'abbr' => 'RUES', 'km' => 10.64],
+        ]
+    ],
+    'flughafenlinie' => [
+        'id' => 'flughafenlinie',
+        'name' => 'Flughafenlinie (Kloten - Effretikon)',
+        'stations' => [
+            ['id' => 'TOEM', 'name' => 'Tössmühle', 'abbr' => 'TOEM', 'km' => -22.86],
+            ['id' => 'KE', 'name' => 'Kemptthal', 'abbr' => 'KE', 'km' => -20.49],
+            ['id' => 'EF', 'name' => 'Effretikon', 'abbr' => 'EF', 'km' => -16.82],
+            ['id' => 'HUER', 'name' => 'Hürlistein', 'abbr' => 'HUER', 'km' => -14.77],
+            ['id' => 'BSD', 'name' => 'Bassersdorf', 'abbr' => 'BSD', 'km' => -11.27],
+            ['id' => 'DORF', 'name' => 'Dorfnest', 'abbr' => 'DORF', 'km' => -9.89],
+            ['id' => 'ZFH', 'name' => 'Flughafen', 'abbr' => 'ZFH', 'km' => -6.12],
+            ['id' => 'OPS', 'name' => 'Opfikon Süd', 'abbr' => 'OPS', 'km' => -3.71],
+            ['id' => 'OPS', 'name' => 'Opfikon Süd', 'abbr' => 'OPS', 'km' => -1.3],
+            ['id' => 'Oerlikon', 'name' => 'Oerlikon', 'abbr' => 'ZOER', 'km' => -1.17],
+        ]
+    ],
+    'ef-ws' => [
+        'id' => 'ef-ws',
+        'name' => 'Effretikon - Oerlikon',
+        'stations' => [
+            ['id' => 'TOEM', 'name' => 'Tössmühle', 'abbr' => 'TOEM', 'km' => -22.86],
+            ['id' => 'KE', 'name' => 'Kemptthal', 'abbr' => 'KE', 'km' => -20.49],
+            ['id' => 'EF', 'name' => 'Effretikon', 'abbr' => 'EF', 'km' => -16.82],
+            ['id' => 'HUER', 'name' => 'Hürlistein', 'abbr' => 'HUER', 'km' => -14.77],
+            ['id' => 'DTL', 'name' => 'Dietlikon', 'abbr' => 'DTL', 'km' => -11.05],
+            ['id' => 'WS', 'name' => 'Wallisellen', 'abbr' => 'WS', 'km' => -8.37],
+            ['id' => 'ZOER', 'name' => 'Oerlikon', 'abbr' => 'ZOER', 'km' => -4.72],
+            ['id' => 'ZWIP', 'name' => 'Wipkingen', 'abbr' => 'ZWIP', 'km' => -2.31],
+            ['id' => 'ZWIP', 'name' => 'Viadukt', 'abbr' => 'ZVIA', 'km' => -1.1],
+            ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0.58],
+        ]
+    ],
+    'ws-zue' => [
+        'id' => 'es-zue',
+        'name' => 'Wallisellen - Zürich HB',
+        'stations' => [
+            ['id' => 'DUE', 'name' => 'Dübendorf', 'abbr' => 'DUE', 'km' => -11.16],
+            ['id' => 'WS', 'name' => 'Wallisellen', 'abbr' => 'WS', 'km' => -8.37],
+            ['id' => 'ZOER', 'name' => 'Oerlikon', 'abbr' => 'ZOER', 'km' => -4.72],
+            ['id' => 'ZWIP', 'name' => 'Wipkingen', 'abbr' => 'ZWIP', 'km' => -2.31],
+            ['id' => 'ZWIP', 'name' => 'Viadukt', 'abbr' => 'ZVIA', 'km' => -1.1],
+            ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0.58],
         ]
     ],
     'zimmerberg' => [
@@ -1081,6 +1177,18 @@ $ROUTES = [
             ['id' => 'AAT', 'name' => 'Aathal', 'abbr' => 'AAT', 'km' => 122.46],
             ['id' => 'WZ', 'name' => 'Wetzikon', 'abbr' => 'WZ', 'km' => 125.33],
             ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => 129.77],
+        ]
+    ],
+    'dvzo' => [
+        'id' => 'dvzo',
+        'name' => 'DVZO (Bauma)',
+        'stations' => [
+            ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => 13.97],
+            ['id' => 'ETH', 'name' => 'Ettenhausen-Emmetschloo', 'abbr' => 'HI', 'km' => 13.97],
+            ['id' => 'BAET', 'name' => 'Tobel', 'abbr' => 'BAET', 'km' => 19.05],
+            ['id' => 'BAEW', 'name' => 'Bäretswil', 'abbr' => 'BAEW', 'km' => 19.69],
+            ['id' => 'NEU', 'name' => 'Neuthal', 'abbr' => 'NEU', 'km' => 22.47],
+            ['id' => 'BMA', 'name' => 'Bauma', 'abbr' => 'BMA', 'km' => 25.26],
         ]
     ],
     'züriberg-z' => [
