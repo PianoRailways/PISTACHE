@@ -1252,6 +1252,20 @@ $ROUTES = [
             ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => 52.4],
         ]
     ],
+    'läufelfingen' => [
+        'id' => 'läufelfingen',
+        'name' => 'Läufelfingen',
+        'stations' => [
+            ['id' => 'OL', 'name' => 'Olten', 'abbr' => 'OL', 'km' => -39.29],
+            ['id' => 'TRI', 'name' => 'Trimbach', 'abbr' => 'TRI', 'km' => -36.28],
+            ['id' => 'LF', 'name' => 'Läufelfingen', 'abbr' => 'LF', 'km' => -30.82],
+            ['id' => 'BUC', 'name' => 'Buckten', 'abbr' => 'BUC', 'km' => -28.82],
+            ['id' => 'RLG', 'name' => 'Rümlingen', 'abbr' => 'RLG', 'km' => -26.89],
+            ['id' => 'SOM', 'name' => 'Sommerau', 'abbr' => 'SOM', 'km' => -25.28],
+            ['id' => 'DIE', 'name' => 'Diepflingen', 'abbr' => 'DIE', 'km' => -23.7],
+            ['id' => 'SIS', 'name' => 'Sissach', 'abbr' => 'SIS', 'km' => -21.1],
+        ]
+    ],
     'ol-gäu' => [
         'id' => 'ol-gäu',
         'name' => 'Olten (Gäu)',
