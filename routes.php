@@ -973,8 +973,8 @@ $ROUTES = [
             ['id' => 'VMC', 'name' => 'Vernier-Meyrin Cargo', 'abbr' => 'VMC', 'km' => 65.43],
             ['id' => 'VM', 'name' => 'Meyrin', 'abbr' => 'VM', 'km' => 66.11],
             ['id' => 'ZIM', 'name' => 'Zimeysa', 'abbr' => 'ZIM', 'km' => 66.98],
-            ['id' => 'SY', 'name' => 'Saitgny', 'abbr' => 'SY', 'km' => 69.37],
-            ['id' => 'RUS', 'name' => 'Satigny', 'abbr' => 'RUS', 'km' => 72.83],
+            ['id' => 'SY', 'name' => 'Satigny', 'abbr' => 'SY', 'km' => 69.37],
+            ['id' => 'RUS', 'name' => 'Russin', 'abbr' => 'RUS', 'km' => 72.83],
             ['id' => 'LP', 'name' => 'La Plaine', 'abbr' => 'LP', 'km' => 74.78],
         ]
     ],
