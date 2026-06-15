@@ -1231,7 +1231,6 @@ $ROUTES = [
         'stations' => [
             ['id' => 'GKD', 'name' => 'GKD', 'abbr' => 'GKD', 'km' => 24.04],
             ['id' => 'TK', 'name' => 'TK', 'abbr' => 'TK', 'km' => 28.16],
-            ['id' => 'FRE', 'name' => 'FRE', 'abbr' => 'FRE', 'km' => 30],
             ['id' => 'HBT', 'name' => 'HBT', 'abbr' => 'HBT', 'km' => 31.42],
             ['id' => 'OLN', 'name' => 'OLN', 'abbr' => 'OLN', 'km' => 37.44],
             ['id' => 'OL', 'name' => 'OL', 'abbr' => 'OL', 'km' => 39.18],
@@ -1249,6 +1248,20 @@ $ROUTES = [
             ['id' => 'SCOE', 'name' => 'Schönenwerd', 'abbr' => 'SCOE', 'km' => 48.1],
             ['id' => 'WOES', 'name' => 'Wöschnau', 'abbr' => 'WOES', 'km' => 50.8],
             ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => 52.4],
+        ]
+    ],
+    'ol-gäu' => [
+        'id' => 'ol-gäu',
+        'name' => 'Olten (Gäu)',
+        'stations' => [
+            ['id' => 'EG', 'name' => 'Egerkingen', 'abbr' => 'EG', 'km' => -49.1],
+            ['id' => 'HRK', 'name' => 'Härkingen Post', 'abbr' => 'HRK', 'km' => -47],
+            ['id' => 'HAE', 'name' => 'Hägendorf', 'abbr' => 'HAE', 'km' => -45.3],
+            ['id' => 'WBO', 'name' => 'Wangen b.O.', 'abbr' => 'WBO', 'km' => -43],
+            ['id' => 'OLH', 'name' => 'Hammer', 'abbr' => 'OLH', 'km' => -40.6],
+            ['id' => 'OL', 'name' => 'Olten', 'abbr' => 'OL', 'km' => -39.3],
+            ['id' => 'DU', 'name' => 'Dulliken', 'abbr' => 'DU', 'km' => 35.7],
+            ['id' => 'DK', 'name' => 'Däniken', 'abbr' => 'DK', 'km' => 32.9],
         ]
     ],
     'sihl-zug' => [
