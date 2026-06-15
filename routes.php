@@ -1220,7 +1220,8 @@ $ROUTES = [
             ['id' => 'SIS', 'name' => 'SIS', 'abbr' => 'SIS', 'km' => 21.11],
             ['id' => 'GKD', 'name' => 'GKD', 'abbr' => 'GKD', 'km' => 24.04],
             ['id' => 'TK', 'name' => 'TK', 'abbr' => 'TK', 'km' => 28.16],
-            ['id' => 'HBT', 'name' => 'HBT', 'abbr' => 'HBT', 'km' => 31.42],
+            ['id' => 'HBTN', 'name' => 'HBTN', 'abbr' => 'HBTN', 'km' => 31.42],
+            ['id' => 'HBTS', 'name' => 'HBTS', 'abbr' => 'HBTS', 'km' => 34.04],
             ['id' => 'OLN', 'name' => 'OLN', 'abbr' => 'OLN', 'km' => 37.44],
             ['id' => 'OL', 'name' => 'OL', 'abbr' => 'OL', 'km' => 39.18],
         ]
@@ -1231,7 +1232,8 @@ $ROUTES = [
         'stations' => [
             ['id' => 'GKD', 'name' => 'GKD', 'abbr' => 'GKD', 'km' => 24.04],
             ['id' => 'TK', 'name' => 'TK', 'abbr' => 'TK', 'km' => 28.16],
-            ['id' => 'HBT', 'name' => 'HBT', 'abbr' => 'HBT', 'km' => 31.42],
+            ['id' => 'HBTN', 'name' => 'HBTN', 'abbr' => 'HBTN', 'km' => 31.42],
+            ['id' => 'HBTS', 'name' => 'HBTS', 'abbr' => 'HBTS', 'km' => 34.04],
             ['id' => 'OLN', 'name' => 'OLN', 'abbr' => 'OLN', 'km' => 37.44],
             ['id' => 'OL', 'name' => 'OL', 'abbr' => 'OL', 'km' => 39.18],
             ['id' => 'RTR', 'name' => 'Rothrist', 'abbr' => 'RTR', 'km' => 46.2],
