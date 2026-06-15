@@ -958,7 +958,7 @@ $ROUTES = [
             ['id' => 'CHEB', 'name' => 'Chêne-Bourg', 'abbr' => 'CHEB', 'km' => 73.11],
             ['id' => 'CHEF', 'name' => 'Chêne-Bourg-Frontière', 'abbr' => 'CHEF', 'km' => 74.39],
             ['id' => 'APY', 'name' => 'Ambilly (AMBI)', 'abbr' => 'APY', 'km' => 75.33],
-            ['id' => 'AE', 'name' => 'Annemasse (ANN)', 'abbr' => 'APY', 'km' => 76.39],
+            ['id' => 'AE', 'name' => 'Annemasse (ANN)', 'abbr' => 'AE', 'km' => 76.39],
         ]
     ],
     'la-plaine' => [
