@@ -1225,6 +1225,19 @@ $ROUTES = [
             ['id' => 'OL', 'name' => 'OL', 'abbr' => 'OL', 'km' => 39.18],
         ]
     ],
+    'niederamt' => [
+        'id' => 'niederamt',
+        'name' => 'Olten (Niederamt)',
+        'stations' => [
+            ['id' => 'ABO', 'name' => 'Aarburg-Oftringen', 'abbr' => 'ABO', 'km' => 35.6],
+            ['id' => 'OL', 'name' => 'Olten', 'abbr' => 'OL', 'km' => 39.3],
+            ['id' => 'DU', 'name' => 'Dulliken', 'abbr' => 'DU', 'km' => 42.9],
+            ['id' => 'DK', 'name' => 'Däniken', 'abbr' => 'DK', 'km' => 45.7],
+            ['id' => 'SCOE', 'name' => 'Schönenwerd', 'abbr' => 'SCOE', 'km' => 48.1],
+            ['id' => 'WOES', 'name' => 'Wöschnau', 'abbr' => 'WOES', 'km' => 50.8],
+            ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => 52.4],
+        ]
+    ],
     'sihl-zug' => [
         'id' => 'sihl-zug',
         'name' => 'Thalwil - Sihlbrugg - Zug - Rotkreuz',
