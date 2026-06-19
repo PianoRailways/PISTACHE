@@ -1026,7 +1026,7 @@ $ROUTES = [
             ['id' => 'DEN', 'name' => '	Denges-Echandens', 'abbr' => 'DEN', 'km' => -8.38],
         ]
     ],
-    'copppet' => [
+    'coppet' => [
         'id' => 'coppet',
         'name' => 'Coppet',
         'stations' => [
