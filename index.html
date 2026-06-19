@@ -63,6 +63,16 @@
         .hidden {
             display: none !important;
         }
+
+        .segment-info {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-left: 10px;
+            padding: 6px 12px;
+            background: #0f172a;
+            border-radius: 4px;
+            border-left: 3px solid #0ea5e9;
+        }
     </style>
 </head>
 <body>
@@ -86,9 +96,25 @@
                 </label>
                 <label>
                     Strecke:
-                    <select id="route_select" onchange="loadAndRenderGraph()">
+                    <select id="route_select" onchange="onRouteChanged()">
                     </select>
                 </label>
+                
+                <!-- Segment-Picker -->
+                <label>
+                    Von Station:
+                    <select id="segment_from" onchange="loadAndRenderGraph()" style="width: 120px;">
+                        <option value="">--- Alle ---</option>
+                    </select>
+                </label>
+                <label>
+                    Bis Station:
+                    <select id="segment_to" onchange="loadAndRenderGraph()" style="width: 120px;">
+                        <option value="">--- Alle ---</option>
+                    </select>
+                </label>
+                <div id="segment_status" class="segment-info" style="display: none;"></div>
+                
                 <label>
                     Modus:
                     <select id="time_mode" onchange="updateTimeMode()">
@@ -153,6 +179,8 @@ var ROUTES = {};
 var routesConfig = {};    
 var activeTrains = [];    
 var autoScrollInterval = null;
+var currentSegmentFrom = '';
+var currentSegmentTo = '';
 
 // Hilfsfunktion zur Manipulation der URL-Parameter ohne Neuladen
 function updateUrlParameter(key, value) {
@@ -163,6 +191,68 @@ function updateUrlParameter(key, value) {
         url.searchParams.delete(key);
     }
     window.history.replaceState({}, '', url.toString());
+}
+
+// Segment-Picker aktualisieren, wenn Route wechselt
+function onRouteChanged() {
+    const routeSelect = document.getElementById('route_select');
+    const route = routesConfig[routeSelect.value];
+    
+    const segmentFromSelect = document.getElementById('segment_from');
+    const segmentToSelect = document.getElementById('segment_to');
+    
+    // Optionen neufüllen
+    segmentFromSelect.innerHTML = '<option value="">--- Alle ---</option>';
+    segmentToSelect.innerHTML = '<option value="">--- Alle ---</option>';
+    
+    if (route && route.stations) {
+        route.stations.forEach(station => {
+            const optFrom = document.createElement('option');
+            optFrom.value = station.id;
+            optFrom.textContent = `${station.abbr} (${station.km} km)`;
+            segmentFromSelect.appendChild(optFrom);
+            
+            const optTo = document.createElement('option');
+            optTo.value = station.id;
+            optTo.textContent = `${station.abbr} (${station.km} km)`;
+            segmentToSelect.appendChild(optTo);
+        });
+    }
+    
+    // Segment-Status zurücksetzen
+    currentSegmentFrom = '';
+    currentSegmentTo = '';
+    updateSegmentStatus();
+    
+    loadAndRenderGraph();
+}
+
+// Segment-Status anzeigen/verstecken
+function updateSegmentStatus() {
+    const statusDiv = document.getElementById('segment_status');
+    const routeSelect = document.getElementById('route_select');
+    const route = routesConfig[routeSelect.value];
+    
+    if (!currentSegmentFrom && !currentSegmentTo) {
+        statusDiv.style.display = 'none';
+        return;
+    }
+    
+    let fromName = 'Start';
+    let toName = 'End';
+    
+    if (currentSegmentFrom && route) {
+        const st = route.stations.find(s => s.id === currentSegmentFrom);
+        if (st) fromName = st.abbr;
+    }
+    
+    if (currentSegmentTo && route) {
+        const st = route.stations.find(s => s.id === currentSegmentTo);
+        if (st) toName = st.abbr;
+    }
+    
+    statusDiv.style.display = 'block';
+    statusDiv.textContent = `Segment: ${fromName} → ${toName}`;
 }
 
 function updateTimeMode() {
@@ -284,6 +374,8 @@ async function initZuschauer() {
         const urlParams = new URLSearchParams(window.location.search);
         const paramRoute = urlParams.get('route')?.toLowerCase(); // Sucht nach ?route=...
         const paramTicker = urlParams.get('ticker')?.toLowerCase(); // Sucht nach ?ticker=...
+        const paramSegmentFrom = urlParams.get('segment_from'); // Segment Start
+        const paramSegmentTo = urlParams.get('segment_to'); // Segment End
         
         // Ticker-Sichtbarkeit über URL initialisieren
         const ticker = document.getElementById('ticker_panel');
@@ -342,9 +434,21 @@ async function initZuschauer() {
             updateUrlParameter('route', firstId);
         }
         
-        if (typeof switchRoute === 'function') {
-            switchRoute();
+        // Route initialisieren (befüllt Segment-Picker)
+        if (typeof onRouteChanged === 'function') {
+            onRouteChanged();
         }
+        
+        // Segment-Werte aus URL setzen, wenn vorhanden
+        if (paramSegmentFrom) {
+            document.getElementById('segment_from').value = paramSegmentFrom;
+            currentSegmentFrom = paramSegmentFrom;
+        }
+        if (paramSegmentTo) {
+            document.getElementById('segment_to').value = paramSegmentTo;
+            currentSegmentTo = paramSegmentTo;
+        }
+        updateSegmentStatus();
         
         // Daten holen und zeichnen
         await loadAndRenderGraph();
@@ -370,8 +474,17 @@ async function loadAndRenderGraph() {
     
     currentRouteId = routeSelect.value; 
     
-    // URL-Parameter synchronisieren, wenn der Nutzer im Dropdown wählt
+    // Segment-Werte auslesen
+    currentSegmentFrom = document.getElementById('segment_from').value;
+    currentSegmentTo = document.getElementById('segment_to').value;
+    updateSegmentStatus();
+    
+    // URL-Parameter synchronisieren
     updateUrlParameter('route', currentRouteId);
+    if (currentSegmentFrom) updateUrlParameter('segment_from', currentSegmentFrom);
+    else updateUrlParameter('segment_from', null);
+    if (currentSegmentTo) updateUrlParameter('segment_to', currentSegmentTo);
+    else updateUrlParameter('segment_to', null);
     
     const formData = new FormData();
     formData.append('action', 'get_all_data');
@@ -381,6 +494,13 @@ async function loadAndRenderGraph() {
         const res = await fetch('timetable.php', { method: 'POST', body: formData });
         const trainsData = await res.json();
         
+        // Wenn Segment aktiv: trainDaten filtern
+        if (currentSegmentFrom || currentSegmentTo) {
+            trainsData.forEach(train => {
+                train.stops = filterTrainStops(train.stops);
+            });
+        }
+        
         activeTrains = trainsData;
         
         if (typeof renderGraph === 'function') {
@@ -389,6 +509,32 @@ async function loadAndRenderGraph() {
     } catch (e) {
         console.error("Fehler beim Laden der Fahrplandaten für Zuschauer:", e);
     }
+}
+
+function filterTrainStops(stops) {
+    const route = routesConfig[currentRouteId];
+    if (!route || !route.stations) return stops;
+    
+    let fromIndex = 0;
+    let toIndex = route.stations.length - 1;
+    
+    if (currentSegmentFrom) {
+        const fromSt = route.stations.findIndex(s => s.id === currentSegmentFrom);
+        if (fromSt !== -1) fromIndex = fromSt;
+    }
+    
+    if (currentSegmentTo) {
+        const toSt = route.stations.findIndex(s => s.id === currentSegmentTo);
+        if (toSt !== -1) toIndex = toSt;
+    }
+    
+    // Stationen im Bereich [fromIndex, toIndex] herausfiltern
+    const validStationIds = new Set();
+    for (let i = fromIndex; i <= toIndex && i < route.stations.length; i++) {
+        validStationIds.add(route.stations[i].id);
+    }
+    
+    return stops.filter(stop => validStationIds.has(stop.station_id));
 }
 
 async function loadAndRenderTicker() {
@@ -437,8 +583,8 @@ function switchRouteAndLoad() {
         currentRouteId = routeSelect.value;
         updateUrlParameter('route', currentRouteId);
     }
-    if (typeof switchRoute === 'function') {
-        switchRoute();
+    if (typeof onRouteChanged === 'function') {
+        onRouteChanged();
     }
     loadAndRenderGraph();
 }
@@ -475,7 +621,7 @@ function filterRoutes() {
 
     if (firstVisibleOption && select.value !== firstVisibleOption.value) {
         select.value = firstVisibleOption.value;
-        loadAndRenderGraph(); 
+        onRouteChanged();
     }
 }
 
