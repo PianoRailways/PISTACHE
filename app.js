@@ -361,8 +361,8 @@ async function renderGraph() {
     const endMin = timeToMinutes(document.getElementById('graph_end').value) ?? 720;
     const totalVisibleMinutes = endMin - startMin;
 
-    const paddingTop = 60;
-    const paddingBottom = 40;
+    const paddingTop = 100;
+    const paddingBottom = 90;
     const paddingLeft = 100;
     const paddingRight = 100;
     
@@ -431,7 +431,7 @@ async function renderGraph() {
     ctx.setLineDash([]);
 
     // Raster: Bahnhofslinien
-    stations.forEach((st) => {
+    stations.forEach((st, index) => {
         const x = getX(st.km);
         const isDarkMode = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)');
         
@@ -441,15 +441,51 @@ async function renderGraph() {
         ctx.lineTo(x, paddingTop + graphHeight);
         ctx.stroke();
 
+        // Abbr. direkt über dem Canvas
         ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
-        ctx.font = 'bold 12px sans-serif';
+        ctx.font = 'bold 11px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(st.abbr, x, paddingTop - 12);
+        ctx.fillText(st.abbr, x, paddingTop - 5);
         
-        ctx.font = '9px sans-serif';
+        // Name + km versetzt: ungerade oben, gerade unten
         ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
-        ctx.fillText(st.name, x, paddingTop - 28);
-        ctx.fillText(`km ${st.km}`, x, paddingTop - 40);
+        ctx.font = '8px sans-serif';
+        
+        const isOddStation = index % 2 === 0; // 0,2,4... oben / 1,3,5... unten
+        
+        if (isOddStation) {
+            // Text OBEN (über dem Canvas)
+            const textY = paddingTop - 30;
+            
+            // Kleine Linie vom Text zur Abbr
+            ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(x, paddingTop - 20);
+            ctx.lineTo(x, paddingTop - 10);
+            ctx.stroke();
+            
+            // Name
+            ctx.fillText(st.name, x, textY);
+            // km
+            ctx.fillText(`km ${st.km}`, x, textY + 10);
+        } else {
+            // Text UNTEN (unter dem Canvas)
+            const textY = paddingTop + graphHeight + 25;
+            
+            // Kleine Linie vom Text zur Abbr
+            ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(x, paddingTop + graphHeight + 5);
+            ctx.lineTo(x, paddingTop + graphHeight + 15);
+            ctx.stroke();
+            
+            // Name
+            ctx.fillText(st.name, x, textY);
+            // km
+            ctx.fillText(`km ${st.km}`, x, textY + 10);
+        }
     });
 
     // Zuglinien zeichnen
