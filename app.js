@@ -447,45 +447,33 @@ async function renderGraph() {
         ctx.textAlign = 'center';
         ctx.fillText(st.abbr, x, paddingTop - 5);
         
-        // Name + km versetzt: ungerade oben, gerade unten
+        // Name + km: alle OBEN, aber unterschiedlich hoch versetzt
         ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
         ctx.font = '8px sans-serif';
         
-        const isOddStation = index % 2 === 0; // 0,2,4... oben / 1,3,5... unten
+        const isOddStation = index % 2 === 0; // 0,2,4... oben hoch / 1,3,5... oben tiefer
         
+        let textY;
         if (isOddStation) {
-            // Text OBEN (über dem Canvas)
-            const textY = paddingTop - 30;
-            
-            // Kleine Linie vom Text zur Abbr
-            ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(x, paddingTop - 20);
-            ctx.lineTo(x, paddingTop - 10);
-            ctx.stroke();
-            
-            // Name
-            ctx.fillText(st.name, x, textY);
-            // km
-            ctx.fillText(`km ${st.km}`, x, textY + 10);
+            // Ungerade: weiter oben
+            textY = paddingTop - 35;
         } else {
-            // Text UNTEN (unter dem Canvas)
-            const textY = paddingTop + graphHeight + 25;
-            
-            // Kleine Linie vom Text zur Abbr
-            ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(x, paddingTop + graphHeight + 5);
-            ctx.lineTo(x, paddingTop + graphHeight + 15);
-            ctx.stroke();
-            
-            // Name
-            ctx.fillText(st.name, x, textY);
-            // km
-            ctx.fillText(`km ${st.km}`, x, textY + 10);
+            // Gerade: etwas tiefer (aber immer noch oben)
+            textY = paddingTop - 20;
         }
+        
+        // Kleine Linie vom Text zur Abbr
+        ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(x, textY + 10);
+        ctx.lineTo(x, paddingTop - 10);
+        ctx.stroke();
+        
+        // Name
+        ctx.fillText(st.name, x, textY);
+        // km
+        ctx.fillText(`km ${st.km}`, x, textY + 10);
     });
 
     // Zuglinien zeichnen
