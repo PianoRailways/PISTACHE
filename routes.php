@@ -47,6 +47,24 @@ $ROUTES = [
             ['id' => 'DO', 'name' => 'Domodossola', 'abbr' => 'DO', 'km' => 47.278],
         ]
     ],
+    'flp' => [
+        'id' => 'flp',
+        'name' => 'FLP',
+        'stations' => [
+            ['id' => 'LGFL', 'name' => 'Lugano', 'abbr' => 'LGFL', 'km' => -0.037],
+            ['id' => 'SOGO', 'name' => 'Sorengo', 'abbr' => 'SOGO', 'km' => 1.357],
+            ['id' => 'SORL', 'name' => 'Laghetto', 'abbr' => 'SORL', 'km' => 1.704],
+            ['id' => 'CAAG', 'name' => 'Cappella-Agnuzzo', 'abbr' => 'CAAG', 'km' => 2.52],
+            ['id' => 'BIOM', 'name' => 'Molinazzo', 'abbr' => 'BIOM', 'km' => 5.287],
+            ['id' => 'BIOG', 'name' => 'Bioggio', 'abbr' => 'BIOG', 'km' => 5.779],
+            ['id' => 'SERO', 'name' => 'Serocca', 'abbr' => 'SERO', 'km' => 6.27],
+            ['id' => 'AGNO', 'name' => 'Agno', 'abbr' => 'AGNO', 'km' => 7.755],
+            ['id' => 'MAGP', 'name' => 'Magliaso Pasese', 'abbr' => 'MAGP', 'km' => 9.404],
+            ['id' => 'MAGL', 'name' => 'Magliaso', 'abbr' => 'MAGL', 'km' => 9.949],
+            ['id' => 'CASL', 'name' => 'Caslano', 'abbr' => 'CASL', 'km' => 10.712],
+            ['id' => 'POTR', 'name' => 'Ponte Tresa', 'abbr' => 'POTR', 'km' => 12.28],
+        ]
+    ],
     'locarnese' => [
         'id' => 'locarnese',
         'name' => 'Locarno',
