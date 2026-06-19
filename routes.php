@@ -107,6 +107,43 @@ $ROUTES = [
             ['id' => 'MAA2', 'name' => 'Malpensa Aeroporto T2', 'abbr' => 'MAA2', 'km' => 61.93],
         ]
     ],
+    'cd-lifs' => [
+        'id' => 'cd-lifs',
+        'name' => 'Cadenazzo – Luino',
+        'stations' => [
+            ['id' => 'GIU', 'name' => 'Giubiasco', 'abbr' => 'GIU', 'km' => 154.04],
+            ['id' => 'SAN', 'name' => 'S. Antonino', 'abbr' => 'SAN', 'km' => 156.8],
+            ['id' => 'CD', 'name' => 'Cadenazzo', 'abbr' => 'CD', 'km' => 159.48],
+            ['id' => 'QUA', 'name' => 'Quartino', 'abbr' => 'QUA', 'km' => 163.96],
+            ['id' => 'MAG', 'name' => 'Magadino', 'abbr' => 'MAG', 'km' => 166.96],
+            ['id' => 'SN', 'name' => 'S. Nazzaro', 'abbr' => 'SN', 'km' => 170.54],
+            ['id' => 'GER', 'name' => 'Gerra (Gambarogno)', 'abbr' => 'GER', 'km' => 172.82],
+            ['id' => 'RZO', 'name' => 'Ranzo-S. Abbondio', 'abbr' => 'RZO', 'km' => 173.69],
+            ['id' => 'PINC', 'name' => 'Pino Confine', 'abbr' => 'PINC', 'km' => 175.89],
+            ['id' => 'PINT', 'name' => 'Pino-Tronzano', 'abbr' => 'PINT', 'km' => 177.77],
+            ['id' => 'MAC', 'name' => 'Maccagno', 'abbr' => 'MAC', 'km' => 184.76],
+            ['id' => 'CMA', 'name' => 'Colmegna', 'abbr' => 'CMA', 'km' => 187.18],
+            ['id' => 'LIFS', 'name' => 'Luino', 'abbr' => 'LIFS', 'km' => 190.74],
+            ['id' => 'POVA', 'name' => 'Porto Valtravaglia', 'abbr' => 'POVA', 'km' => 197.579],
+        ]
+    ],
+    'lago-maggiore' => [
+        'id' => 'lago-maggiore',
+        'name' => 'Lago Maggiore (Luino)',
+        'stations' => [
+            ['id' => 'LIFS', 'name' => 'Luino', 'abbr' => 'LIFS', 'km' => -50.715],
+            ['id' => 'POVA', 'name' => 'Porto Valtravaglia', 'abbr' => 'POVA', 'km' => -43.876],
+            ['id' => 'CLD', 'name' => '	Caldè', 'abbr' => 'CLD', 'km' => -42.092],
+            ['id' => 'LAMO', 'name' => 'Laveno-Mombello', 'abbr' => 'LAMO', 'km' => -31.236],
+            ['id' => 'SANG', 'name' => 'Sangiano', 'abbr' => 'SANG', 'km' => -27.97],
+            ['id' => 'BESZ', 'name' => 'Besozzo', 'abbr' => 'BESZ', 'km' => -23.596],
+            ['id' => 'TRAV', 'name' => 'Travedona-Biandronno', 'abbr' => 'TRAV', 'km' => -19.126],
+            ['id' => 'TERV', 'name' => 'Ternate-Varano Borghi', 'abbr' => 'TERV', 'km' => -15.965],
+            ['id' => 'MORN', 'name' => 'Mornago-Cimbro', 'abbr' => 'MORN', 'km' => -9.517],
+            ['id' => 'BENA', 'name' => 'Besnate', 'abbr' => 'BENA', 'km' => -5.161],
+            ['id' => 'GAL', 'name' => 'Gallarate', 'abbr' => 'GAL', 'km' => -0],
+        ]
+    ],
     'lugano' => [
         'id' => 'lugano',
         'name' => 'Lugano',
