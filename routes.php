@@ -1498,6 +1498,23 @@ $ROUTES = [
             ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => 129.77],
         ]
     ],
+    'rbl-zoer' => [
+        'id' => 'rbl-zoer',
+        'name' => 'Altstetten - Oerlikon',
+        'stations' => [
+            ['id' => 'KLW', 'name' => 'Killwangen-Spreitenbach', 'abbr' => 'KLW', 'km' => -13.14],
+            ['id' => 'RBL', 'name' => 'RBL / Silberen', 'abbr' => 'RBL', 'km' => -10.33],
+            ['id' => 'DT', 'name' => 'Dietikon', 'abbr' => 'DT', 'km' => -8.1],
+            ['id' => 'GLZB', 'name' => 'Glanzenberg', 'abbr' => 'GLZB', 'km' => -6.06],
+            ['id' => 'SCHL', 'name' => 'Schlieren', 'abbr' => 'SCHL', 'km' => -4.02],
+            ['id' => 'ZAS', 'name' => 'Altstetten', 'abbr' => 'ZAS', 'km' => -0.68],
+            ['id' => 'HRD', 'name' => 'Hard', 'abbr' => 'HRD', 'km' => 1.2],
+            ['id' => 'ZOER', 'name' => 'Oerlikon', 'abbr' => 'ZOER', 'km' => 4.7],
+            ['id' => 'OPS', 'name' => 'Opfikon Süd', 'abbr' => 'OPS', 'km' => 6.17],
+            ['id' => 'OP', 'name' => 'Opfikon', 'abbr' => 'OP', 'km' => 7.2],
+            ['id' => 'ZFH', 'name' => 'Zürich Flughafen', 'abbr' => 'ZFH', 'km' => 9.6],
+        ]
+    ],
     'dvzo' => [
         'id' => 'dvzo',
         'name' => 'DVZO (Bauma)',
