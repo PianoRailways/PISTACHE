@@ -1549,6 +1549,8 @@ $ROUTES = [
             ['id' => 'NRRB', 'name' => 'Niederrickenbach', 'abbr' => 'NRRB', 'km' => -18.95],
             ['id' => 'DAL', 'name' => 'Dallenwil', 'abbr' => 'DAL', 'km' => -18.23],
             ['id' => 'BNNW', 'name' => 'Büren', 'abbr' => 'BNNW', 'km' => -17.67],
+            ['id' => 'AEG', 'name' => 'Ägerti', 'abbr' => 'AEG', 'km' => -17.65],
+            ['id' => 'STF', 'name' => 'Staldifeld', 'abbr' => 'STF', 'km' => -16.88],
             ['id' => 'ODNW', 'name' => 'Oberdorf', 'abbr' => 'ODNW', 'km' => -16.46],
             ['id' => 'STAN', 'name' => 'Stans', 'abbr' => 'STAN', 'km' => -14.55],
             ['id' => 'SSTA', 'name' => 'Stansstad', 'abbr' => 'SSTA', 'km' => -11.42],
