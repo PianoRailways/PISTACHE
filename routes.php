@@ -803,6 +803,34 @@ $ROUTES = [
             ['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 145.45],
         ]
     ],
+    'le-chable' => [
+        'id' => 'le-chable',
+        'name' => 'Le Châble',
+        'stations' => [
+            ['id' => 'MA', 'name' => 'Martigny', 'abbr' => 'MA', 'km' => 0],
+            ['id' => 'MAXP', 'name' => 'MAXP', 'abbr' => 'MAXP', 'km' => 2.26],
+            ['id' => 'MABO', 'name' => 'Martigny-Bourg', 'abbr' => 'MABO', 'km' => 2.9],
+            ['id' => 'MACR', 'name' => 'Martigny-Croix', 'abbr' => 'MACR', 'km' => 4.07],
+            ['id' => 'BOVE', 'name' => 'Bovernier', 'abbr' => 'BOVE', 'km' => 7.8],
+            ['id' => 'SMB', 'name' => 'Sembrancher', 'abbr' => 'SMB', 'km' => 13.11],
+            ['id' => 'ETIE', 'name' => 'Etiez', 'abbr' => 'ETIE', 'km' => 14.82],
+            ['id' => 'CHAB', 'name' => 'Le Châble', 'abbr' => 'CHAB', 'km' => 19.99],
+        ]
+    ],
+    'orsieres' => [
+        'id' => 'orsieres',
+        'name' => 'Orsières',
+        'stations' => [
+            ['id' => 'MA', 'name' => 'Martigny', 'abbr' => 'MA', 'km' => 0],
+            ['id' => 'MAXP', 'name' => 'MAXP', 'abbr' => 'MAXP', 'km' => 2.26],
+            ['id' => 'MABO', 'name' => 'Martigny-Bourg', 'abbr' => 'MABO', 'km' => 2.9],
+            ['id' => 'MACR', 'name' => 'Martigny-Croix', 'abbr' => 'MACR', 'km' => 4.07],
+            ['id' => 'BOVE', 'name' => 'Bovernier', 'abbr' => 'BOVE', 'km' => 7.8],
+            ['id' => 'SMB', 'name' => 'Sembrancher', 'abbr' => 'SMB', 'km' => 13.11],
+            ['id' => 'DOUY', 'name' => 'La Douay', 'abbr' => 'DOUY', 'km' => 16.49],
+            ['id' => 'ORS', 'name' => 'Orsières', 'abbr' => 'ORS', 'km' => 19.34],
+        ]
+    ],
     'rheintal' => [
         'id' => 'rheintal',
         'name' => 'Rheintal',
