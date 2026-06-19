@@ -320,7 +320,7 @@ async function renderGraph() {
     formData.append('route_id', currentRouteId);
 
     const res = await fetch('', { method: 'POST', body: formData });
-    const trains = await res.json();
+    let trains = await res.json();
 
     updateTrainList(trains);
 
@@ -329,8 +329,33 @@ async function renderGraph() {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const stations = routesConfig[currentRouteId].stations;
+    let stations = routesConfig[currentRouteId].stations;
     if (!stations || stations.length === 0) return;
+
+    // === SEGMENT-FILTERUNG (für Zuschauermodus) ===
+    if (typeof currentSegmentFrom !== 'undefined' && typeof currentSegmentTo !== 'undefined') {
+        let fromIndex = 0;
+        let toIndex = stations.length - 1;
+        
+        if (currentSegmentFrom) {
+            const idx = stations.findIndex(s => s.id === currentSegmentFrom);
+            if (idx !== -1) fromIndex = idx;
+        }
+        
+        if (currentSegmentTo) {
+            const idx = stations.findIndex(s => s.id === currentSegmentTo);
+            if (idx !== -1) toIndex = idx;
+        }
+        
+        // Gefilterte Stations-Liste
+        stations = stations.slice(fromIndex, toIndex + 1);
+        
+        // Auch Züge filtern
+        trains.forEach(train => {
+            const segmentStationIds = new Set(stations.map(s => s.id));
+            train.stops = train.stops.filter(stop => segmentStationIds.has(stop.station_id));
+        });
+    }
 
     const startMin = timeToMinutes(document.getElementById('graph_start').value) ?? 240;
     const endMin = timeToMinutes(document.getElementById('graph_end').value) ?? 720;
