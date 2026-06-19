@@ -2031,6 +2031,20 @@ $ROUTES = [
         ['id' => 'GVIL', 'name' => 'Grandvillars (F)', 'abbr' => 'GVIL', 'km' => -39.9],
     ]
 ],
+'bure-casernes' => [
+    'id' => 'bure-casernes',
+    'name' => 'Bure-Casernes',
+    'stations' => [
+        ['id' => 'GLO', 'name' => 'Glovelier', 'abbr' => 'GLO', 'km' => -73.09],
+        ['id' => 'SU', 'name' => 'St-Ursanne', 'abbr' => 'SU', 'km' => -67.83],
+        ['id' => 'CG', 'name' => 'Courgenay', 'abbr' => 'CG', 'km' => -61.67],
+        ['id' => 'POR', 'name' => 'Porrentruy', 'abbr' => 'POR', 'km' => -56.58],
+        ['id' => 'CCH', 'name' => 'Courchavon', 'abbr' => 'CCH', 'km' => -53.32],
+        ['id' => 'CTM', 'name' => 'Courtemaîche', 'abbr' => 'CTM', 'km' => -51.46],
+        ['id' => 'GRA', 'name' => 'Grandcourt', 'abbr' => 'GRA', 'km' => -49.79],
+        ['id' => 'BURE', 'name' => 'Bure-Casernes', 'abbr' => 'BURE', 'km' => -46.76],
+    ]
+],
 'ajoie-cj' => [
     'id' => 'ajoie-cj',
     'name' => 'Ajoie (CJ)',
