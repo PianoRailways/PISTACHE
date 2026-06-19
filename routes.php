@@ -2031,6 +2031,26 @@ $ROUTES = [
         ['id' => 'GVIL', 'name' => 'Grandvillars (F)', 'abbr' => 'GVIL', 'km' => -39.9],
     ]
 ],
+'ajoie-cj' => [
+    'id' => 'ajoie-cj',
+    'name' => 'Ajoie (CJ)',
+    'stations' => [
+        ['id' => 'LSB', 'name' => 'Liesberg', 'abbr' => 'LSB', 'km' => -94.2],
+        ['id' => 'SOY', 'name' => 'Soyhières', 'abbr' => 'SOY', 'km' => -88.5],
+        ['id' => 'DMT', 'name' => 'Delémont', 'abbr' => 'DMT', 'km' => -84.6],
+        ['id' => 'CTT', 'name' => 'Courtetélle', 'abbr' => 'CTT', 'km' => -81.6],
+        ['id' => 'CFV', 'name' => 'Courfaivre', 'abbr' => 'CFV', 'km' => -79.36],
+        ['id' => 'BSC', 'name' => 'Bassecourt', 'abbr' => 'BSC', 'km' => -75.99],
+        ['id' => 'GLO', 'name' => 'Glovelier', 'abbr' => 'GLO', 'km' => -73.09],
+        ['id' => 'SU', 'name' => 'St-Ursanne', 'abbr' => 'SU', 'km' => -67.83],
+        ['id' => 'CG', 'name' => 'Courgenay', 'abbr' => 'CG', 'km' => -61.67],
+        ['id' => 'POR', 'name' => 'Porrentruy', 'abbr' => 'POR', 'km' => -56.58],
+        ['id' => 'ALLE', 'name' => 'Alle', 'abbr' => 'ALLE', 'km' => -60.73],
+        ['id' => 'ALLC', 'name' => 'Alle Centre', 'abbr' => 'ALLC', 'km' => -61.95],
+        ['id' => 'VEND', 'name' => 'Vendlincourt', 'abbr' => 'VEND', 'km' => -64.96],
+        ['id' => 'BONF', 'name' => 'Bonfol', 'abbr' => 'BONF', 'km' => -67.47],
+    ]
+],
     'laufental-moutier' => [
         'id' => 'laufental-moutier',
         'name' => 'Laufental (Münster)',
