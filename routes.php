@@ -814,6 +814,7 @@ $ROUTES = [
             ['id' => 'BOVE', 'name' => 'Bovernier', 'abbr' => 'BOVE', 'km' => 7.8],
             ['id' => 'SMB', 'name' => 'Sembrancher', 'abbr' => 'SMB', 'km' => 13.11],
             ['id' => 'ETIE', 'name' => 'Etiez', 'abbr' => 'ETIE', 'km' => 14.82],
+            ['id' => 'DOUY', 'name' => 'La Douay', 'abbr' => 'DOUY', 'km' => 16.49],
             ['id' => 'CHAB', 'name' => 'Le Châble', 'abbr' => 'CHAB', 'km' => 19.99],
         ]
     ],
@@ -827,6 +828,7 @@ $ROUTES = [
             ['id' => 'MACR', 'name' => 'Martigny-Croix', 'abbr' => 'MACR', 'km' => 4.07],
             ['id' => 'BOVE', 'name' => 'Bovernier', 'abbr' => 'BOVE', 'km' => 7.8],
             ['id' => 'SMB', 'name' => 'Sembrancher', 'abbr' => 'SMB', 'km' => 13.11],
+            ['id' => 'ETIE', 'name' => 'Etiez', 'abbr' => 'ETIE', 'km' => 14.82],
             ['id' => 'DOUY', 'name' => 'La Douay', 'abbr' => 'DOUY', 'km' => 16.49],
             ['id' => 'ORS', 'name' => 'Orsières', 'abbr' => 'ORS', 'km' => 19.34],
         ]
