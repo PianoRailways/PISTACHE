@@ -9,7 +9,7 @@ if (php_sapi_name() !== 'cli') {
 }
 
 // Pfade definieren
-$db_file = __DIR__ . '/dbs/fahrplan-ch-26.sqlite';
+$db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 $import_folder = __DIR__ . '/anschlussprobleme'; // Ordner, in dem deine 100 Dateien liegen
 
 // Standard-Strecken-ID, falls sie nicht aus dem Dateinamen extrahiert werden kann
@@ -45,6 +45,19 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     remarks TEXT, 
     UNIQUE(train_id, station_id)
 )");
+
+// 🔧 WICHTIG: Nachrüsten der neuen Spalten, falls sie in älteren DBs fehlen
+try {
+    $db->exec("ALTER TABLE timetable ADD COLUMN actual_arrival TEXT");
+} catch (Exception $e) {
+    // Spalte existiert bereits
+}
+
+try {
+    $db->exec("ALTER TABLE timetable ADD COLUMN actual_departure TEXT");
+} catch (Exception $e) {
+    // Spalte existiert bereits
+}
 
 // Prüfen, ob der Import-Ordner existiert
 if (!is_dir($import_folder)) {
