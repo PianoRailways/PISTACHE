@@ -2534,12 +2534,30 @@ $ROUTES = [
             ['id' => 'RTW', 'name' => 'Riedtwil', 'abbr' => 'RTW', 'km' => -72.33],
         ]
     ],
+    'köniz' => [
+        'id' => 'köniz',
+        'name' => 'Köniz',
+        'stations' => [
+            ['id' => 'SCBG', 'name' => 'Schwarzenburg', 'abbr' => 'SCBG', 'km' => -20.87],
+            ['id' => 'LH', 'name' => 'Lanzenhäusern', 'abbr' => 'LH', 'km' => -17.83],
+            ['id' => 'SBR', 'name' => 'Schwarzwasserbrücke', 'abbr' => 'SBR', 'km' => -14.66],
+            ['id' => 'MHN', 'name' => 'Mittelhäusern', 'abbr' => 'MHN', 'km' => -12.82],
+            ['id' => 'NS', 'name' => 'Niederscherli', 'abbr' => 'NS', 'km' => -10.89],
+            ['id' => 'GAS', 'name' => 'Gasel', 'abbr' => 'GAS', 'km' => -8.87],
+            ['id' => 'MOOS', 'name' => 'Moos', 'abbr' => 'MOOS', 'km' => -7.8],
+            ['id' => 'KOE', 'name' => 'Köniz', 'abbr' => 'KOE', 'km' => -5.71],
+            ['id' => 'LBF', 'name' => 'Liebefeld', 'abbr' => 'LBF', 'km' => -5],
+            ['id' => 'BNFI', 'name' => 'Fischermätteli', 'abbr' => 'BNFI', 'km' => -3.53],
+            ['id' => 'BNAH', 'name' => 'Ausserholligen GBS (Europaplatz)', 'abbr' => 'BNAH', 'km' => -3.12],
+            ['id' => 'HOL', 'name' => 'Holligen', 'abbr' => 'HOL', 'km' => -2.71],
+        ]
+    ],
     'gürbetal' => [
         'id' => '303',
         'name' => '303 - Gürbetal',
         'stations' => [
             ['id' => 'HOL', 'name' => 'Holligen', 'abbr' => 'HOL', 'km' => 2.71],
-			['id' => 'BNAH', 'name' => 'Ausserholligen GBS', 'abbr' => 'BNAH', 'km' => 3.12],
+			['id' => 'BNAH', 'name' => 'Ausserholligen GBS (Europaplatz)', 'abbr' => 'BNAH', 'km' => 3.12],
 			['id' => 'BNFI', 'name' => 'Bern Fischermätteli', 'abbr' => 'BNFI', 'km' => 3.52],
             ['id' => 'BNWE', 'name' => 'Bern Weissenbühl', 'abbr' => 'BNWE', 'km' => 5.09],
             ['id' => 'WBB', 'name' => 'Wabern b. Bern', 'abbr' => 'WBB', 'km' => 6.57],
