@@ -2703,6 +2703,23 @@ $ROUTES = [
             ['id' => 'CH', 'name' => 'Chur', 'abbr' => 'CH', 'km' => 25.72],
         ]
     ],
+    'mittelthurgau' => [
+        'id' => 'mittelthurgau',
+        'name' => 'Mittelthurgau',
+        'stations' => [
+            ['id' => 'WF', 'name' => 'Weinfelden', 'abbr' => 'WF', 'km' => 19.17],
+            ['id' => 'KHF', 'name' => 'Kehlhof', 'abbr' => 'KHF', 'km' => 24.31],
+            ['id' => 'BERG', 'name' => 'Berg', 'abbr' => 'BERG', 'km' => 27.23],
+            ['id' => 'AHAU', 'name' => 'Altishausen', 'abbr' => 'AHAU', 'km' => 29.09],
+            ['id' => 'SHAU', 'name' => 'Sigershausen', 'abbr' => 'SHAU', 'km' => 30.78],
+            ['id' => 'LENG', 'name' => 'Lengwil', 'abbr' => 'LENG', 'km' => 33.46],
+            ['id' => 'KRB', 'name' => 'Kreuzlingen Bernrain', 'abbr' => 'KRB', 'km' => 36.25],
+            ['id' => 'TAEM', 'name' => 'Tägerwilen Dorf MTHB', 'abbr' => 'TAEM', 'km' => 38.61],
+            ['id' => 'TAMO', 'name' => 'Tägermoos', 'abbr' => 'TAMO', 'km' => 39.58],
+            ['id' => 'KR', 'name' => 'Kreuzlingen', 'abbr' => 'KR', 'km' => 41.12],
+            ['id' => 'RKO', 'name' => 'Konstanz (KODB)', 'abbr' => 'RKO', 'km' => 42.28],
+        ]
+    ],
     'unterbruch' => [
         'id' => '999',
         'name' => '< ----------------------------------------- >',
