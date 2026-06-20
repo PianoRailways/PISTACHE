@@ -761,6 +761,8 @@ $ROUTES = [
             ['id' => 'PRE', 'name' => 'Preglia', 'abbr' => 'PRE', 'km' => 182.45],
             ['id' => 'DOBI', 'name' => 'Domodossola bif', 'abbr' => 'DOBI', 'km' => 184],
             ['id' => 'DOFS', 'name' => 'Domodossola FS (I)', 'abbr' => 'DOFS', 'km' => 186.28],
+            ['id' => 'DO', 'name' => '', 'abbr' => '', 'km' => 186.28],
+            ['id' => 'DOFM', 'name' => '', 'abbr' => '', 'km' => 186.28],
         ]
     ],
     'monthey-cff' => [
