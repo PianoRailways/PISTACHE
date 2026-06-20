@@ -1002,6 +1002,25 @@ $ROUTES = [
             ['id' => 'BT', 'name' => 'Buttes', 'abbr' => 'BT', 'km' => 34.43],
         ]
     ],
+    'st-sulpice' => [
+        'id' => 'st-sulpice',
+        'name' => 'St-Sulpice',
+        'stations' => [
+            ['id' => 'NE', 'name' => 'Neuchâtel', 'abbr' => 'NE', 'km' => 0],
+            ['id' => 'NEVA', 'name' => 'Vauseyon', 'abbr' => 'NEVA', 'km' => 1.33],
+            ['id' => 'NESE', 'name' => 'Serrières', 'abbr' => 'NESE', 'km' => 2.9],
+            ['id' => 'AUV', 'name' => 'Auvernier', 'abbr' => 'AUV', 'km' => 4.98],
+            ['id' => 'BOLE', 'name' => 'Bôle', 'abbr' => 'BOLE', 'km' => 8.37],
+            ['id' => 'CDM', 'name' => 'Champ-du-Moulin', 'abbr' => 'CDM', 'km' => 13.65],
+            ['id' => 'NOI', 'name' => 'Noiraigue', 'abbr' => 'NOI', 'km' => 18.11],
+            ['id' => 'TR', 'name' => 'Travers', 'abbr' => 'TR', 'km' => 22.45],
+            ['id' => 'PRST', 'name' => 'La Presta Mines dasphalte', 'abbr' => 'PRST', 'km' => 24.69],
+            ['id' => 'CVTR', 'name' => 'Couvet TR', 'abbr' => 'CVTR', 'km' => 26.47],
+            ['id' => 'MOT', 'name' => 'Môtiers', 'abbr' => 'MOT', 'km' => 28.87],
+            ['id' => 'FLE', 'name' => 'Fleurier', 'abbr' => 'FLE', 'km' => 31.3],
+            ['id' => 'SSP', 'name' => 'St.Sulpice', 'abbr' => 'SSP', 'km' => 32.91],
+        ]
+    ],
     'areuse-f' => [
         'id' => 'areuse-f',
         'name' => 'Neuchatel - Travers - Pontarlier',
