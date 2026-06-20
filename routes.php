@@ -1477,6 +1477,44 @@ $ROUTES = [
             ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => 15.77],
         ]
     ],
+    'biberbrugg' => [
+        'id' => 'biberbrugg',
+        'name' => 'Biberbrugg',
+        'stations' => [
+            ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD-Goldau', 'km' => -38.6],
+            ['id' => 'STBG', 'name' => 'Steinerberg', 'abbr' => 'STBG', 'km' => -35.6],
+            ['id' => 'SAT', 'name' => 'Sattel-Aegeri', 'abbr' => 'SAT', 'km' => -30.79],
+            ['id' => 'SATT', 'name' => 'Sattel', 'abbr' => 'SATT', 'km' => -30.24],
+            ['id' => 'RTT', 'name' => 'Rothenthurm', 'abbr' => 'RTT', 'km' => -25.65],
+            ['id' => 'AT', 'name' => 'Altmatt', 'abbr' => 'AT', 'km' => -22.25],
+            ['id' => 'BIB', 'name' => 'Biberbrugg', 'abbr' => 'BIB', 'km' => -18.42],
+            ['id' => 'SCHI', 'name' => 'Schindellegi-Feusisberg', 'abbr' => 'SCHI', 'km' => -15.58],
+            ['id' => 'SAM', 'name' => 'Samstagern', 'abbr' => 'SAM', 'km' => -12.33],
+            ['id' => 'BGH', 'name' => 'Burghalden', 'abbr' => 'BGH', 'km' => -9.81],
+            ['id' => 'RDM', 'name' => 'Riedmadd', 'abbr' => 'RDM', 'km' => -9.31],
+            ['id' => 'WOL', 'name' => 'Wollerau', 'abbr' => 'WOL', 'km' => -8.27],
+            ['id' => 'WILN', 'name' => 'Wilen bei Wollerau', 'abbr' => 'WILN', 'km' => -7.53],
+            ['id' => 'FRBS', 'name' => 'Freienbach SOB', 'abbr' => 'FRBS', 'km' => -5.49],
+            ['id' => 'PF', 'name' => 'Pfäffikon SZ', 'abbr' => 'PF', 'km' => -4.02],
+            ['id' => 'PFNO', 'name' => 'Pfäffikon Nord', 'abbr' => 'PFNO', 'km' => -2.06],
+            ['id' => 'HUR', 'name' => 'Hurden', 'abbr' => 'HUR', 'km' => -1.57],
+            ['id' => 'RW', 'name' => 'Rapperswil', 'abbr' => 'RW', 'km' => 0],
+        ]
+    ],
+    'einsiedeln' => [
+        'id' => 'einsiedeln',
+        'name' => 'Einsiedeln',
+        'stations' => [
+            ['id' => 'WAE', 'name' => 'Wädenswil', 'abbr' => 'WAE', 'km' => -0.09],
+            ['id' => 'BGH', 'name' => 'Burghalden', 'abbr' => 'BGH', 'km' => 2.89],
+            ['id' => 'GRF', 'name' => 'Grüenfeld', 'abbr' => 'GRF', 'km' => 4.33],
+            ['id' => 'SAM', 'name' => 'Samstagern', 'abbr' => 'SAM', 'km' => 5.41],
+            ['id' => 'SCHI', 'name' => 'Unbekannt', 'abbr' => 'SCHI', 'km' => 8.28],
+            ['id' => 'BIB', 'name' => 'Biberbrugg', 'abbr' => 'BIB', 'km' => 11.51],
+            ['id' => 'NBG', 'name' => 'Neuberg', 'abbr' => 'NBG', 'km' => 13.67],
+            ['id' => 'EIS', 'name' => 'Einsiedeln', 'abbr' => 'EIS', 'km' => 16.65],
+        ]
+    ],
     'furttal' => [
         'id' => 'furttal',
         'name' => 'Furttal',
