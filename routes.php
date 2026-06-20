@@ -1882,6 +1882,32 @@ $ROUTES = [
             ['id' => 'ZZ', 'name' => 'Bad Zurzach', 'abbr' => 'ZZ', 'km' => 48.11],
         ]
     ],
+    'heitersberg' => [
+        'id' => 'heitersberg',
+        'name' => 'Heitersberg',
+        'stations' => [
+            ['id' => 'WOES', 'name' => 'Wöschnau', 'abbr' => 'WOES', 'km' => -43.44],
+            ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => -41.51],
+            ['id' => 'AAGB', 'name' => 'Aarau GB', 'abbr' => 'AAGB', 'km' => -40.31],
+            ['id' => 'RU', 'name' => 'Rupperswil', 'abbr' => 'RU', 'km' => 35.64],
+            ['id' => 'LB', 'name' => 'Lenzburg', 'abbr' => 'LB', 'km' => -31.94],
+            ['id' => 'GEXI', 'name' => 'Gexi', 'abbr' => 'GEXI', 'km' => -30.01],
+            ['id' => 'OTH', 'name' => 'Othmarsingen', 'abbr' => 'OTH', 'km' => -27.68],
+            ['id' => 'MAEG', 'name' => 'Mägenswil', 'abbr' => 'MAEG', 'km' => -25.94],
+            ['id' => 'GMT', 'name' => 'Gruemet', 'abbr' => 'GMT', 'km' => -22.84],
+            ['id' => 'MELH', 'name' => 'Mellingen Heitersberg', 'abbr' => 'MELH', 'km' => 22.24],
+            ['id' => 'LANG', 'name' => 'Langacher', 'abbr' => 'LANG', 'km' => -17.83],
+            ['id' => 'KLW', 'name' => 'Killwangen-Spreitenach', 'abbr' => 'KLW', 'km' => -16.11],
+            ['id' => 'SILB', 'name' => 'Silbern', 'abbr' => 'SILB', 'km' => -13.3],
+            ['id' => 'DT', 'name' => 'Dietikon', 'abbr' => 'DT', 'km' => -11.07],
+            ['id' => 'GLZB', 'name' => 'Glanzenberg', 'abbr' => 'GLZB', 'km' => -9.55],
+            ['id' => 'SCHL', 'name' => 'Schlieren', 'abbr' => 'SCHL', 'km' => -7.51],
+            ['id' => 'EINF', 'name' => 'Einfang', 'abbr' => 'EINF', 'km' => -6.32],
+            ['id' => 'ZAS', 'name' => 'Altstetten', 'abbr' => 'ZAS', 'km' => -4.17],
+            ['id' => 'ZVB', 'name' => 'Vorbahnhof', 'abbr' => 'ZVB', 'km' => -1.96],
+            ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0],
+        ]
+    ],
     'lupfig' => [
         'id' => 'lupfig',
         'name' => 'Heitersberg (RU - LB - LUPF - BG)',
