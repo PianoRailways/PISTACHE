@@ -749,6 +749,20 @@ $ROUTES = [
 			['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 73.82],
         ]
     ],
+    'simplon' => [
+        'id' => 'simplon',
+        'name' => 'Simplon (BR-DO)',
+        'stations' => [
+            ['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 145.55],
+            ['id' => 'BRTU', 'name' => 'Brig Tunnel', 'abbr' => 'BRTU', 'km' => 147.15],
+            ['id' => 'STGD', 'name' => 'Stazione Galleria', 'abbr' => 'STGD', 'km' => 156.34],
+            ['id' => 'IS', 'name' => 'Iselle di Trasquera', 'abbr' => 'IS', 'km' => 167.22],
+            ['id' => 'VAR', 'name' => 'Varzo', 'abbr' => 'VAR', 'km' => 173.73],
+            ['id' => 'PRE', 'name' => 'Preglia', 'abbr' => 'PRE', 'km' => 182.45],
+            ['id' => 'DOBI', 'name' => 'Domodossola bif', 'abbr' => 'DOBI', 'km' => 184],
+            ['id' => 'DOFS', 'name' => 'Domodossola FS (I)', 'abbr' => 'DOFS', 'km' => 186.28],
+        ]
+    ],
     'monthey-cff' => [
         'id' => 'monthey-cff',
         'name' => 'Monthey (CFF)',
