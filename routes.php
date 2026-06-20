@@ -2131,6 +2131,32 @@ $ROUTES = [
             ['id' => 'BI', 'name' => 'Bienne', 'abbr' => 'BI', 'km' => 24.4],
         ]
     ],
+    'jura-weissenstein' => [
+        'id' => 'jura-weissenstein',
+        'name' => 'Jura - Weissenstein (SCB - MOU - ODF - SW)',
+        'stations' => [
+            ['id' => 'SCB', 'name' => 'Sonceboz', 'abbr' => 'SCB', 'km' => -67.22],
+            ['id' => 'TA', 'name' => 'Tavannes', 'abbr' => 'TA', 'km' => -40.33],
+            ['id' => 'REC', 'name' => 'Reconvilier', 'abbr' => 'REC', 'km' => -37.48],
+            ['id' => 'PON', 'name' => 'Pontent', 'abbr' => 'PON', 'km' => -35.38],
+            ['id' => 'MB', 'name' => 'Malleray-Bévilard', 'abbr' => 'MB', 'km' => -33.71],
+            ['id' => 'SOR', 'name' => 'Sorvilier', 'abbr' => 'SOR', 'km' => -31.3],
+            ['id' => 'CT', 'name' => 'Court', 'abbr' => 'CT', 'km' => -28.46],
+
+            ['id' => 'MOU', 'name' => 'Moutier', 'abbr' => 'MOU', 'km' => -22.1],
+            ['id' => 'GVAL', 'name' => 'Grandval', 'abbr' => 'GVAL', 'km' => -18.8],
+            ['id' => 'CREM', 'name' => 'Crémines', 'abbr' => 'CREM', 'km' => -17.8],
+            ['id' => 'CORC', 'name' => 'Corcelles', 'abbr' => 'CORC', 'km' => -16.6],
+            ['id' => 'ZOO', 'name' => 'Zoo', 'abbr' => 'ZOO', 'km' => -14.6],
+            ['id' => 'GAE', 'name' => 'Gänsbrunnen', 'abbr' => 'GAE', 'km' => -13.6],
+            ['id' => 'ODF', 'name' => 'Oberdorf', 'abbr' => 'ODF', 'km' => -9.6],
+            ['id' => 'IMHO', 'name' => 'Im Holz', 'abbr' => 'IMHO', 'km' => -8],
+            ['id' => 'LOM', 'name' => 'Lommiswil', 'abbr' => 'LOM', 'km' => -5.3],
+            ['id' => 'LADO', 'name' => 'Langendorf', 'abbr' => 'LADO', 'km' => -1.9],
+            ['id' => 'SW', 'name' => 'Alt-Solothurn', 'abbr' => 'SW', 'km' => 0],
+            ['id' => 'SO', 'name' => 'Neu-Solothurn', 'abbr' => 'SO', 'km' => -1],
+        ]
+    ],
     'weissenstein' => [
         'id' => 'weissenstein',
         'name' => 'Weissenstein',
