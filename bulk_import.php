@@ -39,6 +39,8 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     track TEXT, 
     arrival TEXT, 
     departure TEXT, 
+    actual_arrival TEXT,
+    actual_departure TEXT,
     flags TEXT, 
     remarks TEXT, 
     UNIQUE(train_id, station_id)
