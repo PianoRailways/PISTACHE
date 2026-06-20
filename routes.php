@@ -1719,6 +1719,35 @@ $ROUTES = [
             ['id' => 'HI', 'name' => 'Hinwil', 'abbr' => 'HI', 'km' => 22.5],
         ]
     ],
+    'bd-wadb' => [
+        'id' => 'bd-wadb',
+        'name' => 'Baden - Waldshut',
+        'stations' => [
+            ['id' => 'BD', 'name' => 'Baden', 'abbr' => 'BD', 'km' => 22.53],
+            ['id' => 'TG', 'name' => 'Turgi', 'abbr' => 'TG', 'km' => 27.43],
+            ['id' => 'SIG', 'name' => 'Siggenthal-Würenlingen', 'abbr' => 'SIG', 'km' => 30.76],
+            ['id' => 'DOE', 'name' => 'Döttingen', 'abbr' => 'DOE', 'km' => 37.36],
+            ['id' => 'KLI', 'name' => 'Klingnau', 'abbr' => 'KLI', 'km' => 38.33],
+            ['id' => 'KB', 'name' => 'Koblenz', 'abbr' => 'KB', 'km' => 41.13],
+            ['id' => 'KBGR', 'name' => 'Koblenz Grenze', 'abbr' => 'KBGR', 'km' => 42.7],
+            ['id' => 'RWU', 'name' => 'Waldshut (D) (WADB)', 'abbr' => 'RWU', 'km' => 44.46],
+        ]
+    ],
+    'bd-zz' => [
+        'id' => 'bd-zz',
+        'name' => 'Baden - Zurzach',
+        'stations' => [
+            ['id' => 'BD', 'name' => 'Baden', 'abbr' => 'BD', 'km' => 22.53],
+            ['id' => 'TG', 'name' => 'Turgi', 'abbr' => 'TG', 'km' => 27.43],
+            ['id' => 'SIG', 'name' => 'Siggenthal-Würenlingen', 'abbr' => 'SIG', 'km' => 30.76],
+            ['id' => 'DOE', 'name' => 'Döttingen', 'abbr' => 'DOE', 'km' => 37.36],
+            ['id' => 'KLI', 'name' => 'Klingnau', 'abbr' => 'KLI', 'km' => 38.33],
+            ['id' => 'KB', 'name' => 'Koblenz', 'abbr' => 'KB', 'km' => 41.13],
+            ['id' => 'KBD', 'name' => 'Koblenz Dorf', 'abbr' => 'KBD', 'km' => 42.59],
+            ['id' => 'RIET', 'name' => 'Rietheim', 'abbr' => 'RIET', 'km' => 46.12],
+            ['id' => 'ZZ', 'name' => 'Bad Zurzach', 'abbr' => 'ZZ', 'km' => 48.11],
+        ]
+    ],
     'nazeli' => [
         'id' => 'nazeli',
         'name' => 'Nationalbahn',
