@@ -1312,7 +1312,6 @@ $ROUTES = [
             ['id' => 'PNTR', 'name' => 'PNTR', 'abbr' => 'PNTR', 'km' => 35.36],
             ['id' => 'MTB', 'name' => 'Montbovon', 'abbr' => 'MTB', 'km' => 36.67],
             ['id' => 'SCI', 'name' => 'Les Sciernes (MOB)', 'abbr' => 'SCI', 'km' => 38.38],
-            
         ]
     ],
     'toggenburg' => [
