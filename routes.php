@@ -1882,6 +1882,20 @@ $ROUTES = [
             ['id' => 'ZZ', 'name' => 'Bad Zurzach', 'abbr' => 'ZZ', 'km' => 48.11],
         ]
     ],
+    'lupfig' => [
+        'id' => 'lupfig',
+        'name' => 'Heitersberg (RU - LB - LUPF - BG)',
+        'stations' => [
+            ['id' => 'RU', 'name' => 'Rupperswil', 'abbr' => 'RU', 'km' => -16.68],
+            ['id' => 'LB', 'name' => 'Lenzburg', 'abbr' => 'LB', 'km' => -12.98],
+            ['id' => 'GEXI', 'name' => 'Gexi', 'abbr' => 'GEXI', 'km' => -11.05],
+            ['id' => 'OTH', 'name' => 'Othmarsingen', 'abbr' => 'OTH', 'km' => -8.72],
+            ['id' => 'BRGG', 'name' => 'Brunegg', 'abbr' => 'BRGG', 'km' => -7.07],
+            ['id' => 'BIRR', 'name' => 'Birr', 'abbr' => 'BIRR', 'km' => -5.29],
+            ['id' => 'LUPF', 'name' => 'Lupfig', 'abbr' => 'LUPF', 'km' => -4.24],
+            ['id' => 'BG', 'name' => 'Brugg', 'abbr' => 'BG', 'km' => 0],
+        ]
+    ],
     'nazeli' => [
         'id' => 'nazeli',
         'name' => 'Nationalbahn',
