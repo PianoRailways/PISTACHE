@@ -1509,7 +1509,7 @@ $ROUTES = [
             ['id' => 'BGH', 'name' => 'Burghalden', 'abbr' => 'BGH', 'km' => 2.89],
             ['id' => 'GRF', 'name' => 'Grüenfeld', 'abbr' => 'GRF', 'km' => 4.33],
             ['id' => 'SAM', 'name' => 'Samstagern', 'abbr' => 'SAM', 'km' => 5.41],
-            ['id' => 'SCHI', 'name' => 'Unbekannt', 'abbr' => 'SCHI', 'km' => 8.28],
+            ['id' => 'SCHI', 'name' => 'Schindellegi-Feusisberg', 'abbr' => 'SCHI', 'km' => 8.28],
             ['id' => 'BIB', 'name' => 'Biberbrugg', 'abbr' => 'BIB', 'km' => 11.51],
             ['id' => 'NBG', 'name' => 'Neuberg', 'abbr' => 'NBG', 'km' => 13.67],
             ['id' => 'EIS', 'name' => 'Einsiedeln', 'abbr' => 'EIS', 'km' => 16.65],
