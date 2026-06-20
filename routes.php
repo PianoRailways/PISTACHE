@@ -925,6 +925,21 @@ $ROUTES = [
             ['id' => 'RSST', 'name' => 'Rorschach Stadt', 'abbr' => 'RSST', 'km' => 66.27],
         ]
     ],
+    'holderbank' => [
+        'id' => 'holderbank',
+        'name' => 'Holderbank',
+        'stations' => [
+            ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => -49.36],
+            ['id' => 'AAGB', 'name' => 'Aarau GB', 'abbr' => 'AAGB', 'km' => -48.16],
+            ['id' => 'RU', 'name' => 'Rupperswil', 'abbr' => 'RU', 'km' => -43.49],
+            ['id' => 'WI', 'name' => 'Wildegg', 'abbr' => 'WI', 'km' => -40.42],
+            ['id' => 'HOBK', 'name' => 'Holderbank', 'abbr' => 'HOBK', 'km' => -38.76],
+            ['id' => 'SBAD', 'name' => 'Schinznach Bad', 'abbr' => 'SBAD', 'km' => -36.14],
+            ['id' => 'BG', 'name' => 'Brugg', 'abbr' => 'BG', 'km' => -31.27],
+            ['id' => 'TG', 'name' => 'Turgi', 'abbr' => 'TG', 'km' => -27.43],
+            ['id' => 'BD', 'name' => 'Baden', 'abbr' => 'BD', 'km' => -22.53],
+        ]
+    ],
     'frick' => [
         'id' => 'frick',
         'name' => 'Bözberg',
