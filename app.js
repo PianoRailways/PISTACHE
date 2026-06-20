@@ -361,10 +361,10 @@ async function renderGraph() {
     const endMin = timeToMinutes(document.getElementById('graph_end').value) ?? 720;
     const totalVisibleMinutes = endMin - startMin;
 
-    const paddingTop = 100;
-    const paddingBottom = 90;
-    const paddingLeft = 100;
-    const paddingRight = 100;
+    const paddingTop = 50;
+    const paddingBottom = 40;
+    const paddingLeft = 50;
+    const paddingRight = 50;
     
     const graphWidth = canvas.width - paddingLeft - paddingRight;
     const graphHeight = canvas.height - paddingTop - paddingBottom;
@@ -844,13 +844,10 @@ async function saveTrainLink() {
 // ========================================================================
 
 /**
- * propagateTravelTimeWithReserve()
+ * propagateTravelTimeWithReserve() - Free Editor Version
  * 
- * Propagiert die ganze Fahrt durch den Zug mit folgender Logik:
- * - Berechnet die SOLL-Fahrzeit zwischen zwei Haltestellen
- * - Anwendet 7% Reserve: Fahrzeit darf maximal um 7% kürzer sein
- * - Berücksichtigt die Standzeit (Arrival bis Departure) an jeder Station
- * - Propagiert die Ist-Zeiten über die ganze Fahrt
+ * Propagiert die Fahrt mit 7%-Reserve IMMER neu
+ * AUSNAHME: Wenn Flags ein Dispo-Kriterium (X, V, C, C4-C7) enthalten → nicht anfassen!
  */
 function propagateTravelTimeWithReserve() {
     const form = document.getElementById('free_timetable_form');
@@ -864,9 +861,16 @@ function propagateTravelTimeWithReserve() {
         // Lese Soll-Ankunft und Soll-Abfahrt
         const sollArrStr = form.querySelector(`[name="stations[${stId}][arrival]"]`)?.value;
         const sollDepStr = form.querySelector(`[name="stations[${stId}][departure]"]`)?.value;
+        const flags = form.querySelector(`[name="stations[${stId}][flags]"]`)?.value || '';
 
         // Wenn keine Abfahrt/Ankunft: überspring
         if (!sollArrStr && !sollDepStr) continue;
+
+        // 🔒 SCHUTZ: Wenn Flags ein Dispo-Kriterium enthalten, NICHT anfassen
+        if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
+            console.log(`🔒 GESCHÜTZT: Halt ${stId} hat Dispo-Kriterium (${flags}) → wird übersprungen`);
+            continue;
+        }
 
         const sollArrMin = timeToMinutes(sollArrStr);
         const sollDepMin = timeToMinutes(sollDepStr);
@@ -896,48 +900,45 @@ function propagateTravelTimeWithReserve() {
             standzeit = sollDepMin - sollArrMin;
         }
 
-        // IST-Abfahrt berechnen
-        if (istDepMin === null) {
-            // Es gibt noch keine Ist-Abfahrt: wird aus Fahrzeit + Standzeit berechnet
-            if (i > 0) {
-                // Hole die vorige Soll-Abfahrt und Ist-Abfahrt
-                const prevStation = freeEditorStations[i - 1];
-                const prevSollDepStr = form.querySelector(`[name="stations[${prevStation.id}][departure]"]`)?.value;
-                const prevIstDepField = form.querySelector(`[name="stations[${prevStation.id}][actual_departure]"]`);
-                const prevIstDepMin = timeToMinutes(prevIstDepField?.value);
+        // 🔧 BERECHNE IST-ABFAHRT IMMER NEU (auch wenn bereits Werte vorhanden sind!)
+        // Das ist der Key-Change: Nicht nur wenn istDepMin === null, sondern IMMER
+        if (i > 0) {
+            const prevStation = freeEditorStations[i - 1];
+            const prevSollDepStr = form.querySelector(`[name="stations[${prevStation.id}][departure]"]`)?.value;
+            const prevIstDepField = form.querySelector(`[name="stations[${prevStation.id}][actual_departure]"]`);
+            const prevIstDepMin = timeToMinutes(prevIstDepField?.value);
 
-                if (prevIstDepMin !== null && prevSollDepStr) {
-                    const prevSollDepMin = timeToMinutes(prevSollDepStr);
+            if (prevIstDepMin !== null && prevSollDepStr) {
+                const prevSollDepMin = timeToMinutes(prevSollDepStr);
 
-                    // Soll-Fahrzeit
-                    const sollFahrtzeit = (sollArrMin !== null) 
-                        ? (sollArrMin - prevSollDepMin) 
-                        : (sollDepMin - prevSollDepMin);
+                // Soll-Fahrzeit
+                const sollFahrtzeit = (sollArrMin !== null) 
+                    ? (sollArrMin - prevSollDepMin) 
+                    : (sollDepMin - prevSollDepMin);
 
-                    if (sollFahrtzeit > 0) {
-                        // 7% Reserve: Minimum-Fahrzeit = Sollfahrzeit * 0.93
-                        const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
+                if (sollFahrtzeit > 0) {
+                    // 7% Reserve: Minimum-Fahrzeit = Sollfahrzeit * 0.93
+                    const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
 
-                        // Ist-Fahrzeit basierend auf bisher eingegeben Ist-Ankunft
-                        const istFahrtzeit = istArrMin - prevIstDepMin;
+                    // Ist-Fahrzeit basierend auf bisher eingegeben Ist-Ankunft
+                    const istFahrtzeit = istArrMin - prevIstDepMin;
 
-                        // Verwende Max: entweder die eingegebene Ist-Fahrzeit oder Minimum (mit 7% Reserve)
-                        const effektiveFahrtzeit = Math.max(istFahrtzeit, minFahrtzeit);
+                    // Verwende Max: entweder die eingegebene Ist-Fahrzeit oder Minimum (mit 7% Reserve)
+                    const effektiveFahrtzeit = Math.max(istFahrtzeit, minFahrtzeit);
 
-                        // Neue Ist-Ankunft berechnen
-                        istArrMin = prevIstDepMin + effektiveFahrtzeit;
-                        if (istArrField) {
-                            istArrField.value = minutesToTime(istArrMin);
-                        }
+                    // Neue Ist-Ankunft berechnen
+                    istArrMin = prevIstDepMin + effektiveFahrtzeit;
+                    if (istArrField) {
+                        istArrField.value = minutesToTime(istArrMin);
                     }
                 }
             }
+        }
 
-            // Jetzt Ist-Abfahrt = Ist-Ankunft + Standzeit
-            istDepMin = istArrMin + standzeit;
-            if (istDepField) {
-                istDepField.value = minutesToTime(istDepMin);
-            }
+        // Jetzt Ist-Abfahrt = Ist-Ankunft + Standzeit
+        istDepMin = istArrMin + standzeit;
+        if (istDepField) {
+            istDepField.value = minutesToTime(istDepMin);
         }
 
         // Delay-Felder aktualisieren
