@@ -749,6 +749,23 @@ $ROUTES = [
 			['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 73.82],
         ]
     ],
+    'monthey-cff' => [
+        'id' => 'monthey-cff',
+        'name' => 'Monthey (CFF)',
+        'stations' => [
+            ['id' => 'STGI', 'name' => 'St-Gingolphe', 'abbr' => 'STGI', 'km' => -26.8],
+            ['id' => 'BOU', 'name' => 'Bouveret', 'abbr' => 'BOU', 'km' => -22.91],
+            ['id' => 'EVOU', 'name' => 'Les Evouettes', 'abbr' => 'EVOU', 'km' => -19.53],
+            ['id' => 'VOU', 'name' => 'Vouvry', 'abbr' => 'VOU', 'km' => -16.25],
+            ['id' => 'VIO', 'name' => 'Vionnaz', 'abbr' => 'VIO', 'km' => -13.39],
+            ['id' => 'CBY', 'name' => 'Collombey', 'abbr' => 'CBY', 'km' => -7.91],
+            ['id' => 'MTH', 'name' => 'Monthey', 'abbr' => 'MTH', 'km' => -6.05],
+            ['id' => 'MAS', 'name' => 'Massongex', 'abbr' => 'MAS', 'km' => -3.2],
+            ['id' => 'PDS', 'name' => 'Les Paluds', 'abbr' => 'PDS', 'km' => -1.47],
+            ['id' => 'SM', 'name' => 'St-Mauice', 'abbr' => 'SM', 'km' => 0.02],
+            ['id' => 'EV', 'name' => 'Evionnaz', 'abbr' => 'EV', 'km' => 6.31],
+        ]
+    ],
     'rhonetal' => [
         'id' => 'rhonetal',
         'name' => 'Rhonetal',
