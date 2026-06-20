@@ -2142,7 +2142,6 @@ $ROUTES = [
             ['id' => 'MB', 'name' => 'Malleray-Bévilard', 'abbr' => 'MB', 'km' => -33.71],
             ['id' => 'SOR', 'name' => 'Sorvilier', 'abbr' => 'SOR', 'km' => -31.3],
             ['id' => 'CT', 'name' => 'Court', 'abbr' => 'CT', 'km' => -28.46],
-
             ['id' => 'MOU', 'name' => 'Moutier', 'abbr' => 'MOU', 'km' => -22.1],
             ['id' => 'GVAL', 'name' => 'Grandval', 'abbr' => 'GVAL', 'km' => -18.8],
             ['id' => 'CREM', 'name' => 'Crémines', 'abbr' => 'CREM', 'km' => -17.8],
