@@ -2161,6 +2161,19 @@ $ROUTES = [
             ['id' => 'LZBE', 'name' => 'LZBE', 'abbr' => 'LZBE', 'km' => 0.8],
         ]
     ],
+    'mib' => [
+        'id' => 'mib',
+        'name' => 'MIB',
+        'stations' => [
+            ['id' => 'MR', 'name' => 'Meringen', 'abbr' => 'MR', 'km' => 0.16],
+            ['id' => 'MRAB', 'name' => 'Alpbach', 'abbr' => 'MRAB', 'km' => 0.65],
+            ['id' => 'MRSS', 'name' => 'Aareschlucht West (Sandsteg)', 'abbr' => 'MRSS', 'km' => 1.37],
+            ['id' => 'ATOS', 'name' => 'Aareschlucht Ost', 'abbr' => 'ATOS', 'km' => 3.38],
+            ['id' => 'INUN', 'name' => 'Unterwasser', 'abbr' => 'INUN', 'km' => 4.15],
+            ['id' => 'INNP', 'name' => 'Innertkirchen Post (Grimseltor)', 'abbr' => 'INNP', 'km' => 4.44],
+            ['id' => 'INN', 'name' => 'Innertkirchen', 'abbr' => 'INN', 'km' => 4.99],
+        ]
+    ],
     'brünigbahn-m' => [
         'id' => 'brünigbahn-m',
         'name' => 'Brünigbahn (Meiringen)',
