@@ -58,7 +58,7 @@ $ROUTES = [
             ['id' => 'GRRI', 'name' => 'Grafenried', 'abbr' => 'GRRI', 'km' => -16.25],
             ['id' => 'FBR', 'name' => 'Fraubrunnen', 'abbr' => 'FBR', 'km' => -15.05],
             ['id' => 'BUHO', 'name' => 'Büren zum Hof', 'abbr' => 'BUHO', 'km' => -13.97],
-            ['id' => 'SCN', 'name' => 'Schalunen', 'abbr' => 'SCN', 'km' => 13.97],
+            ['id' => 'SCN', 'name' => 'Schalunen', 'abbr' => 'SCN', 'km' => -12.33],
             ['id' => 'HOFW', 'name' => 'Hof', 'abbr' => 'HOFW', 'km' => -11.43],
             ['id' => 'BKI', 'name' => 'Bätterkinden', 'abbr' => 'BKI', 'km' => -9.98],
             ['id' => 'BKWG', 'name' => 'Wendegleis', 'abbr' => 'BKWG', 'km' => -9],
