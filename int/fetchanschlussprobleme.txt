@@ -1,4 +1,5 @@
 // Auf https://www.stellwerksim.de/openedit/edit-bahnhofplan.php in der Console ausführen
+// https://www.stellwerksim.de/openedit/edit-bahnhofplan.php?m=plan&aid=AID#AID,AID
 (function() {
     let capture = false;
     let regions = [
