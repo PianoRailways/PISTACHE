@@ -2656,16 +2656,6 @@ $ROUTES = [
             ['id' => 'BOLL', 'name' => 'Bollement', 'abbr' => 'BOLL', 'km' => -6.09],
             ['id' => 'COTA', 'name' => 'Combe-Tabeillon', 'abbr' => 'COTA', 'km' => 1.98],
             ['id' => 'GLO', 'name' => 'Glovelier', 'abbr' => 'GLO', 'km' => 7.3],
-            ['id' => 'BREL', 'name' => 'Les Breuleux-Eglise', 'abbr' => 'BREL', 'km' => 8],
-            ['id' => 'BREU', 'name' => 'Les Breleux', 'abbr' => 'BREU', 'km' => 8.7],
-            ['id' => 'CHXB', 'name' => 'La Chaux-des-Breleux', 'abbr' => 'CHXB', 'km' => 10.59],
-            ['id' => 'PIEO', 'name' => 'Le Pied-dOr', 'abbr' => 'PIEO', 'km' => 13.04],
-            ['id' => 'REUS', 'name' => 'Les Reussilles', 'abbr' => 'REUS', 'km' => 15.15],
-            ['id' => 'TRCH', 'name' => 'Tramelan-Chalet', 'abbr' => 'TRCH', 'km' => 16.3],
-            ['id' => 'TRAM', 'name' => 'Tramelan', 'abbr' => 'TRAM', 'km' => 17.93],
-            ['id' => 'ORAN', 'name' => 'Orange', 'abbr' => 'ORAN', 'km' => 18.25],
-            ['id' => 'TRDE', 'name' => 'Tramelan-Dessous', 'abbr' => 'TRDE', 'km' => 18.57],
-            ['id' => 'TACJ', 'name' => 'Tavannes', 'abbr' => 'TACJ', 'km' => 26.61],
         ]
     ],
     'cj-tramelan' => [
