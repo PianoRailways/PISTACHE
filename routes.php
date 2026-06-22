@@ -2263,8 +2263,8 @@ $ROUTES = [
             ['id' => 'SUCU', 'name' => 'Sumvitg-Cumpadials (RhB)', 'abbr' => 'SUCU', 'km' => 103.57],
         ]
     ],
-    'davos' => [
-        'id' => 'davos',
+    'rhb-davos' => [
+        'id' => 'rhb-davos',
         'name' => 'Davos',
         'stations' => [
             ['id' => 'CHWI', 'name' => 'Wiesental', 'abbr' => 'CHWI', 'km' => -12.64],
@@ -2304,8 +2304,8 @@ $ROUTES = [
             ['id' => 'STGL', 'name' => 'Stugl/Stuls', 'abbr' => 'STGL', 'km' => 75.11],
         ]
     ],
-    'vereina' => [
-        'id' => 'vereina',
+    'rhb-vereina' => [
+        'id' => 'rhb-vereina',
         'name' => 'Vereina',
         'stations' => [
             ['id' => 'CHWI', 'name' => 'Wiesental', 'abbr' => 'CHWI', 'km' => -12.64],
@@ -2346,8 +2346,8 @@ $ROUTES = [
             ['id' => 'SCTA', 'name' => 'Scuol-Tarasp', 'abbr' => 'SCTA', 'km' => 72.29],
         ]
     ],
-    'engadin' => [
-        'id' => 'engadin',
+    'rhb-engadin' => [
+        'id' => 'rhb-engadin',
         'name' => 'Engadin',
         'stations' => [
             ['id' => 'SURO', 'name' => 'Surovas', 'abbr' => 'SURO', 'km' => 86.73],
@@ -2372,8 +2372,8 @@ $ROUTES = [
             ['id' => 'SCTA', 'name' => 'Scuol-Tarasp', 'abbr' => 'SCTA', 'km' => 145.01],
         ]
     ],
-    'bernina' => [
-        'id' => 'bernina',
+    'rhb-bernina' => [
+        'id' => 'rhb-bernina',
         'name' => 'Bernina',
         'stations' => [
             ['id' => 'SMOR', 'name' => 'St. Moritz', 'abbr' => 'SMOR', 'km' => 0],
@@ -2408,9 +2408,9 @@ $ROUTES = [
             ['id' => 'TIR', 'name' => 'Tirano', 'abbr' => 'TIR', 'km' => 60.69],
         ]
     ],
-    'ilz' => [
-        'id' => 'ilz',
-        'name' => 'ilz',
+    'rhb-rhein' => [
+        'id' => 'rhb-rhein',
+        'name' => 'Ilanz (Rhein)',
         'stations' => [
             ['id' => 'TRIN', 'name' => 'Trin', 'abbr' => 'TRIN', 'km' => 28.26],
             ['id' => 'VESA', 'name' => 'Versam-Safien', 'abbr' => 'VESA', 'km' => 32.73],
