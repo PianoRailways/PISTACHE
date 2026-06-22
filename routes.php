@@ -912,6 +912,52 @@ $ROUTES = [
             ['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 145.45],
         ]
     ],
+    'vallorcine' => [
+        'id' => 'vallorcine',
+        'name' => 'Vallorcine',
+        'stations' => [
+            ['id' => 'MA', 'name' => 'Martigny', 'abbr' => 'MA', 'km' => 0],
+            ['id' => 'BATI', 'name' => 'La Bâtiaz', 'abbr' => 'BATI', 'km' => 0.6],
+            ['id' => 'FUM', 'name' => 'Les Fumeaux', 'abbr' => 'FUM', 'km' => 1.91],
+            ['id' => 'VEMC', 'name' => 'Vernayaz MC', 'abbr' => 'VEMC', 'km' => 4.68],
+            ['id' => 'SLV', 'name' => 'Salvan', 'abbr' => 'SLV', 'km' => 8.17],
+            ['id' => 'MARE', 'name' => 'Les Marécottes', 'abbr' => 'MARE', 'km' => 9.58],
+            ['id' => 'MED', 'name' => 'La Médettaz', 'abbr' => 'MED', 'km' => 10.12],
+            ['id' => 'TRET', 'name' => 'Le Trétien', 'abbr' => 'TRET', 'km' => 11.34],
+            ['id' => 'FIN', 'name' => 'Finhaut', 'abbr' => 'FIN', 'km' => 14.71],
+            ['id' => 'CHGI', 'name' => 'Le Châtelard-Giétroz', 'abbr' => 'CHGI', 'km' => 17.75],
+            ['id' => 'CHFR', 'name' => 'Châtelard-Frontière', 'abbr' => 'CHFR', 'km' => 18.84],
+            ['id' => 'CFRO', 'name' => 'Frontière CH-F', 'abbr' => 'CFRO', 'km' => 19.13],
+            ['id' => 'VLL', 'name' => 'Vallorcine (VLL)', 'abbr' => 'VLO', 'km' => 21.63],
+        ]
+    ],
+    'chamonix' => [
+        'id' => 'chamonix',
+        'name' => 'Chamonix-Mont-Blanc',
+        'stations' => [
+            ['id' => 'CHFR', 'name' => 'Châtelard-Frontière (CH) (HTF)', 'abbr' => 'CHFR', 'km' => -36.91],
+            ['id' => 'CFRO', 'name' => 'Frontière F-CH', 'abbr' => 'CFRO', 'km' => -36.62],
+            ['id' => 'VLO', 'name' => 'Vallorcine (F) (VLL)', 'abbr' => 'VLO', 'km' => -34.12],
+            ['id' => 'BVQ', 'name' => 'Le Buet', 'abbr' => 'BVQ', 'km' => -32.34],
+            ['id' => 'MKZ', 'name' => 'Montroc-le Planet', 'abbr' => 'MKZ', 'km' => -29.5],
+            ['id' => 'AGI', 'name' => 'Argentière', 'abbr' => 'AGI', 'km' => -27.3],
+            ['id' => 'JOX', 'name' => 'La Joux', 'abbr' => 'JOX', 'km' => -24.97],
+            ['id' => 'TNJ', 'name' => 'Les Tines', 'abbr' => 'TNJ', 'km' => -22.98],
+            ['id' => 'PZI', 'name' => 'Les Praz-de-Chamonix', 'abbr' => 'PZI', 'km' => -21.49],
+            ['id' => 'CHX', 'name' => 'Chamonix-Mont-Blanc (CHMB)', 'abbr' => 'CHX', 'km' => -19.03],
+            ['id' => 'XAM', 'name' => 'Chamonix-Aiguille du Midi', 'abbr' => 'XAM', 'km' => -18.34],
+            ['id' => 'MQK', 'name' => 'Les Moussoux', 'abbr' => 'MQK', 'km' => -17.5],
+            ['id' => 'PKN', 'name' => 'Les Pélerins', 'abbr' => 'PKN', 'km' => -16.6],
+            ['id' => 'BHS', 'name' => 'Les Bossons', 'abbr' => 'BHS', 'km' => -15.67],
+            ['id' => 'TAC', 'name' => 'Taconnaz', 'abbr' => 'TAC', 'km' => -14.36],
+            ['id' => 'HOU', 'name' => 'Les Houches', 'abbr' => 'HOU', 'km' => -11.67],
+            ['id' => 'VDU', 'name' => 'Viaduc Sainte-Marie', 'abbr' => 'VDU', 'km' => -10.62],
+            ['id' => 'VUD', 'name' => 'Vaudagne', 'abbr' => 'VUD', 'km' => -8.93],
+            ['id' => 'SVZ', 'name' => 'Servoz (SEOZ)', 'abbr' => 'SVZ', 'km' => -6.76],
+            ['id' => 'CED', 'name' => 'Chedde', 'abbr' => 'CED', 'km' => -2.68],
+            ['id' => 'SGB', 'name' => 'Saint-Gervais-Le Fayet (SGFA)', 'abbr' => 'SGB', 'km' => 0],
+        ]
+    ],
     'le-chable' => [
         'id' => 'le-chable',
         'name' => 'Le Châble',
@@ -2113,6 +2159,19 @@ $ROUTES = [
             ['id' => 'ALD', 'name' => 'Allmend/Messe', 'abbr' => 'KRM', 'km' => -2.36],
             ['id' => 'LZBR', 'name' => 'Luzern Brünig', 'abbr' => 'LZ', 'km' => -0.13],
             ['id' => 'LZBE', 'name' => 'LZBE', 'abbr' => 'LZBE', 'km' => 0.8],
+        ]
+    ],
+    'mib' => [
+        'id' => 'mib',
+        'name' => 'MIB',
+        'stations' => [
+            ['id' => 'MR', 'name' => 'Meringen', 'abbr' => 'MR', 'km' => 0.16],
+            ['id' => 'MRAB', 'name' => 'Alpbach', 'abbr' => 'MRAB', 'km' => 0.65],
+            ['id' => 'MRSS', 'name' => 'Aareschlucht West (Sandsteg)', 'abbr' => 'MRSS', 'km' => 1.37],
+            ['id' => 'ATOS', 'name' => 'Aareschlucht Ost', 'abbr' => 'ATOS', 'km' => 3.38],
+            ['id' => 'INUN', 'name' => 'Unterwasser', 'abbr' => 'INUN', 'km' => 4.15],
+            ['id' => 'INNP', 'name' => 'Innertkirchen Post (Grimseltor)', 'abbr' => 'INNP', 'km' => 4.44],
+            ['id' => 'INN', 'name' => 'Innertkirchen', 'abbr' => 'INN', 'km' => 4.99],
         ]
     ],
     'brünigbahn-m' => [

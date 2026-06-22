@@ -121,16 +121,26 @@ foreach ($files as $file_path) {
         $gleisSpalte = trim($cols[3] ?? '');
         if (empty($gleisSpalte) || strtolower($gleisSpalte) === 'keine') continue;
 
-        $station_id = $gleisSpalte;
+        $station_id = $gleisSpalte;  // Default
         $track = "";
 
-        if (strpos($gleisSpalte, ' ') !== false) {
-            $parts = explode(' ', $gleisSpalte, 2);
-            $station_id = $parts[0];
-            $track = $parts[1];
-        } elseif (preg_match('/^([A-Za-z]+)(\d+)$/', $gleisSpalte, $matches)) {
-            $station_id = $matches[1];
-            $track = $matches[2];
+        // Verarbeite verschiedene Formate:
+        // "KZ4A" → station_id=KZ, track=4A
+        // "BO2G" → station_id=BO, track=2G
+        // "BN 10 kurz" → station_id=BN, track=10 kurz
+        // "ROSS 3" → station_id=ROSS, track=3
+        // "GMM2" → station_id=GMM, track=2
+        
+        if (preg_match('/^([A-Za-z]+)\s+(.+)$/', $gleisSpalte, $matches)) {
+            // Format mit Leerzeichen: "STATION GLEIS..."
+            // z.B. "BN 10 kurz", "ROSS 3", "KZ 4A"
+            $station_id = $matches[1];              // z.B. "BN", "ROSS", "KZ"
+            $track = $matches[2];                   // z.B. "10 kurz", "3", "4A"
+        } elseif (preg_match('/^([A-Za-z]+)(\d.*)$/', $gleisSpalte, $matches)) {
+            // Format ohne Leerzeichen: "STATIONGLEIS..."
+            // z.B. "KZ4A", "BO2G", "GMM2", "ROSS3"
+            $station_id = $matches[1];              // z.B. "KZ", "BO", "GMM", "ROSS"
+            $track = $matches[2];                   // z.B. "4A", "2G", "2", "3"
         }
 
         $arrival = trim($cols[4] ?? '');

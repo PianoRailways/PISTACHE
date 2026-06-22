@@ -368,9 +368,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        preg_match('/^([a-zA-Z]+)\s*(\d*)$/', trim($raw_gleis), $matches);
-        $station_abbr = isset($matches[1]) ? strtoupper($matches[1]) : strtoupper($raw_gleis);
-        $track_number = isset($matches[2]) && $matches[2] !== '' ? $matches[2] : null;
+        // Extrahiere Stationskürzl aus Plattform-ID
+        // Supportet: "KZ4A", "BO2G", "BN 10 kurz", "ROSS 3", "GMM2", etc.
+        // station_id = nur die Stationskürzl (Buchstaben am Anfang)
+        // track = die komplette Gleisbezeichnung (Nummer + optional Buchstaben/Zusatz)
+        
+        if (preg_match('/^([A-Za-z]+)\s+(.+)$/', trim($raw_gleis), $matches)) {
+            // Format mit Leerzeichen: "STATION GLEIS..."
+            // z.B. "BN 10 kurz", "ROSS 3", "KZ 4A"
+            $station_abbr = strtoupper($matches[1]);           // z.B. "BN", "ROSS", "KZ"
+            $track_number = $matches[2];                       // z.B. "10 kurz", "3", "4A"
+        } elseif (preg_match('/^([A-Za-z]+)(\d.*)$/', trim($raw_gleis), $matches)) {
+            // Format ohne Leerzeichen: "STATIONGLEIS..."
+            // z.B. "KZ4A", "BO2G", "GMM2", "ROSS3", "BN10"
+            $station_abbr = strtoupper($matches[1]);           // z.B. "KZ", "BO", "GMM", "ROSS", "BN"
+            $track_number = $matches[2];                       // z.B. "4A", "2G", "2", "3", "10"
+        } else {
+            // Fallback: Nur Buchstaben, keine Nummer
+            $station_abbr = strtoupper(trim($raw_gleis));
+            $track_number = null;
+        }
 
         // 1. Suche den aktuellen Zug
         $stmt = $db->prepare("SELECT id, route_id, train_number FROM trains WHERE sts_zid = ?");
