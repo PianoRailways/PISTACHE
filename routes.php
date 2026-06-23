@@ -3513,6 +3513,25 @@ $ROUTES = [
             ['id' => 'SH', 'name' => 'Schaffhausen', 'abbr' => 'SH', 'km' => 56.06],
         ]
     ],
+    'db3' => [
+        'id' => 'db3',
+        'name' => 'DB3 (Erzingen - Singen)',
+        'stations' => [
+            ['id' => 'RERZ', 'name' => 'Erzingen (ERZI)', 'abbr' => 'RERZ', 'km' => 345.55],
+            ['id' => 'RT', 'name' => 'Trasadingen (TRHA)', 'abbr' => 'RT', 'km' => 346.21],
+            ['id' => 'RWIN', 'name' => 'Wilchingen-Hallau (WIHA)', 'abbr' => 'RWIN', 'km' => 348.82],
+            ['id' => 'RNK', 'name' => 'Neunkirch (NEUK)', 'abbr' => 'RNK', 'km' => 351.46],
+            ['id' => 'RBE', 'name' => 'Beringen Bad Bf (BERB)', 'abbr' => 'RBE', 'km' => 357.78],
+            ['id' => 'RBEF', 'name' => 'Beringerfeld (BERD)', 'abbr' => 'RBEF', 'km' => 359.2],
+            ['id' => 'RNHN', 'name' => 'Neuhausen Bad Bf (NHB)', 'abbr' => 'RNHN', 'km' => 361.44],
+            ['id' => 'SH', 'name' => 'Schaffhausen (RSCF)', 'abbr' => 'SH', 'km' => 364.42],
+            ['id' => 'HERB', 'name' => 'Herblingen (RHRB)', 'abbr' => 'HERB', 'km' => 367.93],
+            ['id' => 'THA', 'name' => 'Thayngen (RTG)', 'abbr' => 'THA', 'km' => 372.84],
+            ['id' => 'RBGN', 'name' => 'Bietingen (BIET)', 'abbr' => 'RBGN', 'km' => 375.61],
+            ['id' => 'RG', 'name' => 'Gottmadingen (GOTT)', 'abbr' => 'RG', 'km' => 378.49],
+            ['id' => 'RSI', 'name' => 'Singen Hohentwiel (SIN)', 'abbr' => 'RSI', 'km' => 384.08],
+        ]
+    ],
     'seelinie' => [
         'id' => 'seelinie',
         'name' => 'Seelinie',
