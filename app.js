@@ -561,11 +561,11 @@ async function renderGraph() {
         const now = new Date();
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
         
-        // ===== NEUE LOGIK: Berechne STS-Zeit wie in index.html =====
         const basis = document.getElementById('time_basis')?.value || 'instanz1';
         const mode = document.getElementById('time_mode')?.value || 'auto';
         
         let calculatedOffset = 0;
+        let instanzSprunggemaacht = false;  // 🔧 Flag für Instanz-Sprung
         
         if (basis === 'manual') {
             const offsetInput = document.getElementById('sts_offset');
@@ -589,7 +589,36 @@ async function renderGraph() {
             calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
         }
         
-        const stsMinutes = (localTotalMinutes + calculatedOffset + 1440) % 1440;
+        // 🔧 DEBUG
+        const localTimeStr = `${String(Math.floor(localTotalMinutes/60)).padStart(2,'0')}:${String(localTotalMinutes%60).padStart(2,'0')}`;
+        console.log(`[JETZT] basis=${basis}, localTime=${localTimeStr}, offset=${calculatedOffset}`);
+        
+        let stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+        const stsRawStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
+        console.log(`[JETZT] stsMinutes=${stsMinutes} → ${stsRawStr}`);
+        
+        // 🔧 CHECK: Sind wir noch in der Instanz (05:00–21:00)?
+        const instanzStart = 5 * 60;   // 05:00 in Minuten
+        const instanzEnd = 21 * 60;    // 21:00 in Minuten
+        
+        if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
+            console.log(`[JETZT] ⚠️ Außerhalb Instanz-Fenster (${stsRawStr}), springe zur vorigen Instanz...`);
+            
+            // Zur vorherigen Instanz springen: -960 Minuten (16 Stunden)
+            calculatedOffset -= 960;
+            stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+            
+            const stsNewStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
+            console.log(`[JETZT] Nach Sprung: stsMinutes=${stsMinutes} → ${stsNewStr}`);
+            
+            instanzSprunggemaacht = true;  // 🔧 Flag setzen
+            
+            // Nochmals checken (sollte jetzt im Fenster sein)
+            if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
+                console.log(`[JETZT] Immer noch außerhalb, nicht zeichnen`);
+                return;
+            }
+        }
 
         const startVal = document.getElementById('graph_start')?.value || "11:00";
         const endVal = document.getElementById('graph_end')?.value || "17:00";
@@ -600,13 +629,21 @@ async function renderGraph() {
         const startMinutes = startH * 60 + startM;
         const endMinutes = endH * 60 + endM;
 
-        if (stsMinutes >= startMinutes && stsMinutes <= endMinutes) {
+        // 🔧 Wenn Instanz-Sprung: IMMER zeichnen, wenn im Instanz-Fenster (05:00–21:00)
+        // Sonst: nur wenn auch im Graph-Fenster (graph_start–graph_end)
+        const shouldDraw = instanzSprunggemaacht 
+            ? (stsMinutes >= instanzStart && stsMinutes <= instanzEnd)
+            : (stsMinutes >= startMinutes && stsMinutes <= endMinutes);
+
+        console.log(`[JETZT] Fenster: ${startVal}–${endVal}, stsMinutes=${stsMinutes}, sollte zeichnen? ${shouldDraw}`);
+
+        if (shouldDraw) {
             const y = getY(stsMinutes);
 
             if (y !== null) {
                 ctx.save();
                 ctx.beginPath();
-                ctx.strokeStyle = '#FFDE15';
+                ctx.strokeStyle = '#FFDE15'; 
                 ctx.lineWidth = 2;
                 ctx.setLineDash([6, 4]);
                 
