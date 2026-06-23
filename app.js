@@ -561,11 +561,35 @@ async function renderGraph() {
         const now = new Date();
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
         
-        const offsetInput = document.getElementById('sts_offset');
-        const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0; 
+        // ===== NEUE LOGIK: Berechne STS-Zeit wie in index.html =====
+        const basis = document.getElementById('time_basis')?.value || 'instanz1';
+        const mode = document.getElementById('time_mode')?.value || 'auto';
         
-        let currentTotalMinutes = localTotalMinutes + simOffset;
-        currentTotalMinutes = ((currentTotalMinutes % 1440) + 1440) % 1440;
+        let calculatedOffset = 0;
+        
+        if (basis === 'manual') {
+            const offsetInput = document.getElementById('sts_offset');
+            calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+        } else {
+            // Automatische Berechnung basierend auf Ankerpunkt (04.06.2026, 21:30 real = Instanz 1 ist 08:30)
+            const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
+            const baseOffsetInstanz1 = -780;
+            
+            const diffInMs = now - refRealTime;
+            const diffInHours = diffInMs / (1000 * 60 * 60);
+            const instancesPassed = Math.floor(diffInHours / 16);
+            const totalShiftMinutes = instancesPassed * 480;
+            
+            calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
+            
+            if (basis === 'instanz2') {
+                calculatedOffset += 840;
+            }
+            
+            calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
+        }
+        
+        const stsMinutes = (localTotalMinutes + calculatedOffset + 1440) % 1440;
 
         const startVal = document.getElementById('graph_start')?.value || "11:00";
         const endVal = document.getElementById('graph_end')?.value || "17:00";
@@ -576,13 +600,13 @@ async function renderGraph() {
         const startMinutes = startH * 60 + startM;
         const endMinutes = endH * 60 + endM;
 
-        if (currentTotalMinutes >= startMinutes && currentTotalMinutes <= endMinutes) {
-            const y = getY(currentTotalMinutes);
+        if (stsMinutes >= startMinutes && stsMinutes <= endMinutes) {
+            const y = getY(stsMinutes);
 
             if (y !== null) {
                 ctx.save();
                 ctx.beginPath();
-                ctx.strokeStyle = '#FFDE15'; 
+                ctx.strokeStyle = '#FFDE15';
                 ctx.lineWidth = 2;
                 ctx.setLineDash([6, 4]);
                 
@@ -595,8 +619,8 @@ async function renderGraph() {
                 ctx.textAlign = 'right';
                 ctx.textBaseline = 'middle';
                 
-                const displayHours = Math.floor(currentTotalMinutes / 60);
-                const displayMinutes = currentTotalMinutes % 60;
+                const displayHours = Math.floor(stsMinutes / 60);
+                const displayMinutes = stsMinutes % 60;
                 const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
                 
                 ctx.fillText(timeString, paddingLeft - 10, y);
