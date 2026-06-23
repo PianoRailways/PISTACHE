@@ -561,11 +561,64 @@ async function renderGraph() {
         const now = new Date();
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
         
-        const offsetInput = document.getElementById('sts_offset');
-        const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0; 
+        const basis = document.getElementById('time_basis')?.value || 'instanz1';
+        const mode = document.getElementById('time_mode')?.value || 'auto';
         
-        let currentTotalMinutes = localTotalMinutes + simOffset;
-        currentTotalMinutes = ((currentTotalMinutes % 1440) + 1440) % 1440;
+        let calculatedOffset = 0;
+        let instanzSprunggemaacht = false;  // 🔧 Flag für Instanz-Sprung
+        
+        if (basis === 'manual') {
+            const offsetInput = document.getElementById('sts_offset');
+            calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+        } else {
+            // Automatische Berechnung basierend auf Ankerpunkt (04.06.2026, 21:30 real = Instanz 1 ist 08:30)
+            const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
+            const baseOffsetInstanz1 = -780;
+            
+            const diffInMs = now - refRealTime;
+            const diffInHours = diffInMs / (1000 * 60 * 60);
+            const instancesPassed = Math.floor(diffInHours / 16);
+            const totalShiftMinutes = instancesPassed * 480;
+            
+            calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
+            
+            if (basis === 'instanz2') {
+                calculatedOffset += 840;
+            }
+            
+            calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
+        }
+        
+        // 🔧 DEBUG
+        const localTimeStr = `${String(Math.floor(localTotalMinutes/60)).padStart(2,'0')}:${String(localTotalMinutes%60).padStart(2,'0')}`;
+        console.log(`[JETZT] basis=${basis}, localTime=${localTimeStr}, offset=${calculatedOffset}`);
+        
+        let stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+        const stsRawStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
+        console.log(`[JETZT] stsMinutes=${stsMinutes} → ${stsRawStr}`);
+        
+        // 🔧 CHECK: Sind wir noch in der Instanz (05:00–21:00)?
+        const instanzStart = 5 * 60;   // 05:00 in Minuten
+        const instanzEnd = 21 * 60;    // 21:00 in Minuten
+        
+        if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
+            console.log(`[JETZT] ⚠️ Außerhalb Instanz-Fenster (${stsRawStr}), springe zur vorigen Instanz...`);
+            
+            // Zur vorherigen Instanz springen: -960 Minuten (16 Stunden)
+            calculatedOffset -= 960;
+            stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+            
+            const stsNewStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
+            console.log(`[JETZT] Nach Sprung: stsMinutes=${stsMinutes} → ${stsNewStr}`);
+            
+            instanzSprunggemaacht = true;  // 🔧 Flag setzen
+            
+            // Nochmals checken (sollte jetzt im Fenster sein)
+            if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
+                console.log(`[JETZT] Immer noch außerhalb, nicht zeichnen`);
+                return;
+            }
+        }
 
         const startVal = document.getElementById('graph_start')?.value || "11:00";
         const endVal = document.getElementById('graph_end')?.value || "17:00";
@@ -576,8 +629,16 @@ async function renderGraph() {
         const startMinutes = startH * 60 + startM;
         const endMinutes = endH * 60 + endM;
 
-        if (currentTotalMinutes >= startMinutes && currentTotalMinutes <= endMinutes) {
-            const y = getY(currentTotalMinutes);
+        // 🔧 Wenn Instanz-Sprung: IMMER zeichnen, wenn im Instanz-Fenster (05:00–21:00)
+        // Sonst: nur wenn auch im Graph-Fenster (graph_start–graph_end)
+        const shouldDraw = instanzSprunggemaacht 
+            ? (stsMinutes >= instanzStart && stsMinutes <= instanzEnd)
+            : (stsMinutes >= startMinutes && stsMinutes <= endMinutes);
+
+        console.log(`[JETZT] Fenster: ${startVal}–${endVal}, stsMinutes=${stsMinutes}, sollte zeichnen? ${shouldDraw}`);
+
+        if (shouldDraw) {
+            const y = getY(stsMinutes);
 
             if (y !== null) {
                 ctx.save();
@@ -595,8 +656,8 @@ async function renderGraph() {
                 ctx.textAlign = 'right';
                 ctx.textBaseline = 'middle';
                 
-                const displayHours = Math.floor(currentTotalMinutes / 60);
-                const displayMinutes = currentTotalMinutes % 60;
+                const displayHours = Math.floor(stsMinutes / 60);
+                const displayMinutes = stsMinutes % 60;
                 const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
                 
                 ctx.fillText(timeString, paddingLeft - 10, y);
