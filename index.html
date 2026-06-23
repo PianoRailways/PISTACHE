@@ -302,10 +302,8 @@ function applyAutoScroll() {
     let calculatedOffset = 0;
 
     if (basis === 'manual') {
-        // Eigenes Offset aus dem Input-Feld lesen
         calculatedOffset = parseInt(document.getElementById('sts_offset').value || 0, 10);
     } else {
-        // Automatische Berechnung basierend auf dem Ankerpunkt (04.06.2026, 21:30 Uhr real = Instanz 1 ist 08:30 Uhr)
         const refRealTime = new Date(2026, 5, 4, 21, 30, 0); 
         const baseOffsetInstanz1 = -780; 
         
@@ -314,34 +312,37 @@ function applyAutoScroll() {
         const instancesPassed = Math.floor(diffInHours / 16);
         const totalShiftMinutes = instancesPassed * 480;
         
-        // Basis-Offset für Instanz 1 berechnen
         calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
         
-        // Wenn Instanz 2 gewählt ist, liegt diese zeitlich 6 Stunden (+360 Minuten) weiter vorn
         if (basis === 'instanz2') {
             calculatedOffset += 840;
         }
         
-        // Auf den Bereich -720 bis +720 Minuten normalisieren
         calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
-        
-        // Feld aktualisieren, falls man es im Hintergrund sehen möchte
-        const offsetInput = document.getElementById('sts_offset');
-        if (offsetInput) offsetInput.value = calculatedOffset;
     }
 
     // STS-Zeit berechnen
     const pcMinutes = now.getHours() * 60 + now.getMinutes();
-    const stsMinutes = (pcMinutes + calculatedOffset + 1440) % 1440;
+    const stsMinutes = ((pcMinutes + calculatedOffset) % 1440 + 1440) % 1440;
     
-    // Zeitfenster bestimmen (-10 Min bis +60 Min)
-    const startMinutes = (stsMinutes - 10 + 1440) % 1440;
-    const endMinutes = (stsMinutes + 60 + 1440) % 1440;
+    // 🔧 INSTANZ-CHECK: Wenn außerhalb 05:00–21:00, zur vorherigen Instanz springen
+    const instanzStart = 5 * 60;   // 05:00
+    const instanzEnd = 21 * 60;    // 21:00
+    
+    let adjustedStsMinutes = stsMinutes;
+    if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
+        console.log(`[AutoScroll] STS-Zeit ${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')} außerhalb Instanz, springe -16h`);
+        adjustedStsMinutes = ((stsMinutes - 960) % 1440 + 1440) % 1440;
+    }
+    
+    // Zeitfenster bestimmen (-10 Min bis +60 Min um die aktuelle Zeit)
+    const startMinutes = ((adjustedStsMinutes - 10) % 1440 + 1440) % 1440;
+    const endMinutes = ((adjustedStsMinutes + 60) % 1440 + 1440) % 1440;
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
     
-    // Zeitfelder befüllen (im fixen Modus frieren sie dadurch auf dem aktuellen Berechnungsstand ein)
+    // Zeitfelder befüllen
     if (mode === 'auto' || basis !== 'manual') {
         document.getElementById('graph_start').value = startTime;
         document.getElementById('graph_end').value = endTime;
