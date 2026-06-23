@@ -3532,6 +3532,24 @@ $ROUTES = [
             ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => -16.2],
         ]
     ],
+    'w-str' => [
+        'id' => 'w-str',
+        'name' => 'Winterthur - Stein am Rhein',
+        'stations' => [
+            ['id' => 'W', 'name' => 'Winterthur', 'abbr' => 'W', 'km' => 0.04],
+            ['id' => 'SCAL', 'name' => 'Schwalmenacker', 'abbr' => 'SCAL', 'km' => 1.33],
+            ['id' => 'OWT', 'name' => 'Oberwinterthur', 'abbr' => 'OWT', 'km' => 3.6],
+            ['id' => 'WWAL', 'name' => 'Wallrüti', 'abbr' => 'WWAL', 'km' => 4.63],
+            ['id' => 'REUT', 'name' => 'Reutlingen', 'abbr' => 'REUT', 'km' => 6.3],
+            ['id' => 'SEU', 'name' => 'Seuzach', 'abbr' => 'SEU', 'km' => 7.51],
+            ['id' => 'DIH', 'name' => 'Dinhard', 'abbr' => 'DIH', 'km' => 9.97],
+            ['id' => 'TLH', 'name' => 'Talheim-Altikon', 'abbr' => 'TLH', 'km' => 11.84],
+            ['id' => 'OSS', 'name' => 'Ossingen', 'abbr' => 'OSS', 'km' => 19.47],
+            ['id' => 'STM', 'name' => 'Stammheim', 'abbr' => 'STM', 'km' => 26.88],
+            ['id' => 'EW', 'name' => 'Etzwilen', 'abbr' => 'EW', 'km' => 31.81],
+            ['id' => 'STR', 'name' => 'Stein am Rhein', 'abbr' => 'STR', 'km' => 34.86],
+        ]
+    ],
     'nesslau' => [
         'id' => 'nesslau',
         'name' => 'Nesslau',
