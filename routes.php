@@ -3484,6 +3484,16 @@ $ROUTES = [
             ['id' => 'GUEB', 'name' => 'Gübsensee', 'abbr' => 'GUEB', 'km' => -26.45],
             ['id' => 'SGHA', 'name' => 'Haggen', 'abbr' => 'SGHA', 'km' => -24.41],
             ['id' => 'SG', 'name' => 'St. Gallen', 'abbr' => 'SG', 'km' => -21.42],
+            ['id' => 'SGF', 'name' => 'St. Fiden', 'abbr' => 'SGF', 'km' => -19.12],
+            ['id' => 'BRWA', 'name' => 'Bruggwald', 'abbr' => 'BRWA', 'km' => -19.58],
+            ['id' => 'WIT', 'name' => 'Wittenbach', 'abbr' => 'WIT', 'km' => -15.55],
+            ['id' => 'ROBG', 'name' => 'Roggwil-Berg', 'abbr' => 'ROBG', 'km' => -12.84],
+            ['id' => 'HAEW', 'name' => 'Häggenschwil-Winden', 'abbr' => 'HAEW', 'km' => -9.57],
+            ['id' => 'MUO', 'name' => 'Muolen', 'abbr' => 'MUO', 'km' => -7.3],
+            ['id' => 'STB', 'name' => 'Steinebrunn', 'abbr' => 'STB', 'km' => -5.31],
+            ['id' => 'NK', 'name' => 'Neukirch-Egnach', 'abbr' => 'NK', 'km' => -3.03]
+            ['id' => 'RHS', 'name' => 'Romanshorn Süd', 'abbr' => 'RHS', 'km' => -1.2],
+            ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 0],
         ]
     ],
     'nesslau' => [
