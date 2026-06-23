@@ -3491,7 +3491,7 @@ $ROUTES = [
             ['id' => 'HAEW', 'name' => 'Häggenschwil-Winden', 'abbr' => 'HAEW', 'km' => -9.57],
             ['id' => 'MUO', 'name' => 'Muolen', 'abbr' => 'MUO', 'km' => -7.3],
             ['id' => 'STB', 'name' => 'Steinebrunn', 'abbr' => 'STB', 'km' => -5.31],
-            ['id' => 'NK', 'name' => 'Neukirch-Egnach', 'abbr' => 'NK', 'km' => -3.03]
+            ['id' => 'NK', 'name' => 'Neukirch-Egnach', 'abbr' => 'NK', 'km' => -3.03],
             ['id' => 'RHS', 'name' => 'Romanshorn Süd', 'abbr' => 'RHS', 'km' => -1.2],
             ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 0],
         ]
