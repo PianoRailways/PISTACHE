@@ -3496,6 +3496,23 @@ $ROUTES = [
             ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 0],
         ]
     ],
+    '762' => [
+        'id' => '762',
+        'name' => '762 W-SH',
+        'stations' => [
+            ['id' => 'W', 'name' => 'Winterthur', 'abbr' => 'W', 'km' => 26.14],
+            ['id' => 'HET', 'name' => 'Hettlingen', 'abbr' => 'HET', 'km' => 32.71],
+            ['id' => 'HGT', 'name' => 'Henggart', 'abbr' => 'HGT', 'km' => 35.01],
+            ['id' => 'AN', 'name' => 'Andelfingen', 'abbr' => 'AN', 'km' => 39.17],
+            ['id' => 'MEDE', 'name' => 'Meder', 'abbr' => 'MEDE', 'km' => 44.57],
+            ['id' => 'MTL', 'name' => 'Marthalen', 'abbr' => 'MTL', 'km' => 45.96],
+            ['id' => 'MTLN', 'name' => 'Marthalen Nord', 'abbr' => 'MTLN', 'km' => 46.47],
+            ['id' => 'DA', 'name' => 'Dachsen', 'abbr' => 'DA', 'km' => 51.31],
+            ['id' => 'SLF', 'name' => 'Schloss Laufen am Rheinfall', 'abbr' => 'SLF', 'km' => 52.49],
+            ['id' => 'NH', 'name' => 'Neuhausen', 'abbr' => 'NH', 'km' => 53.84],
+            ['id' => 'SH', 'name' => 'Schaffhausen', 'abbr' => 'SH', 'km' => 56.06],
+        ]
+    ],
     'seelinie' => [
         'id' => 'seelinie',
         'name' => 'Seelinie',
