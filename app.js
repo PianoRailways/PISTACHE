@@ -556,7 +556,7 @@ async function renderGraph() {
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
 
-    // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
+// Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
     (function drawCurrentTimeLine() {
         const now = new Date();
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
@@ -565,13 +565,12 @@ async function renderGraph() {
         const mode = document.getElementById('time_mode')?.value || 'auto';
         
         let calculatedOffset = 0;
-        let instanzSprunggemaacht = false;  // 🔧 Flag für Instanz-Sprung
+        let instanzSprunggemaacht = false;
         
         if (basis === 'manual') {
             const offsetInput = document.getElementById('sts_offset');
             calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
         } else {
-            // Automatische Berechnung basierend auf Ankerpunkt (04.06.2026, 21:30 real = Instanz 1 ist 08:30)
             const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
             const baseOffsetInstanz1 = -780;
             
@@ -589,80 +588,48 @@ async function renderGraph() {
             calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
         }
         
-        // 🔧 DEBUG
-        const localTimeStr = `${String(Math.floor(localTotalMinutes/60)).padStart(2,'0')}:${String(localTotalMinutes%60).padStart(2,'0')}`;
-        console.log(`[JETZT] basis=${basis}, localTime=${localTimeStr}, offset=${calculatedOffset}`);
-        
         let stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-        const stsRawStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
-        console.log(`[JETZT] stsMinutes=${stsMinutes} → ${stsRawStr}`);
         
-        // 🔧 CHECK: Sind wir noch in der Instanz (05:00–21:00)?
-        const instanzStart = 5 * 60;   // 05:00 in Minuten
-        const instanzEnd = 21 * 60;    // 21:00 in Minuten
+        // CHECK: Sind wir noch in der Instanz (05:00–21:00)?
+        const instanzStart = 5 * 60;
+        const instanzEnd = 21 * 60;
         
         if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-            console.log(`[JETZT] ⚠️ Außerhalb Instanz-Fenster (${stsRawStr}), springe zur vorigen Instanz...`);
-            
-            // Zur vorherigen Instanz springen: -960 Minuten (16 Stunden)
             calculatedOffset -= 960;
             stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+            instanzSprunggemaacht = true;
             
-            const stsNewStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
-            console.log(`[JETZT] Nach Sprung: stsMinutes=${stsMinutes} → ${stsNewStr}`);
-            
-            instanzSprunggemaacht = true;  // 🔧 Flag setzen
-            
-            // Nochmals checken (sollte jetzt im Fenster sein)
             if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-                console.log(`[JETZT] Immer noch außerhalb, nicht zeichnen`);
                 return;
             }
         }
 
-        const startVal = document.getElementById('graph_start')?.value || "11:00";
-        const endVal = document.getElementById('graph_end')?.value || "17:00";
+        // Berechne Y-Position mit den gleichen Variablen wie oben
+        const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
 
-        const [startH, startM] = startVal.split(':').map(Number);
-        const [endH, endM] = endVal.split(':').map(Number);
+        // Nur zeichnen, wenn die Linie sichtbar ist
+        if (y >= paddingTop && y <= paddingTop + graphHeight) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.strokeStyle = '#FFDE15'; 
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            
+            ctx.moveTo(paddingLeft, y);
+            ctx.lineTo(paddingLeft + graphWidth, y);
+            ctx.stroke();
 
-        const startMinutes = startH * 60 + startM;
-        const endMinutes = endH * 60 + endM;
-
-        // 🔧 Wenn Instanz-Sprung: IMMER zeichnen, wenn im Instanz-Fenster (05:00–21:00)
-        // Sonst: nur wenn auch im Graph-Fenster (graph_start–graph_end)
-        const shouldDraw = instanzSprunggemaacht 
-            ? (stsMinutes >= instanzStart && stsMinutes <= instanzEnd)
-            : (stsMinutes >= startMinutes && stsMinutes <= endMinutes);
-
-        console.log(`[JETZT] Fenster: ${startVal}–${endVal}, stsMinutes=${stsMinutes}, sollte zeichnen? ${shouldDraw}`);
-
-        if (shouldDraw) {
-            const y = getY(stsMinutes);
-
-            if (y !== null) {
-                ctx.save();
-                ctx.beginPath();
-                ctx.strokeStyle = '#FFDE15'; 
-                ctx.lineWidth = 2;
-                ctx.setLineDash([6, 4]);
-                
-                ctx.moveTo(paddingLeft, y);
-                ctx.lineTo(paddingLeft + graphWidth, y);
-                ctx.stroke();
-
-                ctx.fillStyle = '#FFDE15';
-                ctx.font = 'bold 11px sans-serif';
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'middle';
-                
-                const displayHours = Math.floor(stsMinutes / 60);
-                const displayMinutes = stsMinutes % 60;
-                const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
-                
-                ctx.fillText(timeString, paddingLeft - 10, y);
-                ctx.restore();
-            }
+            ctx.fillStyle = '#FFDE15';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            
+            const displayHours = Math.floor(stsMinutes / 60);
+            const displayMinutes = stsMinutes % 60;
+            const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
+            
+            ctx.fillText(timeString, paddingLeft - 10, y);
+            ctx.restore();
         }
     })();
 }
