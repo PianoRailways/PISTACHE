@@ -1768,6 +1768,53 @@ $ROUTES = [
             ['id' => 'DK', 'name' => 'Däniken', 'abbr' => 'DK', 'km' => -32.9],
         ]
     ],
+    'uetliberg' => [
+        'id' => 'uetliberg',
+        'name' => 'Uetlibergbahn',
+        'stations' => [
+            ['id' => 'ZUSZ', 'name' => 'Zürich HB SZU', 'abbr' => 'ZUSZ', 'km' => -1.23],
+            ['id' => 'ZSEL', 'name' => 'Selnau', 'abbr' => 'ZSEL', 'km' => 0],
+            ['id' => 'ZGH', 'name' => 'Giesshübel', 'abbr' => 'ZGH', 'km' => 1.16],
+            ['id' => 'ZBZ', 'name' => 'Binz', 'abbr' => 'ZBZ', 'km' => 1.45],
+            ['id' => 'BORR', 'name' => 'Borrweg', 'abbr' => 'BORR', 'km' => 1.95],
+            ['id' => 'FRIB', 'name' => 'Friesenberg', 'abbr' => 'FRIB', 'km' => 2.28],
+            ['id' => 'SHF', 'name' => 'Schweighof', 'abbr' => 'SHF', 'km' => 2.62],
+            ['id' => 'TRLI', 'name' => 'Triemli', 'abbr' => 'TRLI', 'km' => 3.23],
+            ['id' => 'BGF', 'name' => 'Berghof', 'abbr' => 'BGF', 'km' => 4.44],
+            ['id' => 'UIWA', 'name' => 'Uitikon Waldegg', 'abbr' => 'UIWA', 'km' => 5.9],
+            ['id' => 'RILI', 'name' => 'Ringlikon', 'abbr' => 'RILI', 'km' => 7.12],
+            ['id' => 'UEBE', 'name' => 'Uetliberg', 'abbr' => 'UEBE', 'km' => 9.13],
+        ]
+    ],
+    'sbb-szu' => [
+        'id' => 'sbb-szu',
+        'name' => 'Verbindungslinie Wiedikon - Giesshübel',
+        'stations' => [
+            ['id' => 'ZWIE', 'name' => 'Zürich Wiedikon', 'abbr' => 'ZWIE', 'km' => 0.08],
+            ['id' => 'ZGH', 'name' => 'Giesshübel', 'abbr' => 'ZGH', 'km' => 1.16],
+        ]
+    ],
+    'sihltal' => [
+        'id' => 'sihltal',
+        'name' => 'Sihltalbahn',
+        'stations' => [
+            ['id' => 'ZUSZ', 'name' => 'Zürich HB SZU', 'abbr' => 'ZUSZ', 'km' => -1.23],
+            ['id' => 'ZSEL', 'name' => 'Selnau', 'abbr' => 'ZSEL', 'km' => 0],
+            ['id' => 'ZGH', 'name' => 'Giesshübel', 'abbr' => 'ZGH', 'km' => 1.16],
+            ['id' => 'ZSAA', 'name' => 'Saalsporthalle', 'abbr' => 'ZSAA', 'km' => 1.8],
+            ['id' => 'ZBRU', 'name' => 'Brunau', 'abbr' => 'ZBRU', 'km' => 2.52],
+            ['id' => 'HOEB', 'name' => 'Höcklerbrücke', 'abbr' => 'HOEB', 'km' => 3.88],
+            ['id' => 'ZMA', 'name' => 'Manegg', 'abbr' => 'ZMA', 'km' => 4.18],
+            ['id' => 'ZLE', 'name' => 'Leimbach', 'abbr' => 'ZLE', 'km' => 4.76],
+            ['id' => 'SOOD', 'name' => 'Sood-Oberleimbach', 'abbr' => 'SOOD', 'km' => 6.43],
+            ['id' => 'ADW', 'name' => 'Adliswil', 'abbr' => 'ADW', 'km' => 7.32],
+            ['id' => 'SIA', 'name' => 'Sihlau', 'abbr' => 'SIA', 'km' => 8.32],
+            ['id' => 'WP', 'name' => 'Wildpark-Höfli', 'abbr' => 'WP', 'km' => 9.5],
+            ['id' => 'LNG', 'name' => 'Langnau-Gattikon', 'abbr' => 'LNG', 'km' => 10.71],
+            ['id' => 'SIW', 'name' => 'Sihlwald', 'abbr' => 'SIW', 'km' => 13.23],
+            ['id' => 'SBG', 'name' => 'Sihlbrugg', 'abbr' => 'SBG', 'km' => 17.39],
+        ]
+    ],
     'sihl-zug' => [
         'id' => 'sihl-zug',
         'name' => 'Thalwil - Sihlbrugg - Zug - Rotkreuz',
