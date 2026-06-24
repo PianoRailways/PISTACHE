@@ -710,8 +710,6 @@ $ROUTES = [
         'id' => 'schynige-platte',
         'name' => 'Schynige Platte',
         'stations' => [
-            ['id' => 'ZWEI', 'name' => '', 'abbr' => '', 'km' => -4.96],
-            ['id' => 'MBI', 'name' => '', 'abbr' => '', 'km' => -1.23],
             ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 0],
             ['id' => 'ROTE', 'name' => 'Rotenegg', 'abbr' => 'ROTE', 'km' => 1.87],
             ['id' => 'BRLA', 'name' => 'Breitlauenen', 'abbr' => 'BRLA', 'km' => 4.61],
