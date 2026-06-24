@@ -3571,7 +3571,7 @@ $ROUTES = [
             ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 0],
         ]
     ],
-    '762' => [
+    'w-sh' => [
         'id' => '762',
         'name' => '762 W-SH',
         'stations' => [

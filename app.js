@@ -1353,7 +1353,7 @@ async function saveFreeTimetable(e) {
         const data = await res.json();
         
         if (data.success) {
-            alert('Fahrplan gespeichert!');
+            //alert('Fahrplan gespeichert!');
             closeFreeEditor();
         } else {
             alert('Fehler beim Speichern: ' + (data.error || 'Unbekannter Fehler'));
