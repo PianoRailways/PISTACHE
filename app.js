@@ -443,7 +443,7 @@ async function renderGraph() {
 
         // Abbr. direkt über dem Canvas
         ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
-        ctx.font = 'bold 11px sans-serif';
+        ctx.font = 'bold 8px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(st.abbr, x, paddingTop - 5);
         
@@ -456,10 +456,10 @@ async function renderGraph() {
         let textY;
         if (isOddStation) {
             // Ungerade: weiter oben
-            textY = paddingTop - 35;
+            textY = paddingTop - 40;
         } else {
             // Gerade: etwas tiefer (aber immer noch oben)
-            textY = paddingTop - 20;
+            textY = paddingTop - 25;
         }
         
         // Kleine Linie vom Text zur Abbr
@@ -473,7 +473,7 @@ async function renderGraph() {
         // Name
         ctx.fillText(st.name, x, textY);
         // km
-        ctx.fillText(`km ${st.km}`, x, textY + 10);
+        ctx.fillText(`km ${st.km}`, x, textY + 8);
     });
 
     // Zuglinien zeichnen
