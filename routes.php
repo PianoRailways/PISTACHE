@@ -647,6 +647,8 @@ $ROUTES = [
         'id' => 'BOB',
         'name' => 'BOB',
         'stations' => [
+            ['id' => 'IW', 'name' => '', 'abbr' => '', 'km' => -2],
+            ['id' => 'RIN', 'name' => '', 'abbr' => '', 'km' => -2],
             ['id' => 'IO', 'name' => 'Interlaken Ost', 'abbr' => 'IO', 'km' => -0.18],
             ['id' => 'MBI', 'name' => 'Matten', 'abbr' => 'MBI', 'km' => 2.21],
             ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 3.24],
@@ -677,6 +679,8 @@ $ROUTES = [
         'id' => 'BOB-G',
         'name' => 'Interlaken - Grindelwald',
         'stations' => [
+            ['id' => 'IW', 'name' => '', 'abbr' => '', 'km' => -2],
+            ['id' => 'RIN', 'name' => '', 'abbr' => '', 'km' => -2],
             ['id' => 'IO', 'name' => 'Interlaken Ost', 'abbr' => 'IO', 'km' => -0.18],
             ['id' => 'MBI', 'name' => 'Matten', 'abbr' => 'MBI', 'km' => 2.21],
             ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 3.24],
@@ -689,6 +693,30 @@ $ROUTES = [
             ['id' => 'GRIN', 'name' => 'Grindelwald', 'abbr' => 'GRIN', 'km' => 19.35],
             ['id' => 'GRIG', 'name' => 'Grindelwald Grund', 'abbr' => 'GRIG', 'km' => 20.33],
             ]
+    ],
+    'jungfraujoch' => [
+        'id' => 'jungfraujoch',
+        'name' => 'Jungfraujoch',
+        'stations' => [
+            ['id' => 'KLS', 'name' => 'Kleine Scheidegg', 'abbr' => 'KLS', 'km' => 0],
+            ['id' => 'FALB', 'name' => 'Fallboden', 'abbr' => 'FALB', 'km' => 1.03],
+            ['id' => 'EIGL', 'name' => 'Eigergletscher', 'abbr' => 'EIGL', 'km' => 2.02],
+            ['id' => 'EIGE', 'name' => 'Eigerwand', 'abbr' => 'EIGE', 'km' => 4.34],
+            ['id' => 'EISM', 'name' => 'Eismeer', 'abbr' => 'EISM', 'km' => 5.7],
+            ['id' => 'JU', 'name' => 'Jungfraujoch', 'abbr' => 'JU', 'km' => 9.3],
+        ]
+    ],
+    'schynige-platte' => [
+        'id' => 'schynige-platte',
+        'name' => 'Schynige Platte',
+        'stations' => [
+            ['id' => 'ZWEI', 'name' => '', 'abbr' => '', 'km' => -4.96],
+            ['id' => 'MBI', 'name' => '', 'abbr' => '', 'km' => -1.23],
+            ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 0],
+            ['id' => 'ROTE', 'name' => 'Rotenegg', 'abbr' => 'ROTE', 'km' => 1.87],
+            ['id' => 'BRLA', 'name' => 'Breitlauenen', 'abbr' => 'BRLA', 'km' => 4.61],
+            ['id' => 'SCHY', 'name' => 'Schynige Platte', 'abbr' => 'SCHY', 'km' => 7.26],
+        ]
     ],
     'mob' => [
         'id' => 'mob',
