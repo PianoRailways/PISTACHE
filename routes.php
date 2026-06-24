@@ -2078,7 +2078,7 @@ $ROUTES = [
             ['id' => 'OTH', 'name' => 'Othmarsingen', 'abbr' => 'OTH', 'km' => -27.68],
             ['id' => 'MAEG', 'name' => 'Mägenswil', 'abbr' => 'MAEG', 'km' => -25.94],
             ['id' => 'GMT', 'name' => 'Gruemet', 'abbr' => 'GMT', 'km' => -22.84],
-            ['id' => 'MELH', 'name' => 'Mellingen Heitersberg', 'abbr' => 'MELH', 'km' => 22.24],
+            ['id' => 'MELH', 'name' => 'Mellingen Heitersberg', 'abbr' => 'MELH', 'km' => -22.24],
             ['id' => 'LANG', 'name' => 'Langacher', 'abbr' => 'LANG', 'km' => -17.83],
             ['id' => 'KLW', 'name' => 'Killwangen-Spreitenach', 'abbr' => 'KLW', 'km' => -16.11],
             ['id' => 'SILB', 'name' => 'Silbern', 'abbr' => 'SILB', 'km' => -13.3],
