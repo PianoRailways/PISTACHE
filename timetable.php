@@ -572,7 +572,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Esc</kbd> Schliessen</div>
     </div>
 </div>
-<script src="tooltip.js"></script>
+
 <script src="app.js"></script>
 <script>
 const routesConfig = <?= json_encode($ROUTES) ?>;

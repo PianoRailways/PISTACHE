@@ -329,10 +329,6 @@ async function renderGraph() {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (typeof trainLineCache !== 'undefined' && trainLineCache.clear) {
-    trainLineCache.clear();
-    }
-
     let stations = routesConfig[currentRouteId].stations;
     if (!stations || stations.length === 0) return;
 
@@ -492,37 +488,32 @@ async function renderGraph() {
             .filter(item => item !== null);
 
         if (validStops.length < 2) return;
- 
+
         validStops.sort((a, b) => {
             const timeA = timeToMinutes(a.stop.departure || a.stop.arrival);
             const timeB = timeToMinutes(b.stop.departure || b.stop.arrival);
             return timeA - timeB;
         });
- 
+
         const sollPoints = [];
         validStops.forEach(item => {
             const x = getX(item.km);
             const arrMin = timeToMinutes(item.stop.arrival);
             const depMin = timeToMinutes(item.stop.departure);
- 
+
             if (arrMin !== null) sollPoints.push({ x, y: getY(arrMin) });
             if (depMin !== null) sollPoints.push({ x, y: getY(depMin) });
         });
- 
+
         const istPoints = [];
         validStops.forEach(item => {
             const x = getX(item.km);
             const arrMin = timeToMinutes(item.stop.actual_arrival || item.stop.arrival);
             const depMin = timeToMinutes(item.stop.actual_departure || item.stop.departure);
- 
+
             if (arrMin !== null) istPoints.push({ x, y: getY(arrMin) });
             if (depMin !== null) istPoints.push({ x, y: getY(depMin) });
         });
- 
-        // 🔥 NEU: Cache füllen VOR dem Zeichnen
-        if (typeof trainLineCache !== 'undefined' && trainLineCache.add) {
-            trainLineCache.add(train.train_number, istPoints, sollPoints, baseColor);
-        }
 
         function drawPointChain(points) {
             let started = false;
@@ -564,10 +555,6 @@ async function renderGraph() {
     
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
-
-    if (typeof attachCanvasHoverListener === 'function') {
-        attachCanvasHoverListener(canvas);
-    }
 
 // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
     (function drawCurrentTimeLine() {
