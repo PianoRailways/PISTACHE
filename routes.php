@@ -685,8 +685,8 @@ $ROUTES = [
             ['id' => 'LUEL', 'name' => 'Lütschental', 'abbr' => 'LUEL', 'km' => 12.31],     
             ['id' => 'BURG', 'name' => 'Burglauenen', 'abbr' => 'BURG', 'km' => 14.45],
             ['id' => 'SWDG', 'name' => 'Schwendi', 'abbr' => 'SWDG', 'km' => 16.76],
-            ['id' => 'GRIT', 'name' => 'Terminal', 'abbr' => 'SWDG', 'km' => 17.9],
-            ['id' => 'GRIN', 'name' => 'Grindelwald', 'abbr' => 'SWDG', 'km' => 19.35],
+            ['id' => 'GRIT', 'name' => 'Terminal', 'abbr' => 'GRIT', 'km' => 17.9],
+            ['id' => 'GRIN', 'name' => 'Grindelwald', 'abbr' => 'GRIN', 'km' => 19.35],
             ['id' => 'GRIG', 'name' => 'Grindelwald Grund', 'abbr' => 'GRIG', 'km' => 20.33],
             ]
     ],
