@@ -132,148 +132,130 @@ function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_d
     return $current_delay;
 }
 
-// =========================================================================
-// 7%-RESERVE-PROPAGATION MIT STANDZEIT-BERÜCKSICHTIGUNG
-// JEDESMAL NEU BERECHNEN - AUSSER BEI HALTE MIT "!"
-// =========================================================================
-function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $source_tag = 'P') {
-    global $write_log;
-    
-    // Zugdetails für Logging
-    $stmtInfo = $db->prepare("SELECT train_number, sts_zid FROM trains WHERE id = ?");
-    $stmtInfo->execute([$train_id]);
-    $info = $stmtInfo->fetch(PDO::FETCH_ASSOC);
-    $logIdent = $info ? "Zug " . $info['train_number'] . " (ZID: " . $info['sts_zid'] . ")" : "Zug-ID $train_id";
-    
-    write_log("🔄 PROPAGATION (7% RESERVE): Starte für $logIdent ab Station $modified_station_id");
-    
-    // Lade ALLE Halte des Zuges (chronologisch)
-	$stmt = $db->prepare("
-		SELECT id, station_id, arrival, departure, actual_arrival, actual_departure, flags 
-		FROM timetable 
-		WHERE train_id = ? 
-		ORDER BY COALESCE(arrival, departure) ASC
-	");
-    $stmt->execute([$train_id]);
-    $all_stops = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    if (empty($all_stops)) {
-        write_log("⚠️ PROPAGATION: Keine Halte für Zug-ID $train_id gefunden.");
-        return;
-    }
-    
-    // Finde Index der modifizierten Station
-    $modified_index = null;
-    foreach ($all_stops as $i => $stop) {
-        if ($stop['station_id'] === $modified_station_id) {
-            $modified_index = $i;
-            break;
+//**
+ * propagateTravelTimeWithReserve() - PHP-Version für Delay-Propagation
+ * 
+ * Wird vom STS-Plugin aufgerufen und propagiert Verspätung mit:
+ * - 7% Fahrtzeit-Reserve
+ * - Standzeitabbau (außer bei R-Flag)
+ * - Dispo-Kriterium Schutz
+ */
+function propagateTravelTimeWithReserve($db, $trainId) {
+    $stmt = $db->prepare("
+        SELECT id, station_id, arrival, departure, actual_arrival, actual_departure, flags
+        FROM timetable
+        WHERE train_id = ?
+        ORDER BY 
+            CASE WHEN arrival != '' THEN arrival ELSE departure END ASC,
+            id ASC
+    ");
+    $stmt->execute([$trainId]);
+    $stops = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $timeToMin = function($tStr) {
+        if (empty($tStr)) return null;
+        $p = explode(':', $tStr);
+        return (count($p) >= 2) ? (intval($p[0]) * 60 + intval($p[1])) : null;
+    };
+
+    $minToTime = function($minutes) {
+        if ($minutes === null || is_nan($minutes)) return '';
+        $normalized = ((intval($minutes) % 1440) + 1440) % 1440;
+        $h = intval($normalized / 60);
+        $m = intval($normalized % 60);
+        return sprintf('%02d:%02d', $h, $m);
+    };
+
+    $prevDepMin = null;
+    $prevSollDepMin = null;
+
+    for ($i = 0; $i < count($stops); $i++) {
+        $stop = $stops[$i];
+        $stationId = $stop['station_id'];
+        $flags = $stop['flags'] ?? '';
+
+        $sollArrMin = $timeToMin($stop['arrival']);
+        $sollDepMin = $timeToMin($stop['departure']);
+
+        if ($sollArrMin === null && $sollDepMin === null) {
+            continue;
         }
-    }
-    
-    if ($modified_index === null) {
-        write_log("⚠️ PROPAGATION: Station $modified_station_id nicht in Halteliste gefunden.");
-        return;
-    }
-    
-    write_log("📍 PROPAGATION: Starte ab Halt-Index $modified_index von " . count($all_stops));
-    
-    // Durchgehe alle Halte ab der modifizierten Station
-    for ($i = $modified_index; $i < count($all_stops); $i++) {
-        $currentStop = $all_stops[$i];
-        $stId = $currentStop['station_id'];
-        $timetable_id = $currentStop['id'];
-        
-        $sollArrStr = $currentStop['arrival'];
-        $sollDepStr = $currentStop['departure'];
-        $flags = $currentStop['flags'] ?? '';
-        
-        // Skip wenn keine Zeiten
-        if (empty($sollArrStr) && empty($sollDepStr)) continue;
-        
-        // 🔒 SCHUTZ: Wenn dieser Halt mit "!" geschützt ist, stoppt Propagation hier
-        if (isHaltProtected($flags)) {
-            write_log("🔒 GESCHÜTZT: Halt $stId mit ! in Flags → wird nicht berechnet, Propagation stoppt");
-            break;
+
+        // 🔒 SCHUTZ: Dispo-Kriterium prüfen
+        if (preg_match('/^(X|V|C[4-7]?)\((\d+)\)/i', trim($flags))) {
+            error_log("🔒 GESCHÜTZT (Dispo): $stationId → wird übersprungen");
+            continue;
         }
-        
-        $sollArrMin = timeToMinutes($sollArrStr);
-        $sollDepMin = timeToMinutes($sollDepStr);
-        
-        // IST-Zeiten auslesen
-        $istArrMin = timeToMinutes($currentStop['actual_arrival']);
-        $istDepMin = timeToMinutes($currentStop['actual_departure']);
-        
-        // Wenn Ankunft fehlt, von vorheriger Abfahrt übernehmen
-        if ($istArrMin === null && $i > 0) {
-            $prevStop = $all_stops[$i - 1];
-            $prevIstDepMin = timeToMinutes($prevStop['actual_departure']);
-            if ($prevIstDepMin !== null) {
-                $istArrMin = $prevIstDepMin;
+
+        $istArrMin = $timeToMin($stop['actual_arrival']);
+        $istDepMin = $timeToMin($stop['actual_departure']);
+
+        // ========== ANKUNFT BERECHNEN ==========
+        if ($prevDepMin !== null && $prevSollDepMin !== null && $istArrMin === null) {
+            $sollFahrtzeit = 0;
+            if ($sollArrMin !== null) {
+                $sollFahrtzeit = $sollArrMin - $prevSollDepMin;
+            } elseif ($sollDepMin !== null) {
+                $sollFahrtzeit = $sollDepMin - $prevSollDepMin;
+            }
+
+            if ($sollFahrtzeit > 0) {
+                $minFahrtzeit = round($sollFahrtzeit * 0.93);
+                $istFahrtzeit = max($minFahrtzeit, $sollFahrtzeit);
+                $istArrMin = $prevDepMin + $istFahrtzeit;
             }
         }
-        
-        // Wenn Ankunft immer noch null, skip
-        if ($istArrMin === null) continue;
-        
-        // Standzeit berechnen (Soll-Soll)
-        $standzeit = 0;
-        if ($sollArrMin !== null && $sollDepMin !== null && $sollDepMin >= $sollArrMin) {
-            $standzeit = $sollDepMin - $sollArrMin;
+
+        if ($istArrMin === null && $prevDepMin !== null) {
+            $istArrMin = $prevDepMin;
         }
-        
-        // 🔧 BERECHNE IST-ABFAHRT IMMER NEU (auch wenn bereits Werte vorhanden sind!)
-        // Das ist der Key-Change: Nicht nur wenn $istDepMin === null, sondern IMMER
-        if ($i > 0) {
-            $prevStop = $all_stops[$i - 1];
-            $prevSollDepStr = $prevStop['departure'];
-            $prevSollDepMin = timeToMinutes($prevSollDepStr);
-            $prevIstDepMin = timeToMinutes($prevStop['actual_departure']);
-            
-            if ($prevIstDepMin !== null && $prevSollDepMin !== null) {
-                // Soll-Fahrzeit
-                $sollFahrtzeit = ($sollArrMin !== null) 
-                    ? ($sollArrMin - $prevSollDepMin) 
-                    : ($sollDepMin - $prevSollDepMin);
-                
-                if ($sollFahrtzeit > 0) {
-                    // 7% Reserve: Minimum = Sollfahrzeit * 0.93
-                    $minFahrtzeit = max(1, intval(round($sollFahrtzeit * 0.93)));
-                    
-                    // Ist-Fahrzeit
-                    $istFahrtzeit = $istArrMin - $prevIstDepMin;
-                    
-                    // Effektive Fahrzeit = Maximum(eingegeben, Minimum mit 7% Reserve)
-                    $effektiveFahrtzeit = max($istFahrtzeit, $minFahrtzeit);
-                    
-                    // Neue Ist-Ankunft
-                    $istArrMin = $prevIstDepMin + $effektiveFahrtzeit;
-                }
+
+        // ========== STANDZEIT & ABFAHRT ==========
+        if ($istArrMin !== null && $sollDepMin !== null) {
+            // Soll-Standzeit
+            $sollStandzeit = 0;
+            if ($sollArrMin !== null) {
+                $sollStandzeit = max(0, $sollDepMin - $sollArrMin);
             }
+
+            // R-Flag prüfen
+            $hasRFlag = preg_match('/R/i', $flags) ? true : false;
+            $minStandzeit = $hasRFlag ? 2 : 0;
+
+            // Verspätung bei Ankunft
+            $arrivalDelay = ($sollArrMin !== null) ? ($istArrMin - $sollArrMin) : 0;
+
+            // Verfügbare Abbremsung
+            $availableBraking = max(0, $sollStandzeit - $minStandzeit);
+            $actualBraking = min(max(0, $arrivalDelay), $availableBraking);
+
+            // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
+            $remainingDelay = max(0, $arrivalDelay - $actualBraking);
+            $istDepMin = $sollDepMin + $remainingDelay;
+
+            error_log("📍 $stationId: Ank.Versp={$arrivalDelay}min, Abbr={$actualBraking}min, Restversp={$remainingDelay}min");
+        } elseif ($istArrMin !== null) {
+            // Keine geplante Abfahrt, aber Ankunft: Ist-Abfahrt = Ist-Ankunft
+            $istDepMin = $istArrMin;
         }
-        
-        // Ist-Abfahrt = Ist-Ankunft + Standzeit
-        $istDepMin = $istArrMin + $standzeit;
-        
-        // Dispo-Kriterien anwenden (falls vorhanden)
-        if (!empty($flags) && $sollDepMin !== null) {
-            $adjusted_delay = evaluateDispoCriteria($db, $stId, $flags, $istDepMin - $sollDepMin, $sollDepMin);
-            $istDepMin = $sollDepMin + $adjusted_delay;
-        }
-        
-        // 💾 IN DB SCHREIBEN - IMMER (überschreibt auch bereits vorhandene Werte)
-        $actualArr = ($sollArrMin !== null) ? minutesToTime($istArrMin) : null;
-        $actualDep = ($sollDepMin !== null) ? minutesToTime($istDepMin) : null;
-        
-        $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, remarks = ? WHERE id = ?");
-        $stmtUpdate->execute([
-            $actualArr,
-            $actualDep,
-            "Fahrtberechnung (7% Reserve) (" . $source_tag . ")",
-            $timetable_id
+
+        // ========== UPDATE IN DB ==========
+        $stmt = $db->prepare("
+            UPDATE timetable
+            SET actual_arrival = ?, actual_departure = ?
+            WHERE id = ?
+        ");
+        $stmt->execute([
+            $minToTime($istArrMin),
+            $minToTime($istDepMin),
+            $stop['id']
         ]);
-        
-        write_log("   ✓ Halt $stId: Ank=$actualArr, Abf=$actualDep (neu berechnet)");
+
+        // Aktualisiere Werte für nächste Iteration
+        if ($istDepMin !== null) {
+            $prevDepMin = $istDepMin;
+            $prevSollDepMin = $sollDepMin;
+        }
     }
 }
 
