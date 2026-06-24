@@ -1278,6 +1278,11 @@ function renderFreeEditorTable() {
         tbody.appendChild(tr);
     });
 
+    // Delay-Felder initial befüllen
+    freeEditorStations.forEach(st => {
+        updateDelayFields(st.id);
+    });
+
     tbody.addEventListener('dragover', (e) => {
         e.preventDefault();
         const draggingRow = tbody.querySelector('.dragging');
