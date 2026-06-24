@@ -132,7 +132,7 @@ function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_d
     return $current_delay;
 }
 
-//**
+/**
  * propagateTravelTimeWithReserve() - PHP-Version für Delay-Propagation
  * 
  * Wird vom STS-Plugin aufgerufen und propagiert Verspätung mit:
