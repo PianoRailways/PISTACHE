@@ -2408,7 +2408,24 @@ $ROUTES = [
             ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => 27.8],
         ]
     ],
-    
+    'gbt' => [
+        'id' => 'gbt',
+        'name' => 'GBT',
+        'stations' => [
+            ['id' => 'GRUO', 'name' => 'Gruonbach', 'abbr' => 'GRUO', 'km' => 90.88],
+            ['id' => 'FL', 'name' => 'Flüelen', 'abbr' => 'FL', 'km' => 92.31],
+            ['id' => 'AL', 'name' => 'Altdorf', 'abbr' => 'AL', 'km' => 95.26],
+            ['id' => 'RYN', 'name' => 'Rynächt Nord', 'abbr' => 'RYN', 'km' => 98.67],
+            ['id' => 'SSMF', 'name' => 'Sedrun SMF', 'abbr' => 'SSMF', 'km' => 121],
+            ['id' => 'FSMF', 'name' => 'Faido SMF', 'abbr' => 'FSMF', 'km' => 140.33],
+            ['id' => 'POZZ', 'name' => 'Pozzo Negro', 'abbr' => 'POZZ', 'km' => 156.82],
+            ['id' => 'POLS', 'name' => 'Polleggio Sud', 'abbr' => 'POLS', 'km' => 159.3],
+            ['id' => 'GIDI', 'name' => 'Giustizia', 'abbr' => 'GIDI', 'km' => 164.02],
+            ['id' => 'OS', 'name' => 'Osogna-Cresciano', 'abbr' => 'OS', 'km' => 166.93],
+            ['id' => 'CLA', 'name' => 'Claro', 'abbr' => 'CLA', 'km' => 172.93],
+            ['id' => 'CAST', 'name' => 'Castione-Arbedo', 'abbr' => 'CAST', 'km' => 176.73],
+        ]
+    ],
     'gottardo-berg-komplett' => [
         'id' => 'gottardo-berg-komplett',
         'name' => 'Gotthard-Berg (GD-GIU)',
@@ -2435,6 +2452,7 @@ $ROUTES = [
             ['id' => 'LAV', 'name' => 'Lavorgo', 'abbr' => 'LAV', 'km' => 112.6],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
+            ['id' => 'GIDI', 'name' => 'Giustizia', 'abbr' => 'GIDI', 'km' => 135.05],
             ['id' => 'OS', 'name' => 'Osogna-Cresciano', 'abbr' => 'OS', 'km' => 137.96],
             ['id' => 'CLA', 'name' => 'Claro', 'abbr' => 'CLA', 'km' => 143.47],
             ['id' => 'CAST', 'name' => 'Castione-Arbedo', 'abbr' => 'CAST', 'km' => 147.27],
