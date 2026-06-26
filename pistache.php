@@ -385,31 +385,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $route_id = $train['route_id'];
         $train_num = $train['train_number'];
 
-        // 2. Station suchen
+        // 2. Station suchen (immer global im gesamten Fahrplan)
         $station_id = null;
         $plugin_abbr = strtoupper(trim($station_abbr));
-        
-        write_log("DEBUG: Suche Station mit Kürzel: '$plugin_abbr' in Route '$route_id'");
 
-        if (isset($ROUTES[$route_id]['stations'])) {
-            foreach ($ROUTES[$route_id]['stations'] as $st) {
+        write_log("DEBUG: Suche Station mit Kürzel: '$plugin_abbr' im gesamten Fahrplan");
+        foreach ($ROUTES as $rid => $route) {
+            foreach ($route['stations'] as $st) {
                 if (strtoupper(trim($st['abbr'])) === $plugin_abbr) {
                     $station_id = $st['id'];
-                    break;
-                }
-            }
-        }
-        
-        // FALLBACK: Global suchen
-        if (!$station_id) {
-            write_log("DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für '$plugin_abbr'...");
-            foreach ($ROUTES as $rid => $route) {
-                foreach ($route['stations'] as $st) {
-                    if (strtoupper(trim($st['abbr'])) === $plugin_abbr) {
-                        $station_id = $st['id'];
-                        write_log("DEBUG: Station global in Route '$rid' gefunden (ID: $station_id).");
-                        break 2;
-                    }
+                    write_log("DEBUG: Station global in Route '$rid' gefunden (ID: $station_id).");
+                    break 2;
                 }
             }
         }
