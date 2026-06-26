@@ -419,9 +419,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // SCHUTZ: Prüfe ob mit "!" markiert
+        // SCHUTZ: Prüfe ob die aktuelle Station mit "!" markiert ist
         $flags = $timetable_entry['flags'] ?? '';
-        if (isHaltProtected($flags)) {
+        if (strpos($flags, '!') !== false) {
             write_log("🔒 GESCHÜTZT: Zug $train_num an $station_abbr ist mit ! markiert → Plugin-Update ignoriert");
             echo json_encode(['success' => true, 'message' => "Halt ist fixiert (!), Plugin-Update ignoriert."]);
             exit;
@@ -432,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $am_gleis_flag = ($am_gleis === '1' || $am_gleis === true);
 
         if ($am_gleis_flag) {
-            $actual_arrival = null;
+            $actual_arrival = null; 
             $actual_departure = addMinutes($timetable_entry['departure'], $delay);
             write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$delay Min)");
         } else {
@@ -441,10 +441,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$delay Min)");
         }
 
-        // 5. ZUKÜNFTIGE IST-DATEN ZURÜCKSETZEN (Damit die Neuberechnung greift)
-        // Wir holen alle Halte des Zuges in chronologischer Reihenfolge
+        // 5. ZUKÜNFTIGE IST-DATEN SELEKTIV ZURÜCKSETZEN (Geschützte Halte auslassen!)
         $stmtStops = $db->prepare("
-            SELECT id, station_id FROM timetable WHERE train_id = ? 
+            SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
             ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC
         ");
         $stmtStops->execute([$train_id]);
@@ -456,9 +455,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($all_stops as $s) {
             if ($s['station_id'] == $station_id) {
                 $current_found = true;
-                continue; // Die aktuelle Station nicht löschen, die updaten wir gleich gezielt
+                continue; // Aktuelle Station überspringen, updaten wir gleich gezielt
             }
             if ($current_found) {
+                // Wenn der Folgehalt geschützt ist (!), darf er NICHT auf NULL zurückgesetzt werden!
+                if (strpos($s['flags'] ?? '', '!') !== false) {
+                    write_log("🔒 BEREINIGUNG: Folgehalt ID {$s['id']} ist geschützt (!) und wird nicht zurückgesetzt.");
+                    continue;
+                }
                 $stops_to_clear[] = $s['id'];
             }
         }
@@ -471,11 +475,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE id IN ($clause)
             ");
             $stmtClear->execute($stops_to_clear);
-            write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " nachfolgende Halte für neue Propagation zurückgesetzt.");
+            write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
         }
 
         // 6. Aktuelle Station in DB schreiben
         if ($am_gleis_flag) {
+            // Bei "Am Gleis" bleibt der eventuell vorhandene alte Ist-Ankunftswert unberührt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE train_id = ? AND station_id = ?");
             $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $train_id, $station_id]);
         } else {
