@@ -135,10 +135,15 @@ function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_d
 /**
  * propagateTravelTimeWithReserve() - PHP-Version für Delay-Propagation
  * 
- * Wird vom STS-Plugin aufgerufen und propagiert Verspätung mit:
+ * Wird vom STS-Plugin aufgerufen und propagiert Verspätung für die aktuelle Fahrt
+ * über alle noch folgenden Halte des gleichen Zuges.
+ * Dabei werden angewendet:
  * - 7% Fahrtzeit-Reserve
  * - Standzeitabbau (außer bei R-Flag)
  * - Dispo-Kriterium Schutz
+ * 
+ * Hinweis: Diese Funktion arbeitet nur für den aktuellen Zug (train_id),
+ * Nachfolgezüge werden hier nicht automatisch angepasst.
  */
 function propagateTravelTimeWithReserve($db, $trainId) {
     $stmt = $db->prepare("
@@ -189,9 +194,17 @@ function propagateTravelTimeWithReserve($db, $trainId) {
 
         $istArrMin = $timeToMin($stop['actual_arrival']);
         $istDepMin = $timeToMin($stop['actual_departure']);
+        $hasActualDepartureOnly = ($istArrMin === null && $istDepMin !== null);
 
         // ========== ANKUNFT BERECHNEN ==========
-        if ($prevDepMin !== null && $prevSollDepMin !== null && $istArrMin === null) {
+        if ($hasActualDepartureOnly) {
+            if ($sollArrMin !== null && $sollDepMin !== null) {
+                $scheduledStandzeit = max(0, $sollDepMin - $sollArrMin);
+                $istArrMin = max(0, $istDepMin - $scheduledStandzeit);
+            } else {
+                $istArrMin = $istDepMin;
+            }
+        } elseif ($prevDepMin !== null && $prevSollDepMin !== null && $istArrMin === null) {
             $sollFahrtzeit = 0;
             if ($sollArrMin !== null) {
                 $sollFahrtzeit = $sollArrMin - $prevSollDepMin;
@@ -448,11 +461,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
+        write_log("DEBUG: Starte Propagation der aktuellen Fahrt von Zug $train_num bis zum Ende des Fahrplans.");
 
-        // 7%-RESERVE-PROPAGATION FÜR GANZE FAHRT (JEDESMAL NEU)
-        propagateTravelTimeWithReserve($db, $train_id);  // NUR 2 Parameter!
+        // 7%-RESERVE-PROPAGATION FÜR DIE AKTUELLE FAHRT
+        // Diese Funktion berechnet die weiteren Halte des aktuellen Zuges neu.
+        propagateTravelTimeWithReserve($db, $train_id);
         
-        // Optional: Cascade für Nachfolgerzug
+        // Optional: Cascade für Nachfolgezug (nicht Teil der aktuellen Fahrtpropagation)
         // recalculateDelayCascade($db, $sts_zid, $delay);
 
         // 6. Audit-Log
@@ -473,7 +488,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("✗ EXCEPTION beim Audit-Log: " . $logEx->getMessage());
         }
 
-        echo json_encode(['success' => true, 'message' => "Fahrt mit 7%-Reserve neu berechnet und propagiert."]);
+        echo json_encode(['success' => true, 'message' => "Aktuelle Fahrt bis zum Ende des Fahrplans neu berechnet und propagiert."]);
         exit;
     }
 
