@@ -214,7 +214,6 @@ $has_entries = !empty($rows);
         <?php endif; ?>
     </form>
 </div>
-/* Facts */
 <?php 
 $fun_facts = [
     "Der Gotthard-Basistunnel ist mit 57 Kilometern der längste Eisenbahntunnel der Welt.",
