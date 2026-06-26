@@ -238,6 +238,8 @@ foreach ($rows as $row):
     
     if ($row['location_type'] === 'line') {
         $location_text = "auf der Strecke " . htmlspecialchars($row['station_a']) . " – " . htmlspecialchars($row['station_b']);
+    } elseif ($row['location_type'] === 'interlocking') {
+        $location_text = "im Stellwerk " . htmlspecialchars($row['station_a']);
     } else {
         $location_text = "im Bahnhof " . htmlspecialchars($row['station_a']);
     }

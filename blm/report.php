@@ -42,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete_incident'])) 
         
         if ($location_type === 'line') {
             $reason = "Die Störung auf der Strecke " . $station_a . " - " . $station_b . " konnte behoben werden.";
+        } elseif ($location_type === 'interlocking') {
+            $reason = "Die Störung im Stellwerk " . $station_a . " konnte behoben werden.";
         } else {
             $reason = "Die Störung im Bahnhof " . $station_a . " konnte behoben werden.";
         }
@@ -135,6 +137,7 @@ while ($row = $incidents_res->fetchArray(SQLITE3_ASSOC)) {
                 document.getElementById('impact').value = data.impact ? data.impact : '';
                 document.getElementById('start_time').value = data.start_time_html;
                 document.getElementById('end_time').value = data.end_time_html;
+                toggleLocationFields();
                 
                 resolveContainer.style.display = 'flex';
                 deleteBtn.style.display = 'block'; // Zeigen, wenn ein Eintrag geladen ist
@@ -160,6 +163,12 @@ while ($row = $incidents_res->fetchArray(SQLITE3_ASSOC)) {
         function toggleLocationFields() {
             var type = document.getElementById('location_type').value;
             document.getElementById('station_b_container').style.display = (type === 'line') ? 'block' : 'none';
+            var stationALabel = document.getElementById('station_a_label');
+            if (type === 'interlocking') {
+                stationALabel.textContent = 'Stellwerk:';
+            } else {
+                stationALabel.textContent = 'Bahnhof A:';
+            }
         }
     </script>
 </head>
@@ -192,6 +201,7 @@ while ($row = $incidents_res->fetchArray(SQLITE3_ASSOC)) {
                 <select id="location_type" name="location_type" onchange="toggleLocationFields()">
                     <option value="station">Im Bahnhof</option>
                     <option value="line">Auf der Strecke</option>
+                    <option value="interlocking">Im Stellwerk</option>
                 </select>
             </div>
             <div>
@@ -206,7 +216,7 @@ while ($row = $incidents_res->fetchArray(SQLITE3_ASSOC)) {
 
         <div class="row">
             <div>
-                <label for="station_a">Bahnhof A:</label>
+                <label for="station_a" id="station_a_label">Bahnhof A:</label>
                 <input type="text" id="station_a" name="station_a" required>
             </div>
             <div id="station_b_container" style="display:none;">
