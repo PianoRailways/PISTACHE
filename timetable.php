@@ -452,8 +452,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" id="train_number" inputmode="numeric" pattern="[0-9]*" maxlength="6" 
                            placeholder="z.B. 421" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                     <button type="submit">Editor öffnen</button>
-                    <button type="button" style="background-color: #8b5cf6;" 
-                    onclick="activateFreeEditor()">📝 Freier Editor</button>
+                    <!-- <button type="button" style="background-color: #8b5cf6;" 
+                    onclick="activateFreeEditor()">📝 Freier Editor</button> -->
                 </form>
             </div>
         </div>
