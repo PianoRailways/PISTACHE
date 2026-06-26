@@ -307,10 +307,11 @@ function recalcRow(stationId, type, trigger) {
         }
     }
 
-    // 🔧 LIVE-PROPAGATION IM FREE EDITOR
-    if (isFree) {
+    // 🔧 LIVE-PROPAGATION: Nur wenn Zeit geändert wurde (nicht bei Delay-Input!)
+    // Im Free Editor: propagiere nur bei Zeit-Änderungen, nicht bei Delay-Eingabe
+    if (isFree && trigger === 'time') {
         propagateTravelTimeWithReserve();
-    } else if (typeof propagateForward === 'function') {
+    } else if (!isFree && typeof propagateForward === 'function') {
         propagateForward(currentIndex + 1);
     }
 }
@@ -863,7 +864,11 @@ function propagateForward(startIndex) {
 
             // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
             const remainingDelay = Math.max(0, arrivalDelay - actualBraking);
-            const istDepMin = sollDepMin + remainingDelay;
+            let istDepMin = sollDepMin + remainingDelay;
+
+            if (istArrMin !== null && istDepMin < istArrMin) {
+                istDepMin = istArrMin;
+            }
 
             if (istDepField) istDepField.value = minutesToTime(istDepMin);
             if (delayDepField) delayDepField.value = istDepMin - sollDepMin;
@@ -1030,6 +1035,10 @@ function propagateTravelTimeWithReserve() {
             istDepMin = sollDepMin + remainingDelay;
         } else {
             istDepMin = istArrMin + minStandzeit;
+        }
+
+        if (istArrMin !== null && istDepMin < istArrMin) {
+            istDepMin = istArrMin;
         }
 
         if (istDepField) {
