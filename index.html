@@ -260,36 +260,22 @@ function updateInstanzTimeLabels() {
     const timeBasisSelect = document.getElementById('time_basis');
     if (!timeBasisSelect) return;
     
-    // Berechne aktuelle Instanzzeiten
-    const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
-    const baseOffsetInstanz1 = -780;
+    const nowRealMinutes = now.getHours() * 60 + now.getMinutes();
     
-    const diffInMs = now - refRealTime;
-    const diffInHours = diffInMs / (1000 * 60 * 60);
-    const instancesPassed = Math.floor(diffInHours / 16);
-    const totalShiftMinutes = instancesPassed * 480;
+    // Instanz 1: 13 Stunden (780 Min) hinter Realzeit
+    const instanz1Minutes = (nowRealMinutes - 780 + 1440) % 1440;
     
-    const localMinutes = now.getHours() * 60 + now.getMinutes();
-    
-    // Instanz 1
-    let offset1 = baseOffsetInstanz1 + totalShiftMinutes;
-    offset1 = ((offset1 % 1440) + 1440) % 1440 - 720; // Normalisieren
-    let stsMin1 = ((localMinutes + offset1) % 1440 + 1440) % 1440;
-    
-    // Instanz 2
-    let offset2 = offset1 + 840;
-    offset2 = ((offset2 % 1440) + 1440) % 1440 - 720; // Normalisieren
-    let stsMin2 = ((localMinutes + offset2) % 1440 + 1440) % 1440;
+    // Instanz 2: 7 Stunden (420 Min) hinter Realzeit
+    const instanz2Minutes = (nowRealMinutes - 420 + 1440) % 1440;
     
     const format = (min) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
     
-    // Update Options
     const options = timeBasisSelect.options;
     for (let i = 0; i < options.length; i++) {
         if (options[i].value === 'instanz1') {
-            options[i].textContent = `STS Instanz 1 (${format(stsMin1)})`;
+            options[i].textContent = `STS Instanz 1 (${format(instanz1Minutes)})`;
         } else if (options[i].value === 'instanz2') {
-            options[i].textContent = `STS Instanz 2 (${format(stsMin2)})`;
+            options[i].textContent = `STS Instanz 2 (${format(instanz2Minutes)})`;
         }
     }
 }
@@ -343,19 +329,12 @@ function applyAutoScroll() {
     if (basis === 'manual') {
         calculatedOffset = parseInt(document.getElementById('sts_offset').value || 0, 10);
     } else {
-        const refRealTime = new Date(2026, 5, 4, 21, 30, 0); 
-        const baseOffsetInstanz1 = -780; 
-        
-        const diffInMs = now - refRealTime;
-        const diffInHours = diffInMs / (1000 * 60 * 60);
-        const instancesPassed = Math.floor(diffInHours / 16);
-        const totalShiftMinutes = instancesPassed * 480;
-        
-        calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
-        calculatedOffset = ((calculatedOffset % 1440) + 1440) % 1440 - 720; // Normalisieren
-        
-        if (basis === 'instanz2') {
-            calculatedOffset = ((calculatedOffset + 840 + 1440) % 1440) - 720; // Normalisieren
+        // Instanz 1: 13 Stunden (780 Minuten) hinter Realzeit
+        // Instanz 2: 7 Stunden (420 Minuten) hinter Realzeit
+        if (basis === 'instanz1') {
+            calculatedOffset = -780;
+        } else if (basis === 'instanz2') {
+            calculatedOffset = -420;
         }
     }
 

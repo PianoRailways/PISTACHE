@@ -557,64 +557,52 @@ async function renderGraph() {
     ctx.setLineDash([]);
 
 // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
-    (function drawCurrentTimeLine() {
-        const now = new Date();
-        const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
-        
-        const basis = document.getElementById('time_basis')?.value || 'instanz1';
-        
-        let calculatedOffset = 0;
-        
-        if (basis === 'manual') {
-            const offsetInput = document.getElementById('sts_offset');
-            calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
-        } else {
-            const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
-            const baseOffsetInstanz1 = -780;
-            
-            const diffInMs = now - refRealTime;
-            const diffInHours = diffInMs / (1000 * 60 * 60);
-            const instancesPassed = Math.floor(diffInHours / 16);
-            const totalShiftMinutes = instancesPassed * 480;
-            
-            calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
-            calculatedOffset = ((calculatedOffset % 1440) + 1440) % 1440 - 720; // Normalisieren
-            
-            if (basis === 'instanz2') {
-                calculatedOffset = ((calculatedOffset + 840 + 1440) % 1440) - 720; // Normalisieren
-            }
+(function drawCurrentTimeLine() {
+    const now = new Date();
+    const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    const basis = document.getElementById('time_basis')?.value || 'instanz1';
+    
+    let calculatedOffset = 0;
+    
+    if (basis === 'manual') {
+        const offsetInput = document.getElementById('sts_offset');
+        calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+    } else {
+        if (basis === 'instanz1') {
+            calculatedOffset = -780;
+        } else if (basis === 'instanz2') {
+            calculatedOffset = -420;
         }
+    }
+    
+    const stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+    const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
+
+    if (y >= paddingTop && y <= paddingTop + graphHeight) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = '#FFDE15'; 
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
         
-        const stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(paddingLeft + graphWidth, y);
+        ctx.stroke();
 
-        // Berechne Y-Position mit den gleichen Variablen wie oben
-        const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
-
-        // Nur zeichnen, wenn die Linie sichtbar ist
-        if (y >= paddingTop && y <= paddingTop + graphHeight) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.strokeStyle = '#FFDE15'; 
-            ctx.lineWidth = 2;
-            ctx.setLineDash([6, 4]);
-            
-            ctx.moveTo(paddingLeft, y);
-            ctx.lineTo(paddingLeft + graphWidth, y);
-            ctx.stroke();
-
-            ctx.fillStyle = '#FFDE15';
-            ctx.font = 'bold 11px sans-serif';
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'middle';
-            
-            const displayHours = Math.floor(stsMinutes / 60);
-            const displayMinutes = stsMinutes % 60;
-            const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
-            
-            ctx.fillText(timeString, paddingLeft - 10, y);
-            ctx.restore();
-        }
-    })();
+        ctx.fillStyle = '#FFDE15';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        
+        const displayHours = Math.floor(stsMinutes / 60);
+        const displayMinutes = stsMinutes % 60;
+        const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
+        
+        ctx.fillText(timeString, paddingLeft - 10, y);
+        ctx.restore();
+    }
+})();
 }
 
 function updateTrainList(trains) {
