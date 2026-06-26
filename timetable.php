@@ -623,6 +623,11 @@ function filterRoutes() {
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
+    // Browser-Shortcuts wie Strg/Cmd+F oder F3 nicht blockieren
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+    }
+
     // Nicht triggern wenn man in Textfeldern tippt (ausser Escape)
     const isInInput = document.activeElement.tagName === 'INPUT' || 
                       document.activeElement.tagName === 'TEXTAREA' ||
