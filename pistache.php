@@ -349,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // =========================================================================
-    // PLUGIN-UPDATE MIT 7%-RESERVE PROPAGATION
+    // PLUGIN-UPDATE MIT 7%-RESERVE PROPAGATION (ÜBERSCHREIBT ZUKÜNFTIGE IST-DATEN)
     // =========================================================================
     if ($action === 'plugin_update_delay') {
         $sts_zid = $_POST['sts_zid'] ?? $input_data['sts_zid'] ?? '';
@@ -363,23 +363,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Extrahiere Stationskürzl aus Plattform-ID
-        // Supportet: "KZ4A", "BO2G", "BN 10 kurz", "ROSS 3", "GMM2", etc.
-        // station_id = nur die Stationskürzl (Buchstaben am Anfang)
-        // track = die komplette Gleisbezeichnung (Nummer + optional Buchstaben/Zusatz)
-        
         if (preg_match('/^([A-Za-z]+)\s+(.+)$/', trim($raw_gleis), $matches)) {
-            // Format mit Leerzeichen: "STATION GLEIS..."
-            // z.B. "BN 10 kurz", "ROSS 3", "KZ 4A"
-            $station_abbr = strtoupper($matches[1]);           // z.B. "BN", "ROSS", "KZ"
-            $track_number = $matches[2];                       // z.B. "10 kurz", "3", "4A"
+            $station_abbr = strtoupper($matches[1]);
+            $track_number = $matches[2];
         } elseif (preg_match('/^([A-Za-z]+)(\d.*)$/', trim($raw_gleis), $matches)) {
-            // Format ohne Leerzeichen: "STATIONGLEIS..."
-            // z.B. "KZ4A", "BO2G", "GMM2", "ROSS3", "BN10"
-            $station_abbr = strtoupper($matches[1]);           // z.B. "KZ", "BO", "GMM", "ROSS", "BN"
-            $track_number = $matches[2];                       // z.B. "4A", "2G", "2", "3", "10"
+            $station_abbr = strtoupper($matches[1]);
+            $track_number = $matches[2];
         } else {
-            // Fallback: Nur Buchstaben, keine Nummer
             $station_abbr = strtoupper(trim($raw_gleis));
             $track_number = null;
         }
@@ -398,7 +388,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $route_id = $train['route_id'];
         $train_num = $train['train_number'];
 
-        // 2. Station suchen (immer global im gesamten Fahrplan)
+        // 2. Station suchen
         $station_id = null;
         $plugin_abbr = strtoupper(trim($station_abbr));
 
@@ -451,7 +441,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$delay Min)");
         }
 
-        // 5. In DB schreiben
+        // 5. ZUKÜNFTIGE IST-DATEN ZURÜCKSETZEN (Damit die Neuberechnung greift)
+        // Wir holen alle Halte des Zuges in chronologischer Reihenfolge
+        $stmtStops = $db->prepare("
+            SELECT id, station_id FROM timetable WHERE train_id = ? 
+            ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC
+        ");
+        $stmtStops->execute([$train_id]);
+        $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
+
+        $current_found = false;
+        $stops_to_clear = [];
+
+        foreach ($all_stops as $s) {
+            if ($s['station_id'] == $station_id) {
+                $current_found = true;
+                continue; // Die aktuelle Station nicht löschen, die updaten wir gleich gezielt
+            }
+            if ($current_found) {
+                $stops_to_clear[] = $s['id'];
+            }
+        }
+
+        if (!empty($stops_to_clear)) {
+            $clause = implode(',', array_fill(0, count($stops_to_clear), '?'));
+            $stmtClear = $db->prepare("
+                UPDATE timetable 
+                SET actual_arrival = NULL, actual_departure = NULL 
+                WHERE id IN ($clause)
+            ");
+            $stmtClear->execute($stops_to_clear);
+            write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " nachfolgende Halte für neue Propagation zurückgesetzt.");
+        }
+
+        // 6. Aktuelle Station in DB schreiben
         if ($am_gleis_flag) {
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE train_id = ? AND station_id = ?");
             $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $train_id, $station_id]);
@@ -463,14 +486,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
         write_log("DEBUG: Starte Propagation der aktuellen Fahrt von Zug $train_num bis zum Ende des Fahrplans.");
 
-        // 7%-RESERVE-PROPAGATION FÜR DIE AKTUELLE FAHRT
-        // Diese Funktion berechnet die weiteren Halte des aktuellen Zuges neu.
+        // 7. Freie Fahrt für die 7%-Reserve-Propagation über die bereinigten Folgehalte
         propagateTravelTimeWithReserve($db, $train_id);
         
-        // Optional: Cascade für Nachfolgezug (nicht Teil der aktuellen Fahrtpropagation)
-        // recalculateDelayCascade($db, $sts_zid, $delay);
-
-        // 6. Audit-Log
+        // 8. Audit-Log
         try {
             $sts_user = $_POST['sts_user'] ?? $input_data['sts_user'] ?? '';
             $sts_sim = $_POST['sts_sim'] ?? $input_data['sts_sim'] ?? '';
