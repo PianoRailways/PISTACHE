@@ -259,7 +259,7 @@ function minutesToTime(totalMinutes) {
 }
 
 function recalcRow(stationId, type, trigger) {
-    const isFree = !document.getElementById('editor_panel').classList.contains('hidden') ? false : true;
+    const isFree = !document.getElementById('free_editor_panel').classList.contains('hidden');
     const form = isFree ? document.getElementById('free_timetable_form') : document.getElementById('timetable_form');
     
     const stations = isFree ? freeEditorStations : (routesConfig[currentRouteId]?.stations || []);
@@ -307,7 +307,10 @@ function recalcRow(stationId, type, trigger) {
         }
     }
 
-    if (!isFree && typeof propagateForward === 'function') {
+    // 🔧 LIVE-PROPAGATION IM FREE EDITOR
+    if (isFree) {
+        propagateTravelTimeWithReserve();
+    } else if (typeof propagateForward === 'function') {
         propagateForward(currentIndex + 1);
     }
 }
