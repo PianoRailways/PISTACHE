@@ -343,7 +343,7 @@ function applyAutoScroll() {
     const adjustedStsMinutes = ((pcMinutes + calculatedOffset) % 1440 + 1440) % 1440;
     
     // Zeitfenster bestimmen (-10 Min bis +60 Min um die aktuelle Zeit)
-    const startMinutes = ((adjustedStsMinutes - 10 + 1440) % 1440);
+    const startMinutes = ((adjustedStsMinutes - 15 + 1440) % 1440);
     const endMinutes = ((adjustedStsMinutes + 60 + 1440) % 1440);
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
