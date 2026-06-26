@@ -464,7 +464,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
 
         // 7%-RESERVE-PROPAGATION FÜR GANZE FAHRT (JEDESMAL NEU)
-        propagateTravelTimeWithReserve($db, $train_id, $station_id);
+        propagateTravelTimeWithReserve($db, $train_id);  // NUR 2 Parameter!
         
         // Optional: Cascade für Nachfolgerzug
         // recalculateDelayCascade($db, $sts_zid, $delay);
