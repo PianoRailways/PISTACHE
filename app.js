@@ -259,7 +259,7 @@ function minutesToTime(totalMinutes) {
 }
 
 function recalcRow(stationId, type, trigger) {
-    const isFree = !document.getElementById('free_editor_panel').classList.contains('hidden');
+    const isFree = !document.getElementById('editor_panel').classList.contains('hidden') ? false : true;
     const form = isFree ? document.getElementById('free_timetable_form') : document.getElementById('timetable_form');
     
     const stations = isFree ? freeEditorStations : (routesConfig[currentRouteId]?.stations || []);
@@ -307,11 +307,7 @@ function recalcRow(stationId, type, trigger) {
         }
     }
 
-    // 🔧 LIVE-PROPAGATION: Nur wenn Zeit geändert wurde (nicht bei Delay-Input!)
-    // Im Free Editor: propagiere nur bei Zeit-Änderungen, nicht bei Delay-Eingabe
-    if (isFree && trigger === 'time') {
-        propagateTravelTimeWithReserve();
-    } else if (!isFree && typeof propagateForward === 'function') {
+    if (!isFree && typeof propagateForward === 'function') {
         propagateForward(currentIndex + 1);
     }
 }
@@ -864,11 +860,7 @@ function propagateForward(startIndex) {
 
             // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
             const remainingDelay = Math.max(0, arrivalDelay - actualBraking);
-            let istDepMin = sollDepMin + remainingDelay;
-
-            if (istArrMin !== null && istDepMin < istArrMin) {
-                istDepMin = istArrMin;
-            }
+            const istDepMin = sollDepMin + remainingDelay;
 
             if (istDepField) istDepField.value = minutesToTime(istDepMin);
             if (delayDepField) delayDepField.value = istDepMin - sollDepMin;
@@ -1035,10 +1027,6 @@ function propagateTravelTimeWithReserve() {
             istDepMin = sollDepMin + remainingDelay;
         } else {
             istDepMin = istArrMin + minStandzeit;
-        }
-
-        if (istArrMin !== null && istDepMin < istArrMin) {
-            istDepMin = istArrMin;
         }
 
         if (istDepField) {
