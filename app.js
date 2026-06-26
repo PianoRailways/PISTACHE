@@ -578,22 +578,14 @@ async function renderGraph() {
             const totalShiftMinutes = instancesPassed * 480;
             
             calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
+            calculatedOffset = ((calculatedOffset % 1440) + 1440) % 1440 - 720; // Normalisieren
             
             if (basis === 'instanz2') {
-                calculatedOffset += 840;
+                calculatedOffset = ((calculatedOffset + 840 + 1440) % 1440) - 720; // Normalisieren
             }
         }
         
-        let stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-        
-        // CHECK: Sind wir noch in der Instanz (05:00–21:00)?
-        const instanzStart = 5 * 60;
-        const instanzEnd = 21 * 60;
-        
-        if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-            calculatedOffset -= 960;
-            stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-        }
+        const stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
 
         // Berechne Y-Position mit den gleichen Variablen wie oben
         const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
