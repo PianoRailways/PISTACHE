@@ -2884,10 +2884,10 @@ $ROUTES = [
         ['id' => 'SU', 'name' => 'St-Ursanne', 'abbr' => 'SU', 'km' => -67.83],
         ['id' => 'CG', 'name' => 'Courgenay', 'abbr' => 'CG', 'km' => -61.67],
         ['id' => 'POR', 'name' => 'Porrentruy', 'abbr' => 'POR', 'km' => -56.58],
-        ['id' => 'ALLE', 'name' => 'Alle', 'abbr' => 'ALLE', 'km' => -60.73],
-        ['id' => 'ALLC', 'name' => 'Alle Centre', 'abbr' => 'ALLC', 'km' => -61.95],
-        ['id' => 'VEND', 'name' => 'Vendlincourt', 'abbr' => 'VEND', 'km' => -64.96],
-        ['id' => 'BONF', 'name' => 'Bonfol', 'abbr' => 'BONF', 'km' => -67.47],
+        ['id' => 'ALLE', 'name' => 'Alle', 'abbr' => 'ALLE', 'km' => -52.43],
+        ['id' => 'ALLC', 'name' => 'Alle Centre', 'abbr' => 'ALLC', 'km' => -51.21],
+        ['id' => 'VEND', 'name' => 'Vendlincourt', 'abbr' => 'VEND', 'km' => -48.2],
+        ['id' => 'BONF', 'name' => 'Bonfol', 'abbr' => 'BONF', 'km' => -45.69],
     ]
 ],
     'cj-cj' => [
