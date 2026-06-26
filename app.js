@@ -562,10 +562,8 @@ async function renderGraph() {
         const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
         
         const basis = document.getElementById('time_basis')?.value || 'instanz1';
-        const mode = document.getElementById('time_mode')?.value || 'auto';
         
         let calculatedOffset = 0;
-        let instanzSprunggemaacht = false;
         
         if (basis === 'manual') {
             const offsetInput = document.getElementById('sts_offset');
@@ -584,8 +582,6 @@ async function renderGraph() {
             if (basis === 'instanz2') {
                 calculatedOffset += 840;
             }
-            
-            calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
         }
         
         let stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
@@ -597,11 +593,6 @@ async function renderGraph() {
         if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
             calculatedOffset -= 960;
             stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-            instanzSprunggemaacht = true;
-            
-            if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-                return;
-            }
         }
 
         // Berechne Y-Position mit den gleichen Variablen wie oben

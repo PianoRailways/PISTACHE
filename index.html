@@ -125,7 +125,7 @@
 
                 <label>
                     Zeitbasis:
-                    <select id="time_basis" onchange="updateTimeMode()">
+                    <select id="time_basis" onchange="updateTimeMode(); updateInstanzTimeLabels();">
                         <option value="instanz1" selected>STS Instanz 1</option>
                         <option value="instanz2">STS Instanz 2</option>
                         <option value="manual">Eigenes Offset / Zeit</option>
@@ -253,6 +253,51 @@ function updateSegmentStatus() {
     
     statusDiv.style.display = 'block';
     statusDiv.textContent = `Segment: ${fromName} → ${toName}`;
+}
+
+function updateInstanzTimeLabels() {
+    const now = new Date();
+    const timeBasisSelect = document.getElementById('time_basis');
+    if (!timeBasisSelect) return;
+    
+    // Berechne aktuelle Instanzzeiten
+    const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
+    const baseOffsetInstanz1 = -780;
+    
+    const diffInMs = now - refRealTime;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    const instancesPassed = Math.floor(diffInHours / 16);
+    const totalShiftMinutes = instancesPassed * 480;
+    
+    const localMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    // Instanz 1
+    let offset1 = baseOffsetInstanz1 + totalShiftMinutes;
+    let stsMin1 = ((localMinutes + offset1) % 1440 + 1440) % 1440;
+    if (stsMin1 < 300 || stsMin1 > 1260) {
+        offset1 -= 960;
+        stsMin1 = ((localMinutes + offset1) % 1440 + 1440) % 1440;
+    }
+    
+    // Instanz 2
+    let offset2 = baseOffsetInstanz1 + totalShiftMinutes + 840;
+    let stsMin2 = ((localMinutes + offset2) % 1440 + 1440) % 1440;
+    if (stsMin2 < 300 || stsMin2 > 1260) {
+        offset2 -= 960;
+        stsMin2 = ((localMinutes + offset2) % 1440 + 1440) % 1440;
+    }
+    
+    const format = (min) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
+    
+    // Update Options
+    const options = timeBasisSelect.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === 'instanz1') {
+            options[i].textContent = `STS Instanz 1 (${format(stsMin1)})`;
+        } else if (options[i].value === 'instanz2') {
+            options[i].textContent = `STS Instanz 2 (${format(stsMin2)})`;
+        }
+    }
 }
 
 function updateTimeMode() {
@@ -457,12 +502,18 @@ async function initZuschauer() {
         
         // Starte Auto-Scroll NACH dem ersten Render
         updateAutoScroll();
+        updateInstanzTimeLabels();
         
         // Auto-Refresh alle 30 Sekunden
         setInterval(() => {
             loadAndRenderGraph();
             loadAndRenderTicker();
         }, 30000);
+        
+        // Update Instanz-Zeit-Labels alle 10 Sekunden
+        setInterval(() => {
+            updateInstanzTimeLabels();
+        }, 10000);
 
     } catch (e) {
         console.error("Fehler beim Initialisieren der Zuschaueransicht:", e);
