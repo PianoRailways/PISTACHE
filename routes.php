@@ -3433,9 +3433,7 @@ $ROUTES = [
             ['id' => 'LY', 'name' => 'Lyss', 'abbr' => 'LY', 'km' => 22.5],
             ['id' => 'BUS', 'name' => 'Busswil', 'abbr' => 'BUS', 'km' => 26.16],
             ['id' => 'STU', 'name' => 'Studen', 'abbr' => 'STU', 'km' => 28.12],
-            ['id' => 'DON', 'name' => 'Dotzigen', 'abbr' => 'DON', 'km' => 28.89],
             ['id' => 'BGG', 'name' => 'Brügg', 'abbr' => 'BGG', 'km' => 30.51],
-            ['id' => 'BUER', 'name' => 'Büren a.d.A.', 'abbr' => 'BUER', 'km' => 32.31],
             ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => 33.6],
         ]
     ],
