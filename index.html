@@ -41,7 +41,7 @@
             background: #334155; 
             color: #fff; 
             border: 1px solid #475569; 
-            padding: 8px 12px; 
+            padding: 7px 10px; 
             border-radius: 4px; 
             font-size: 14px;
         }
@@ -125,7 +125,7 @@
 
                 <label>
                     Zeitbasis:
-                    <select id="time_basis" onchange="updateTimeMode()">
+                    <select id="time_basis" onchange="updateTimeMode(); updateInstanzTimeLabels();">
                         <option value="instanz1" selected>STS Instanz 1</option>
                         <option value="instanz2">STS Instanz 2</option>
                         <option value="manual">Eigenes Offset / Zeit</option>
@@ -255,6 +255,31 @@ function updateSegmentStatus() {
     statusDiv.textContent = `Segment: ${fromName} → ${toName}`;
 }
 
+function updateInstanzTimeLabels() {
+    const now = new Date();
+    const timeBasisSelect = document.getElementById('time_basis');
+    if (!timeBasisSelect) return;
+    
+    const nowRealMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    // Instanz 1: 13 Stunden (780 Min) hinter Realzeit
+    const instanz1Minutes = (nowRealMinutes - 780 + 1440) % 1440;
+    
+    // Instanz 2: 7 Stunden (420 Min) hinter Realzeit
+    const instanz2Minutes = (nowRealMinutes - 420 + 1440) % 1440;
+    
+    const format = (min) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
+    
+    const options = timeBasisSelect.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === 'instanz1') {
+            options[i].textContent = `STS Instanz 1 (${format(instanz1Minutes)})`;
+        } else if (options[i].value === 'instanz2') {
+            options[i].textContent = `STS Instanz 2 (${format(instanz2Minutes)})`;
+        }
+    }
+}
+
 function updateTimeMode() {
     const mode = document.getElementById('time_mode').value;
     const basis = document.getElementById('time_basis').value;
@@ -304,40 +329,22 @@ function applyAutoScroll() {
     if (basis === 'manual') {
         calculatedOffset = parseInt(document.getElementById('sts_offset').value || 0, 10);
     } else {
-        const refRealTime = new Date(2026, 5, 4, 21, 30, 0); 
-        const baseOffsetInstanz1 = -780; 
-        
-        const diffInMs = now - refRealTime;
-        const diffInHours = diffInMs / (1000 * 60 * 60);
-        const instancesPassed = Math.floor(diffInHours / 16);
-        const totalShiftMinutes = instancesPassed * 480;
-        
-        calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
-        
-        if (basis === 'instanz2') {
-            calculatedOffset += 840;
+        // Instanz 1: 13 Stunden (780 Minuten) hinter Realzeit
+        // Instanz 2: 7 Stunden (420 Minuten) hinter Realzeit
+        if (basis === 'instanz1') {
+            calculatedOffset = -780;
+        } else if (basis === 'instanz2') {
+            calculatedOffset = -420;
         }
-        
-        calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
     }
 
     // STS-Zeit berechnen
     const pcMinutes = now.getHours() * 60 + now.getMinutes();
-    const stsMinutes = ((pcMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-    
-    // 🔧 INSTANZ-CHECK: Wenn außerhalb 05:00–21:00, zur vorherigen Instanz springen
-    const instanzStart = 5 * 60;   // 05:00
-    const instanzEnd = 21 * 60;    // 21:00
-    
-    let adjustedStsMinutes = stsMinutes;
-    if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-        console.log(`[AutoScroll] STS-Zeit ${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')} außerhalb Instanz, springe -16h`);
-        adjustedStsMinutes = ((stsMinutes - 960) % 1440 + 1440) % 1440;
-    }
+    const adjustedStsMinutes = ((pcMinutes + calculatedOffset) % 1440 + 1440) % 1440;
     
     // Zeitfenster bestimmen (-10 Min bis +60 Min um die aktuelle Zeit)
-    const startMinutes = ((adjustedStsMinutes - 10) % 1440 + 1440) % 1440;
-    const endMinutes = ((adjustedStsMinutes + 60) % 1440 + 1440) % 1440;
+    const startMinutes = ((adjustedStsMinutes - 15 + 1440) % 1440);
+    const endMinutes = ((adjustedStsMinutes + 60 + 1440) % 1440);
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
@@ -457,12 +464,18 @@ async function initZuschauer() {
         
         // Starte Auto-Scroll NACH dem ersten Render
         updateAutoScroll();
+        updateInstanzTimeLabels();
         
         // Auto-Refresh alle 30 Sekunden
         setInterval(() => {
             loadAndRenderGraph();
             loadAndRenderTicker();
         }, 30000);
+        
+        // Update Instanz-Zeit-Labels alle 10 Sekunden
+        setInterval(() => {
+            updateInstanzTimeLabels();
+        }, 10000);
 
     } catch (e) {
         console.error("Fehler beim Initialisieren der Zuschaueransicht:", e);

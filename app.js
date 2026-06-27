@@ -443,7 +443,7 @@ async function renderGraph() {
 
         // Abbr. direkt über dem Canvas
         ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
-        ctx.font = 'bold 11px sans-serif';
+        ctx.font = 'bold 8px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(st.abbr, x, paddingTop - 5);
         
@@ -456,10 +456,10 @@ async function renderGraph() {
         let textY;
         if (isOddStation) {
             // Ungerade: weiter oben
-            textY = paddingTop - 35;
+            textY = paddingTop - 40;
         } else {
             // Gerade: etwas tiefer (aber immer noch oben)
-            textY = paddingTop - 20;
+            textY = paddingTop - 25;
         }
         
         // Kleine Linie vom Text zur Abbr
@@ -473,7 +473,7 @@ async function renderGraph() {
         // Name
         ctx.fillText(st.name, x, textY);
         // km
-        ctx.fillText(`km ${st.km}`, x, textY + 10);
+        ctx.fillText(`km ${st.km}`, x, textY + 8);
     });
 
     // Zuglinien zeichnen
@@ -556,115 +556,53 @@ async function renderGraph() {
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
 
-    // Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
-    (function drawCurrentTimeLine() {
-        const now = new Date();
-        const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
-        
-        const basis = document.getElementById('time_basis')?.value || 'instanz1';
-        const mode = document.getElementById('time_mode')?.value || 'auto';
-        
-        let calculatedOffset = 0;
-        let instanzSprunggemaacht = false;  // 🔧 Flag für Instanz-Sprung
-        
-        if (basis === 'manual') {
-            const offsetInput = document.getElementById('sts_offset');
-            calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
-        } else {
-            // Automatische Berechnung basierend auf Ankerpunkt (04.06.2026, 21:30 real = Instanz 1 ist 08:30)
-            const refRealTime = new Date(2026, 5, 4, 21, 30, 0);
-            const baseOffsetInstanz1 = -780;
-            
-            const diffInMs = now - refRealTime;
-            const diffInHours = diffInMs / (1000 * 60 * 60);
-            const instancesPassed = Math.floor(diffInHours / 16);
-            const totalShiftMinutes = instancesPassed * 480;
-            
-            calculatedOffset = baseOffsetInstanz1 + totalShiftMinutes;
-            
-            if (basis === 'instanz2') {
-                calculatedOffset += 840;
-            }
-            
-            calculatedOffset = ((calculatedOffset + 720) % 1440 + 1440) % 1440 - 720;
+// Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
+(function drawCurrentTimeLine() {
+    const now = new Date();
+    const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    const basis = document.getElementById('time_basis')?.value || 'instanz1';
+    
+    let calculatedOffset = 0;
+    
+    if (basis === 'manual') {
+        const offsetInput = document.getElementById('sts_offset');
+        calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+    } else {
+        if (basis === 'instanz1') {
+            calculatedOffset = -780;
+        } else if (basis === 'instanz2') {
+            calculatedOffset = -420;
         }
+    }
+    
+    const stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+    const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
+
+    if (y >= paddingTop && y <= paddingTop + graphHeight) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = '#FFDE15'; 
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
         
-        // 🔧 DEBUG
-        const localTimeStr = `${String(Math.floor(localTotalMinutes/60)).padStart(2,'0')}:${String(localTotalMinutes%60).padStart(2,'0')}`;
-        console.log(`[JETZT] basis=${basis}, localTime=${localTimeStr}, offset=${calculatedOffset}`);
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(paddingLeft + graphWidth, y);
+        ctx.stroke();
+
+        ctx.fillStyle = '#FFDE15';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
         
-        let stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-        const stsRawStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
-        console.log(`[JETZT] stsMinutes=${stsMinutes} → ${stsRawStr}`);
+        const displayHours = Math.floor(stsMinutes / 60);
+        const displayMinutes = stsMinutes % 60;
+        const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
         
-        // 🔧 CHECK: Sind wir noch in der Instanz (05:00–21:00)?
-        const instanzStart = 5 * 60;   // 05:00 in Minuten
-        const instanzEnd = 21 * 60;    // 21:00 in Minuten
-        
-        if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-            console.log(`[JETZT] ⚠️ Außerhalb Instanz-Fenster (${stsRawStr}), springe zur vorigen Instanz...`);
-            
-            // Zur vorherigen Instanz springen: -960 Minuten (16 Stunden)
-            calculatedOffset -= 960;
-            stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
-            
-            const stsNewStr = `${String(Math.floor(stsMinutes/60)).padStart(2,'0')}:${String(stsMinutes%60).padStart(2,'0')}`;
-            console.log(`[JETZT] Nach Sprung: stsMinutes=${stsMinutes} → ${stsNewStr}`);
-            
-            instanzSprunggemaacht = true;  // 🔧 Flag setzen
-            
-            // Nochmals checken (sollte jetzt im Fenster sein)
-            if (stsMinutes < instanzStart || stsMinutes > instanzEnd) {
-                console.log(`[JETZT] Immer noch außerhalb, nicht zeichnen`);
-                return;
-            }
-        }
-
-        const startVal = document.getElementById('graph_start')?.value || "11:00";
-        const endVal = document.getElementById('graph_end')?.value || "17:00";
-
-        const [startH, startM] = startVal.split(':').map(Number);
-        const [endH, endM] = endVal.split(':').map(Number);
-
-        const startMinutes = startH * 60 + startM;
-        const endMinutes = endH * 60 + endM;
-
-        // 🔧 Wenn Instanz-Sprung: IMMER zeichnen, wenn im Instanz-Fenster (05:00–21:00)
-        // Sonst: nur wenn auch im Graph-Fenster (graph_start–graph_end)
-        const shouldDraw = instanzSprunggemaacht 
-            ? (stsMinutes >= instanzStart && stsMinutes <= instanzEnd)
-            : (stsMinutes >= startMinutes && stsMinutes <= endMinutes);
-
-        console.log(`[JETZT] Fenster: ${startVal}–${endVal}, stsMinutes=${stsMinutes}, sollte zeichnen? ${shouldDraw}`);
-
-        if (shouldDraw) {
-            const y = getY(stsMinutes);
-
-            if (y !== null) {
-                ctx.save();
-                ctx.beginPath();
-                ctx.strokeStyle = '#FFDE15'; 
-                ctx.lineWidth = 2;
-                ctx.setLineDash([6, 4]);
-                
-                ctx.moveTo(paddingLeft, y);
-                ctx.lineTo(paddingLeft + graphWidth, y);
-                ctx.stroke();
-
-                ctx.fillStyle = '#FFDE15';
-                ctx.font = 'bold 11px sans-serif';
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'middle';
-                
-                const displayHours = Math.floor(stsMinutes / 60);
-                const displayMinutes = stsMinutes % 60;
-                const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
-                
-                ctx.fillText(timeString, paddingLeft - 10, y);
-                ctx.restore();
-            }
-        }
-    })();
+        ctx.fillText(timeString, paddingLeft - 10, y);
+        ctx.restore();
+    }
+})();
 }
 
 function updateTrainList(trains) {
@@ -812,59 +750,130 @@ async function saveTimetableAuto() {
     }
 }
 
+/**
+ * propagateForward() - Normal Editor mit Standzeitabbau
+ * 
+ * Propagiert Verspätung nach vorne mit:
+ * - 7% Fahrtzeit-Reserve
+ * - Standzeitabbau (außer bei R-Flag)
+ * - Schutz vor Dispo-Kriterien
+ */
 function propagateForward(startIndex) {
     const form = document.getElementById('timetable_form');
     const stations = routesConfig[currentRouteId].stations;
     
-    let lastDepartureTime = 0;
-    for (let i = startIndex - 1; i >= 0; i--) {
-        const depVal = form.querySelector(`[name="stations[${stations[i].id}][actual_departure]"]`)?.value;
-        const depTime = timeToMinutes(depVal);
-        if (depTime !== null && !isNaN(depTime)) {
-            lastDepartureTime = depTime;
-            break;
-        }
+    if (!form || !stations || startIndex < 0 || startIndex >= stations.length) {
+        return;
     }
 
-    let lastValidSollDep = null;
+    // Starte von der vorherigen Station
+    let prevDepMin = null;
+    let prevSollDepMin = null;
+
+    // Suche die letzte gültige Abfahrt vor startIndex
     for (let i = startIndex - 1; i >= 0; i--) {
-        const depVal = form.querySelector(`[name="stations[${stations[i].id}][departure]"]`)?.value;
-        if (depVal && depVal !== '--:--') {
-            lastValidSollDep = timeToMinutes(depVal);
-            break;
-        }
+        const sollDep = form.querySelector(`[name="stations[${stations[i].id}][departure]"]`)?.value;
+        const istDep = form.querySelector(`[name="stations[${stations[i].id}][actual_departure]"]`)?.value;
+        
+        if (sollDep) prevSollDepMin = timeToMinutes(sollDep);
+        if (istDep) prevDepMin = timeToMinutes(istDep);
+        
+        if (prevDepMin !== null) break;
     }
 
+    // Propagiere ab startIndex
     for (let i = startIndex; i < stations.length; i++) {
         const st = stations[i];
-        const sollArr = timeToMinutes(form.querySelector(`[name="stations[${st.id}][arrival]"]`)?.value);
-        const sollDep = timeToMinutes(form.querySelector(`[name="stations[${st.id}][departure]"]`)?.value);
-
-        if (sollArr === null && sollDep === null) continue;
-
-        const arrIst = form.querySelector(`[name="stations[${st.id}][actual_arrival]"]`);
-        const depIst = form.querySelector(`[name="stations[${st.id}][actual_departure]"]`);
+        const stId = st.id;
         
-        let newArr = lastDepartureTime;
+        const sollArrStr = form.querySelector(`[name="stations[${stId}][arrival]"]`)?.value;
+        const sollDepStr = form.querySelector(`[name="stations[${stId}][departure]"]`)?.value;
+        const flags = form.querySelector(`[name="stations[${stId}][flags]"]`)?.value || '';
 
-        if (sollArr !== null) {
-            const travel = (lastValidSollDep !== null) ? (sollArr - lastValidSollDep) : 0;
-            newArr = lastDepartureTime + Math.round(travel * 0.9);
-            if (newArr < lastDepartureTime) newArr = lastDepartureTime;
-            
-            if (arrIst) arrIst.value = minutesToTime(newArr);
-            const dArr = document.getElementById(`delay_arr_${st.id}`);
-            if (dArr) dArr.value = newArr - sollArr;
-            lastDepartureTime = newArr;
+        if (!sollArrStr && !sollDepStr) continue;
+
+        // 🔒 SCHUTZ: Dispo-Kriterium prüfen
+        if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
+            console.log(`🔒 GESCHÜTZT (Dispo): ${stId} → wird übersprungen`);
+            continue;
         }
 
-        if (sollDep !== null) {
-            const newDep = (sollArr !== null) ? (newArr + Math.max(sollDep - sollArr, 0)) : (lastDepartureTime + Math.max(sollDep - (sollArr || lastValidSollDep || 0), 0));
-            if (depIst) depIst.value = minutesToTime(newDep);
-            const dDep = document.getElementById(`delay_dep_${st.id}`);
-            if (dDep) dDep.value = newDep - sollDep;
-            lastDepartureTime = newDep;
-            lastValidSollDep = sollDep;
+        const sollArrMin = timeToMinutes(sollArrStr);
+        const sollDepMin = timeToMinutes(sollDepStr);
+        const istArrField = form.querySelector(`[name="stations[${stId}][actual_arrival]"]`);
+        const istDepField = form.querySelector(`[name="stations[${stId}][actual_departure]"]`);
+        const delayArrField = document.getElementById(`delay_arr_${stId}`);
+        const delayDepField = document.getElementById(`delay_dep_${stId}`);
+
+        // ========== ANKUNFT BERECHNEN ==========
+        let istArrMin = null;
+
+        if (prevDepMin !== null && prevSollDepMin !== null) {
+            // Soll-Fahrzeit
+            let sollFahrtzeit = 0;
+            if (sollArrMin !== null) {
+                sollFahrtzeit = sollArrMin - prevSollDepMin;
+            } else if (sollDepMin !== null) {
+                sollFahrtzeit = sollDepMin - prevSollDepMin;
+            }
+
+            if (sollFahrtzeit > 0) {
+                // 7% Reserve
+                const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
+                // Ist-Fahrzeit (aus Soll-Fahrzeit + Differenz der Abfahrten)
+                const istFahrtzeit = Math.max(minFahrtzeit, sollFahrtzeit);
+                
+                istArrMin = prevDepMin + istFahrtzeit;
+                if (istArrField) istArrField.value = minutesToTime(istArrMin);
+            }
+        }
+
+        // Falls Ankunft immer noch nicht berechnet wurde
+        if (istArrMin === null && prevDepMin !== null) {
+            istArrMin = prevDepMin;
+            if (istArrField) istArrField.value = minutesToTime(istArrMin);
+        }
+
+        // Update Ankunfts-Delay
+        if (istArrMin !== null && sollArrMin !== null && delayArrField) {
+            delayArrField.value = istArrMin - sollArrMin;
+        }
+
+        // ========== STANDZEIT-VERWALTUNG & ABFAHRT ==========
+        if (istArrMin !== null && sollDepMin !== null) {
+            // Soll-Standzeit
+            let sollStandzeit = 0;
+            if (sollArrMin !== null) {
+                sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
+            }
+
+            // R-Flag prüfen
+            const hasRFlag = /R/i.test(flags);
+            const minStandzeit = hasRFlag ? 2 : 0;
+
+            // Verspätung bei Ankunft
+            const arrivalDelay = (sollArrMin !== null) ? (istArrMin - sollArrMin) : 0;
+
+            // Verfügbare Abbremsung
+            const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+            const actualBraking = Math.min(Math.max(0, arrivalDelay), availableBraking);
+
+            // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
+            const remainingDelay = Math.max(0, arrivalDelay - actualBraking);
+            const istDepMin = sollDepMin + remainingDelay;
+
+            if (istDepField) istDepField.value = minutesToTime(istDepMin);
+            if (delayDepField) delayDepField.value = istDepMin - sollDepMin;
+
+            prevDepMin = istDepMin;
+            prevSollDepMin = sollDepMin;
+
+            // Debug-Ausgabe
+            if (arrivalDelay > 0 || actualBraking > 0) {
+                console.log(`📍 ${stId}: Ank.Versp=${arrivalDelay}min, Abbr=${actualBraking}min, Restversp=${remainingDelay}min`);
+            }
+        } else if (istArrMin !== null) {
+            prevDepMin = istArrMin;
         }
     }
 }
@@ -909,6 +918,9 @@ async function saveTrainLink() {
  * 
  * Propagiert die Fahrt mit 7%-Reserve IMMER neu
  * AUSNAHME: Wenn Flags ein Dispo-Kriterium (X, V, C, C4-C7) enthalten → nicht anfassen!
+ * 
+ * 🔑 KEY FEATURE: Standzeit wird für Verspätungsabbau genutzt
+ * - R-Flag = reservierte Standzeit (mind. 2 Min), sonst kann Verspätung abgebremst werden
  */
 function propagateTravelTimeWithReserve() {
     const form = document.getElementById('free_timetable_form');
@@ -955,14 +967,26 @@ function propagateTravelTimeWithReserve() {
         // Wenn Ankunft immer noch null, skip
         if (istArrMin === null) continue;
 
-        // Standzeit berechnen (Soll-Soll)
-        let standzeit = 0;
+        // ========== STANDZEIT-VERWALTUNG ==========
+        // Soll-Standzeit
+        let sollStandzeit = 0;
         if (sollArrMin !== null && sollDepMin !== null && sollDepMin >= sollArrMin) {
-            standzeit = sollDepMin - sollArrMin;
+            sollStandzeit = sollDepMin - sollArrMin;
         }
 
-        // 🔧 BERECHNE IST-ABFAHRT IMMER NEU (auch wenn bereits Werte vorhanden sind!)
-        // Das ist der Key-Change: Nicht nur wenn istDepMin === null, sondern IMMER
+        // R-Flag prüfen (reservierte Standzeit)
+        const hasRFlag = /R/i.test(flags);
+        const minStandzeit = hasRFlag ? 2 : 0;
+
+        // Verspätung bei Ankunft
+        const arrivalDelay = (sollArrMin !== null) ? (istArrMin - sollArrMin) : 0;
+
+        // Verfügbare Abbremsung = Soll-Standzeit - minimale Standzeit
+        const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+        const actualBraking = Math.min(Math.max(0, arrivalDelay), availableBraking);
+
+        // 🔧 NEUE IST-ABFAHRT MIT STANDZEITABBAU
+        // Ist-Abfahrt = Soll-Abfahrt + (Verspätung bei Ankunft - Abbremsung)
         if (i > 0) {
             const prevStation = freeEditorStations[i - 1];
             const prevSollDepStr = form.querySelector(`[name="stations[${prevStation.id}][departure]"]`)?.value;
@@ -996,8 +1020,15 @@ function propagateTravelTimeWithReserve() {
             }
         }
 
-        // Jetzt Ist-Abfahrt = Ist-Ankunft + Standzeit
-        istDepMin = istArrMin + standzeit;
+        // ========== IST-ABFAHRT BERECHNEN MIT STANDZEITABBAU ==========
+        // Soll-Abfahrt + Restversp. = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
+        if (sollDepMin !== null) {
+            const remainingDelay = Math.max(0, arrivalDelay - actualBraking);
+            istDepMin = sollDepMin + remainingDelay;
+        } else {
+            istDepMin = istArrMin + minStandzeit;
+        }
+
         if (istDepField) {
             istDepField.value = minutesToTime(istDepMin);
         }
@@ -1011,6 +1042,11 @@ function propagateTravelTimeWithReserve() {
         }
         if (sollDepMin !== null && delayDepField) {
             delayDepField.value = istDepMin - sollDepMin;
+        }
+
+        // Debug-Ausgabe
+        if (arrivalDelay > 0 || actualBraking > 0) {
+            console.log(`📍 ${stId}: Ank.Versp=${arrivalDelay}min, Abbr=${actualBraking}min, Restversp=${Math.max(0, arrivalDelay - actualBraking)}min`);
         }
     }
 }
@@ -1213,6 +1249,11 @@ function renderFreeEditorTable() {
         tbody.appendChild(tr);
     });
 
+    // Delay-Felder initial befüllen
+    freeEditorStations.forEach(st => {
+        updateDelayFields(st.id);
+    });
+
     tbody.addEventListener('dragover', (e) => {
         e.preventDefault();
         const draggingRow = tbody.querySelector('.dragging');
@@ -1283,7 +1324,7 @@ async function saveFreeTimetable(e) {
         const data = await res.json();
         
         if (data.success) {
-            alert('Fahrplan gespeichert!');
+            //alert('Fahrplan gespeichert!');
             closeFreeEditor();
         } else {
             alert('Fehler beim Speichern: ' + (data.error || 'Unbekannter Fehler'));

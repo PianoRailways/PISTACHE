@@ -452,8 +452,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" id="train_number" inputmode="numeric" pattern="[0-9]*" maxlength="6" 
                            placeholder="z.B. 421" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                     <button type="submit">Editor öffnen</button>
-                    <button type="button" style="background-color: #8b5cf6;" 
-                    onclick="activateFreeEditor()">📝 Freier Editor</button>
+                    <!-- <button type="button" style="background-color: #8b5cf6;" 
+                    onclick="activateFreeEditor()">📝 Freier Editor</button> -->
                 </form>
             </div>
         </div>
@@ -623,6 +623,11 @@ function filterRoutes() {
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
+    // Browser-Shortcuts wie Strg/Cmd+F oder F3 nicht blockieren
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+    }
+
     // Nicht triggern wenn man in Textfeldern tippt (ausser Escape)
     const isInInput = document.activeElement.tagName === 'INPUT' || 
                       document.activeElement.tagName === 'TEXTAREA' ||

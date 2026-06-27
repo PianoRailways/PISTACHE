@@ -1,0 +1,1713 @@
+[2026-06-26 22:49:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:49:58] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:49:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:49:58] ⏳ AM GLEIS: Zug 34 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:49:58] 🎉 DB-UPDATE: Zug 34 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:49:58] ✓ Audit-Log geschrieben: 34 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:49:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:49:58] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:49:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:49:58] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+6 Min)
+[2026-06-26 22:49:58] 🎉 DB-UPDATE: Zug 1723 an RAR auf +6 Min gesetzt.
+[2026-06-26 22:49:58] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:49:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:49:58] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:49:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:49:58] ⏳ AM GLEIS: Zug 1826 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:49:58] 🎉 DB-UPDATE: Zug 1826 an SIE auf +0 Min gesetzt.
+[2026-06-26 22:49:58] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:49:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:49:58] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 22:49:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 22:49:58] ⏳ AM GLEIS: Zug 6124 an SL - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:49:58] 🎉 DB-UPDATE: Zug 6124 an SL auf +0 Min gesetzt.
+[2026-06-26 22:49:58] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:49:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:49:58] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 22:49:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 22:49:58] 📍 VORLAUF: Zug 6221 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 22:49:58] 🎉 DB-UPDATE: Zug 6221 an SL auf +4 Min gesetzt.
+[2026-06-26 22:49:58] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:49:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:49:58] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:49:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:49:58] ⏳ AM GLEIS: Zug 6224 an RAR - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:49:58] 🎉 DB-UPDATE: Zug 6224 an RAR auf +0 Min gesetzt.
+[2026-06-26 22:49:58] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:50:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:50:58] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:50:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:50:58] ⏳ AM GLEIS: Zug 34 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:50:58] 🎉 DB-UPDATE: Zug 34 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:50:58] ✓ Audit-Log geschrieben: 34 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:50:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:50:58] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:50:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:50:58] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 22:50:58] 🎉 DB-UPDATE: Zug 1723 an RAR auf +7 Min gesetzt.
+[2026-06-26 22:50:58] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:50:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:50:58] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:50:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:50:58] ⏳ AM GLEIS: Zug 1826 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:50:58] 🎉 DB-UPDATE: Zug 1826 an SIE auf +0 Min gesetzt.
+[2026-06-26 22:50:58] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:50:58] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:50:58] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:50:58] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:50:58] 📍 VORLAUF: Zug 6124 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:50:58] 🎉 DB-UPDATE: Zug 6124 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:50:58] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:50:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:50:59] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:50:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:50:59] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:50:59] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:50:59] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:50:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:50:59] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:50:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:50:59] ⏳ AM GLEIS: Zug 6224 an RAR - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:50:59] 🎉 DB-UPDATE: Zug 6224 an RAR auf +0 Min gesetzt.
+[2026-06-26 22:50:59] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:51:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:51:59] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 22:51:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 22:51:59] 📍 VORLAUF: Zug 34 an CHF - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:51:59] 🎉 DB-UPDATE: Zug 34 an CHF auf +0 Min gesetzt.
+[2026-06-26 22:51:59] ✓ Audit-Log geschrieben: 34 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:51:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:51:59] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:51:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:51:59] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+8 Min)
+[2026-06-26 22:51:59] 🎉 DB-UPDATE: Zug 1723 an RAR auf +8 Min gesetzt.
+[2026-06-26 22:51:59] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:51:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:51:59] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:51:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:51:59] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:51:59] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:51:59] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:51:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:51:59] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:51:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:51:59] 📍 VORLAUF: Zug 6124 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:51:59] 🎉 DB-UPDATE: Zug 6124 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:51:59] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:51:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:51:59] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:51:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:51:59] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:51:59] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:51:59] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:51:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:51:59] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 22:51:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 22:51:59] 📍 VORLAUF: Zug 6224 an GA - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:51:59] 🎉 DB-UPDATE: Zug 6224 an GA auf +1 Min gesetzt.
+[2026-06-26 22:51:59] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:52:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:52:59] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 22:52:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 22:52:59] 📍 VORLAUF: Zug 34 an CHF - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:52:59] 🎉 DB-UPDATE: Zug 34 an CHF auf +0 Min gesetzt.
+[2026-06-26 22:52:59] ✓ Audit-Log geschrieben: 34 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:52:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:52:59] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:52:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:52:59] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+8 Min)
+[2026-06-26 22:52:59] 🎉 DB-UPDATE: Zug 1723 an RAR auf +8 Min gesetzt.
+[2026-06-26 22:52:59] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:52:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:52:59] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:52:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:52:59] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:52:59] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:52:59] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:52:59] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:52:59] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:52:59] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:52:59] 📍 VORLAUF: Zug 1823 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:52:59] 🎉 DB-UPDATE: Zug 1823 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:53:00] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:53:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:53:00] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:53:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:53:00] 📍 VORLAUF: Zug 6124 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:53:00] 🎉 DB-UPDATE: Zug 6124 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:53:00] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:53:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:53:00] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:53:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:53:00] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:53:00] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:53:00] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:53:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:53:00] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 22:53:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 22:53:00] 📍 VORLAUF: Zug 6224 an GA - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:53:00] 🎉 DB-UPDATE: Zug 6224 an GA auf +1 Min gesetzt.
+[2026-06-26 22:53:00] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:00] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:54:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:54:00] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+8 Min)
+[2026-06-26 22:54:00] 🎉 DB-UPDATE: Zug 1723 an RAR auf +8 Min gesetzt.
+[2026-06-26 22:54:00] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:00] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:54:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:54:00] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:54:00] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:54:00] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:00] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:54:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:54:00] 📍 VORLAUF: Zug 1823 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:54:00] 🎉 DB-UPDATE: Zug 1823 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:54:00] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:00] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:54:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:54:00] 📍 VORLAUF: Zug 6124 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:54:00] 🎉 DB-UPDATE: Zug 6124 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:54:00] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:00] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:54:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:54:00] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:54:00] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:54:00] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:00] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:00] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 22:54:00] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 22:54:00] ⏳ AM GLEIS: Zug 6224 an GA - nur Abfahrt wird geändert (+1 Min)
+[2026-06-26 22:54:00] 🎉 DB-UPDATE: Zug 6224 an GA auf +1 Min gesetzt.
+[2026-06-26 22:54:00] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:16] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:54:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:54:16] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+8 Min)
+[2026-06-26 22:54:16] 🎉 DB-UPDATE: Zug 1723 an RAR auf +8 Min gesetzt.
+[2026-06-26 22:54:16] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:16] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:54:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:54:16] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:54:16] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:54:16] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:16] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:54:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:54:16] 📍 VORLAUF: Zug 1823 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:54:16] 🎉 DB-UPDATE: Zug 1823 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:54:16] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:16] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:54:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:54:16] 📍 VORLAUF: Zug 6124 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:54:16] 🎉 DB-UPDATE: Zug 6124 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:54:16] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:16] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:54:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:54:16] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:54:16] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:54:16] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:54:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:54:16] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 22:54:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 22:54:16] 📍 VORLAUF: Zug 6224 an TUR - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:54:16] 🎉 DB-UPDATE: Zug 6224 an TUR auf +1 Min gesetzt.
+[2026-06-26 22:54:16] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:55:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:55:16] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:55:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:55:16] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+9 Min)
+[2026-06-26 22:55:16] 🎉 DB-UPDATE: Zug 1723 an RAR auf +9 Min gesetzt.
+[2026-06-26 22:55:16] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:55:16] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:55:16] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:55:16] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:55:16] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:55:16] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:55:16] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:55:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:55:17] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:55:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:55:17] 📍 VORLAUF: Zug 1823 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:55:17] 🎉 DB-UPDATE: Zug 1823 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:55:17] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:55:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:55:17] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:55:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:55:17] ⏳ AM GLEIS: Zug 6124 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:55:17] 🎉 DB-UPDATE: Zug 6124 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:55:17] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:55:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:55:17] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:55:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:55:17] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:55:17] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:55:17] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:55:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:55:17] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 22:55:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 22:55:17] 📍 VORLAUF: Zug 6224 an TUR - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:55:17] 🎉 DB-UPDATE: Zug 6224 an TUR auf +1 Min gesetzt.
+[2026-06-26 22:55:17] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:56:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:56:17] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 22:56:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 22:56:17] 📍 VORLAUF: Zug 1723 an RAR - An- und Abfahrt werden geändert (+9 Min)
+[2026-06-26 22:56:17] 🎉 DB-UPDATE: Zug 1723 an RAR auf +9 Min gesetzt.
+[2026-06-26 22:56:17] ✓ Audit-Log geschrieben: 1723 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:56:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:56:17] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:56:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:56:17] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:56:17] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:56:17] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:56:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:56:17] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:56:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:56:17] 📍 VORLAUF: Zug 1823 an SIO - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:56:17] 🎉 DB-UPDATE: Zug 1823 an SIO auf +1 Min gesetzt.
+[2026-06-26 22:56:17] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:56:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:56:17] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 22:56:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 22:56:17] 📍 VORLAUF: Zug 6124 an CHF - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:56:17] 🎉 DB-UPDATE: Zug 6124 an CHF auf +0 Min gesetzt.
+[2026-06-26 22:56:17] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:56:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:56:17] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:56:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:56:17] 📍 VORLAUF: Zug 6221 an SIE - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:56:17] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:56:17] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:56:17] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:56:17] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 22:56:17] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 22:56:17] ⏳ AM GLEIS: Zug 6224 an TUR - nur Abfahrt wird geändert (+1 Min)
+[2026-06-26 22:56:17] 🎉 DB-UPDATE: Zug 6224 an TUR auf +1 Min gesetzt.
+[2026-06-26 22:56:17] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:57:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:57:18] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:57:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:57:18] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:57:18] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:57:18] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:57:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:57:18] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:57:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:57:18] 📍 VORLAUF: Zug 1823 an SIO - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:57:18] 🎉 DB-UPDATE: Zug 1823 an SIO auf +1 Min gesetzt.
+[2026-06-26 22:57:18] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:57:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:57:18] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 22:57:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 22:57:18] 📍 VORLAUF: Zug 6124 an CHF - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:57:18] 🎉 DB-UPDATE: Zug 6124 an CHF auf +0 Min gesetzt.
+[2026-06-26 22:57:18] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:57:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:57:18] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:57:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:57:18] ⏳ AM GLEIS: Zug 6221 an SIE - nur Abfahrt wird geändert (+5 Min)
+[2026-06-26 22:57:18] 🎉 DB-UPDATE: Zug 6221 an SIE auf +5 Min gesetzt.
+[2026-06-26 22:57:18] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:57:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:57:18] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 22:57:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 22:57:18] 📍 VORLAUF: Zug 6224 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:57:18] 🎉 DB-UPDATE: Zug 6224 an LK auf +0 Min gesetzt.
+[2026-06-26 22:57:18] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:58:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:58:18] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:58:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:58:18] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:58:18] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:58:18] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1826 bis zum Ende des Fahrplans.
+[2026-06-26 22:58:18] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:58:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:58:18] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:58:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:58:18] ⏳ AM GLEIS: Zug 1823 an SIO - nur Abfahrt wird geändert (+1 Min)
+[2026-06-26 22:58:18] 🎉 DB-UPDATE: Zug 1823 an SIO auf +1 Min gesetzt.
+[2026-06-26 22:58:18] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 22:58:18] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:58:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:58:18] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 22:58:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 22:58:18] ⏳ AM GLEIS: Zug 6124 an CHF - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:58:18] 🎉 DB-UPDATE: Zug 6124 an CHF auf +0 Min gesetzt.
+[2026-06-26 22:58:18] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6124 bis zum Ende des Fahrplans.
+[2026-06-26 22:58:18] ✓ Audit-Log geschrieben: 6124 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:58:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:58:18] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 22:58:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 22:58:18] 📍 VORLAUF: Zug 6221 an SAL - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:58:18] 🎉 DB-UPDATE: Zug 6221 an SAL auf +5 Min gesetzt.
+[2026-06-26 22:58:18] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 22:58:18] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:58:18] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:58:18] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 22:58:18] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 22:58:18] 📍 VORLAUF: Zug 6224 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:58:18] 🎉 DB-UPDATE: Zug 6224 an LK auf +0 Min gesetzt.
+[2026-06-26 22:58:18] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 22:58:18] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:59:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:59:19] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 22:59:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 22:59:19] 📍 VORLAUF: Zug 1826 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 22:59:19] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 22:59:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1826 bis zum Ende des Fahrplans.
+[2026-06-26 22:59:19] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:59:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:59:19] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 22:59:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 22:59:19] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 22:59:19] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 22:59:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 22:59:19] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:59:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:59:19] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 22:59:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 22:59:19] 📍 VORLAUF: Zug 6221 an SAL - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 22:59:19] 🎉 DB-UPDATE: Zug 6221 an SAL auf +5 Min gesetzt.
+[2026-06-26 22:59:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 22:59:19] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 22:59:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 22:59:19] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 22:59:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 22:59:19] ⏳ AM GLEIS: Zug 6224 an LK - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 22:59:19] 🎉 DB-UPDATE: Zug 6224 an LK auf +0 Min gesetzt.
+[2026-06-26 22:59:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 22:59:19] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:00:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:00:19] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:00:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:00:19] ⏳ AM GLEIS: Zug 1826 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:00:19] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:00:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1826 bis zum Ende des Fahrplans.
+[2026-06-26 23:00:19] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:00:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:00:19] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:00:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:00:19] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:00:19] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:00:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:00:19] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:00:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:00:19] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:00:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:00:19] 📍 VORLAUF: Zug 6221 an SAL - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:00:19] 🎉 DB-UPDATE: Zug 6221 an SAL auf +5 Min gesetzt.
+[2026-06-26 23:00:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:00:19] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:00:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:00:19] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:00:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:00:19] ⏳ AM GLEIS: Zug 6224 an LK - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:00:19] 🎉 DB-UPDATE: Zug 6224 an LK auf +0 Min gesetzt.
+[2026-06-26 23:00:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:00:19] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:01:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:01:19] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:01:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:01:19] ⏳ AM GLEIS: Zug 1826 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:01:19] 🎉 DB-UPDATE: Zug 1826 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:01:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1826 bis zum Ende des Fahrplans.
+[2026-06-26 23:01:19] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:01:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:01:19] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:01:19] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:01:19] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:01:19] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:01:19] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:01:19] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:01:19] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:01:20] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:01:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:01:20] 📍 VORLAUF: Zug 6221 an SAL - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:01:20] 🎉 DB-UPDATE: Zug 6221 an SAL auf +5 Min gesetzt.
+[2026-06-26 23:01:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:01:20] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:01:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:01:20] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:01:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:01:20] 📍 VORLAUF: Zug 6224 an SAL - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:01:20] 🎉 DB-UPDATE: Zug 6224 an SAL auf +0 Min gesetzt.
+[2026-06-26 23:01:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:01:20] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:02:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:02:20] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:02:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:02:20] 📍 VORLAUF: Zug 1826 an CHF - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:02:20] 🎉 DB-UPDATE: Zug 1826 an CHF auf +0 Min gesetzt.
+[2026-06-26 23:02:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1826 bis zum Ende des Fahrplans.
+[2026-06-26 23:02:20] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:02:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:02:20] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:02:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:02:20] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:02:20] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:02:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:02:20] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:02:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:02:20] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:02:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:02:20] 📍 VORLAUF: Zug 6221 an LK - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 23:02:20] 🎉 DB-UPDATE: Zug 6221 an LK auf +7 Min gesetzt.
+[2026-06-26 23:02:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:02:20] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:02:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:02:20] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:02:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:02:20] 📍 VORLAUF: Zug 6224 an SAL - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:02:20] 🎉 DB-UPDATE: Zug 6224 an SAL auf +0 Min gesetzt.
+[2026-06-26 23:02:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:02:20] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:03:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:03:20] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:03:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:03:20] 📍 VORLAUF: Zug 1826 an CHF - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:03:20] 🎉 DB-UPDATE: Zug 1826 an CHF auf +0 Min gesetzt.
+[2026-06-26 23:03:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1826 bis zum Ende des Fahrplans.
+[2026-06-26 23:03:20] ✓ Audit-Log geschrieben: 1826 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:03:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:03:20] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:03:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:03:20] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:03:20] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:03:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:03:20] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:03:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:03:20] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:03:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:03:20] 📍 VORLAUF: Zug 6221 an LK - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 23:03:20] 🎉 DB-UPDATE: Zug 6221 an LK auf +7 Min gesetzt.
+[2026-06-26 23:03:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:03:20] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:03:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:03:20] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:03:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:03:20] 📍 VORLAUF: Zug 6224 an SAL - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:03:20] 🎉 DB-UPDATE: Zug 6224 an SAL auf +0 Min gesetzt.
+[2026-06-26 23:03:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:03:20] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:04:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:04:20] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:04:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:04:20] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:04:20] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:04:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:04:20] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:04:20] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:04:20] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:04:20] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:04:20] 📍 VORLAUF: Zug 6221 an LK - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 23:04:20] 🎉 DB-UPDATE: Zug 6221 an LK auf +7 Min gesetzt.
+[2026-06-26 23:04:20] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:04:20] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:04:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:04:21] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:04:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:04:21] ⏳ AM GLEIS: Zug 6224 an SAL - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:04:21] 🎉 DB-UPDATE: Zug 6224 an SAL auf +0 Min gesetzt.
+[2026-06-26 23:04:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:04:21] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:05:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:05:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:05:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:05:21] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:05:21] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:05:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:05:21] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:05:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:05:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:05:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:05:21] 📍 VORLAUF: Zug 61082 an SIE - An- und Abfahrt werden geändert (+9 Min)
+[2026-06-26 23:05:21] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:05:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:05:21] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:05:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:05:21] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:05:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:05:21] ⏳ AM GLEIS: Zug 6221 an LK - nur Abfahrt wird geändert (+7 Min)
+[2026-06-26 23:05:21] 🎉 DB-UPDATE: Zug 6221 an LK auf +7 Min gesetzt.
+[2026-06-26 23:05:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:05:21] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:05:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:05:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:05:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:05:21] 📍 VORLAUF: Zug 6224 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:05:21] 🎉 DB-UPDATE: Zug 6224 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:05:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:05:21] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:06:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:06:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:06:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:06:21] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:06:21] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:06:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:06:21] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:06:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:06:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:06:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:06:21] 📍 VORLAUF: Zug 61082 an SIE - An- und Abfahrt werden geändert (+9 Min)
+[2026-06-26 23:06:21] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:06:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:06:21] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:06:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:06:21] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 23:06:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 23:06:21] 📍 VORLAUF: Zug 6221 an TUR - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:06:21] 🎉 DB-UPDATE: Zug 6221 an TUR auf +5 Min gesetzt.
+[2026-06-26 23:06:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:06:21] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:06:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:06:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:06:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:06:21] 📍 VORLAUF: Zug 6224 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:06:21] 🎉 DB-UPDATE: Zug 6224 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:06:21] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:06:21] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:07:21] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:07:21] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:07:21] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:07:21] 📍 VORLAUF: Zug 1823 an SIE - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:07:22] 🎉 DB-UPDATE: Zug 1823 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:07:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:07:22] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:07:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:07:22] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:07:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:07:22] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:07:22] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:07:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:07:22] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:07:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:07:22] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 23:07:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 23:07:22] 📍 VORLAUF: Zug 6221 an TUR - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:07:22] 🎉 DB-UPDATE: Zug 6221 an TUR auf +5 Min gesetzt.
+[2026-06-26 23:07:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:07:22] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:07:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:07:22] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:07:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:07:22] 📍 VORLAUF: Zug 6224 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:07:22] 🎉 DB-UPDATE: Zug 6224 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:07:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:07:22] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:08:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:08:22] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:08:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:08:22] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:08:22] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:08:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:08:22] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:08:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:08:22] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:08:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:08:22] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:08:22] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:08:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:08:22] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:08:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:08:22] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 23:08:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 23:08:22] ⏳ AM GLEIS: Zug 6221 an TUR - nur Abfahrt wird geändert (+5 Min)
+[2026-06-26 23:08:22] 🎉 DB-UPDATE: Zug 6221 an TUR auf +5 Min gesetzt.
+[2026-06-26 23:08:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:08:22] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:08:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:08:22] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:08:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:08:22] 📍 VORLAUF: Zug 6123 an CHF - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:08:22] 🎉 DB-UPDATE: Zug 6123 an CHF auf +3 Min gesetzt.
+[2026-06-26 23:08:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:08:22] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:08:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:08:22] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:08:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:08:22] ⏳ AM GLEIS: Zug 6224 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:08:22] 🎉 DB-UPDATE: Zug 6224 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:08:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:08:22] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:09:22] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:09:22] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:09:22] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:09:22] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:09:22] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:09:22] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:09:22] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:09:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:09:23] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:09:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:09:23] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:09:23] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:09:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:09:23] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:09:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:09:23] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:09:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:09:23] 📍 VORLAUF: Zug 6221 an GA - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:09:23] 🎉 DB-UPDATE: Zug 6221 an GA auf +5 Min gesetzt.
+[2026-06-26 23:09:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:09:23] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:09:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:09:23] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:09:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:09:23] ⏳ AM GLEIS: Zug 6123 an CHF - nur Abfahrt wird geändert (+3 Min)
+[2026-06-26 23:09:23] 🎉 DB-UPDATE: Zug 6123 an CHF auf +3 Min gesetzt.
+[2026-06-26 23:09:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:09:23] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:09:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:09:23] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:09:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:09:23] ⏳ AM GLEIS: Zug 6224 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:09:23] 🎉 DB-UPDATE: Zug 6224 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:09:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:09:23] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:10:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:10:23] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:10:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:10:23] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:10:23] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:10:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:10:23] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:10:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:10:23] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:10:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:10:23] 📍 VORLAUF: Zug 1726 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:10:23] 🎉 DB-UPDATE: Zug 1726 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:10:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:10:23] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:10:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:10:23] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:10:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:10:23] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:10:23] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:10:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:10:23] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:10:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:10:23] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:10:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:10:23] 📍 VORLAUF: Zug 6221 an GA - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:10:23] 🎉 DB-UPDATE: Zug 6221 an GA auf +5 Min gesetzt.
+[2026-06-26 23:10:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:10:23] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:10:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:10:23] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:10:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:10:23] 📍 VORLAUF: Zug 6123 an SIO - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:10:23] 🎉 DB-UPDATE: Zug 6123 an SIO auf +3 Min gesetzt.
+[2026-06-26 23:10:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:10:23] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:10:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:10:23] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:10:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:10:23] ⏳ AM GLEIS: Zug 6224 an SIE - nur Abfahrt wird geändert (+1 Min)
+[2026-06-26 23:10:23] 🎉 DB-UPDATE: Zug 6224 an SIE auf +1 Min gesetzt.
+[2026-06-26 23:10:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:10:23] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:11:23] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:11:23] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:11:23] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:11:23] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:11:23] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:11:23] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:11:23] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:11:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:11:24] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:11:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:11:24] 📍 VORLAUF: Zug 1726 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:11:24] 🎉 DB-UPDATE: Zug 1726 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:11:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:11:24] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:11:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:11:24] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:11:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:11:24] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:11:24] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:11:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:11:24] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:11:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:11:24] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:11:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:11:24] 📍 VORLAUF: Zug 6221 an GA - An- und Abfahrt werden geändert (+6 Min)
+[2026-06-26 23:11:24] 🎉 DB-UPDATE: Zug 6221 an GA auf +6 Min gesetzt.
+[2026-06-26 23:11:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:11:24] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:11:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:11:24] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:11:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:11:24] 📍 VORLAUF: Zug 6123 an SIO - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:11:24] 🎉 DB-UPDATE: Zug 6123 an SIO auf +3 Min gesetzt.
+[2026-06-26 23:11:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:11:24] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:11:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:11:24] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:11:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:11:24] ⏳ AM GLEIS: Zug 6224 an SIE - nur Abfahrt wird geändert (+2 Min)
+[2026-06-26 23:11:24] 🎉 DB-UPDATE: Zug 6224 an SIE auf +2 Min gesetzt.
+[2026-06-26 23:11:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:11:24] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:12:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:12:24] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:12:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:12:24] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:12:24] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:12:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:12:24] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:12:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:12:24] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:12:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:12:24] 📍 VORLAUF: Zug 1726 an RAR - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:12:24] 🎉 DB-UPDATE: Zug 1726 an RAR auf +1 Min gesetzt.
+[2026-06-26 23:12:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:12:24] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:12:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:12:24] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:12:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:12:24] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:12:24] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:12:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:12:24] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:12:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:12:24] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:12:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:12:24] 📍 VORLAUF: Zug 6221 an GA - An- und Abfahrt werden geändert (+6 Min)
+[2026-06-26 23:12:24] 🎉 DB-UPDATE: Zug 6221 an GA auf +6 Min gesetzt.
+[2026-06-26 23:12:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:12:24] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:12:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:12:24] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:12:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:12:24] 📍 VORLAUF: Zug 6123 an SIO - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:12:24] 🎉 DB-UPDATE: Zug 6123 an SIO auf +3 Min gesetzt.
+[2026-06-26 23:12:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:12:24] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:12:24] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:12:24] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:12:24] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:12:24] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:12:24] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:12:24] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:12:24] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:13:25] 📍 VORLAUF: Zug 1725 an CHF - An- und Abfahrt werden geändert (+-2 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 1725 an CHF auf +-2 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:13:25] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:13:25] 📍 VORLAUF: Zug 1726 an RAR - An- und Abfahrt werden geändert (+1 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 1726 an RAR auf +1 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:13:25] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:13:25] 📍 VORLAUF: Zug 6221 an GA - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 6221 an GA auf +7 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:13:25] 📍 VORLAUF: Zug 6123 an SIO - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 6123 an SIO auf +3 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:13:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:13:25] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:13:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:13:25] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:13:25] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:13:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:13:25] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:25] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:14:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:14:25] 📍 VORLAUF: Zug 1725 an SIO - An- und Abfahrt werden geändert (+-2 Min)
+[2026-06-26 23:14:25] 🧹 BEREINIGUNG: 5 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:25] 🎉 DB-UPDATE: Zug 1725 an SIO auf +-2 Min gesetzt.
+[2026-06-26 23:14:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:25] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:25] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:14:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:14:25] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:14:25] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:25] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:14:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:25] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:25] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:25] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:14:25] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:14:25] 📍 VORLAUF: Zug 1726 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:14:25] 🧹 BEREINIGUNG: 23 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:25] 🎉 DB-UPDATE: Zug 1726 an LK auf +0 Min gesetzt.
+[2026-06-26 23:14:25] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:25] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:26] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:14:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:14:26] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:14:26] 🧹 BEREINIGUNG: 15 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:26] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:14:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:26] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:26] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:14:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:14:26] ⏳ AM GLEIS: Zug 6221 an GA - nur Abfahrt wird geändert (+7 Min)
+[2026-06-26 23:14:26] 🧹 BEREINIGUNG: 3 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:26] 🎉 DB-UPDATE: Zug 6221 an GA auf +7 Min gesetzt.
+[2026-06-26 23:14:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:26] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:26] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:14:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:14:26] ⏳ AM GLEIS: Zug 6123 an SIO - nur Abfahrt wird geändert (+3 Min)
+[2026-06-26 23:14:26] 🧹 BEREINIGUNG: 9 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:26] 🎉 DB-UPDATE: Zug 6123 an SIO auf +3 Min gesetzt.
+[2026-06-26 23:14:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:26] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:14:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:14:26] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:14:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:14:26] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:14:26] 🧹 BEREINIGUNG: 12 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:14:26] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:14:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:14:26] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:26] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:15:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:15:26] 📍 VORLAUF: Zug 1725 an SIO - An- und Abfahrt werden geändert (+-2 Min)
+[2026-06-26 23:15:26] 🧹 BEREINIGUNG: 5 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:26] 🎉 DB-UPDATE: Zug 1725 an SIO auf +-2 Min gesetzt.
+[2026-06-26 23:15:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:26] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:26] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:15:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:15:26] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:15:26] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:26] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:15:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:26] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:26] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:15:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:15:26] 📍 VORLAUF: Zug 1726 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:15:26] 🧹 BEREINIGUNG: 23 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:26] 🎉 DB-UPDATE: Zug 1726 an LK auf +0 Min gesetzt.
+[2026-06-26 23:15:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:26] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:26] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:15:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:15:26] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:15:26] 🧹 BEREINIGUNG: 15 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:26] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:15:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:26] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:26] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:26] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:15:26] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:15:26] 📍 VORLAUF: Zug 6221 an RAR - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 23:15:26] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:26] 🎉 DB-UPDATE: Zug 6221 an RAR auf +7 Min gesetzt.
+[2026-06-26 23:15:26] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:26] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:27] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:15:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:15:27] 📍 VORLAUF: Zug 6123 an SL - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:15:27] 🧹 BEREINIGUNG: 8 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:27] 🎉 DB-UPDATE: Zug 6123 an SL auf +3 Min gesetzt.
+[2026-06-26 23:15:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:27] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:15:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:15:27] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:15:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:15:27] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:15:27] 🧹 BEREINIGUNG: 12 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:15:27] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:15:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:15:27] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:16:27] ⏳ AM GLEIS: Zug 1725 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 5 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 1725 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:16:27] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:16:27] 📍 VORLAUF: Zug 1726 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 23 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 1726 an LK auf +0 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:16:27] ⏳ AM GLEIS: Zug 61082 an SIE - nur Abfahrt wird geändert (+9 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 15 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 61082 an SIE auf +9 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:16:27] 📍 VORLAUF: Zug 6221 an RAR - An- und Abfahrt werden geändert (+7 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 6221 an RAR auf +7 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:16:27] 📍 VORLAUF: Zug 6123 an SL - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 8 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 6123 an SL auf +3 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:16:27] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:16:27] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:16:27] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:16:27] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:16:27] 🧹 BEREINIGUNG: 12 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:16:27] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:16:27] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:16:27] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:17:28] ⏳ AM GLEIS: Zug 1725 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 5 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 1725 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:17:28] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:17:28] 📍 VORLAUF: Zug 1726 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 23 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 1726 an LK auf +0 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:17:28] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 14 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:17:28] ⏳ AM GLEIS: Zug 6221 an RAR - nur Abfahrt wird geändert (+7 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 6221 an RAR auf +7 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:17:28] 📍 VORLAUF: Zug 6123 an SL - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 8 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 6123 an SL auf +3 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:17:28] 📍 VORLAUF: Zug 6126 an RAR - An- und Abfahrt werden geändert (+-1 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 18 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 6126 an RAR auf +-1 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:17:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:17:28] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:17:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:17:28] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:17:28] 🧹 BEREINIGUNG: 12 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:17:28] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:17:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:17:28] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:28] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:18:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:18:28] ⏳ AM GLEIS: Zug 1725 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:18:28] 🧹 BEREINIGUNG: 5 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:28] 🎉 DB-UPDATE: Zug 1725 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:18:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:28] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:28] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:18:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:18:28] 📍 VORLAUF: Zug 1823 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:18:28] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:28] 🎉 DB-UPDATE: Zug 1823 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:18:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1823 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:28] ✓ Audit-Log geschrieben: 1823 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:28] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:28] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:18:28] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:18:28] 📍 VORLAUF: Zug 1726 an LK - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:18:28] 🧹 BEREINIGUNG: 23 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:28] 🎉 DB-UPDATE: Zug 1726 an LK auf +0 Min gesetzt.
+[2026-06-26 23:18:28] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:29] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:29] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:18:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:18:29] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:18:29] 🧹 BEREINIGUNG: 14 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:29] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:18:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:29] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:29] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:18:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:18:29] ⏳ AM GLEIS: Zug 6221 an RAR - nur Abfahrt wird geändert (+8 Min)
+[2026-06-26 23:18:29] 🧹 BEREINIGUNG: 2 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:29] 🎉 DB-UPDATE: Zug 6221 an RAR auf +8 Min gesetzt.
+[2026-06-26 23:18:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6221 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:29] ✓ Audit-Log geschrieben: 6221 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:29] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:18:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:18:29] 📍 VORLAUF: Zug 6123 an SL - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:18:29] 🧹 BEREINIGUNG: 8 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:29] 🎉 DB-UPDATE: Zug 6123 an SL auf +3 Min gesetzt.
+[2026-06-26 23:18:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:29] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:29] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:18:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:18:29] 📍 VORLAUF: Zug 6126 an RAR - An- und Abfahrt werden geändert (+-1 Min)
+[2026-06-26 23:18:29] 🧹 BEREINIGUNG: 18 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:29] 🎉 DB-UPDATE: Zug 6126 an RAR auf +-1 Min gesetzt.
+[2026-06-26 23:18:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:29] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:18:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:18:29] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:18:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:18:29] 📍 VORLAUF: Zug 6224 an SL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:18:29] 🧹 BEREINIGUNG: 12 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:18:29] 🎉 DB-UPDATE: Zug 6224 an SL auf +4 Min gesetzt.
+[2026-06-26 23:18:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:18:29] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:19:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:19:29] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:19:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:19:29] ⏳ AM GLEIS: Zug 1725 an SIO - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:19:29] 🧹 BEREINIGUNG: 5 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:19:29] 🎉 DB-UPDATE: Zug 1725 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:19:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:19:29] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:19:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:19:29] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:19:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:19:29] ⏳ AM GLEIS: Zug 1726 an LK - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:19:29] 🧹 BEREINIGUNG: 23 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:19:29] 🎉 DB-UPDATE: Zug 1726 an LK auf +0 Min gesetzt.
+[2026-06-26 23:19:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:19:29] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:19:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:19:29] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:19:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:19:29] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:19:29] 🧹 BEREINIGUNG: 14 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:19:29] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:19:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:19:29] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:19:29] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:19:29] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:19:29] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:19:29] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:19:29] 🧹 BEREINIGUNG: 7 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:19:29] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:19:29] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:19:29] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:19:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:19:30] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:19:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:19:30] 📍 VORLAUF: Zug 6126 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:19:30] 🧹 BEREINIGUNG: 18 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:19:30] 🎉 DB-UPDATE: Zug 6126 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:19:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:19:30] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:19:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:19:30] DEBUG: Suche Station mit Kürzel: 'SL' im gesamten Fahrplan
+[2026-06-26 23:19:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SL).
+[2026-06-26 23:19:30] ⏳ AM GLEIS: Zug 6224 an SL - nur Abfahrt wird geändert (+5 Min)
+[2026-06-26 23:19:30] 🧹 BEREINIGUNG: 12 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:19:30] 🎉 DB-UPDATE: Zug 6224 an SL auf +5 Min gesetzt.
+[2026-06-26 23:19:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:19:30] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:20:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:20:30] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:20:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:20:30] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:20:30] 🧹 BEREINIGUNG: 4 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:20:30] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:20:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:20:30] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:20:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:20:30] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:20:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:20:30] 📍 VORLAUF: Zug 1726 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:20:30] 🧹 BEREINIGUNG: 22 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:20:30] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:20:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:20:30] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:20:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:20:30] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:20:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:20:30] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:20:30] 🧹 BEREINIGUNG: 14 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:20:30] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:20:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:20:30] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:20:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:20:30] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:20:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:20:30] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:20:30] 🧹 BEREINIGUNG: 7 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:20:30] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:20:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:20:30] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:20:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:20:30] DEBUG: Suche Station mit Kürzel: 'RAR' im gesamten Fahrplan
+[2026-06-26 23:20:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: RAR).
+[2026-06-26 23:20:30] 📍 VORLAUF: Zug 6126 an RAR - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:20:30] 🧹 BEREINIGUNG: 18 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:20:30] 🎉 DB-UPDATE: Zug 6126 an RAR auf +0 Min gesetzt.
+[2026-06-26 23:20:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:20:30] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:20:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:20:30] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:20:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:20:30] 📍 VORLAUF: Zug 6224 an SIO - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:20:30] 🧹 BEREINIGUNG: 11 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:20:30] 🎉 DB-UPDATE: Zug 6224 an SIO auf +5 Min gesetzt.
+[2026-06-26 23:20:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:20:30] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:21:30] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:21:30] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:21:30] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:21:30] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:21:30] 🧹 BEREINIGUNG: 4 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:21:30] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:21:30] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:21:30] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:21:31] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:21:31] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:21:31] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:21:31] 📍 VORLAUF: Zug 1726 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:21:31] 🧹 BEREINIGUNG: 22 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:21:31] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:21:31] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:21:31] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:21:31] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:21:31] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:21:31] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:21:31] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:21:31] 🧹 BEREINIGUNG: 14 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:21:31] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:21:31] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:21:31] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:21:31] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:21:31] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:21:31] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:21:31] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:21:31] 🧹 BEREINIGUNG: 7 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:21:31] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:21:31] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:21:31] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:21:31] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:21:31] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:21:31] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:21:31] 📍 VORLAUF: Zug 6126 an GA - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:21:31] 🧹 BEREINIGUNG: 17 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:21:31] 🎉 DB-UPDATE: Zug 6126 an GA auf +3 Min gesetzt.
+[2026-06-26 23:21:31] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:21:31] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:21:31] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:21:31] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:21:31] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:21:31] 📍 VORLAUF: Zug 6224 an SIO - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:21:31] 🧹 BEREINIGUNG: 11 nachfolgende Halte für neue Propagation zurückgesetzt.
+[2026-06-26 23:21:31] 🎉 DB-UPDATE: Zug 6224 an SIO auf +5 Min gesetzt.
+[2026-06-26 23:21:31] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:21:31] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 1726 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 22 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 61079 an CHF - An- und Abfahrt werden geändert (+13 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 5 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 61079 an CHF auf +13 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 7 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 6126 an GA - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 17 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 6126 an GA auf +3 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:22:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:22:33] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:22:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:22:33] 📍 VORLAUF: Zug 6224 an SIO - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:22:33] 🧹 BEREINIGUNG: 11 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:22:33] 🎉 DB-UPDATE: Zug 6224 an SIO auf +5 Min gesetzt.
+[2026-06-26 23:22:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:22:33] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:33] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:23:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:23:33] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:23:33] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:33] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:23:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:33] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:33] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:33] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:23:33] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:23:33] 📍 VORLAUF: Zug 1726 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:23:33] 🧹 BEREINIGUNG: 22 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:33] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:23:33] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:33] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:34] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:23:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:23:34] 📍 VORLAUF: Zug 61079 an CHF - An- und Abfahrt werden geändert (+13 Min)
+[2026-06-26 23:23:34] 🧹 BEREINIGUNG: 5 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:34] 🎉 DB-UPDATE: Zug 61079 an CHF auf +13 Min gesetzt.
+[2026-06-26 23:23:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:34] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:34] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:23:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:23:34] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:23:34] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:34] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:23:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:34] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:34] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:23:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:23:34] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:23:34] 🧹 BEREINIGUNG: 7 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:34] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:23:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:34] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:34] DEBUG: Suche Station mit Kürzel: 'GA' im gesamten Fahrplan
+[2026-06-26 23:23:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: GA).
+[2026-06-26 23:23:34] ⏳ AM GLEIS: Zug 6126 an GA - nur Abfahrt wird geändert (+3 Min)
+[2026-06-26 23:23:34] 🧹 BEREINIGUNG: 17 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:34] 🎉 DB-UPDATE: Zug 6126 an GA auf +3 Min gesetzt.
+[2026-06-26 23:23:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:34] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:23:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:23:34] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:23:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:23:34] 📍 VORLAUF: Zug 6224 an SIO - An- und Abfahrt werden geändert (+5 Min)
+[2026-06-26 23:23:34] 🧹 BEREINIGUNG: 11 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:23:34] 🎉 DB-UPDATE: Zug 6224 an SIO auf +5 Min gesetzt.
+[2026-06-26 23:23:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:23:34] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:34] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:24:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:24:34] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:24:34] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:34] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:24:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:34] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:34] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:24:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:24:34] 📍 VORLAUF: Zug 1726 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:24:34] 🧹 BEREINIGUNG: 22 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:34] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:24:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:34] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:34] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:24:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:24:34] 📍 VORLAUF: Zug 61079 an SIO - An- und Abfahrt werden geändert (+13 Min)
+[2026-06-26 23:24:34] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:34] 🎉 DB-UPDATE: Zug 61079 an SIO auf +13 Min gesetzt.
+[2026-06-26 23:24:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:34] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:34] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:24:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:24:34] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:24:34] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:34] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:24:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:34] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:34] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:34] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:24:34] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:24:34] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:24:34] 🧹 BEREINIGUNG: 7 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:34] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:24:34] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:35] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:35] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 23:24:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 23:24:35] 📍 VORLAUF: Zug 6126 an TUR - An- und Abfahrt werden geändert (+2 Min)
+[2026-06-26 23:24:35] 🧹 BEREINIGUNG: 16 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:35] 🎉 DB-UPDATE: Zug 6126 an TUR auf +2 Min gesetzt.
+[2026-06-26 23:24:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:35] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:24:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:24:35] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:24:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:24:35] 📍 VORLAUF: Zug 6224 an CHF - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:24:35] 🧹 BEREINIGUNG: 10 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:24:35] 🎉 DB-UPDATE: Zug 6224 an CHF auf +4 Min gesetzt.
+[2026-06-26 23:24:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:24:35] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:25:35] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:25:35] ⏳ AM GLEIS: Zug 1726 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 22 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:25:35] 📍 VORLAUF: Zug 61079 an SIO - An- und Abfahrt werden geändert (+13 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 61079 an SIO auf +13 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:25:35] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:25:35] 📍 VORLAUF: Zug 6123 an SIE - An- und Abfahrt werden geändert (+3 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 7 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 6123 an SIE auf +3 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'TUR' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: TUR).
+[2026-06-26 23:25:35] 📍 VORLAUF: Zug 6126 an TUR - An- und Abfahrt werden geändert (+2 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 16 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 6126 an TUR auf +2 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:25:35] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:25:35] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:25:35] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:25:35] 📍 VORLAUF: Zug 6224 an CHF - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:25:35] 🧹 BEREINIGUNG: 10 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:25:35] 🎉 DB-UPDATE: Zug 6224 an CHF auf +4 Min gesetzt.
+[2026-06-26 23:25:35] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:25:35] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:26:36] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:26:36] ⏳ AM GLEIS: Zug 1726 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 22 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:26:36] ⏳ AM GLEIS: Zug 61079 an SIO - nur Abfahrt wird geändert (+13 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 61079 an SIO auf +13 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:26:36] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:26:36] 📍 VORLAUF: Zug 6123 an SAL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 6 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 6123 an SAL auf +4 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:26:36] 📍 VORLAUF: Zug 6126 an LK - An- und Abfahrt werden geändert (+2 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 15 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 6126 an LK auf +2 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:26:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:26:36] DEBUG: Suche Station mit Kürzel: 'CHF' im gesamten Fahrplan
+[2026-06-26 23:26:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: CHF).
+[2026-06-26 23:26:36] 📍 VORLAUF: Zug 6224 an CHF - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:26:36] 🧹 BEREINIGUNG: 10 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:26:36] 🎉 DB-UPDATE: Zug 6224 an CHF auf +4 Min gesetzt.
+[2026-06-26 23:26:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6224 bis zum Ende des Fahrplans.
+[2026-06-26 23:26:36] ✓ Audit-Log geschrieben: 6224 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:27:36] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:27:36] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:27:36] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:27:36] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:27:36] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:27:36] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:27:36] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:27:36] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:27:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:27:37] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:27:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:27:37] ⏳ AM GLEIS: Zug 1726 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:27:37] 🧹 BEREINIGUNG: 22 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:27:37] 🎉 DB-UPDATE: Zug 1726 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:27:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:27:37] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:27:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:27:37] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:27:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:27:37] ⏳ AM GLEIS: Zug 61079 an SIO - nur Abfahrt wird geändert (+13 Min)
+[2026-06-26 23:27:37] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:27:37] 🎉 DB-UPDATE: Zug 61079 an SIO auf +13 Min gesetzt.
+[2026-06-26 23:27:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:27:37] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:27:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:27:37] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:27:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:27:37] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-13 Min)
+[2026-06-26 23:27:37] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:27:37] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-13 Min gesetzt.
+[2026-06-26 23:27:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:27:37] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:27:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:27:37] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:27:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:27:37] 📍 VORLAUF: Zug 6123 an SAL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:27:37] 🧹 BEREINIGUNG: 6 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:27:37] 🎉 DB-UPDATE: Zug 6123 an SAL auf +4 Min gesetzt.
+[2026-06-26 23:27:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:27:37] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:27:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:27:37] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:27:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:27:37] 📍 VORLAUF: Zug 6126 an LK - An- und Abfahrt werden geändert (+2 Min)
+[2026-06-26 23:27:37] 🧹 BEREINIGUNG: 15 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:27:37] 🎉 DB-UPDATE: Zug 6126 an LK auf +2 Min gesetzt.
+[2026-06-26 23:27:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:27:37] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:28:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:28:37] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:28:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:28:37] 📍 VORLAUF: Zug 1725 an SIE - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:28:37] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:28:37] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:28:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:28:37] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:28:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:28:37] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:28:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:28:37] 📍 VORLAUF: Zug 1726 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:28:37] 🧹 BEREINIGUNG: 21 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:28:37] 🎉 DB-UPDATE: Zug 1726 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:28:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:28:37] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:28:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:28:37] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:28:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:28:37] ⏳ AM GLEIS: Zug 61079 an SIO - nur Abfahrt wird geändert (+13 Min)
+[2026-06-26 23:28:37] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:28:37] 🎉 DB-UPDATE: Zug 61079 an SIO auf +13 Min gesetzt.
+[2026-06-26 23:28:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:28:37] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:28:37] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:28:37] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:28:37] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:28:37] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-12 Min)
+[2026-06-26 23:28:37] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:28:37] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-12 Min gesetzt.
+[2026-06-26 23:28:37] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:28:38] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:28:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:28:38] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:28:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:28:38] 📍 VORLAUF: Zug 6123 an SAL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:28:38] 🧹 BEREINIGUNG: 6 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:28:38] 🎉 DB-UPDATE: Zug 6123 an SAL auf +4 Min gesetzt.
+[2026-06-26 23:28:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:28:38] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:28:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:28:38] DEBUG: Suche Station mit Kürzel: 'LK' im gesamten Fahrplan
+[2026-06-26 23:28:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: LK).
+[2026-06-26 23:28:38] 📍 VORLAUF: Zug 6126 an LK - An- und Abfahrt werden geändert (+2 Min)
+[2026-06-26 23:28:38] 🧹 BEREINIGUNG: 15 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:28:38] 🎉 DB-UPDATE: Zug 6126 an LK auf +2 Min gesetzt.
+[2026-06-26 23:28:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:28:38] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:29:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:29:38] DEBUG: Suche Station mit Kürzel: 'SIE' im gesamten Fahrplan
+[2026-06-26 23:29:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIE).
+[2026-06-26 23:29:38] ⏳ AM GLEIS: Zug 1725 an SIE - nur Abfahrt wird geändert (+0 Min)
+[2026-06-26 23:29:38] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:29:38] 🎉 DB-UPDATE: Zug 1725 an SIE auf +0 Min gesetzt.
+[2026-06-26 23:29:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1725 bis zum Ende des Fahrplans.
+[2026-06-26 23:29:38] ✓ Audit-Log geschrieben: 1725 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:29:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:29:38] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:29:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:29:38] 📍 VORLAUF: Zug 1726 an SIO - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:29:38] 🧹 BEREINIGUNG: 21 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:29:38] 🎉 DB-UPDATE: Zug 1726 an SIO auf +0 Min gesetzt.
+[2026-06-26 23:29:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 1726 bis zum Ende des Fahrplans.
+[2026-06-26 23:29:38] ✓ Audit-Log geschrieben: 1726 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:29:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:29:38] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:29:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:29:38] ⏳ AM GLEIS: Zug 61079 an SIO - nur Abfahrt wird geändert (+13 Min)
+[2026-06-26 23:29:38] 🧹 BEREINIGUNG: 4 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:29:38] 🎉 DB-UPDATE: Zug 61079 an SIO auf +13 Min gesetzt.
+[2026-06-26 23:29:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61079 bis zum Ende des Fahrplans.
+[2026-06-26 23:29:38] ✓ Audit-Log geschrieben: 61079 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:29:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:29:38] DEBUG: Suche Station mit Kürzel: 'SIO' im gesamten Fahrplan
+[2026-06-26 23:29:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SIO).
+[2026-06-26 23:29:38] 📍 VORLAUF: Zug 61082 an SIO - An- und Abfahrt werden geändert (+-12 Min)
+[2026-06-26 23:29:38] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:29:38] 🎉 DB-UPDATE: Zug 61082 an SIO auf +-12 Min gesetzt.
+[2026-06-26 23:29:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 61082 bis zum Ende des Fahrplans.
+[2026-06-26 23:29:38] ✓ Audit-Log geschrieben: 61082 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:29:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:29:38] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:29:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:29:38] 📍 VORLAUF: Zug 6123 an SAL - An- und Abfahrt werden geändert (+4 Min)
+[2026-06-26 23:29:38] 🧹 BEREINIGUNG: 6 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:29:38] 🎉 DB-UPDATE: Zug 6123 an SAL auf +4 Min gesetzt.
+[2026-06-26 23:29:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6123 bis zum Ende des Fahrplans.
+[2026-06-26 23:29:38] ✓ Audit-Log geschrieben: 6123 von PISTACHE-Client (Sion - Sierre)
+[2026-06-26 23:29:38] --- NEUER REQUEST EMPFANGEN ---
+[2026-06-26 23:29:38] DEBUG: Suche Station mit Kürzel: 'SAL' im gesamten Fahrplan
+[2026-06-26 23:29:38] DEBUG: Station global in Route 'rhonetal' gefunden (ID: SAL).
+[2026-06-26 23:29:38] 📍 VORLAUF: Zug 6126 an SAL - An- und Abfahrt werden geändert (+0 Min)
+[2026-06-26 23:29:38] 🧹 BEREINIGUNG: 14 ungeschützte Folgehalte für neue Propagation zurückgesetzt.
+[2026-06-26 23:29:38] 🎉 DB-UPDATE: Zug 6126 an SAL auf +0 Min gesetzt.
+[2026-06-26 23:29:38] DEBUG: Starte Propagation der aktuellen Fahrt von Zug 6126 bis zum Ende des Fahrplans.
+[2026-06-26 23:29:38] ✓ Audit-Log geschrieben: 6126 von PISTACHE-Client (Sion - Sierre)

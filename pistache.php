@@ -132,148 +132,143 @@ function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_d
     return $current_delay;
 }
 
-// =========================================================================
-// 7%-RESERVE-PROPAGATION MIT STANDZEIT-BERÜCKSICHTIGUNG
-// JEDESMAL NEU BERECHNEN - AUSSER BEI HALTE MIT "!"
-// =========================================================================
-function propagateTravelTimeWithReserve($db, $train_id, $modified_station_id, $source_tag = 'P') {
-    global $write_log;
-    
-    // Zugdetails für Logging
-    $stmtInfo = $db->prepare("SELECT train_number, sts_zid FROM trains WHERE id = ?");
-    $stmtInfo->execute([$train_id]);
-    $info = $stmtInfo->fetch(PDO::FETCH_ASSOC);
-    $logIdent = $info ? "Zug " . $info['train_number'] . " (ZID: " . $info['sts_zid'] . ")" : "Zug-ID $train_id";
-    
-    write_log("🔄 PROPAGATION (7% RESERVE): Starte für $logIdent ab Station $modified_station_id");
-    
-    // Lade ALLE Halte des Zuges (chronologisch)
-	$stmt = $db->prepare("
-		SELECT id, station_id, arrival, departure, actual_arrival, actual_departure, flags 
-		FROM timetable 
-		WHERE train_id = ? 
-		ORDER BY COALESCE(arrival, departure) ASC
-	");
-    $stmt->execute([$train_id]);
-    $all_stops = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    if (empty($all_stops)) {
-        write_log("⚠️ PROPAGATION: Keine Halte für Zug-ID $train_id gefunden.");
-        return;
-    }
-    
-    // Finde Index der modifizierten Station
-    $modified_index = null;
-    foreach ($all_stops as $i => $stop) {
-        if ($stop['station_id'] === $modified_station_id) {
-            $modified_index = $i;
-            break;
+/**
+ * propagateTravelTimeWithReserve() - PHP-Version für Delay-Propagation
+ * 
+ * Wird vom STS-Plugin aufgerufen und propagiert Verspätung für die aktuelle Fahrt
+ * über alle noch folgenden Halte des gleichen Zuges.
+ * Dabei werden angewendet:
+ * - 7% Fahrtzeit-Reserve
+ * - Standzeitabbau (außer bei R-Flag)
+ * - Dispo-Kriterium Schutz
+ * 
+ * Hinweis: Diese Funktion arbeitet nur für den aktuellen Zug (train_id),
+ * Nachfolgezüge werden hier nicht automatisch angepasst.
+ */
+function propagateTravelTimeWithReserve($db, $trainId) {
+    $stmt = $db->prepare("
+        SELECT id, station_id, arrival, departure, actual_arrival, actual_departure, flags
+        FROM timetable
+        WHERE train_id = ?
+        ORDER BY 
+            CASE WHEN arrival != '' THEN arrival ELSE departure END ASC,
+            id ASC
+    ");
+    $stmt->execute([$trainId]);
+    $stops = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $timeToMin = function($tStr) {
+        if (empty($tStr)) return null;
+        $p = explode(':', $tStr);
+        return (count($p) >= 2) ? (intval($p[0]) * 60 + intval($p[1])) : null;
+    };
+
+    $minToTime = function($minutes) {
+        if ($minutes === null || is_nan($minutes)) return '';
+        $normalized = ((intval($minutes) % 1440) + 1440) % 1440;
+        $h = intval($normalized / 60);
+        $m = intval($normalized % 60);
+        return sprintf('%02d:%02d', $h, $m);
+    };
+
+    $prevDepMin = null;
+    $prevSollDepMin = null;
+
+    for ($i = 0; $i < count($stops); $i++) {
+        $stop = $stops[$i];
+        $stationId = $stop['station_id'];
+        $flags = $stop['flags'] ?? '';
+
+        $sollArrMin = $timeToMin($stop['arrival']);
+        $sollDepMin = $timeToMin($stop['departure']);
+
+        if ($sollArrMin === null && $sollDepMin === null) {
+            continue;
         }
-    }
-    
-    if ($modified_index === null) {
-        write_log("⚠️ PROPAGATION: Station $modified_station_id nicht in Halteliste gefunden.");
-        return;
-    }
-    
-    write_log("📍 PROPAGATION: Starte ab Halt-Index $modified_index von " . count($all_stops));
-    
-    // Durchgehe alle Halte ab der modifizierten Station
-    for ($i = $modified_index; $i < count($all_stops); $i++) {
-        $currentStop = $all_stops[$i];
-        $stId = $currentStop['station_id'];
-        $timetable_id = $currentStop['id'];
-        
-        $sollArrStr = $currentStop['arrival'];
-        $sollDepStr = $currentStop['departure'];
-        $flags = $currentStop['flags'] ?? '';
-        
-        // Skip wenn keine Zeiten
-        if (empty($sollArrStr) && empty($sollDepStr)) continue;
-        
-        // 🔒 SCHUTZ: Wenn dieser Halt mit "!" geschützt ist, stoppt Propagation hier
-        if (isHaltProtected($flags)) {
-            write_log("🔒 GESCHÜTZT: Halt $stId mit ! in Flags → wird nicht berechnet, Propagation stoppt");
-            break;
+
+        // 🔒 SCHUTZ: Dispo-Kriterium prüfen
+        if (preg_match('/^(X|V|C[4-7]?)\((\d+)\)/i', trim($flags))) {
+            error_log("🔒 GESCHÜTZT (Dispo): $stationId → wird übersprungen");
+            continue;
         }
-        
-        $sollArrMin = timeToMinutes($sollArrStr);
-        $sollDepMin = timeToMinutes($sollDepStr);
-        
-        // IST-Zeiten auslesen
-        $istArrMin = timeToMinutes($currentStop['actual_arrival']);
-        $istDepMin = timeToMinutes($currentStop['actual_departure']);
-        
-        // Wenn Ankunft fehlt, von vorheriger Abfahrt übernehmen
-        if ($istArrMin === null && $i > 0) {
-            $prevStop = $all_stops[$i - 1];
-            $prevIstDepMin = timeToMinutes($prevStop['actual_departure']);
-            if ($prevIstDepMin !== null) {
-                $istArrMin = $prevIstDepMin;
+
+        $istArrMin = $timeToMin($stop['actual_arrival']);
+        $istDepMin = $timeToMin($stop['actual_departure']);
+        $hasActualDepartureOnly = ($istArrMin === null && $istDepMin !== null);
+
+        // ========== ANKUNFT BERECHNEN ==========
+        if ($hasActualDepartureOnly) {
+            if ($sollArrMin !== null && $sollDepMin !== null) {
+                $scheduledStandzeit = max(0, $sollDepMin - $sollArrMin);
+                $istArrMin = max(0, $istDepMin - $scheduledStandzeit);
+            } else {
+                $istArrMin = $istDepMin;
+            }
+        } elseif ($prevDepMin !== null && $prevSollDepMin !== null && $istArrMin === null) {
+            $sollFahrtzeit = 0;
+            if ($sollArrMin !== null) {
+                $sollFahrtzeit = $sollArrMin - $prevSollDepMin;
+            } elseif ($sollDepMin !== null) {
+                $sollFahrtzeit = $sollDepMin - $prevSollDepMin;
+            }
+
+            if ($sollFahrtzeit > 0) {
+                $minFahrtzeit = round($sollFahrtzeit * 0.93);
+                $istFahrtzeit = max($minFahrtzeit, $sollFahrtzeit);
+                $istArrMin = $prevDepMin + $istFahrtzeit;
             }
         }
-        
-        // Wenn Ankunft immer noch null, skip
-        if ($istArrMin === null) continue;
-        
-        // Standzeit berechnen (Soll-Soll)
-        $standzeit = 0;
-        if ($sollArrMin !== null && $sollDepMin !== null && $sollDepMin >= $sollArrMin) {
-            $standzeit = $sollDepMin - $sollArrMin;
+
+        if ($istArrMin === null && $prevDepMin !== null) {
+            $istArrMin = $prevDepMin;
         }
-        
-        // 🔧 BERECHNE IST-ABFAHRT IMMER NEU (auch wenn bereits Werte vorhanden sind!)
-        // Das ist der Key-Change: Nicht nur wenn $istDepMin === null, sondern IMMER
-        if ($i > 0) {
-            $prevStop = $all_stops[$i - 1];
-            $prevSollDepStr = $prevStop['departure'];
-            $prevSollDepMin = timeToMinutes($prevSollDepStr);
-            $prevIstDepMin = timeToMinutes($prevStop['actual_departure']);
-            
-            if ($prevIstDepMin !== null && $prevSollDepMin !== null) {
-                // Soll-Fahrzeit
-                $sollFahrtzeit = ($sollArrMin !== null) 
-                    ? ($sollArrMin - $prevSollDepMin) 
-                    : ($sollDepMin - $prevSollDepMin);
-                
-                if ($sollFahrtzeit > 0) {
-                    // 7% Reserve: Minimum = Sollfahrzeit * 0.93
-                    $minFahrtzeit = max(1, intval(round($sollFahrtzeit * 0.93)));
-                    
-                    // Ist-Fahrzeit
-                    $istFahrtzeit = $istArrMin - $prevIstDepMin;
-                    
-                    // Effektive Fahrzeit = Maximum(eingegeben, Minimum mit 7% Reserve)
-                    $effektiveFahrtzeit = max($istFahrtzeit, $minFahrtzeit);
-                    
-                    // Neue Ist-Ankunft
-                    $istArrMin = $prevIstDepMin + $effektiveFahrtzeit;
-                }
+
+        // ========== STANDZEIT & ABFAHRT ==========
+        if ($istArrMin !== null && $sollDepMin !== null) {
+            // Soll-Standzeit
+            $sollStandzeit = 0;
+            if ($sollArrMin !== null) {
+                $sollStandzeit = max(0, $sollDepMin - $sollArrMin);
             }
+
+            // R-Flag prüfen
+            $hasRFlag = preg_match('/R/i', $flags) ? true : false;
+            $minStandzeit = $hasRFlag ? 2 : 0;
+
+            // Verspätung bei Ankunft
+            $arrivalDelay = ($sollArrMin !== null) ? ($istArrMin - $sollArrMin) : 0;
+
+            // Verfügbare Abbremsung
+            $availableBraking = max(0, $sollStandzeit - $minStandzeit);
+            $actualBraking = min(max(0, $arrivalDelay), $availableBraking);
+
+            // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
+            $remainingDelay = max(0, $arrivalDelay - $actualBraking);
+            $istDepMin = $sollDepMin + $remainingDelay;
+
+            error_log("📍 $stationId: Ank.Versp={$arrivalDelay}min, Abbr={$actualBraking}min, Restversp={$remainingDelay}min");
+        } elseif ($istArrMin !== null) {
+            // Keine geplante Abfahrt, aber Ankunft: Ist-Abfahrt = Ist-Ankunft
+            $istDepMin = $istArrMin;
         }
-        
-        // Ist-Abfahrt = Ist-Ankunft + Standzeit
-        $istDepMin = $istArrMin + $standzeit;
-        
-        // Dispo-Kriterien anwenden (falls vorhanden)
-        if (!empty($flags) && $sollDepMin !== null) {
-            $adjusted_delay = evaluateDispoCriteria($db, $stId, $flags, $istDepMin - $sollDepMin, $sollDepMin);
-            $istDepMin = $sollDepMin + $adjusted_delay;
-        }
-        
-        // 💾 IN DB SCHREIBEN - IMMER (überschreibt auch bereits vorhandene Werte)
-        $actualArr = ($sollArrMin !== null) ? minutesToTime($istArrMin) : null;
-        $actualDep = ($sollDepMin !== null) ? minutesToTime($istDepMin) : null;
-        
-        $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, remarks = ? WHERE id = ?");
-        $stmtUpdate->execute([
-            $actualArr,
-            $actualDep,
-            "Fahrtberechnung (7% Reserve) (" . $source_tag . ")",
-            $timetable_id
+
+        // ========== UPDATE IN DB ==========
+        $stmt = $db->prepare("
+            UPDATE timetable
+            SET actual_arrival = ?, actual_departure = ?
+            WHERE id = ?
+        ");
+        $stmt->execute([
+            $minToTime($istArrMin),
+            $minToTime($istDepMin),
+            $stop['id']
         ]);
-        
-        write_log("   ✓ Halt $stId: Ank=$actualArr, Abf=$actualDep (neu berechnet)");
+
+        // Aktualisiere Werte für nächste Iteration
+        if ($istDepMin !== null) {
+            $prevDepMin = $istDepMin;
+            $prevSollDepMin = $sollDepMin;
+        }
     }
 }
 
@@ -354,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // =========================================================================
-    // PLUGIN-UPDATE MIT 7%-RESERVE PROPAGATION
+    // PLUGIN-UPDATE MIT 7%-RESERVE PROPAGATION (ÜBERSCHREIBT ZUKÜNFTIGE IST-DATEN)
     // =========================================================================
     if ($action === 'plugin_update_delay') {
         $sts_zid = $_POST['sts_zid'] ?? $input_data['sts_zid'] ?? '';
@@ -368,23 +363,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Extrahiere Stationskürzl aus Plattform-ID
-        // Supportet: "KZ4A", "BO2G", "BN 10 kurz", "ROSS 3", "GMM2", etc.
-        // station_id = nur die Stationskürzl (Buchstaben am Anfang)
-        // track = die komplette Gleisbezeichnung (Nummer + optional Buchstaben/Zusatz)
-        
         if (preg_match('/^([A-Za-z]+)\s+(.+)$/', trim($raw_gleis), $matches)) {
-            // Format mit Leerzeichen: "STATION GLEIS..."
-            // z.B. "BN 10 kurz", "ROSS 3", "KZ 4A"
-            $station_abbr = strtoupper($matches[1]);           // z.B. "BN", "ROSS", "KZ"
-            $track_number = $matches[2];                       // z.B. "10 kurz", "3", "4A"
+            $station_abbr = strtoupper($matches[1]);
+            $track_number = $matches[2];
         } elseif (preg_match('/^([A-Za-z]+)(\d.*)$/', trim($raw_gleis), $matches)) {
-            // Format ohne Leerzeichen: "STATIONGLEIS..."
-            // z.B. "KZ4A", "BO2G", "GMM2", "ROSS3", "BN10"
-            $station_abbr = strtoupper($matches[1]);           // z.B. "KZ", "BO", "GMM", "ROSS", "BN"
-            $track_number = $matches[2];                       // z.B. "4A", "2G", "2", "3", "10"
+            $station_abbr = strtoupper($matches[1]);
+            $track_number = $matches[2];
         } else {
-            // Fallback: Nur Buchstaben, keine Nummer
             $station_abbr = strtoupper(trim($raw_gleis));
             $track_number = null;
         }
@@ -406,28 +391,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 2. Station suchen
         $station_id = null;
         $plugin_abbr = strtoupper(trim($station_abbr));
-        
-        write_log("DEBUG: Suche Station mit Kürzel: '$plugin_abbr' in Route '$route_id'");
 
-        if (isset($ROUTES[$route_id]['stations'])) {
-            foreach ($ROUTES[$route_id]['stations'] as $st) {
+        write_log("DEBUG: Suche Station mit Kürzel: '$plugin_abbr' im gesamten Fahrplan");
+        foreach ($ROUTES as $rid => $route) {
+            foreach ($route['stations'] as $st) {
                 if (strtoupper(trim($st['abbr'])) === $plugin_abbr) {
                     $station_id = $st['id'];
-                    break;
-                }
-            }
-        }
-        
-        // FALLBACK: Global suchen
-        if (!$station_id) {
-            write_log("DEBUG: Spezifische Suche fehlgeschlagen, starte globale Suche für '$plugin_abbr'...");
-            foreach ($ROUTES as $rid => $route) {
-                foreach ($route['stations'] as $st) {
-                    if (strtoupper(trim($st['abbr'])) === $plugin_abbr) {
-                        $station_id = $st['id'];
-                        write_log("DEBUG: Station global in Route '$rid' gefunden (ID: $station_id).");
-                        break 2;
-                    }
+                    write_log("DEBUG: Station global in Route '$rid' gefunden (ID: $station_id).");
+                    break 2;
                 }
             }
         }
@@ -448,9 +419,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // SCHUTZ: Prüfe ob mit "!" markiert
+        // SCHUTZ: Prüfe ob die aktuelle Station mit "!" markiert ist
         $flags = $timetable_entry['flags'] ?? '';
-        if (isHaltProtected($flags)) {
+        if (strpos($flags, '!') !== false) {
             write_log("🔒 GESCHÜTZT: Zug $train_num an $station_abbr ist mit ! markiert → Plugin-Update ignoriert");
             echo json_encode(['success' => true, 'message' => "Halt ist fixiert (!), Plugin-Update ignoriert."]);
             exit;
@@ -461,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $am_gleis_flag = ($am_gleis === '1' || $am_gleis === true);
 
         if ($am_gleis_flag) {
-            $actual_arrival = null;
+            $actual_arrival = null; 
             $actual_departure = addMinutes($timetable_entry['departure'], $delay);
             write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$delay Min)");
         } else {
@@ -470,8 +441,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$delay Min)");
         }
 
-        // 5. In DB schreiben
+        // 5. ZUKÜNFTIGE IST-DATEN SELEKTIV ZURÜCKSETZEN (Geschützte Halte auslassen!)
+        $stmtStops = $db->prepare("
+            SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
+            ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC
+        ");
+        $stmtStops->execute([$train_id]);
+        $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
+
+        $current_found = false;
+        $stops_to_clear = [];
+
+        foreach ($all_stops as $s) {
+            if ($s['station_id'] == $station_id) {
+                $current_found = true;
+                continue; // Aktuelle Station überspringen, updaten wir gleich gezielt
+            }
+            if ($current_found) {
+                // Wenn der Folgehalt geschützt ist (!), darf er NICHT auf NULL zurückgesetzt werden!
+                if (strpos($s['flags'] ?? '', '!') !== false) {
+                    write_log("🔒 BEREINIGUNG: Folgehalt ID {$s['id']} ist geschützt (!) und wird nicht zurückgesetzt.");
+                    continue;
+                }
+                $stops_to_clear[] = $s['id'];
+            }
+        }
+
+        if (!empty($stops_to_clear)) {
+            $clause = implode(',', array_fill(0, count($stops_to_clear), '?'));
+            $stmtClear = $db->prepare("
+                UPDATE timetable 
+                SET actual_arrival = NULL, actual_departure = NULL 
+                WHERE id IN ($clause)
+            ");
+            $stmtClear->execute($stops_to_clear);
+            write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
+        }
+
+        // 6. Aktuelle Station in DB schreiben
         if ($am_gleis_flag) {
+            // Bei "Am Gleis" bleibt der eventuell vorhandene alte Ist-Ankunftswert unberührt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE train_id = ? AND station_id = ?");
             $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $train_id, $station_id]);
         } else {
@@ -480,14 +489,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
+        write_log("DEBUG: Starte Propagation der aktuellen Fahrt von Zug $train_num bis zum Ende des Fahrplans.");
 
-        // 7%-RESERVE-PROPAGATION FÜR GANZE FAHRT (JEDESMAL NEU)
-        propagateTravelTimeWithReserve($db, $train_id, $station_id);
+        // 7. Freie Fahrt für die 7%-Reserve-Propagation über die bereinigten Folgehalte
+        propagateTravelTimeWithReserve($db, $train_id);
         
-        // Optional: Cascade für Nachfolgerzug
-        // recalculateDelayCascade($db, $sts_zid, $delay);
-
-        // 6. Audit-Log
+        // 8. Audit-Log
         try {
             $sts_user = $_POST['sts_user'] ?? $input_data['sts_user'] ?? '';
             $sts_sim = $_POST['sts_sim'] ?? $input_data['sts_sim'] ?? '';
@@ -505,7 +512,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("✗ EXCEPTION beim Audit-Log: " . $logEx->getMessage());
         }
 
-        echo json_encode(['success' => true, 'message' => "Fahrt mit 7%-Reserve neu berechnet und propagiert."]);
+        echo json_encode(['success' => true, 'message' => "Aktuelle Fahrt bis zum Ende des Fahrplans neu berechnet und propagiert."]);
         exit;
     }
 

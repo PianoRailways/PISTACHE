@@ -398,6 +398,39 @@ $ROUTES = [
             ['id' => 'ZIE', 'name' => 'Zieglei', 'abbr' => 'ZIE', 'km' => 37.37],
         ]
     ],
+    'ETB' => [
+        'id' => 'ETB',
+        'name' => 'ETB (SO-TH)',
+        'stations' => [
+            ['id' => 'SO', 'name' => 'Solothurn', 'abbr' => 'SO', 'km' => 0.14],
+            ['id' => 'BIST', 'name' => 'Biberist Ost', 'abbr' => 'BIST', 'km' => 4.69],
+            ['id' => 'GLF', 'name' => 'Gerlafingen', 'abbr' => 'GLF', 'km' => 5.85],
+            ['id' => 'WRN', 'name' => 'Wiler Nord', 'abbr' => 'WRN', 'km' => 7.5],
+            ['id' => 'WR', 'name' => 'Wiler', 'abbr' => 'WR', 'km' => 8.02],
+            ['id' => 'UT', 'name' => 'Utzenstorf', 'abbr' => 'UT', 'km' => 10.58],
+            ['id' => 'AEF', 'name' => 'Aefligen', 'abbr' => 'AEF', 'km' => 14.44],
+            ['id' => 'KIAL', 'name' => 'Kirchberg-Alchenflüh', 'abbr' => 'KIAL', 'km' => 16.63],
+            ['id' => 'BDFB', 'name' => 'Buchmatt', 'abbr' => 'BDFB', 'km' => 19.67],
+            ['id' => 'BDF', 'name' => 'Burdorf', 'abbr' => 'BDF', 'km' => 20.74],
+            ['id' => 'BDFS', 'name' => 'Steinhof', 'abbr' => 'BDFS', 'km' => 22.66],
+            ['id' => 'OBB', 'name' => 'Oberburg', 'abbr' => 'OBB', 'km' => 24.34],
+            ['id' => 'HA', 'name' => 'Hasle-Rüegsau', 'abbr' => 'HA', 'km' => 27.67],
+            ['id' => 'SHIE', 'name' => 'Schafhausen i.E.', 'abbr' => 'SHIE', 'km' => 30.23],
+            ['id' => 'BIGE', 'name' => 'Bigenthal', 'abbr' => 'BIGE', 'km' => 34.5],
+            ['id' => 'WALK', 'name' => 'Walkringen', 'abbr' => 'WALK', 'km' => 36.56],
+            ['id' => 'BIG', 'name' => 'Biglen', 'abbr' => 'BIG', 'km' => 39.76],
+            ['id' => 'GH', 'name' => 'Grosshöchstetten', 'abbr' => 'GH', 'km' => 42.34],
+            ['id' => 'KF', 'name' => 'Konolfingen', 'abbr' => 'KF', 'km' => 46.41],
+            ['id' => 'STAL', 'name' => 'Stalden', 'abbr' => 'STAL', 'km' => 47.63],
+            ['id' => 'OD', 'name' => 'Oberdiessbach', 'abbr' => 'OD', 'km' => 51.32],
+            ['id' => 'BK', 'name' => 'Brenzikofen', 'abbr' => 'BK', 'km' => 53.75],
+            ['id' => 'HMB', 'name' => 'Heimberg', 'abbr' => 'HMB', 'km' => 57.05],
+            ['id' => 'LAED', 'name' => 'Lädeli', 'abbr' => 'LAED', 'km' => 57.92],
+            ['id' => 'STEF', 'name' => 'Steffisburg', 'abbr' => 'STEF', 'km' => 59.18],
+            ['id' => 'SWB', 'name' => 'Schwäbis', 'abbr' => 'SWB', 'km' => 60.4],
+            ['id' => 'TH', 'name' => 'Thun', 'abbr' => 'TH', 'km' => 61.49],
+        ]
+    ],
     'btb' => [
         'id' => 'btb',
         'name' => 'Emmental',
@@ -641,6 +674,79 @@ $ROUTES = [
             ['id' => 'LAT', 'name' => 'Lattigen', 'abbr' => 'LAT', 'km' => -2.45],
             ['id' => 'SPMS', 'name' => 'Spiezmoos Süd', 'abbr' => 'SPMS', 'km' => -1.57],
             ['id' => 'SP', 'name' => 'Spiez', 'abbr' => 'SP', 'km' => 0],
+        ]
+    ],
+    'BOB' => [
+        'id' => 'BOB',
+        'name' => 'BOB',
+        'stations' => [
+            ['id' => 'IW', 'name' => '', 'abbr' => '', 'km' => -2],
+            ['id' => 'RIN', 'name' => '', 'abbr' => '', 'km' => -2],
+            ['id' => 'IO', 'name' => 'Interlaken Ost', 'abbr' => 'IO', 'km' => -0.18],
+            ['id' => 'MBI', 'name' => 'Matten', 'abbr' => 'MBI', 'km' => 2.21],
+            ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 3.24],
+            ['id' => 'UMLR', 'name' => 'Umler', 'abbr' => 'UMLR', 'km' => 5.51],
+            ['id' => 'ZWEI', 'name' => 'Zweilütschinen', 'abbr' => 'ZWEI', 'km' => 8.2],
+            ['id' => 'SAWE', 'name' => 'Sandweid', 'abbr' => 'SAWE', 'km' => 10.42],
+            ['id' => 'LAUT', 'name' => 'Lauterbrunnen', 'abbr' => 'LAUT', 'km' => 12.3],
+            ['id' => 'WIMA', 'name' => 'Witimatte', 'abbr' => 'WIMA', 'km' => 13.05],
+            ['id' => 'ROFL', 'name' => 'Rohrfluh', 'abbr' => 'ROFL', 'km' => 14.09],
+            ['id' => 'WEWA', 'name' => 'Wengwald', 'abbr' => 'WEWA', 'km' => 15.33],
+            ['id' => 'WENG', 'name' => 'Wengen', 'abbr' => 'WENG', 'km' => 16.12],
+            ['id' => 'SENG', 'name' => 'Sengg', 'abbr' => 'SENG', 'km' => 16.63],
+            ['id' => 'INGA', 'name' => 'In Gassen', 'abbr' => 'INGA', 'km' => 17.52],
+            ['id' => 'ALDW', 'name' => 'Allmend', 'abbr' => 'ALDW', 'km' => 18.02],
+            ['id' => 'BANW', 'name' => 'Bannwald', 'abbr' => 'BANW', 'km' => 19.4],
+            ['id' => 'WEAL', 'name' => 'Wengernalp', 'abbr' => 'WEAL', 'km' => 20.61],
+            ['id' => 'KLS', 'name' => 'Kleine Scheidegg', 'abbr' => 'KLS', 'km' => 22.77],
+            ['id' => 'SZEG', 'name' => 'Salzegg', 'abbr' => 'SZEG', 'km' => 24.09],
+            ['id' => 'STRT', 'name' => 'Strättli', 'abbr' => 'STRT', 'km' => 25.31],
+            ['id' => 'ALP', 'name' => 'Alpiglen', 'abbr' => 'ALP', 'km' => 26.80],
+            ['id' => 'BRAD', 'name' => 'Brandegg', 'abbr' => 'BRAD', 'km' => 28.33],
+            ['id' => 'ROHR', 'name' => 'Rohr', 'abbr' => 'ROHR', 'km' => 29.05],
+            ['id' => 'GRIG', 'name' => 'Grindelwald Grund', 'abbr' => 'GRIG', 'km' => 30.45],      
+            //['id' => 'GRIN', 'name' => 'Grindelwald', 'abbr' => 'GRIN', 'km' => 31.43],      
+            ]
+    ],
+   'BOB-G' => [
+        'id' => 'BOB-G',
+        'name' => 'Interlaken - Grindelwald',
+        'stations' => [
+            ['id' => 'IW', 'name' => '', 'abbr' => '', 'km' => -2],
+            ['id' => 'RIN', 'name' => '', 'abbr' => '', 'km' => -2],
+            ['id' => 'IO', 'name' => 'Interlaken Ost', 'abbr' => 'IO', 'km' => -0.18],
+            ['id' => 'MBI', 'name' => 'Matten', 'abbr' => 'MBI', 'km' => 2.21],
+            ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 3.24],
+            ['id' => 'UMLR', 'name' => 'Umler', 'abbr' => 'UMLR', 'km' => 5.51],
+            ['id' => 'ZWEI', 'name' => 'Zweilütschinen', 'abbr' => 'ZWEI', 'km' => 8.2],     
+            ['id' => 'LUEL', 'name' => 'Lütschental', 'abbr' => 'LUEL', 'km' => 12.31],     
+            ['id' => 'BURG', 'name' => 'Burglauenen', 'abbr' => 'BURG', 'km' => 14.45],
+            ['id' => 'SWDG', 'name' => 'Schwendi', 'abbr' => 'SWDG', 'km' => 16.76],
+            ['id' => 'GRIT', 'name' => 'Terminal', 'abbr' => 'GRIT', 'km' => 17.9],
+            ['id' => 'GRIN', 'name' => 'Grindelwald', 'abbr' => 'GRIN', 'km' => 19.35],
+            ['id' => 'GRIG', 'name' => 'Grindelwald Grund', 'abbr' => 'GRIG', 'km' => 20.33],
+            ]
+    ],
+    'jungfraujoch' => [
+        'id' => 'jungfraujoch',
+        'name' => 'Jungfraujoch',
+        'stations' => [
+            ['id' => 'KLS', 'name' => 'Kleine Scheidegg', 'abbr' => 'KLS', 'km' => 0],
+            ['id' => 'FALB', 'name' => 'Fallboden', 'abbr' => 'FALB', 'km' => 1.03],
+            ['id' => 'EIGL', 'name' => 'Eigergletscher', 'abbr' => 'EIGL', 'km' => 2.02],
+            ['id' => 'EIGE', 'name' => 'Eigerwand', 'abbr' => 'EIGE', 'km' => 4.34],
+            ['id' => 'EISM', 'name' => 'Eismeer', 'abbr' => 'EISM', 'km' => 5.7],
+            ['id' => 'JU', 'name' => 'Jungfraujoch', 'abbr' => 'JU', 'km' => 9.3],
+        ]
+    ],
+    'schynige-platte' => [
+        'id' => 'schynige-platte',
+        'name' => 'Schynige Platte',
+        'stations' => [
+            ['id' => 'WILD', 'name' => 'Wilderswil', 'abbr' => 'WILD', 'km' => 0],
+            ['id' => 'ROTE', 'name' => 'Rotenegg', 'abbr' => 'ROTE', 'km' => 1.87],
+            ['id' => 'BRLA', 'name' => 'Breitlauenen', 'abbr' => 'BRLA', 'km' => 4.61],
+            ['id' => 'SCHY', 'name' => 'Schynige Platte', 'abbr' => 'SCHY', 'km' => 7.26],
         ]
     ],
     'mob' => [
@@ -1768,6 +1874,53 @@ $ROUTES = [
             ['id' => 'DK', 'name' => 'Däniken', 'abbr' => 'DK', 'km' => -32.9],
         ]
     ],
+    'uetliberg' => [
+        'id' => 'uetliberg',
+        'name' => 'Uetlibergbahn',
+        'stations' => [
+            ['id' => 'ZUSZ', 'name' => 'Zürich HB SZU', 'abbr' => 'ZUSZ', 'km' => -1.23],
+            ['id' => 'ZSEL', 'name' => 'Selnau', 'abbr' => 'ZSEL', 'km' => 0],
+            ['id' => 'ZGH', 'name' => 'Giesshübel', 'abbr' => 'ZGH', 'km' => 1.16],
+            ['id' => 'ZBZ', 'name' => 'Binz', 'abbr' => 'ZBZ', 'km' => 1.45],
+            ['id' => 'BORR', 'name' => 'Borrweg', 'abbr' => 'BORR', 'km' => 1.95],
+            ['id' => 'FRIB', 'name' => 'Friesenberg', 'abbr' => 'FRIB', 'km' => 2.28],
+            ['id' => 'SHF', 'name' => 'Schweighof', 'abbr' => 'SHF', 'km' => 2.62],
+            ['id' => 'TRLI', 'name' => 'Triemli', 'abbr' => 'TRLI', 'km' => 3.23],
+            ['id' => 'BGF', 'name' => 'Berghof', 'abbr' => 'BGF', 'km' => 4.44],
+            ['id' => 'UIWA', 'name' => 'Uitikon Waldegg', 'abbr' => 'UIWA', 'km' => 5.9],
+            ['id' => 'RILI', 'name' => 'Ringlikon', 'abbr' => 'RILI', 'km' => 7.12],
+            ['id' => 'UEBE', 'name' => 'Uetliberg', 'abbr' => 'UEBE', 'km' => 9.13],
+        ]
+    ],
+    'sbb-szu' => [
+        'id' => 'sbb-szu',
+        'name' => 'Verbindungslinie Wiedikon - Giesshübel',
+        'stations' => [
+            ['id' => 'ZWIE', 'name' => 'Zürich Wiedikon', 'abbr' => 'ZWIE', 'km' => 0.08],
+            ['id' => 'ZGH', 'name' => 'Giesshübel', 'abbr' => 'ZGH', 'km' => 1.16],
+        ]
+    ],
+    'sihltal' => [
+        'id' => 'sihltal',
+        'name' => 'Sihltalbahn',
+        'stations' => [
+            ['id' => 'ZUSZ', 'name' => 'Zürich HB SZU', 'abbr' => 'ZUSZ', 'km' => -1.23],
+            ['id' => 'ZSEL', 'name' => 'Selnau', 'abbr' => 'ZSEL', 'km' => 0],
+            ['id' => 'ZGH', 'name' => 'Giesshübel', 'abbr' => 'ZGH', 'km' => 1.16],
+            ['id' => 'ZSAA', 'name' => 'Saalsporthalle', 'abbr' => 'ZSAA', 'km' => 1.8],
+            ['id' => 'ZBRU', 'name' => 'Brunau', 'abbr' => 'ZBRU', 'km' => 2.52],
+            ['id' => 'HOEB', 'name' => 'Höcklerbrücke', 'abbr' => 'HOEB', 'km' => 3.88],
+            ['id' => 'ZMA', 'name' => 'Manegg', 'abbr' => 'ZMA', 'km' => 4.18],
+            ['id' => 'ZLE', 'name' => 'Leimbach', 'abbr' => 'ZLE', 'km' => 4.76],
+            ['id' => 'SOOD', 'name' => 'Sood-Oberleimbach', 'abbr' => 'SOOD', 'km' => 6.43],
+            ['id' => 'ADW', 'name' => 'Adliswil', 'abbr' => 'ADW', 'km' => 7.32],
+            ['id' => 'SIA', 'name' => 'Sihlau', 'abbr' => 'SIA', 'km' => 8.32],
+            ['id' => 'WP', 'name' => 'Wildpark-Höfli', 'abbr' => 'WP', 'km' => 9.5],
+            ['id' => 'LNG', 'name' => 'Langnau-Gattikon', 'abbr' => 'LNG', 'km' => 10.71],
+            ['id' => 'SIW', 'name' => 'Sihlwald', 'abbr' => 'SIW', 'km' => 13.23],
+            ['id' => 'SBG', 'name' => 'Sihlbrugg', 'abbr' => 'SBG', 'km' => 17.39],
+        ]
+    ],
     'sihl-zug' => [
         'id' => 'sihl-zug',
         'name' => 'Thalwil - Sihlbrugg - Zug - Rotkreuz',
@@ -2031,7 +2184,7 @@ $ROUTES = [
             ['id' => 'OTH', 'name' => 'Othmarsingen', 'abbr' => 'OTH', 'km' => -27.68],
             ['id' => 'MAEG', 'name' => 'Mägenswil', 'abbr' => 'MAEG', 'km' => -25.94],
             ['id' => 'GMT', 'name' => 'Gruemet', 'abbr' => 'GMT', 'km' => -22.84],
-            ['id' => 'MELH', 'name' => 'Mellingen Heitersberg', 'abbr' => 'MELH', 'km' => 22.24],
+            ['id' => 'MELH', 'name' => 'Mellingen Heitersberg', 'abbr' => 'MELH', 'km' => -22.24],
             ['id' => 'LANG', 'name' => 'Langacher', 'abbr' => 'LANG', 'km' => -17.83],
             ['id' => 'KLW', 'name' => 'Killwangen-Spreitenach', 'abbr' => 'KLW', 'km' => -16.11],
             ['id' => 'SILB', 'name' => 'Silbern', 'abbr' => 'SILB', 'km' => -13.3],
@@ -2288,7 +2441,24 @@ $ROUTES = [
             ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => 27.8],
         ]
     ],
-    
+    'gbt' => [
+        'id' => 'gbt',
+        'name' => 'GBT',
+        'stations' => [
+            ['id' => 'GRUO', 'name' => 'Gruonbach', 'abbr' => 'GRUO', 'km' => 90.88],
+            ['id' => 'FL', 'name' => 'Flüelen', 'abbr' => 'FL', 'km' => 92.31],
+            ['id' => 'AL', 'name' => 'Altdorf', 'abbr' => 'AL', 'km' => 95.26],
+            ['id' => 'RYN', 'name' => 'Rynächt Nord', 'abbr' => 'RYN', 'km' => 98.67],
+            ['id' => 'SSMF', 'name' => 'Sedrun SMF', 'abbr' => 'SSMF', 'km' => 121],
+            ['id' => 'FSMF', 'name' => 'Faido SMF', 'abbr' => 'FSMF', 'km' => 140.33],
+            ['id' => 'POZZ', 'name' => 'Pozzo Negro', 'abbr' => 'POZZ', 'km' => 156.82],
+            ['id' => 'POLS', 'name' => 'Polleggio Sud', 'abbr' => 'POLS', 'km' => 159.3],
+            ['id' => 'GIDI', 'name' => 'Giustizia', 'abbr' => 'GIDI', 'km' => 164.02],
+            ['id' => 'OS', 'name' => 'Osogna-Cresciano', 'abbr' => 'OS', 'km' => 166.93],
+            ['id' => 'CLA', 'name' => 'Claro', 'abbr' => 'CLA', 'km' => 172.93],
+            ['id' => 'CAST', 'name' => 'Castione-Arbedo', 'abbr' => 'CAST', 'km' => 176.73],
+        ]
+    ],
     'gottardo-berg-komplett' => [
         'id' => 'gottardo-berg-komplett',
         'name' => 'Gotthard-Berg (GD-GIU)',
@@ -2315,6 +2485,7 @@ $ROUTES = [
             ['id' => 'LAV', 'name' => 'Lavorgo', 'abbr' => 'LAV', 'km' => 112.6],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
+            ['id' => 'GIDI', 'name' => 'Giustizia', 'abbr' => 'GIDI', 'km' => 135.05],
             ['id' => 'OS', 'name' => 'Osogna-Cresciano', 'abbr' => 'OS', 'km' => 137.96],
             ['id' => 'CLA', 'name' => 'Claro', 'abbr' => 'CLA', 'km' => 143.47],
             ['id' => 'CAST', 'name' => 'Castione-Arbedo', 'abbr' => 'CAST', 'km' => 147.27],
@@ -2713,10 +2884,10 @@ $ROUTES = [
         ['id' => 'SU', 'name' => 'St-Ursanne', 'abbr' => 'SU', 'km' => -67.83],
         ['id' => 'CG', 'name' => 'Courgenay', 'abbr' => 'CG', 'km' => -61.67],
         ['id' => 'POR', 'name' => 'Porrentruy', 'abbr' => 'POR', 'km' => -56.58],
-        ['id' => 'ALLE', 'name' => 'Alle', 'abbr' => 'ALLE', 'km' => -60.73],
-        ['id' => 'ALLC', 'name' => 'Alle Centre', 'abbr' => 'ALLC', 'km' => -61.95],
-        ['id' => 'VEND', 'name' => 'Vendlincourt', 'abbr' => 'VEND', 'km' => -64.96],
-        ['id' => 'BONF', 'name' => 'Bonfol', 'abbr' => 'BONF', 'km' => -67.47],
+        ['id' => 'ALLE', 'name' => 'Alle', 'abbr' => 'ALLE', 'km' => -52.43],
+        ['id' => 'ALLC', 'name' => 'Alle Centre', 'abbr' => 'ALLC', 'km' => -51.21],
+        ['id' => 'VEND', 'name' => 'Vendlincourt', 'abbr' => 'VEND', 'km' => -48.2],
+        ['id' => 'BONF', 'name' => 'Bonfol', 'abbr' => 'BONF', 'km' => -45.69],
     ]
 ],
     'cj-cj' => [
@@ -3063,10 +3234,22 @@ $ROUTES = [
             ['id' => 'BUER', 'name' => 'Büren an der Aare', 'abbr' => 'BUER', 'km' => 109.6],
         ]
     ],
-    'gäu' => [
-        'id' => 'gäu',
-        'name' => 'Gäu',
+    'jurasüdfuss-gäu' => [
+        'id' => 'jurasüdfuss-gäu',
+        'name' => 'Jurasüdfuss / Gäu',
         'stations' => [
+            ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => -99.37],
+            ['id' => 'BIM', 'name' => 'Biel Mett', 'abbr' => 'BIM', 'km' => -96.25],
+            ['id' => 'BIMA', 'name' => 'Biel Mett Abzw.', 'abbr' => 'BIMA', 'km' => -95.81],
+            ['id' => 'BIBD', 'name' => 'Bözingenfeld', 'abbr' => 'BIBD', 'km' => -93.98],
+            ['id' => 'PIE', 'name' => 'Pieterlen', 'abbr' => 'PIE', 'km' => -90.21],
+            ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => -87.99],
+            ['id' => 'GS', 'name' => 'Grenchen Süd', 'abbr' => 'GS', 'km' => -85.31],
+            ['id' => 'BET', 'name' => 'Bettlach', 'abbr' => 'BET', 'km' => -82.92],
+            ['id' => 'SEL', 'name' => 'Selzach', 'abbr' => 'SEL', 'km' => -80.69],
+            ['id' => 'BELL', 'name' => 'Bellach', 'abbr' => 'BELL', 'km' => -76.69],
+            ['id' => 'SOAD', 'name' => 'Allmend', 'abbr' => 'SOAD', 'km' => -75.65],
+            ['id' => 'SW', 'name' => 'Alt-Solothurn', 'abbr' => 'SW', 'km' => -74.78],
             ['id' => 'SO', 'name' => 'Solothurn', 'abbr' => 'SO', 'km' => -73.8],
             ['id' => 'LUT', 'name' => 'Luterbach-Attisholz', 'abbr' => 'LUT', 'km' => -70.4],
             ['id' => 'DN', 'name' => 'Deitingen', 'abbr' => 'DN', 'km' => -67.6],
@@ -3250,9 +3433,7 @@ $ROUTES = [
             ['id' => 'LY', 'name' => 'Lyss', 'abbr' => 'LY', 'km' => 22.5],
             ['id' => 'BUS', 'name' => 'Busswil', 'abbr' => 'BUS', 'km' => 26.16],
             ['id' => 'STU', 'name' => 'Studen', 'abbr' => 'STU', 'km' => 28.12],
-            ['id' => 'DON', 'name' => 'Dotzigen', 'abbr' => 'DON', 'km' => 28.89],
             ['id' => 'BGG', 'name' => 'Brügg', 'abbr' => 'BGG', 'km' => 30.51],
-            ['id' => 'BUER', 'name' => 'Büren a.d.A.', 'abbr' => 'BUER', 'km' => 32.31],
             ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => 33.6],
         ]
     ],
@@ -3524,7 +3705,7 @@ $ROUTES = [
             ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 0],
         ]
     ],
-    '762' => [
+    'w-sh' => [
         'id' => '762',
         'name' => '762 W-SH',
         'stations' => [
