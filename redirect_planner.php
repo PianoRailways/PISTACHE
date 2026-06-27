@@ -24,8 +24,8 @@ $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 function findRoutePaths($ROUTES, $waypoints, $stationMap) {
     if (count($waypoints) < 2) return [];
 
-    // ===== HELPER: Finde direktesten Weg von Start zu End =====
-    function findDirectSegment($startAbbr, $endAbbr, $ROUTES, $stationMap) {
+    // Als anonyme Variable definiert, um "Cannot redeclare"-Fehler zu verhindern
+    $findDirectSegment = function($startAbbr, $endAbbr, $ROUTES, $stationMap) {
         $start = strtoupper($startAbbr);
         $end = strtoupper($endAbbr);
 
@@ -35,7 +35,6 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
 
         $candidates = [];
 
-        // Durchsuche ALLE Stellen, wo Start vorkommt
         foreach ($stationMap[$start] as $startInfo) {
             $startRouteId = $startInfo['route_id'];
             if (!isset($ROUTES[$startRouteId])) continue;
@@ -44,18 +43,13 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
             $stations = $startRoute['stations'] ?? [];
             $startIdx = $startInfo['index'];
 
-            // Suche End in dieser Route NACH Start (keine Rückwärtsfahrt!)
             for ($endIdx = $startIdx + 1; $endIdx < count($stations); $endIdx++) {
                 if (strtoupper($stations[$endIdx]['abbr'] ?? '') === $end) {
-                    // Gefunden! Baue Segment
                     $segment = [];
-                    $totalKm = 0;
-
                     for ($i = $startIdx; $i <= $endIdx; $i++) {
                         $segment[] = $stations[$i];
                     }
 
-                    // Berechne km-Differenz
                     $totalKm = abs($stations[$endIdx]['km'] - $stations[$startIdx]['km']);
 
                     $candidates[] = [
@@ -64,8 +58,7 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
                         'start_route' => $startRouteId,
                         'station_count' => count($segment)
                     ];
-
-                    break; // Nur die ERSTE Stelle, wo End vorkommt
+                    break; 
                 }
             }
         }
@@ -74,37 +67,34 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
             return null;
         }
 
-        // Sortiere nach: Priorität 1 = weniger Stationen (direkter), Priorität 2 = kürzeste km
         usort($candidates, function ($a, $b) {
-            // Erst nach Stationszahl (weniger = direkter)
             if ($a['station_count'] !== $b['station_count']) {
                 return $a['station_count'] - $b['station_count'];
             }
-            // Bei gleicher Stationszahl: nach km (kürzer = besser)
             return $a['km'] - $b['km'];
         });
 
         $best = $candidates[0];
-        
-        // DEBUG
         error_log("findDirectSegment($start → $end): Beste Route hat " . $best['station_count'] . " Stationen, " . $best['km'] . " km");
-        
         return $best;
-    }
+    };
 
-    // ===== MAIN: Verbinde alle Waypoints sequenziell =====
+    // MAIN: Verbinde alle Waypoints sequenziell
     $completePath = [];
     $totalKm = 0;
+    $usedRouteIds = [];
 
     for ($w = 0; $w < count($waypoints) - 1; $w++) {
-        $segment = findDirectSegment($waypoints[$w], $waypoints[$w + 1], $ROUTES, $stationMap);
+        $segment = $findDirectSegment($waypoints[$w], $waypoints[$w + 1], $ROUTES, $stationMap);
 
         if (!$segment) {
-            // Kein Weg gefunden zwischen diesen Waypoints
             return [];
         }
 
-        // Merge mit vorherigem Pfad (entferne erste Station, um Duplikate zu vermeiden)
+        if (!empty($segment['start_route'])) {
+            $usedRouteIds[] = $segment['start_route'];
+        }
+
         if (!empty($completePath)) {
             $segmentStations = array_slice($segment['stations'], 1);
         } else {
@@ -118,7 +108,8 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
     return [
         [
             'stations' => $completePath,
-            'total_km' => $totalKm
+            'total_km' => $totalKm,
+            'route_ids' => $usedRouteIds // Wichtig für die Namensfindung im nächsten Schritt
         ]
     ];
 }
@@ -141,15 +132,14 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
         'route_name' => 'Umgeleitet'
     ];
 
-    // Finde Route-Name (erste Route aus Segments)
-    if (!empty($pathData['segments']) && !empty($pathData['segments'][0]['routes'])) {
-        $firstRouteId = $pathData['segments'][0]['routes'][0];
+    // Routenname anhand der gesammelten IDs ermitteln
+    if (!empty($pathData['route_ids'])) {
+        $firstRouteId = $pathData['route_ids'][0];
         if (isset($ROUTES[$firstRouteId])) {
             $result['route_name'] = $ROUTES[$firstRouteId]['name'] ?? 'Umgeleitet';
         }
     }
 
-    // Berechne Fahrtzeiten basierend auf KUMULATIVEN Kilometern
     $currentTime = 0;
     $cumulativeKm = 0;
 
@@ -160,10 +150,8 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
             $prevStation = $pathStations[$i - 1];
             $prevKm = $prevStation['km'] ?? 0;
             
-            // Berechne Distanz zwischen dieser und vorheriger Station
             $distanceKm = abs($stationKm - $prevKm);
             
-            // Fahrtzeit = Distanz / Geschwindigkeit * 60 (Minuten)
             if ($distanceKm > 0 && $speed > 0) {
                 $travelMinutes = round(($distanceKm / $speed) * 60);
                 $currentTime += $travelMinutes;
@@ -503,7 +491,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="results_list"></div>
     </div>
 
-    <!-- GELADEN FAHRPLAN PANEL -->
+<!-- GELADEN FAHRPLAN PANEL -->
     <div class="panel" id="loaded_timetable_panel" style="display: none; max-height: 400px; overflow-y: auto;">
         <h2>📋 Aktueller Fahrplan: Zug <span id="loaded_train_num"></span></h2>
         <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -520,9 +508,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tbody id="loaded_timetable_tbody">
             </tbody>
         </table>
-    </div>
-        <h2>Gefundene Routen</h2>
-        <div id="results_list"></div>
     </div>
 
     <!-- EDITOR PANEL -->
