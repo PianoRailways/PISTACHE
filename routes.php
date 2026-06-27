@@ -3234,10 +3234,22 @@ $ROUTES = [
             ['id' => 'BUER', 'name' => 'Büren an der Aare', 'abbr' => 'BUER', 'km' => 109.6],
         ]
     ],
-    'gäu' => [
-        'id' => 'gäu',
-        'name' => 'Gäu',
+    'jurasüdfuss-gäu' => [
+        'id' => 'jurasüdfuss-gäu',
+        'name' => 'Jurasüdfuss / Gäu',
         'stations' => [
+            ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => -99.37],
+            ['id' => 'BIM', 'name' => 'Biel Mett', 'abbr' => 'BIM', 'km' => -96.25],
+            ['id' => 'BIMA', 'name' => 'Biel Mett Abzw.', 'abbr' => 'BIMA', 'km' => -95.81],
+            ['id' => 'BIBD', 'name' => 'Bözingenfeld', 'abbr' => 'BIBD', 'km' => -93.98],
+            ['id' => 'PIE', 'name' => 'Pieterlen', 'abbr' => 'PIE', 'km' => -90.21],
+            ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => -87.99],
+            ['id' => 'GS', 'name' => 'Grenchen Süd', 'abbr' => 'GS', 'km' => -85.31],
+            ['id' => 'BET', 'name' => 'Bettlach', 'abbr' => 'BET', 'km' => -82.92],
+            ['id' => 'SEL', 'name' => 'Selzach', 'abbr' => 'SEL', 'km' => -80.69],
+            ['id' => 'BELL', 'name' => 'Bellach', 'abbr' => 'BELL', 'km' => -76.69],
+            ['id' => 'SOAD', 'name' => 'Allmend', 'abbr' => 'SOAD', 'km' => -75.65],
+            ['id' => 'SW', 'name' => 'Alt-Solothurn', 'abbr' => 'SW', 'km' => -74.78],
             ['id' => 'SO', 'name' => 'Solothurn', 'abbr' => 'SO', 'km' => -73.8],
             ['id' => 'LUT', 'name' => 'Luterbach-Attisholz', 'abbr' => 'LUT', 'km' => -70.4],
             ['id' => 'DN', 'name' => 'Deitingen', 'abbr' => 'DN', 'km' => -67.6],
