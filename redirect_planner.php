@@ -695,15 +695,45 @@ function buildEditorTable(path) {
     document.getElementById('current_route_name').innerText = path.route_name || 'Umgeleitet';
     document.getElementById('current_train_info').style.display = 'block';
 
-    // Erstelle Set von alten Station-IDs aus dem geladenen Fahrplan
-    const oldStationIds = new Set(oldTimetable.map(t => t.station_id.toUpperCase()));
+    // Erstelle Set von umgeleiteten Station-IDs
+    const redirectedStationIds = new Set(path.stations.map(s => s.abbr.toUpperCase()));
+    const redirectStart = path.stations[0].abbr.toUpperCase();
+    const redirectEnd = path.stations[path.stations.length - 1].abbr.toUpperCase();
 
+    // ===== TEIL 1: Original-Stationen VOR Umleitung =====
+    let foundStart = false;
+    oldTimetable.forEach(stop => {
+        const abbr = stop.station_id.toUpperCase();
+        if (abbr === redirectStart) {
+            foundStart = true;
+            return; // Skip, wird in Umleitung behandelt
+        }
+        if (foundStart) return; // Nach Start-Station: skip
+
+        const tr = document.createElement('tr');
+        tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
+        
+        tr.innerHTML = `
+            <td class="checkbox-col"></td>
+            <td style="color: #94a3b8;">
+                <strong>${stop.station_id}</strong> (Original)
+            </td>
+            <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
+            <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
+            <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
+            <td></td>
+            <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // ===== TEIL 2: Umgeleitete Stationen =====
     path.stations.forEach((station, index) => {
         const tr = document.createElement('tr');
         const abbr = station.abbr.toUpperCase();
-        const wasInOldRoute = oldStationIds.has(abbr);
+        const wasInOldRoute = oldTimetable.some(t => t.station_id.toUpperCase() === abbr);
 
-        // Styling basierend auf alt/neu
+        // Styling: Grün wenn alt, Blau wenn neu
         if (wasInOldRoute) {
             tr.style.background = 'rgba(34, 197, 94, 0.08)'; // Grün für alte Halte
         } else {
@@ -727,6 +757,46 @@ function buildEditorTable(path) {
             <td><input type="text" name="stations[${abbr}][remarks]" placeholder="Bemerkung"></td>
         `;
 
+        tbody.appendChild(tr);
+    });
+
+    // ===== TEIL 3: Original-Stationen NACH Umleitung =====
+    foundStart = false;
+    oldTimetable.forEach(stop => {
+        const abbr = stop.station_id.toUpperCase();
+        
+        // Markiere den Umleitung-Start
+        if (abbr === redirectStart) {
+            foundStart = true;
+            return;
+        }
+        
+        if (!foundStart) return; // Vor Start: skip
+        
+        // Nach Umleitung-End: Original wieder hinzufügen
+        if (abbr === redirectEnd) {
+            return; // Skip End selbst, aber danach einfach
+        }
+        
+        // Nur nach End-Station hinzufügen
+        if (redirectedStationIds.has(abbr)) {
+            return; // Noch in Umleitung
+        }
+
+        const tr = document.createElement('tr');
+        tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
+        
+        tr.innerHTML = `
+            <td class="checkbox-col"></td>
+            <td style="color: #94a3b8;">
+                <strong>${stop.station_id}</strong> (Original)
+            </td>
+            <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
+            <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
+            <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
+            <td></td>
+            <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
+        `;
         tbody.appendChild(tr);
     });
 }
