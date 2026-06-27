@@ -256,26 +256,18 @@ function updateSegmentStatus() {
 }
 
 function updateInstanzTimeLabels() {
-    const now = new Date();
     const timeBasisSelect = document.getElementById('time_basis');
     if (!timeBasisSelect) return;
     
-    const nowRealMinutes = now.getHours() * 60 + now.getMinutes();
-    
-    // Instanz 1: 13 Stunden (780 Min) hinter Realzeit
-    const instanz1Minutes = (nowRealMinutes - 780 + 1440) % 1440;
-    
-    // Instanz 2: 7 Stunden (420 Min) hinter Realzeit
-    const instanz2Minutes = (nowRealMinutes - 420 + 1440) % 1440;
-    
     const format = (min) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
-    
     const options = timeBasisSelect.options;
+    
     for (let i = 0; i < options.length; i++) {
-        if (options[i].value === 'instanz1') {
-            options[i].textContent = `STS Instanz 1 (${format(instanz1Minutes)})`;
-        } else if (options[i].value === 'instanz2') {
-            options[i].textContent = `STS Instanz 2 (${format(instanz2Minutes)})`;
+        const val = options[i].value;
+        if (val === 'instanz1' || val === 'instanz2') {
+            const stsMin = getDynamicSTSTime(val);
+            const labelNum = val === 'instanz1' ? '1' : '2';
+            options[i].textContent = `STS Instanz ${labelNum} (${format(stsMin)})`;
         }
     }
 }
@@ -322,34 +314,26 @@ function updateAutoScroll() {
 function applyAutoScroll() {
     const mode = document.getElementById('time_mode').value;
     const basis = document.getElementById('time_basis').value;
-    const now = new Date();
     
-    let calculatedOffset = 0;
+    let adjustedStsMinutes = 0;
 
     if (basis === 'manual') {
-        calculatedOffset = parseInt(document.getElementById('sts_offset').value || 0, 10);
+        const now = new Date();
+        const pcMinutes = now.getHours() * 60 + now.getMinutes();
+        const offsetInput = document.getElementById('sts_offset');
+        const offset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+        adjustedStsMinutes = ((pcMinutes + offset) % 1440 + 1440) % 1440;
     } else {
-        // Instanz 1: 13 Stunden (780 Minuten) hinter Realzeit
-        // Instanz 2: 7 Stunden (420 Minuten) hinter Realzeit
-        if (basis === 'instanz1') {
-            calculatedOffset = -780;
-        } else if (basis === 'instanz2') {
-            calculatedOffset = -420;
-        }
+        // Nutzt die dynamische 16h-Berechnung für Instanz 1 oder 2
+        adjustedStsMinutes = getDynamicSTSTime(basis);
     }
-
-    // STS-Zeit berechnen
-    const pcMinutes = now.getHours() * 60 + now.getMinutes();
-    const adjustedStsMinutes = ((pcMinutes + calculatedOffset) % 1440 + 1440) % 1440;
     
-    // Zeitfenster bestimmen (-10 Min bis +60 Min um die aktuelle Zeit)
     const startMinutes = ((adjustedStsMinutes - 15 + 1440) % 1440);
     const endMinutes = ((adjustedStsMinutes + 60 + 1440) % 1440);
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
     
-    // Zeitfelder befüllen
     if (mode === 'auto' || basis !== 'manual') {
         document.getElementById('graph_start').value = startTime;
         document.getElementById('graph_end').value = endTime;

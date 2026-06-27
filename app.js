@@ -556,27 +556,21 @@ async function renderGraph() {
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
 
-// Gelbe/Rote "JETZT"-Zeitlinie (Synchronisiert mit STS)
+// Gelbe/Rote "JETZT"-Zeitlinie innerhalb von renderGraph
 (function drawCurrentTimeLine() {
-    const now = new Date();
-    const localTotalMinutes = now.getHours() * 60 + now.getMinutes();
-    
     const basis = document.getElementById('time_basis')?.value || 'instanz1';
-    
-    let calculatedOffset = 0;
-    
+    let stsMinutes = 0;
+
     if (basis === 'manual') {
+        const now = new Date();
+        const pcMinutes = now.getHours() * 60 + now.getMinutes();
         const offsetInput = document.getElementById('sts_offset');
-        calculatedOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+        const offset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+        stsMinutes = ((pcMinutes + offset) % 1440 + 1440) % 1440;
     } else {
-        if (basis === 'instanz1') {
-            calculatedOffset = -780;
-        } else if (basis === 'instanz2') {
-            calculatedOffset = -420;
-        }
+        stsMinutes = getDynamicSTSTime(basis);
     }
-    
-    const stsMinutes = ((localTotalMinutes + calculatedOffset) % 1440 + 1440) % 1440;
+
     const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
 
     if (y >= paddingTop && y <= paddingTop + graphHeight) {
@@ -603,6 +597,32 @@ async function renderGraph() {
         ctx.restore();
     }
 })();
+}
+function getDynamicSTSTime(instanz) {
+    // Fixer Referenzpunkt aus deinem Live-Abgleich
+    const refReal = new Date('2026-06-27T21:41:00');
+    const now = new Date();
+    
+    // Vergangene Echtzeit-Minuten seit der Referenz
+    const elapsedMinutes = Math.floor((now - refReal) / 60000);
+    
+    // STS-Instanzen laufen von 05:00 bis 21:00 Uhr = 16 Stunden (960 Minuten)
+    const instanzDuration = 960; 
+    const instanzStartMinutes = 300; // 05:00 Uhr in Tagesminuten
+    
+    // Deine gemessenen STS-Minuten seit Instanzstart (05:00) am Referenzpunkt:
+    // Instanz 1 war um 16:41 Uhr (= 701 Min seit 05:00)
+    // Instanz 2 war um 06:41 Uhr (= 101 Min seit 05:00)
+    const refMinutesSinceStart = (instanz === 'instanz1') ? 701 : 101;
+    
+    // Aktuelle Minuten innerhalb des 16-Stunden-Rhythmus berechnen
+    let currentMinutesSinceStart = (refMinutesSinceStart + elapsedMinutes) % instanzDuration;
+    if (currentMinutesSinceStart < 0) {
+        currentMinutesSinceStart += instanzDuration;
+    }
+    
+    // Rückgabe als absolute Tagesminuten (z.B. 1001 für 16:41 Uhr)
+    return instanzStartMinutes + currentMinutesSinceStart;
 }
 
 function updateTrainList(trains) {
