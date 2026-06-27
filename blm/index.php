@@ -221,6 +221,7 @@ $fun_facts = [
     "Im StellwerkSim gibt es über 100 Schweizer Stellwerke.",
     "In der Schweiz gibt es verschiedene Null-Punkte für die Kilometrierung der Strecken. In Olten ist keiner davon.",
     "Ein RABe 512 fährt auf der NBS langsamer als im Grauholztunnel.",
+    "Actuellement, pas de perturbations importantes ni de travaux à signaler. Nous vous souhaitons un agréable voyage!",
 ];
 
 $random_fact = $fun_facts[array_rand($fun_facts)];
