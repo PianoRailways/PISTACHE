@@ -700,15 +700,37 @@ function buildEditorTable(path) {
     const redirectStart = path.stations[0].abbr.toUpperCase();
     const redirectEnd = path.stations[path.stations.length - 1].abbr.toUpperCase();
 
+    // ===== Finde Original-Stationen ZWISCHEN Start und End (die ausfallen) =====
+    const falloutStations = [];
+    let inRange = false;
+    
+    oldTimetable.forEach(stop => {
+        const abbr = stop.station_id.toUpperCase();
+        
+        if (abbr === redirectStart) {
+            inRange = true;
+            return;
+        }
+        
+        if (abbr === redirectEnd) {
+            inRange = false;
+            return;
+        }
+        
+        if (inRange) {
+            falloutStations.push(stop);
+        }
+    });
+
     // ===== TEIL 1: Original-Stationen VOR Umleitung =====
     let foundStart = false;
     oldTimetable.forEach(stop => {
         const abbr = stop.station_id.toUpperCase();
         if (abbr === redirectStart) {
             foundStart = true;
-            return; // Skip, wird in Umleitung behandelt
+            return;
         }
-        if (foundStart) return; // Nach Start-Station: skip
+        if (foundStart) return;
 
         const tr = document.createElement('tr');
         tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
@@ -760,28 +782,53 @@ function buildEditorTable(path) {
         tbody.appendChild(tr);
     });
 
-    // ===== TEIL 3: Original-Stationen NACH Umleitung =====
+    // ===== TEIL 3: Ausfallstationen (Original zwischen Start und End) =====
+    if (falloutStations.length > 0) {
+        // Trennlinie
+        const separatorTr = document.createElement('tr');
+        separatorTr.style.background = 'rgba(239, 68, 68, 0.15)';
+        separatorTr.innerHTML = `<td colspan="7" style="padding: 10px; color: #ef4444; font-weight: bold; text-align: center;">⚠️ Ausfallstationen (Original)</td>`;
+        tbody.appendChild(separatorTr);
+
+        falloutStations.forEach(stop => {
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(239, 68, 68, 0.1)'; // Rot = Ausfall
+            
+            tr.innerHTML = `
+                <td class="checkbox-col">
+                    <input type="checkbox" id="fallout_${stop.station_id.toUpperCase()}" checked title="Dieser Halt fällt aus (ist nicht in der Umleitung)">
+                </td>
+                <td style="color: #ef4444; text-decoration: line-through;">
+                    <strong>${stop.station_id}</strong> ✗ AUSFALL
+                </td>
+                <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.5;"></td>
+                <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.5;"></td>
+                <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.5;"></td>
+                <td></td>
+                <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.5;"></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // ===== TEIL 4: Original-Stationen NACH Umleitung =====
     foundStart = false;
+    let foundEnd = false;
+    
     oldTimetable.forEach(stop => {
         const abbr = stop.station_id.toUpperCase();
         
-        // Markiere den Umleitung-Start
         if (abbr === redirectStart) {
             foundStart = true;
             return;
         }
         
-        if (!foundStart) return; // Vor Start: skip
-        
-        // Nach Umleitung-End: Original wieder hinzufügen
         if (abbr === redirectEnd) {
-            return; // Skip End selbst, aber danach einfach
+            foundEnd = true;
+            return;
         }
         
-        // Nur nach End-Station hinzufügen
-        if (redirectedStationIds.has(abbr)) {
-            return; // Noch in Umleitung
-        }
+        if (!foundStart || !foundEnd) return;
 
         const tr = document.createElement('tr');
         tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
