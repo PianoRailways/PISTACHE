@@ -790,6 +790,8 @@ function buildEditorTable(path) {
     const tbody = document.getElementById('editor_table').querySelector('tbody');
     tbody.innerHTML = '';
 
+    const plannedTimes = calculatePlannedStationTimes(path, getReferenceTimeMinutes(path));
+
     const trainNum = document.getElementById('train_number').value || '???';
     document.getElementById('current_train_num').innerText = trainNum;
     document.getElementById('current_route_name').innerText = path.route_name || 'Umgeleitet';
@@ -854,6 +856,7 @@ function buildEditorTable(path) {
         const tr = document.createElement('tr');
         const abbr = station.abbr.toUpperCase();
         const wasInOldRoute = oldTimetable.some(t => t.station_id.toUpperCase() === abbr);
+        const stationTimes = plannedTimes[index] || {};
 
         // Styling: Grün wenn alt, Blau wenn neu
         if (wasInOldRoute) {
@@ -873,8 +876,8 @@ function buildEditorTable(path) {
                 ${wasInOldRoute ? '<span style="color: #64748b; font-size: 11px; margin-left: 8px;">🗂️ alt</span>' : '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu</span>'}
             </td>
             <td><input type="text" name="stations[${abbr}][track]" placeholder="z.B. 3" size="5"></td>
-            <td><input type="time" name="stations[${abbr}][arrival]" value="${minutesToTime(station.arrival_time)}"></td>
-            <td><input type="time" name="stations[${abbr}][departure]" value="${minutesToTime(station.departure_time)}"></td>
+            <td><input type="time" name="stations[${abbr}][arrival]" value="${minutesToTime(stationTimes.arrival)}"></td>
+            <td><input type="time" name="stations[${abbr}][departure]" value="${minutesToTime(stationTimes.departure)}"></td>
             <td><input type="text" name="stations[${abbr}][halt]" placeholder="H oder H2" size="5"></td>
             <td><input type="text" name="stations[${abbr}][remarks]" placeholder="Bemerkung"></td>
         `;
@@ -948,14 +951,60 @@ function buildEditorTable(path) {
     });
 }
 
-function getReferenceTimeMinutes() {
+function getReferenceTimeMinutes(path = null) {
     if (!Array.isArray(oldTimetable) || oldTimetable.length === 0) return 0;
+
+    if (path && Array.isArray(path.stations)) {
+        for (const station of path.stations) {
+            const stationAbbr = (station.abbr || '').toUpperCase();
+            const matchingStop = oldTimetable.find(stop => (stop.station_id || '').toUpperCase() === stationAbbr);
+            if (matchingStop) {
+                const timeStr = matchingStop.departure || matchingStop.arrival || '';
+                const minutes = timeToMinutes(timeStr);
+                if (minutes !== null) return minutes;
+            }
+        }
+    }
 
     const referenceStop = oldTimetable.find(stop => stop.departure) || oldTimetable.find(stop => stop.arrival) || null;
     if (!referenceStop) return 0;
 
     const timeStr = referenceStop.departure || referenceStop.arrival || '';
     return timeToMinutes(timeStr) ?? 0;
+}
+
+function calculatePlannedStationTimes(path, startOffsetMinutes = 0) {
+    const stations = Array.isArray(path?.stations) ? path.stations : [];
+    if (!stations.length) return [];
+
+    const speedKmh = Number(path?.speed) || currentSpeed || 90;
+    const plannedTimes = [];
+    let currentSeconds = 0;
+    const baseMinutes = Math.max(0, Number(startOffsetMinutes) || 0);
+
+    stations.forEach((station, index) => {
+        if (index > 0) {
+            const prevStation = stations[index - 1];
+            const distanceKm = Math.abs(Number(station.km || 0) - Number(prevStation.km || 0));
+            if (distanceKm > 0 && speedKmh > 0) {
+                currentSeconds += (distanceKm / speedKmh) * 3600;
+            }
+        }
+
+        const arrivalMinutes = baseMinutes + Math.round(currentSeconds / 60);
+        const haltMinutes = Number(station.halt_min || 0);
+        if (haltMinutes > 0) {
+            currentSeconds += haltMinutes * 60;
+        }
+        const departureMinutes = baseMinutes + Math.round(currentSeconds / 60);
+
+        plannedTimes.push({
+            arrival: arrivalMinutes,
+            departure: departureMinutes
+        });
+    });
+
+    return plannedTimes;
 }
 
 function timeToMinutes(timeStr) {
