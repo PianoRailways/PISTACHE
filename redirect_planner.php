@@ -24,10 +24,10 @@ $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 function findRoutePaths($ROUTES, $waypoints, $stationMap) {
     if (count($waypoints) < 2) return [];
 
-    // Als anonyme Variable definiert, um "Cannot redeclare"-Fehler zu verhindern
+    // Closure zur präzisen Ermittlung eines Segments zwischen zwei direkt aufeinanderfolgenden Wegpunkten
     $findDirectSegment = function($startAbbr, $endAbbr, $ROUTES, $stationMap) {
-        $start = strtoupper($startAbbr);
-        $end = strtoupper($endAbbr);
+        $start = strtoupper(trim($startAbbr));
+        $end = strtoupper(trim($endAbbr));
 
         if (!isset($stationMap[$start]) || !isset($stationMap[$end])) {
             return null;
@@ -35,30 +35,56 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
 
         $candidates = [];
 
+        // Wir prüfen alle Routen, die den Startbahnhof enthalten
         foreach ($stationMap[$start] as $startInfo) {
-            $startRouteId = $startInfo['route_id'];
-            if (!isset($ROUTES[$startRouteId])) continue;
+            $routeId = $startInfo['route_id'];
+            if (!isset($ROUTES[$routeId])) continue;
 
-            $startRoute = $ROUTES[$startRouteId];
-            $stations = $startRoute['stations'] ?? [];
+            $stations = $ROUTES[$routeId]['stations'] ?? [];
             $startIdx = $startInfo['index'];
 
-            for ($endIdx = $startIdx + 1; $endIdx < count($stations); $endIdx++) {
-                if (strtoupper($stations[$endIdx]['abbr'] ?? '') === $end) {
-                    $segment = [];
-                    for ($i = $startIdx; $i <= $endIdx; $i++) {
-                        $segment[] = $stations[$i];
+            // Suche nach dem Zielbahnhof auf derselben Route
+            foreach ($stations as $endIdx => $st) {
+                if (strtoupper($st['abbr'] ?? '') !== $end) continue;
+
+                // Fahrtrichtung bestimmen: 1 = vorwärts, -1 = rückwärts
+                $step = ($startIdx <= $endIdx) ? 1 : -1;
+                $segment = [];
+                $visited = [];
+                $valid = true;
+
+                // Segment exakt von Start bis Ziel ablaufen
+                for ($i = $startIdx; ; $i += $step) {
+                    if (!isset($stations[$i])) {
+                        $valid = false;
+                        break;
                     }
 
-                    $totalKm = abs($stations[$endIdx]['km'] - $stations[$startIdx]['km']);
+                    $currentAbbr = strtoupper($stations[$i]['abbr'] ?? '');
+                    
+                    // Schleifenschutz für fehlerhafte Routenstrukturen
+                    if (isset($visited[$currentAbbr]) && $currentAbbr !== $end) {
+                        $valid = false;
+                        break;
+                    }
 
+                    $segment[] = $stations[$i];
+                    $visited[$currentAbbr] = true;
+
+                    if ($currentAbbr === $end) {
+                        break;
+                    }
+                }
+
+                if ($valid && !empty($segment)) {
+                    // Berechnung der reinen Streckenlänge dieses Teilsegments
+                    $segmentKm = abs($stations[$endIdx]['km'] - $stations[$startIdx]['km']);
                     $candidates[] = [
                         'stations' => $segment,
-                        'km' => $totalKm,
-                        'start_route' => $startRouteId,
+                        'km' => $segmentKm,
+                        'route_id' => $routeId,
                         'station_count' => count($segment)
                     ];
-                    break; 
                 }
             }
         }
@@ -67,6 +93,7 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
             return null;
         }
 
+        // Sortierung: Priorisiere die kürzeste Verbindung mit den wenigsten Zwischenstationen
         usort($candidates, function ($a, $b) {
             if ($a['station_count'] !== $b['station_count']) {
                 return $a['station_count'] - $b['station_count'];
@@ -74,42 +101,63 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
             return $a['km'] - $b['km'];
         });
 
-        $best = $candidates[0];
-        error_log("findDirectSegment($start → $end): Beste Route hat " . $best['station_count'] . " Stationen, " . $best['km'] . " km");
-        return $best;
+        return $candidates[0];
     };
 
-    // MAIN: Verbinde alle Waypoints sequenziell
     $completePath = [];
-    $totalKm = 0;
+    $accumulatedKm = 0.0;
     $usedRouteIds = [];
 
     for ($w = 0; $w < count($waypoints) - 1; $w++) {
-        $segment = $findDirectSegment($waypoints[$w], $waypoints[$w + 1], $ROUTES, $stationMap);
+        $startWp = $waypoints[$w];
+        $endWp = $waypoints[$w + 1];
+
+        $segment = $findDirectSegment($startWp, $endWp, $ROUTES, $stationMap);
 
         if (!$segment) {
-            return [];
+            // Falls ein Segment nicht gefunden wird, erzwinge zumindest die Wegpunkte, um den Pfad nicht zu zerreißen
+            if (empty($completePath)) {
+                $completePath[] = ['abbr' => $startWp, 'name' => $startWp, 'km' => $accumulatedKm];
+            }
+            $completePath[] = ['abbr' => $endWp, 'name' => $endWp, 'km' => $accumulatedKm];
+            continue;
         }
 
-        if (!empty($segment['start_route'])) {
-            $usedRouteIds[] = $segment['start_route'];
+        if (!in_array($segment['route_id'], $usedRouteIds)) {
+            $usedRouteIds[] = $segment['route_id'];
         }
 
-        if (!empty($completePath)) {
-            $segmentStations = array_slice($segment['stations'], 1);
-        } else {
-            $segmentStations = $segment['stations'];
+        $segmentStations = $segment['stations'];
+        $startSegmentKm = $segmentStations[0]['km'];
+        $isReverse = ($segmentStations[0]['km'] > $segmentStations[count($segmentStations) - 1]['km']);
+
+        foreach ($segmentStations as $idx => $station) {
+            // Doppelten Bahnhof am Übergang zweier Segmente überspringen
+            if ($idx === 0 && !empty($completePath)) {
+                continue;
+            }
+
+            // Fortlaufende Kilometrierung berechnen (Distanz zum Start des aktuellen Segments)
+            $distanceFromSegmentStart = abs($station['km'] - $startSegmentKm);
+            $currentStationKm = $accumulatedKm + $distanceFromSegmentStart;
+
+            $completePath[] = [
+                'abbr' => $station['abbr'],
+                'name' => $station['name'] ?? $station['abbr'],
+                'km' => round($currentStationKm, 2), // Saubere kaufmännische Rundung auf zwei Dezimalstellen
+                'original_km' => $station['km']     // Beibehalten des Originalwerts zur Sicherheit
+            ];
         }
 
-        $completePath = array_merge($completePath, $segmentStations);
-        $totalKm += $segment['km'];
+        // Am Ende des Segments addieren wir die Gesamtlänge des Teilstücks auf den Zähler auf
+        $accumulatedKm += $segment['km'];
     }
 
     return [
         [
             'stations' => $completePath,
-            'total_km' => $totalKm,
-            'route_ids' => $usedRouteIds // Wichtig für die Namensfindung im nächsten Schritt
+            'total_km' => round($accumulatedKm, 2),
+            'route_ids' => $usedRouteIds
         ]
     ];
 }
