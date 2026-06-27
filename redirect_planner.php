@@ -61,6 +61,61 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
         return ['id' => $abbr, 'abbr' => $abbr, 'name' => $abbr, 'km' => 0];
     };
 
+    // Wenn Start und Ziel auf derselben Route liegen, verwende direkt den passenden Abschnitt der Route.
+    $findRouteSegment = function($startNode, $endNode) use ($ROUTES, $getStationObj) {
+        $startNode = strtoupper($startNode);
+        $endNode = strtoupper($endNode);
+
+        if ($startNode === $endNode) {
+            return [$getStationObj($startNode)];
+        }
+
+        $bestSegment = null;
+        $bestScore = null;
+
+        foreach ($ROUTES as $route) {
+            $stations = $route['stations'] ?? [];
+            $startIndex = null;
+            $endIndex = null;
+
+            foreach ($stations as $idx => $station) {
+                $abbr = strtoupper($station['abbr'] ?? '');
+                if ($abbr === $startNode) {
+                    $startIndex = $idx;
+                }
+                if ($abbr === $endNode) {
+                    $endIndex = $idx;
+                }
+            }
+
+            if ($startIndex === null || $endIndex === null) {
+                continue;
+            }
+
+            $segment = $startIndex <= $endIndex
+                ? array_slice($stations, $startIndex, $endIndex - $startIndex + 1)
+                : array_reverse(array_slice($stations, $endIndex, $startIndex - $endIndex + 1));
+
+            if (empty($segment)) {
+                continue;
+            }
+
+            $segmentLength = count($segment);
+            $segmentKm = 0;
+            for ($i = 0; $i < count($segment) - 1; $i++) {
+                $segmentKm += abs(($segment[$i + 1]['km'] ?? 0) - ($segment[$i]['km'] ?? 0));
+            }
+
+            $score = [$segmentLength, $segmentKm];
+            if ($bestScore === null || $score[0] < $bestScore[0] || ($score[0] === $bestScore[0] && $score[1] < $bestScore[1])) {
+                $bestSegment = $segment;
+                $bestScore = $score;
+            }
+        }
+
+        return $bestSegment ?: null;
+    };
+
     // Kürzester-Pfad-Suche (Dijkstra) von Wegpunkt zu Wegpunkt
     $findShortestSegment = function($startNode, $endNode) use ($graph, $getStationObj) {
         $startNode = strtoupper($startNode);
@@ -119,7 +174,11 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
     $completePath = [];
 
     for ($w = 0; $w < count($waypoints) - 1; $w++) {
-        $segmentStations = $findShortestSegment($waypoints[$w], $waypoints[$w + 1]);
+        $segmentStations = $findRouteSegment($waypoints[$w], $waypoints[$w + 1]);
+
+        if (!$segmentStations) {
+            $segmentStations = $findShortestSegment($waypoints[$w], $waypoints[$w + 1]);
+        }
 
         if (!$segmentStations) {
             error_log("Routing-Fehler: Kein Schienenweg zwischen " . $waypoints[$w] . " und " . $waypoints[$w + 1]);
@@ -151,7 +210,7 @@ function findRoutePaths($ROUTES, $waypoints, $stationMap) {
 /**
  * Berechnet Fahrtzeiten mit korrekter km-Berechnung
  */
-function calculatePathTimes($pathData, $speed, $ROUTES) {
+function calculatePathTimes($pathData, $speed, $ROUTES, $startOffsetMinutes = 0) {
     $pathStations = $pathData['stations'] ?? [];
     
     if (empty($pathStations)) {
@@ -174,7 +233,9 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
         }
     }
 
-    // Interne Berechnung in Sekunden verhindert das Aufsummieren von Rundungsfehlern
+    // Interne Berechnung in Sekunden verhindert das Aufsummieren von Rundungsfehlern.
+    // Die echte Fahrplanzeit wird zusätzlich um einen Start-Offset erweitert.
+    $baseMinutes = max(0, intval($startOffsetMinutes));
     $currentSeconds = 0;
     $cumulativeKm = 0;
 
@@ -198,8 +259,8 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
             $cumulativeKm += $distanceKm;
         }
 
-        // Ankunftszeit sekundengenau berechnen und erst für die Ausgabe in Minuten runden
-        $arrivalTime = (int)round($currentSeconds / 60);
+        // Reine Fahrzeit intern berechnen, aber auf einen echten Fahrplan-Startpunkt beziehen
+        $arrivalTime = $baseMinutes + (int)round($currentSeconds / 60);
         
         // Aufenthalt am Betriebspunkt hinzurechnen
         if ($haltMinutes > 0) {
@@ -207,7 +268,7 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
         }
         
         // Abfahrtszeit nach dem Halt
-        $departureTime = (int)round($currentSeconds / 60);
+        $departureTime = $baseMinutes + (int)round($currentSeconds / 60);
 
         $result['stations'][] = [
             'id' => $station['id'] ?? strtoupper($station['abbr'] ?? ''),
@@ -316,10 +377,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        $startOffsetMinutes = isset($_POST['start_time_minutes']) ? intval($_POST['start_time_minutes']) : 0;
+
         // Berechne Fahrtzeiten für jeden Pfad
         $results = [];
         foreach ($paths as $path) {
-            $result = calculatePathTimes($path, $speed, $ROUTES);
+            $result = calculatePathTimes($path, $speed, $ROUTES, $startOffsetMinutes);
             $results[] = $result;
         }
 
@@ -667,6 +730,7 @@ async function findRoutes() {
     vias.forEach((via, idx) => formData.append(`vias[${idx}]`, via)); // Array-Format
     formData.append('destination', destination);
     formData.append('speed', speed);
+    formData.append('start_time_minutes', getReferenceTimeMinutes());
 
     try {
         const res = await fetch('', { method: 'POST', body: formData });
@@ -697,7 +761,8 @@ function displayRoutePaths(paths) {
         div.onclick = () => selectRoute(index, path, div);
 
         const stationList = path.stations.map(s => `<strong>${s.abbr}</strong>`).join(' → ');
-        const timeString = minutesToTime(path.total_time);
+        const roundedTotalTime = Math.round(Number(path.total_time) || 0);
+        const timeString = minutesToTime(roundedTotalTime);
         const distanceKm = path.total_km.toFixed(1);
 
         div.innerHTML = `
@@ -883,6 +948,16 @@ function buildEditorTable(path) {
     });
 }
 
+function getReferenceTimeMinutes() {
+    if (!Array.isArray(oldTimetable) || oldTimetable.length === 0) return 0;
+
+    const referenceStop = oldTimetable.find(stop => stop.departure) || oldTimetable.find(stop => stop.arrival) || null;
+    if (!referenceStop) return 0;
+
+    const timeStr = referenceStop.departure || referenceStop.arrival || '';
+    return timeToMinutes(timeStr) ?? 0;
+}
+
 function timeToMinutes(timeStr) {
     if (!timeStr) return null;
     const parts = timeStr.split(':');
@@ -891,8 +966,9 @@ function timeToMinutes(timeStr) {
 }
 
 function minutesToTime(minutes) {
-    if (minutes === null || isNaN(minutes)) return '--:--';
-    const m = ((minutes % 1440) + 1440) % 1440;
+    if (minutes === null || minutes === '' || isNaN(minutes)) return '--:--';
+    const totalMinutes = Math.round(Number(minutes));
+    const m = ((totalMinutes % 1440) + 1440) % 1440;
     const h = Math.floor(m / 60);
     const min = m % 60;
     return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
