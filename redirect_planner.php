@@ -21,143 +21,129 @@ $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
  * - Keine Stationen doppelt
  * - Einfach: Start→Via1→Via2→...→Ziel sequenziell
  */
+/**
+ * GRAPH-ROUTING: Findet den echten kürzesten Weg über Netzwerkknoten
+ * Verhindert Schleifen und unvollständige Pfade durch topologische Graphensuche.
+ */
 function findRoutePaths($ROUTES, $waypoints, $stationMap) {
     if (count($waypoints) < 2) return [];
 
-    // Closure zur präzisen Ermittlung eines Segments zwischen zwei direkt aufeinanderfolgenden Wegpunkten
-    $findDirectSegment = function($startAbbr, $endAbbr, $ROUTES, $stationMap) {
-        $start = strtoupper(trim($startAbbr));
-        $end = strtoupper(trim($endAbbr));
+    // 1. Graph aus dem Liniennetz aufbauen (Knoten und Kanten)
+    $graph = [];
+    foreach ($ROUTES as $routeId => $route) {
+        $stations = $route['stations'] ?? [];
+        for ($i = 0; $i < count($stations) - 1; $i++) {
+            $u = strtoupper($stations[$i]['abbr'] ?? '');
+            $v = strtoupper($stations[$i+1]['abbr'] ?? '');
+            if (!$u || !$v) continue;
 
-        if (!isset($stationMap[$start]) || !isset($stationMap[$end])) {
-            return null;
-        }
+            // Strecken-Distanz berechnen
+            $kmDiff = abs(($stations[$i+1]['km'] ?? 0) - ($stations[$i]['km'] ?? 0));
 
-        $candidates = [];
-
-        // Wir prüfen alle Routen, die den Startbahnhof enthalten
-        foreach ($stationMap[$start] as $startInfo) {
-            $routeId = $startInfo['route_id'];
-            if (!isset($ROUTES[$routeId])) continue;
-
-            $stations = $ROUTES[$routeId]['stations'] ?? [];
-            $startIdx = $startInfo['index'];
-
-            // Suche nach dem Zielbahnhof auf derselben Route
-            foreach ($stations as $endIdx => $st) {
-                if (strtoupper($st['abbr'] ?? '') !== $end) continue;
-
-                // Fahrtrichtung bestimmen: 1 = vorwärts, -1 = rückwärts
-                $step = ($startIdx <= $endIdx) ? 1 : -1;
-                $segment = [];
-                $visited = [];
-                $valid = true;
-
-                // Segment exakt von Start bis Ziel ablaufen
-                for ($i = $startIdx; ; $i += $step) {
-                    if (!isset($stations[$i])) {
-                        $valid = false;
-                        break;
-                    }
-
-                    $currentAbbr = strtoupper($stations[$i]['abbr'] ?? '');
-                    
-                    // Schleifenschutz für fehlerhafte Routenstrukturen
-                    if (isset($visited[$currentAbbr]) && $currentAbbr !== $end) {
-                        $valid = false;
-                        break;
-                    }
-
-                    $segment[] = $stations[$i];
-                    $visited[$currentAbbr] = true;
-
-                    if ($currentAbbr === $end) {
-                        break;
-                    }
-                }
-
-                if ($valid && !empty($segment)) {
-                    // Berechnung der reinen Streckenlänge dieses Teilsegments
-                    $segmentKm = abs($stations[$endIdx]['km'] - $stations[$startIdx]['km']);
-                    $candidates[] = [
-                        'stations' => $segment,
-                        'km' => $segmentKm,
-                        'route_id' => $routeId,
-                        'station_count' => count($segment)
-                    ];
-                }
-            }
-        }
-
-        if (empty($candidates)) {
-            return null;
-        }
-
-        // Sortierung: Priorisiere die kürzeste Verbindung mit den wenigsten Zwischenstationen
-        usort($candidates, function ($a, $b) {
-            if ($a['station_count'] !== $b['station_count']) {
-                return $a['station_count'] - $b['station_count'];
-            }
-            return $a['km'] - $b['km'];
-        });
-
-        return $candidates[0];
-    };
-
-    $completePath = [];
-    $accumulatedKm = 0.0;
-    $usedRouteIds = [];
-
-    for ($w = 0; $w < count($waypoints) - 1; $w++) {
-        $startWp = $waypoints[$w];
-        $endWp = $waypoints[$w + 1];
-
-        $segment = $findDirectSegment($startWp, $endWp, $ROUTES, $stationMap);
-
-        if (!$segment) {
-            // Falls ein Segment nicht gefunden wird, erzwinge zumindest die Wegpunkte, um den Pfad nicht zu zerreißen
-            if (empty($completePath)) {
-                $completePath[] = ['abbr' => $startWp, 'name' => $startWp, 'km' => $accumulatedKm];
-            }
-            $completePath[] = ['abbr' => $endWp, 'name' => $endWp, 'km' => $accumulatedKm];
-            continue;
-        }
-
-        if (!in_array($segment['route_id'], $usedRouteIds)) {
-            $usedRouteIds[] = $segment['route_id'];
-        }
-
-        $segmentStations = $segment['stations'];
-        $startSegmentKm = $segmentStations[0]['km'];
-        $isReverse = ($segmentStations[0]['km'] > $segmentStations[count($segmentStations) - 1]['km']);
-
-        foreach ($segmentStations as $idx => $station) {
-            // Doppelten Bahnhof am Übergang zweier Segmente überspringen
-            if ($idx === 0 && !empty($completePath)) {
-                continue;
-            }
-
-            // Fortlaufende Kilometrierung berechnen (Distanz zum Start des aktuellen Segments)
-            $distanceFromSegmentStart = abs($station['km'] - $startSegmentKm);
-            $currentStationKm = $accumulatedKm + $distanceFromSegmentStart;
-
-            $completePath[] = [
-                'abbr' => $station['abbr'],
-                'name' => $station['name'] ?? $station['abbr'],
-                'km' => round($currentStationKm, 2), // Saubere kaufmännische Rundung auf zwei Dezimalstellen
-                'original_km' => $station['km']     // Beibehalten des Originalwerts zur Sicherheit
+            // Gerichtete Kante im Graphen hinterlegen
+            $graph[$u][] = [
+                'to' => $v,
+                'km' => $kmDiff,
+                'station' => $stations[$i+1]
             ];
         }
+    }
 
-        // Am Ende des Segments addieren wir die Gesamtlänge des Teilstücks auf den Zähler auf
-        $accumulatedKm += $segment['km'];
+    // Helper: Holt das originale Station-Metadaten-Objekt für Startbahnhöfe
+    $getStationObj = function($abbr) use ($ROUTES) {
+        foreach ($ROUTES as $route) {
+            foreach ($route['stations'] as $st) {
+                if (strtoupper($st['abbr'] ?? '') === strtoupper($abbr)) {
+                    return $st;
+                }
+            }
+        }
+        return ['id' => $abbr, 'abbr' => $abbr, 'name' => $abbr, 'km' => 0];
+    };
+
+    // Kürzester-Pfad-Suche (Dijkstra) von Wegpunkt zu Wegpunkt
+    $findShortestSegment = function($startNode, $endNode) use ($graph, $getStationObj) {
+        $startNode = strtoupper($startNode);
+        $endNode = strtoupper($endNode);
+
+        if ($startNode === $endNode) {
+            return [$getStationObj($startNode)];
+        }
+
+        $distances = [$startNode => 0];
+        $previous = [];
+        $edgeStationData = [];
+        $queue = [$startNode => 0];
+
+        while (!empty($queue)) {
+            // Knoten mit der geringsten Distanz wählen
+            asort($queue);
+            $current = key($queue);
+            unset($queue[$current]);
+
+            if ($current === $endNode) break;
+            if (!isset($graph[$current])) continue;
+
+            foreach ($graph[$current] as $edge) {
+                $neighbor = $edge['to'];
+                
+                // Distanzgewicht + minimaler Malus pro Hop, um Stations-Zickzack bei 0 km zu meiden
+                $weight = $edge['km'] + 0.05; 
+                $alt = $distances[$current] + $weight;
+
+                if (!isset($distances[$neighbor]) || $alt < $distances[$neighbor]) {
+                    $distances[$neighbor] = $alt;
+                    $previous[$neighbor] = $current;
+                    $edgeStationData[$neighbor] = $edge['station'];
+                    $queue[$neighbor] = $alt;
+                }
+            }
+        }
+
+        // Kein valider Pfad im Schienennetz gefunden
+        if (!isset($previous[$endNode])) return null;
+
+        // Pfad von hinten nach vorne rekonstruieren
+        $segmentPath = [];
+        $curr = $endNode;
+        while (isset($previous[$curr])) {
+            $segmentPath[] = $edgeStationData[$curr];
+            $curr = $previous[$curr];
+        }
+        $segmentPath[] = $getStationObj($startNode);
+
+        return array_reverse($segmentPath);
+    };
+
+    // 2. Segmente sequentiell verknüpfen
+    $completePath = [];
+
+    for ($w = 0; $w < count($waypoints) - 1; $w++) {
+        $segmentStations = $findShortestSegment($waypoints[$w], $waypoints[$w + 1]);
+
+        if (!$segmentStations) {
+            error_log("Routing-Fehler: Kein Schienenweg zwischen " . $waypoints[$w] . " und " . $waypoints[$w + 1]);
+            return [];
+        }
+
+        // Ersten Eintrag abschneiden, um Doppelungen an den Übergabeknoten zu verhindern
+        if (!empty($completePath)) {
+            $segmentStations = array_slice($segmentStations, 1);
+        }
+
+        $completePath = array_merge($completePath, $segmentStations);
+    }
+
+    // Kilometer-Summe präzise über die realen Kanten des finalen Pfads neu aufbauen
+    $totalKm = 0;
+    for ($i = 0; $i < count($completePath) - 1; $i++) {
+        $totalKm += abs(($completePath[$i+1]['km'] ?? 0) - ($completePath[$i]['km'] ?? 0));
     }
 
     return [
         [
             'stations' => $completePath,
-            'total_km' => round($accumulatedKm, 2),
-            'route_ids' => $usedRouteIds
+            'total_km' => $totalKm
         ]
     ];
 }
@@ -180,14 +166,15 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
         'route_name' => 'Umgeleitet'
     ];
 
-    // Routenname anhand der gesammelten IDs ermitteln
-    if (!empty($pathData['route_ids'])) {
-        $firstRouteId = $pathData['route_ids'][0];
+    // Finde Route-Name (erste Route aus Segments)
+    if (!empty($pathData['segments']) && !empty($pathData['segments'][0]['routes'])) {
+        $firstRouteId = $pathData['segments'][0]['routes'][0];
         if (isset($ROUTES[$firstRouteId])) {
             $result['route_name'] = $ROUTES[$firstRouteId]['name'] ?? 'Umgeleitet';
         }
     }
 
+    // Berechne Fahrtzeiten basierend auf KUMULATIVEN Kilometern
     $currentTime = 0;
     $cumulativeKm = 0;
 
@@ -198,8 +185,10 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
             $prevStation = $pathStations[$i - 1];
             $prevKm = $prevStation['km'] ?? 0;
             
+            // Berechne Distanz zwischen dieser und vorheriger Station
             $distanceKm = abs($stationKm - $prevKm);
             
+            // Fahrtzeit = Distanz / Geschwindigkeit * 60 (Minuten)
             if ($distanceKm > 0 && $speed > 0) {
                 $travelMinutes = round(($distanceKm / $speed) * 60);
                 $currentTime += $travelMinutes;
@@ -539,7 +528,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="results_list"></div>
     </div>
 
-<!-- GELADEN FAHRPLAN PANEL -->
+    <!-- GELADEN FAHRPLAN PANEL -->
     <div class="panel" id="loaded_timetable_panel" style="display: none; max-height: 400px; overflow-y: auto;">
         <h2>📋 Aktueller Fahrplan: Zug <span id="loaded_train_num"></span></h2>
         <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -556,6 +545,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tbody id="loaded_timetable_tbody">
             </tbody>
         </table>
+    </div>
+        <h2>Gefundene Routen</h2>
+        <div id="results_list"></div>
     </div>
 
     <!-- EDITOR PANEL -->
