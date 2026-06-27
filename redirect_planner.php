@@ -166,7 +166,7 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
         'route_name' => 'Umgeleitet'
     ];
 
-    // Finde Route-Name (erste Route aus Segments)
+    // Route-Name ermitteln
     if (!empty($pathData['segments']) && !empty($pathData['segments'][0]['routes'])) {
         $firstRouteId = $pathData['segments'][0]['routes'][0];
         if (isset($ROUTES[$firstRouteId])) {
@@ -174,31 +174,40 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
         }
     }
 
-    // Berechne Fahrtzeiten basierend auf KUMULATIVEN Kilometern
-    $currentTime = 0;
+    // Interne Berechnung in Sekunden verhindert das Aufsummieren von Rundungsfehlern
+    $currentSeconds = 0;
     $cumulativeKm = 0;
 
     foreach ($pathStations as $i => $station) {
         $stationKm = $station['km'] ?? 0;
+        // Erlaubt optionale Aufenthalte pro Station (Standard: 0 Minuten)
+        $haltMinutes = $station['halt_min'] ?? 0; 
 
         if ($i > 0) {
             $prevStation = $pathStations[$i - 1];
             $prevKm = $prevStation['km'] ?? 0;
             
-            // Berechne Distanz zwischen dieser und vorheriger Station
             $distanceKm = abs($stationKm - $prevKm);
             
-            // Fahrtzeit = Distanz / Geschwindigkeit * 60 (Minuten)
             if ($distanceKm > 0 && $speed > 0) {
-                $travelMinutes = round(($distanceKm / $speed) * 60);
-                $currentTime += $travelMinutes;
+                // Reine Fahrzeit in Sekunden: (Distanz / Geschwindigkeit) * 3600
+                $travelSeconds = ($distanceKm / $speed) * 3600;
+                $currentSeconds += $travelSeconds;
             }
 
             $cumulativeKm += $distanceKm;
         }
 
-        $arrivalTime = $currentTime;
-        $departureTime = $currentTime;
+        // Ankunftszeit sekundengenau berechnen und erst für die Ausgabe in Minuten runden
+        $arrivalTime = (int)round($currentSeconds / 60);
+        
+        // Aufenthalt am Betriebspunkt hinzurechnen
+        if ($haltMinutes > 0) {
+            $currentSeconds += $haltMinutes * 60;
+        }
+        
+        // Abfahrtszeit nach dem Halt
+        $departureTime = (int)round($currentSeconds / 60);
 
         $result['stations'][] = [
             'id' => $station['id'] ?? strtoupper($station['abbr'] ?? ''),
@@ -207,12 +216,13 @@ function calculatePathTimes($pathData, $speed, $ROUTES) {
             'km' => $stationKm,
             'arrival_time' => $arrivalTime,
             'departure_time' => $departureTime,
-            'cumulative_km' => $cumulativeKm
+            'cumulative_km' => round($cumulativeKm, 2),
+            'halt_min' => $haltMinutes
         ];
     }
 
-    $result['total_km'] = $cumulativeKm;
-    $result['total_time'] = $currentTime;
+    $result['total_km'] = round($cumulativeKm, 2);
+    $result['total_time'] = (int)round($currentSeconds / 60);
 
     return $result;
 }
