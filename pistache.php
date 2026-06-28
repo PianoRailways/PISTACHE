@@ -375,7 +375,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // 1. Suche den aktuellen Zug
-        $stmt = $db->prepare("SELECT id, route_id, train_number FROM trains WHERE sts_zid = ?");
+        $stmt = $db->prepare("SELECT id, route_id, train_number, sts_zid FROM trains WHERE sts_zid = ?");
         $stmt->execute([$sts_zid]);
         $train = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -493,8 +493,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 7. Freie Fahrt für die 7%-Reserve-Propagation über die bereinigten Folgehalte
         propagateTravelTimeWithReserve($db, $train_id);
+
+        // 8. Verspätungs-Kaskade auf den verknüpften Folgezug über ZID
+        $current_sts_zid = $train['sts_zid'] ?? null;
+        if (!empty($current_sts_zid) && function_exists('recalculateDelayCascade')) {
+            $stmtLastStop = $db->prepare(" 
+                SELECT departure, arrival, actual_departure, actual_arrival FROM timetable 
+                WHERE train_id = ? 
+                ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, id DESC 
+                LIMIT 1
+            ");
+            $stmtLastStop->execute([$train_id]);
+            $last_stop = $stmtLastStop->fetch(PDO::FETCH_ASSOC);
+
+            if ($last_stop) {
+                $toMin = function($tStr) {
+                    if (empty($tStr)) return 0;
+                    $p = explode(':', $tStr);
+                    return (count($p) >= 2) ? (intval($p[0]) * 60 + intval($p[1])) : 0;
+                };
+
+                $soll_time = !empty($last_stop['departure']) ? $toMin($last_stop['departure']) : $toMin($last_stop['arrival']);
+                $act_time = !empty($last_stop['actual_departure']) ? $toMin($last_stop['actual_departure']) : $toMin($last_stop['actual_arrival']);
+
+                if ($soll_time > 0 && $act_time > 0) {
+                    $final_delay = $act_time - $soll_time;
+                    if ($final_delay > 0) {
+                        recalculateDelayCascade($db, $current_sts_zid, $final_delay);
+                    }
+                }
+            }
+        }
         
-        // 8. Audit-Log
+        // 9. Audit-Log
         try {
             $sts_user = $_POST['sts_user'] ?? $input_data['sts_user'] ?? '';
             $sts_sim = $_POST['sts_sim'] ?? $input_data['sts_sim'] ?? '';
