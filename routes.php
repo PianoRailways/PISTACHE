@@ -1621,6 +1621,31 @@ $ROUTES = [
             ['id' => 'WTOE', 'name' => 'Töss', 'abbr' => 'WTOE', 'km' => -1.72],
         ]
     ],
+    'sh-glb' => [
+        'id' => 'sh-glb',
+        'name' => 'Schaffhausen - Glattbrugg',
+        'stations' => [
+            ['id' => 'SH', 'name' => 'Schaffhausen', 'abbr' => 'SH', 'km' => -42.35],
+            ['id' => 'NH', 'name' => 'Neuhausen', 'abbr' => 'NH', 'km' => -40.13],
+            ['id' => 'NHRH', 'name' => 'Rheinfall', 'abbr' => 'NHRH', 'km' => -39.05],
+            ['id' => 'FISH', 'name' => 'Fischerhölzli', 'abbr' => 'FISH', 'km' => -37.73],
+            ['id' => 'AR', 'name' => 'Altenburg-Rheinau', 'abbr' => 'AR', 'km' => -36.42],
+            ['id' => 'JE', 'name' => 'Jestetten', 'abbr' => 'JE', 'km' => -34.33],
+            ['id' => 'JES', 'name' => 'Jestetten Süd', 'abbr' => 'JES', 'km' => -32.4],
+            ['id' => 'LOT', 'name' => 'Lottstetten', 'abbr' => 'LOT', 'km' => -30.16],
+            ['id' => 'RZ', 'name' => 'Rafz', 'abbr' => 'RZ', 'km' => -27.04],
+            ['id' => 'HUEW', 'name' => 'Hüntwangen-Wil', 'abbr' => 'HUEW', 'km' => -23.6],
+            ['id' => 'EGL', 'name' => 'Eglisau', 'abbr' => 'EGL', 'km' => -22.25],
+            ['id' => 'GF', 'name' => 'Glattfelden', 'abbr' => 'GF', 'km' => -19.4],
+            ['id' => 'BUE', 'name' => 'Bülach', 'abbr' => 'BUE', 'km' => -16.25],
+            ['id' => 'NG', 'name' => 'Niederlatt', 'abbr' => 'NG', 'km' => -11.24],
+            ['id' => 'OGL', 'name' => 'Oberglatt', 'abbr' => 'OGL', 'km' => -9.09],
+            ['id' => 'RUEM', 'name' => 'Rümlang', 'abbr' => 'RUEM', 'km' => -6.52],
+            ['id' => 'TALR', 'name' => 'Tankanlage', 'abbr' => 'TALR', 'km' => -4.18],
+            ['id' => 'GBDF', 'name' => 'Glattbrugg (Df)', 'abbr' => 'GBDF', 'km' => -3.5],
+            ['id' => 'GLB', 'name' => 'Glattbrugg', 'abbr' => 'GLB', 'km' => -3.23],
+        ]
+    ],
     'strs-bale' => [
         'id' => 'strs-bale',
         'name' => 'Strasbourg – Bâle',
@@ -1827,6 +1852,51 @@ $ROUTES = [
             ['id' => 'REG', 'name' => 'Regensdorf-Watt', 'abbr' => 'REG', 'km' => -29.5],
             ['id' => 'ZAF', 'name' => 'Zürich Affoltern', 'abbr' => 'ZAF', 'km' => -26.3],
             ['id' => 'ZSEB', 'name' => 'Seebach', 'abbr' => 'ZSEB', 'km' => -23.3],
+        ]
+    ],
+    'furttal-güter' => [
+        'id' => 'furttal-güter',
+        'name' => 'Furttal (Güter)',
+        'stations' => [
+            ['id' => 'GBDF', 'name' => 'Glattbrugg (Df)', 'abbr' => 'GBDF', 'km' => -3.5],
+            ['id' => 'GLB', 'name' => 'Glattbrugg', 'abbr' => 'GLB', 'km' => -3.23],
+            ['id' => 'OPS', 'name' => 'Opfikon Süd', 'abbr' => 'OPS', 'km' => 2.15],
+            ['id' => 'ZSEB', 'name' => 'ZSEB', 'abbr' => 'ZSEB', 'km' => 2.3],
+            ['id' => 'ZAF', 'name' => 'ZAF', 'abbr' => 'ZAF', 'km' => 5.32],
+            ['id' => 'REG', 'name' => 'REG', 'abbr' => 'REG', 'km' => 8.49],
+            ['id' => 'BUD', 'name' => 'BUD', 'abbr' => 'BUD', 'km' => 11.72],
+            ['id' => 'BUDI', 'name' => 'BUDI', 'abbr' => 'BUDI', 'km' => 12.92],
+            ['id' => 'OFR', 'name' => 'OFR', 'abbr' => 'OFR', 'km' => 14.4],
+            ['id' => 'OF', 'name' => 'OF', 'abbr' => 'OF', 'km' => 15.15],
+            ['id' => 'WUER', 'name' => 'WUER', 'abbr' => 'WUER', 'km' => 17.68],
+            ['id' => 'WE', 'name' => 'WE', 'abbr' => 'WE', 'km' => 21.37],
+            ['id' => 'BDO', 'name' => 'BDO', 'abbr' => 'BDO', 'km' => 22.85],
+            ['id' => 'DW', 'name' => 'DW', 'abbr' => 'DW', 'km' => 26.08],
+            ['id' => 'MEL', 'name' => 'MEL', 'abbr' => 'MEL', 'km' => 28.75],
+            ['id' => 'MAEG', 'name' => 'MAEG', 'abbr' => 'MAEG', 'km' => 32.39],
+            ['id' => 'OTH', 'name' => 'OTH', 'abbr' => 'OTH', 'km' => 34.13],
+            ['id' => 'GEXI', 'name' => 'GEXI', 'abbr' => 'GEXI', 'km' => 36.46],
+            ['id' => 'HDK', 'name' => 'HDK', 'abbr' => 'HDK', 'km' => 37.55],
+            ['id' => 'DOT', 'name' => 'DOT', 'abbr' => 'DOT', 'km' => 40.27],
+        ]
+    ],
+    'wehntalbahn' => [
+        'id' => 'wehntalbahn',
+        'name' => 'Wehntalbahn',
+        'stations' => [
+            ['id' => 'REG', 'name' => 'Regensdorf-Watt', 'abbr' => 'REG', 'km' => -0.2],
+            ['id' => 'ZAF', 'name' => 'Zürich Affoltern', 'abbr' => 'ZAF', 'km' => 3],
+            ['id' => 'ZSEB', 'name' => 'Seebach', 'abbr' => 'ZSEB', 'km' => 6],
+            ['id' => 'OPS', 'name' => 'Opfikon Süd', 'abbr' => 'OPS', 'km' => 6.75],
+            ['id' => 'GLB', 'name' => 'Glattbrugg', 'abbr' => 'GLB', 'km' => 7.25],
+            ['id' => 'RUEM', 'name' => 'Rümlang', 'abbr' => 'RUEM', 'km' => 10.54],
+            ['id' => 'OGL', 'name' => 'Oberglatt', 'abbr' => 'OGL', 'km' => 13.12],
+            ['id' => 'NIE', 'name' => 'Niederhasli', 'abbr' => 'NIE', 'km' => 15.07],
+            ['id' => 'DI', 'name' => 'Dielsdorf', 'abbr' => 'DI', 'km' => 17.46],
+            ['id' => 'STMR', 'name' => 'Steinmaur', 'abbr' => 'STMR', 'km' => 18.79],
+            ['id' => 'SCHO', 'name' => 'Schöfflisdorf-Oberweningen', 'abbr' => 'SCHO', 'km' => 21.65],
+            ['id' => 'NWD', 'name' => 'Niederweningen Dorf', 'abbr' => 'NWD', 'km' => 24.13],
+            ['id' => 'NW', 'name' => 'Niederweningen', 'abbr' => 'NW', 'km' => 25.19],
         ]
     ],
     'hauenstein' => [
@@ -3744,6 +3814,22 @@ $ROUTES = [
             ['id' => 'NK', 'name' => 'Neukirch-Egnach', 'abbr' => 'NK', 'km' => -3.03],
             ['id' => 'RHS', 'name' => 'Romanshorn Süd', 'abbr' => 'RHS', 'km' => -1.2],
             ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 0],
+        ]
+    ],
+    'rh-rs' => [
+        'id' => 'rh-rs',
+        'name' => 'Romanshorn - Rorschach',
+        'stations' => [
+            ['id' => 'RH', 'name' => 'Romanshorn', 'abbr' => 'RH', 'km' => 82.16],
+            ['id' => 'RHVL', 'name' => '', 'abbr' => '', 'km' => 83.32],
+            ['id' => 'RHS', 'name' => 'Romanshorn Süd', 'abbr' => 'RHS', 'km' => 83.32],
+            ['id' => 'EGN', 'name' => 'Egnach', 'abbr' => 'EGN', 'km' => 84.72],
+            ['id' => 'ARBS', 'name' => 'Seemoosriet', 'abbr' => 'ARBS', 'km' => 88.75],
+            ['id' => 'ARB', 'name' => 'Arbon', 'abbr' => 'ARB', 'km' => 90.29],
+            ['id' => 'STCH', 'name' => 'Steinach', 'abbr' => 'STCH', 'km' => 91.64],
+            ['id' => 'HN', 'name' => 'Horn', 'abbr' => 'HN', 'km' => 93.47],
+            ['id' => 'RSHF', 'name' => 'Hafen', 'abbr' => 'RSHF', 'km' => 96.32],
+            ['id' => 'RS', 'name' => 'Rorschach', 'abbr' => 'RS', 'km' => 97.27],
         ]
     ],
     'w-sh' => [
