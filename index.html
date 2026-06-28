@@ -132,6 +132,17 @@
                     </select>
                 </label>
 
+                <div id="instance_window_container" style="display: flex; gap: 10px; align-items: center;">
+                    <label>
+                        Zurück (Min):
+                        <input type="number" id="window_back" value="15" min="0" max="720" style="width: 60px;" onchange="updateTimeMode()">
+                    </label>
+                    <label>
+                        Vorwärts (Min):
+                        <input type="number" id="window_forward" value="60" min="0" max="720" style="width: 60px;" onchange="updateTimeMode()">
+                    </label>
+                </div>
+
                 <label id="offset_container" style="display: none;">
                     STS-Offset (Min):
                     <input type="number" id="sts_offset" value="180" min="-600" max="600" style="width: 60px;" onchange="applyAutoScroll()">
@@ -278,6 +289,10 @@ function updateTimeMode() {
     
     const offsetContainer = document.getElementById('offset_container');
     const fixedTimeContainer = document.getElementById('fixed_time_container');
+    const instanceWindowContainer = document.getElementById('instance_window_container');
+    const showInstanceWindow = basis === 'instanz1' || basis === 'instanz2';
+    
+    instanceWindowContainer.style.display = showInstanceWindow ? 'flex' : 'none';
     
     // Sichtbarkeiten regeln
     if (mode === 'auto') {
@@ -327,9 +342,17 @@ function applyAutoScroll() {
         // Nutzt die dynamische 16h-Berechnung für Instanz 1 oder 2
         adjustedStsMinutes = getDynamicSTSTime(basis);
     }
-    
-    const startMinutes = ((adjustedStsMinutes - 15 + 1440) % 1440);
-    const endMinutes = ((adjustedStsMinutes + 60 + 1440) % 1440);
+
+    const getWindowValue = (inputId, fallback) => {
+        const input = document.getElementById(inputId);
+        const parsed = parseInt(input?.value || fallback, 10);
+        return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
+    };
+
+    const windowBack = getWindowValue('window_back', 15);
+    const windowForward = getWindowValue('window_forward', 60);
+    const startMinutes = ((adjustedStsMinutes - windowBack + 1440) % 1440);
+    const endMinutes = ((adjustedStsMinutes + windowForward + 1440) % 1440);
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
