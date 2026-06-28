@@ -10,19 +10,23 @@
         'Zürich und Umgebung',
         'Zentralschweiz',
         'Bourgogne-Franche-Comte',
-        'Lombardia'
+        'Lombardia',
     ];
     let output = [];
-    for (const text of [...$('#liste > tbody > tr > td:nth-child(1)')].map(s => s.innerText))
+    
+    for (const text of [...$('#liste > tbody > tr > td:nth-child(1)')].map(s => s.innerText.trim()))
     {
         const aid = parseInt(text);
+        
         if (isNaN(aid)) {
             capture = regions.includes(text);
-        }
-        
-        if (capture)
+        } else if (capture) {
             output.push(aid);
+        }
     }
 
-    return output;
+    const anzahl = output.length;
+    const liste = output.join(',');
+
+    return `Es wurden ${anzahl} Stellwerke gefunden.\n${liste}`;
 })()
