@@ -52,6 +52,156 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
     UNIQUE(train_id, station_id)
 )");
+
+// ========================================================================
+// FOLGEZUG-VERSPÄTUNGS-PROPAGATION (Cascade Delay)
+// ========================================================================
+
+/**
+ * recalculateDelayCascade()
+ * 
+ * Propagiert die Verspätung eines Zuges auf seinen Folgezug.
+ * Berücksichtigt die Standzeit des Folgezuges am Übergabepunkt.
+ * 
+ * @param PDO $db Datenbank-Verbindung
+ * @param string $current_sts_zid STS-ZID des aktuellen Zuges (der verspätet ist)
+ * @param int $delay_minutes Verspätung in Minuten (positiv = Verzug)
+ */
+function recalculateDelayCascade($db, $current_sts_zid, $delay_minutes) {
+    if (empty($current_sts_zid) || $delay_minutes <= 0) {
+        return;
+    }
+
+    // 1. Finde den aktuellen Zug in der Datenbank
+    $stmtCurrentTrain = $db->prepare("
+        SELECT id, successor_sts_zid, route_id
+        FROM trains
+        WHERE sts_zid = ?
+    ");
+    $stmtCurrentTrain->execute([$current_sts_zid]);
+    $currentTrain = $stmtCurrentTrain->fetch(PDO::FETCH_ASSOC);
+
+    if (!$currentTrain || empty($currentTrain['successor_sts_zid'])) {
+        // Kein Folgezug definiert oder Zug nicht gefunden
+        return;
+    }
+
+    $successor_sts_zid = $currentTrain['successor_sts_zid'];
+
+    // 2. Finde den Folgezug
+    $stmtSuccessorTrain = $db->prepare("
+        SELECT id, train_number, route_id
+        FROM trains
+        WHERE sts_zid = ?
+    ");
+    $stmtSuccessorTrain->execute([$successor_sts_zid]);
+    $successorTrain = $stmtSuccessorTrain->fetch(PDO::FETCH_ASSOC);
+
+    if (!$successorTrain) {
+        // Folgezug existiert nicht in der Datenbank
+        return;
+    }
+
+    // 3. Finde den letzten Halt des aktuellen Zuges (Übergabepunkt)
+    $stmtLastStopCurrent = $db->prepare("
+        SELECT station_id, actual_departure, departure
+        FROM timetable
+        WHERE train_id = ?
+        ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, id DESC
+        LIMIT 1
+    ");
+    $stmtLastStopCurrent->execute([$currentTrain['id']]);
+    $lastStopCurrent = $stmtLastStopCurrent->fetch(PDO::FETCH_ASSOC);
+
+    if (!$lastStopCurrent) {
+        return;
+    }
+
+    $handoverStation = $lastStopCurrent['station_id'];
+
+    // 4. Finde denselben Bahnhof im Folgezug
+    $stmtHandoverStopSuccessor = $db->prepare("
+        SELECT id, arrival, departure, actual_arrival, actual_departure, flags
+        FROM timetable
+        WHERE train_id = ? AND station_id = ?
+    ");
+    $stmtHandoverStopSuccessor->execute([$successorTrain['id'], $handoverStation]);
+    $handoverStopSuccessor = $stmtHandoverStopSuccessor->fetch(PDO::FETCH_ASSOC);
+
+    if (!$handoverStopSuccessor) {
+        // Folgezug hält nicht an dieser Station
+        return;
+    }
+
+    // 5. Hilfsfunktion: Zeit-String zu Minuten
+    $toMin = function($tStr) {
+        if (empty($tStr)) return 0;
+        $p = explode(':', $tStr);
+        return (count($p) >= 2) ? (intval($p[0]) * 60 + intval($p[1])) : 0;
+    };
+
+    // 6. Berechne die Standzeit des Folgezuges an der Übergabestation (Soll)
+    $successor_soll_arrival = $toMin($handoverStopSuccessor['arrival']);
+    $successor_soll_departure = $toMin($handoverStopSuccessor['departure']);
+    $successor_standzeit = max(0, $successor_soll_departure - $successor_soll_arrival);
+
+    // 7. Berechne die neue Ist-Ankunft des Folgezuges
+    //    Neue Ankunft = alte Ist-Ankunft + Verspätung des vorherigen Zuges
+    $successor_ist_arrival = $toMin($handoverStopSuccessor['actual_arrival']);
+    
+    if ($successor_ist_arrival === 0) {
+        // Falls noch keine Ist-Ankunft erfasst: von Soll ausgehen
+        $successor_ist_arrival = $successor_soll_arrival;
+    }
+
+    // Neue Ist-Ankunft = alte Ist-Ankunft + Verspätung
+    $new_successor_ist_arrival = $successor_ist_arrival + $delay_minutes;
+
+    // 8. Berechne die neue Ist-Abfahrt unter Standzeit-Schutz
+    //    Wenn Folgezug eine R- oder E-Flag hat: Standzeit = mind. 1 Min
+    //    Sonst: Standzeit kann auf 0 reduziert werden (zum Verzug abbremsen)
+    
+    $flags = $handoverStopSuccessor['flags'] ?? '';
+    $minStandzeit = 0;
+    if (preg_match('/[RE]/i', $flags)) {
+        $minStandzeit = 1; // R- oder E-Flag: Minimum 1 Min Standzeit
+    }
+
+    // Tatsächliche Standzeit = max(Soll-Standzeit, Minimum)
+    $effective_standzeit = max($successor_standzeit, $minStandzeit);
+
+    // Neue Ist-Abfahrt = neue Ankunft + effektive Standzeit
+    $new_successor_ist_departure = $new_successor_ist_arrival + $effective_standzeit;
+
+    // 9. Hilfsfunktion: Minuten zu Zeit-String
+    $minutesToTime = function($m) {
+        $positiveMinutes = (($m % 1440) + 1440) % 1440;
+        $h = floor($positiveMinutes / 60);
+        $min = $positiveMinutes % 60;
+        return sprintf('%02d:%02d', $h, $min);
+    };
+
+    // 10. Speichere die neuen Ist-Zeiten des Folgezuges
+    $stmtUpdateSuccessor = $db->prepare("
+        UPDATE timetable
+        SET actual_arrival = ?, actual_departure = ?
+        WHERE id = ?
+    ");
+
+    $stmtUpdateSuccessor->execute([
+        $minutesToTime($new_successor_ist_arrival),
+        $minutesToTime($new_successor_ist_departure),
+        $handoverStopSuccessor['id']
+    ]);
+
+    // 11. Rekursiv: Wenn der Folgezug selbst einen Folgezug hat, propagiere weiter
+    $new_successor_delay = $new_successor_ist_departure - $successor_soll_departure;
+    
+    if ($new_successor_delay > 0) {
+        recalculateDelayCascade($db, $successor_sts_zid, $new_successor_delay);
+    }
+}
+
 //Diskri
 function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr, $actualDepartureStr) {
     if (empty($flags)) return $actualDepartureStr;
