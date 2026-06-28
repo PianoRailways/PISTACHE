@@ -1687,6 +1687,31 @@ $ROUTES = [
             ['id' => 'BS', 'name' => 'Basel SBB', 'abbr' => 'BS', 'km' => 142.6],
         ]
     ],
+    'wiesentalbahn' => [
+        'id' => 'wiesentalbahn',
+        'name' => 'Wiesentalbahn',
+        'stations' => [
+            ['id' => 'BS', 'name' => 'Basel SBB', 'abbr' => 'BS', 'km' => -6.04],
+            ['id' => 'GELN', 'name' => 'Gellert Nord', 'abbr' => 'GELN', 'km' => -2.92],
+            ['id' => 'RB', 'name' => 'Badischer Bahnhof (BAD)', 'abbr' => 'RB', 'km' => -1.59],
+            ['id' => 'RRID', 'name' => 'Niederholz', 'abbr' => 'RRID', 'km' => 0.76],
+            ['id' => 'RRIE', 'name' => 'Riehen', 'abbr' => 'RRIE', 'km' => 2.92],
+            ['id' => 'RLST', 'name' => 'Stetten', 'abbr' => 'RLST', 'km' => 5.02],
+            ['id' => 'RLRS', 'name' => 'Museum/Burghof', 'abbr' => 'RLRS', 'km' => 5.8],
+            ['id' => 'RLR', 'name' => 'Lörrach', 'abbr' => 'RLR', 'km' => 6.51],
+            ['id' => 'RLRW', 'name' => 'Schwarzwaldstrasse', 'abbr' => 'RLRW', 'km' => 7.8],
+            ['id' => 'RHAH', 'name' => 'Haagen/Messe', 'abbr' => 'RHAH', 'km' => 9.06],
+            ['id' => 'RBRM', 'name' => 'Brombach/Hauingen', 'abbr' => 'RBRM', 'km' => 10.21],
+            ['id' => 'RSTN', 'name' => 'Steinen', 'abbr' => 'RSTN', 'km' => 13.75],
+            ['id' => 'RMLG', 'name' => 'Maulburg', 'abbr' => 'RMLG', 'km' => 16.7],
+            ['id' => 'RSCW', 'name' => 'Schpofheim West', 'abbr' => 'RSCW', 'km' => 18.3],
+            ['id' => 'RSCH', 'name' => 'Schopfheim', 'abbr' => 'RSCH', 'km' => 19.92],
+            ['id' => 'RSCS', 'name' => 'Schlattholz', 'abbr' => 'RSCS', 'km' => 20.2],
+            ['id' => 'RFN', 'name' => 'Fahrnau', 'abbr' => 'RFN', 'km' => 21.93],
+            ['id' => 'RHSN', 'name' => 'Hausen-Raitbach', 'abbr' => 'RHSN', 'km' => 24.03],
+            ['id' => 'RZ', 'name' => 'Zell im Wiesental', 'abbr' => 'RZ', 'km' => 27.16],
+        ]
+    ],
     'seebahn' => [
         'id' => 'seebahn',
         'name' => 'Seebahn (Kilchberg)',
