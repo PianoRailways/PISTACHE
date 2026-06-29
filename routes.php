@@ -3438,6 +3438,7 @@ $ROUTES = [
         'id' => '400',
         'name' => '400 NBS',
         'stations' => [
+            ['id' => 'BNWD', 'name' => 'Wankdorf', 'abbr' => 'BNWD', 'km' => -3.23],
             ['id' => 'LGUT', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => 4.9],
             ['id' => 'MATA', 'name' => 'Aespli', 'abbr' => 'MATA', 'km' => 12.3],
             ['id' => 'HERS', 'name' => 'Hersiwil', 'abbr' => 'HERS', 'km' => 30.1],
