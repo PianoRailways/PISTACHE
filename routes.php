@@ -3436,8 +3436,8 @@ $ROUTES = [
         'id' => 'stammstrecke-abo',
         'name' => 'LGUT-BDF-ABO',
         'stations' => [
-            ['id' => 'BNWD/WKD', 'name' => 'BNWD/WKD', 'abbr' => 'BNWD/WKD', 'km' => -102.95],
-            ['id' => 'LGUT', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => -101.28],
+            ['id' => 'BNWD', 'name' => 'Wankdorf', 'abbr' => 'BNWD', 'km' => -102.95],
+            ['id' => 'BNVL', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => -101.28],
             ['id' => 'ZOL', 'name' => 'Zollikofen', 'abbr' => 'ZOL', 'km' => -98.81],
             ['id' => 'SCHB', 'name' => 'Schönbühl', 'abbr' => 'SCHB', 'km' => -94.91],
             ['id' => 'MAT', 'name' => 'Mattstetten', 'abbr' => 'MAT', 'km' => -93.15],
@@ -3482,8 +3482,8 @@ $ROUTES = [
         'id' => 'stammstrecke',
         'name' => 'LGUT-BDF-RTW',
         'stations' => [
-            ['id' => 'BNWD/WKD', 'name' => 'BNWD/WKD', 'abbr' => 'BNWD/WKD', 'km' => -102.95],
-            ['id' => 'LGUT', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => -101.28],
+            ['id' => 'BNWD', 'name' => 'Wankdorf', 'abbr' => 'BNWD', 'km' => -102.95],
+            ['id' => 'BNVL', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => -101.28],
             ['id' => 'ZOL', 'name' => 'Zollikofen', 'abbr' => 'ZOL', 'km' => -98.81],
             ['id' => 'SCHB', 'name' => 'Schönbühl', 'abbr' => 'SCHB', 'km' => -94.91],
             ['id' => 'MAT', 'name' => 'Mattstetten', 'abbr' => 'MAT', 'km' => -93.15],
