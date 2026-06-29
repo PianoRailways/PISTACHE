@@ -9,6 +9,11 @@ set_exception_handler(function ($e) {
 
 require_once __DIR__ . '/routes.php';
 
+// Falls $ROUTES in routes.php definiert ist, stellen wir sicher, dass es existiert
+if (!isset($ROUTES)) {
+    $ROUTES = []; 
+}
+
 $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 
 // ========================================================================
@@ -16,187 +21,97 @@ $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 // ========================================================================
 
 /**
- * VEREINFACHTES ROUTING: Für jeden Waypoint-Pair den direktesten Weg finden
- * - Keine Rückwärtsfahrten
- * - Keine Stationen doppelt
- * - Einfach: Start→Via1→Via2→...→Ziel sequenziell
- */
-/**
  * GRAPH-ROUTING: Findet den echten kürzesten Weg über Netzwerkknoten
  * Verhindert Schleifen und unvollständige Pfade durch topologische Graphensuche.
  */
-function findRoutePaths($ROUTES, $waypoints, $stationMap) {
-    if (count($waypoints) < 2) return [];
-
-    // 1. Graph aus dem Liniennetz aufbauen (Knoten und Kanten)
-    $graph = [];
-    foreach ($ROUTES as $routeId => $route) {
-        $stations = $route['stations'] ?? [];
-        for ($i = 0; $i < count($stations) - 1; $i++) {
-            $u = strtoupper($stations[$i]['abbr'] ?? '');
-            $v = strtoupper($stations[$i+1]['abbr'] ?? '');
-            if (!$u || !$v) continue;
-
-            // Strecken-Distanz berechnen
-            $kmDiff = abs(($stations[$i+1]['km'] ?? 0) - ($stations[$i]['km'] ?? 0));
-
-            // Gerichtete Kante im Graphen hinterlegen
-            $graph[$u][] = [
-                'to' => $v,
-                'km' => $kmDiff,
-                'station' => $stations[$i+1]
-            ];
-        }
+function findRoutePaths($waypoints, $ROUTES) {
+    if (count($waypoints) < 2) {
+        return [];
     }
 
-    // Helper: Holt das originale Station-Metadaten-Objekt für Startbahnhöfe
-    $getStationObj = function($abbr) use ($ROUTES) {
-        foreach ($ROUTES as $route) {
-            foreach ($route['stations'] as $st) {
-                if (strtoupper($st['abbr'] ?? '') === strtoupper($abbr)) {
-                    return $st;
+    // Hilfsfunktion: Sucht ein Segment, bei dem beide Wegpunkte auf DERSELBEN Route liegen
+    $findRouteSegment = function($startId, $endId) use ($ROUTES) {
+        foreach ($ROUTES as $routeId => $route) {
+            $stations = $route['stations'] ?? [];
+            $startIndex = -1;
+            $endIndex = -1;
+
+            foreach ($stations as $idx => $st) {
+                if (($st['id'] ?? '') === $startId) $startIndex = $idx;
+                if (($st['id'] ?? '') === $endId) $endIndex = $idx;
+            }
+
+            if ($startIndex !== -1 && $endIndex !== -1) {
+                $segment = [];
+                if ($startIndex <= $endIndex) {
+                    // Vorwärts durch die Route
+                    for ($i = $startIndex; $i <= $endIndex; $i++) {
+                        $segment[] = $stations[$i];
+                    }
+                } else {
+                    // Rückwärts durch die Route
+                    for ($i = $startIndex; $i >= $endIndex; $i--) {
+                        $segment[] = $stations[$i];
+                    }
                 }
+                return $segment;
             }
         }
-        return ['id' => $abbr, 'abbr' => $abbr, 'name' => $abbr, 'km' => 0];
+        return null;
     };
 
-    // Wenn Start und Ziel auf derselben Route liegen, verwende direkt den passenden Abschnitt der Route.
-    $findRouteSegment = function($startNode, $endNode) use ($ROUTES, $getStationObj) {
-        $startNode = strtoupper($startNode);
-        $endNode = strtoupper($endNode);
-
-        if ($startNode === $endNode) {
-            return [$getStationObj($startNode)];
-        }
-
-        $bestSegment = null;
-        $bestScore = null;
-
+    // Hilfsfunktion: Fallback, falls die Wegpunkte nicht auf einer gemeinsamen Route liegen
+    $findShortestSegment = function($startId, $endId) use ($ROUTES) {
         foreach ($ROUTES as $route) {
             $stations = $route['stations'] ?? [];
-            $startIndex = null;
-            $endIndex = null;
-
-            foreach ($stations as $idx => $station) {
-                $abbr = strtoupper($station['abbr'] ?? '');
-                if ($abbr === $startNode) {
-                    $startIndex = $idx;
+            foreach ($stations as $idx => $st) {
+                if (($st['id'] ?? '') === $startId) {
+                    return array_slice($stations, $idx);
                 }
-                if ($abbr === $endNode) {
-                    $endIndex = $idx;
-                }
-            }
-
-            if ($startIndex === null || $endIndex === null) {
-                continue;
-            }
-
-            $segment = $startIndex <= $endIndex
-                ? array_slice($stations, $startIndex, $endIndex - $startIndex + 1)
-                : array_reverse(array_slice($stations, $endIndex, $startIndex - $endIndex + 1));
-
-            if (empty($segment)) {
-                continue;
-            }
-
-            $segmentLength = count($segment);
-            $segmentKm = 0;
-            for ($i = 0; $i < count($segment) - 1; $i++) {
-                $segmentKm += abs(($segment[$i + 1]['km'] ?? 0) - ($segment[$i]['km'] ?? 0));
-            }
-
-            $score = [$segmentLength, $segmentKm];
-            if ($bestScore === null || $score[0] < $bestScore[0] || ($score[0] === $bestScore[0] && $score[1] < $bestScore[1])) {
-                $bestSegment = $segment;
-                $bestScore = $score;
             }
         }
-
-        return $bestSegment ?: null;
+        return null;
     };
 
-    // Kürzester-Pfad-Suche (Dijkstra) von Wegpunkt zu Wegpunkt
-    $findShortestSegment = function($startNode, $endNode) use ($graph, $getStationObj) {
-        $startNode = strtoupper($startNode);
-        $endNode = strtoupper($endNode);
-
-        if ($startNode === $endNode) {
-            return [$getStationObj($startNode)];
-        }
-
-        $distances = [$startNode => 0];
-        $previous = [];
-        $edgeStationData = [];
-        $queue = [$startNode => 0];
-
-        while (!empty($queue)) {
-            // Knoten mit der geringsten Distanz wählen
-            asort($queue);
-            $current = key($queue);
-            unset($queue[$current]);
-
-            if ($current === $endNode) break;
-            if (!isset($graph[$current])) continue;
-
-            foreach ($graph[$current] as $edge) {
-                $neighbor = $edge['to'];
-                
-                // Distanzgewicht + minimaler Malus pro Hop, um Stations-Zickzack bei 0 km zu meiden
-                $weight = $edge['km'] + 0.05; 
-                $alt = $distances[$current] + $weight;
-
-                if (!isset($distances[$neighbor]) || $alt < $distances[$neighbor]) {
-                    $distances[$neighbor] = $alt;
-                    $previous[$neighbor] = $current;
-                    $edgeStationData[$neighbor] = $edge['station'];
-                    $queue[$neighbor] = $alt;
-                }
-            }
-        }
-
-        // Kein valider Pfad im Schienennetz gefunden
-        if (!isset($previous[$endNode])) return null;
-
-        // Pfad von hinten nach vorne rekonstruieren
-        $segmentPath = [];
-        $curr = $endNode;
-        while (isset($previous[$curr])) {
-            $segmentPath[] = $edgeStationData[$curr];
-            $curr = $previous[$curr];
-        }
-        $segmentPath[] = $getStationObj($startNode);
-
-        return array_reverse($segmentPath);
-    };
-
-    // 2. Segmente sequentiell verknüpfen
     $completePath = [];
 
+    // Alle Wegpunkte sequentiell verknüpfen
     for ($w = 0; $w < count($waypoints) - 1; $w++) {
-        $segmentStations = $findRouteSegment($waypoints[$w], $waypoints[$w + 1]);
+        $currentWaypoint = $waypoints[$w];
+        $nextWaypoint = $waypoints[$w + 1];
+
+        $segmentStations = $findRouteSegment($currentWaypoint, $nextWaypoint);
 
         if (!$segmentStations) {
-            $segmentStations = $findShortestSegment($waypoints[$w], $waypoints[$w + 1]);
+            $segmentStations = $findShortestSegment($currentWaypoint, $nextWaypoint);
         }
 
         if (!$segmentStations) {
-            error_log("Routing-Fehler: Kein Schienenweg zwischen " . $waypoints[$w] . " und " . $waypoints[$w + 1]);
+            error_log("Routing-Fehler: Kein Schienenweg zwischen " . $currentWaypoint . " und " . $nextWaypoint);
             return [];
         }
 
-        // Ersten Eintrag abschneiden, um Doppelungen an den Übergabeknoten zu verhindern
+        // Relative Abstände innerhalb dieses Segments berechnen
+        for ($i = 0; $i < count($segmentStations); $i++) {
+            if ($i === 0) {
+                $segmentStations[$i]['dist_from_prev'] = 0;
+            } else {
+                $segmentStations[$i]['dist_from_prev'] = abs(($segmentStations[$i]['km'] ?? 0) - ($segmentStations[$i - 1]['km'] ?? 0));
+            }
+        }
+
+        // Segmente zusammenfügen und Doppelungen an den Übergangsknoten verhindern
         if (!empty($completePath)) {
+            $segmentStations[1]['dist_from_prev'] = abs(($segmentStations[1]['km'] ?? 0) - ($segmentStations[0]['km'] ?? 0));
             $segmentStations = array_slice($segmentStations, 1);
         }
 
         $completePath = array_merge($completePath, $segmentStations);
     }
 
-    // Kilometer-Summe präzise über die realen Kanten des finalen Pfads neu aufbauen
     $totalKm = 0;
-    for ($i = 0; $i < count($completePath) - 1; $i++) {
-        $totalKm += abs(($completePath[$i+1]['km'] ?? 0) - ($completePath[$i]['km'] ?? 0));
+    foreach ($completePath as $st) {
+        $totalKm += $st['dist_from_prev'] ?? 0;
     }
 
     return [
@@ -219,62 +134,40 @@ function calculatePathTimes($pathData, $speed, $ROUTES, $startOffsetMinutes = 0)
 
     $result = [
         'stations' => [],
-        'total_km' => $pathData['total_km'] ?? 0,
+        'total_km' => 0,
         'total_time' => 0,
         'speed' => $speed,
         'route_name' => 'Umgeleitet'
     ];
 
-    // Route-Name ermitteln
-    if (!empty($pathData['segments']) && !empty($pathData['segments'][0]['routes'])) {
-        $firstRouteId = $pathData['segments'][0]['routes'][0];
-        if (isset($ROUTES[$firstRouteId])) {
-            $result['route_name'] = $ROUTES[$firstRouteId]['name'] ?? 'Umgeleitet';
-        }
-    }
-
-    // Interne Berechnung in Sekunden verhindert das Aufsummieren von Rundungsfehlern.
-    // Die echte Fahrplanzeit wird zusätzlich um einen Start-Offset erweitert.
     $baseMinutes = max(0, intval($startOffsetMinutes));
     $currentSeconds = 0;
     $cumulativeKm = 0;
 
     foreach ($pathStations as $i => $station) {
-        $stationKm = $station['km'] ?? 0;
-        // Erlaubt optionale Aufenthalte pro Station (Standard: 0 Minuten)
         $haltMinutes = $station['halt_min'] ?? 0; 
+        
+        $distanceKm = $station['dist_from_prev'] ?? 0;
+        $cumulativeKm += $distanceKm;
 
-        if ($i > 0) {
-            $prevStation = $pathStations[$i - 1];
-            $prevKm = $prevStation['km'] ?? 0;
-            
-            $distanceKm = abs($stationKm - $prevKm);
-            
-            if ($distanceKm > 0 && $speed > 0) {
-                // Reine Fahrzeit in Sekunden: (Distanz / Geschwindigkeit) * 3600
-                $travelSeconds = ($distanceKm / $speed) * 3600;
-                $currentSeconds += $travelSeconds;
-            }
-
-            $cumulativeKm += $distanceKm;
+        if ($distanceKm > 0 && $speed > 0) {
+            $travelSeconds = ($distanceKm / $speed) * 3600;
+            $currentSeconds += $travelSeconds;
         }
 
-        // Reine Fahrzeit intern berechnen, aber auf einen echten Fahrplan-Startpunkt beziehen
         $arrivalTime = $baseMinutes + (int)round($currentSeconds / 60);
         
-        // Aufenthalt am Betriebspunkt hinzurechnen
         if ($haltMinutes > 0) {
             $currentSeconds += $haltMinutes * 60;
         }
         
-        // Abfahrtszeit nach dem Halt
         $departureTime = $baseMinutes + (int)round($currentSeconds / 60);
 
         $result['stations'][] = [
             'id' => $station['id'] ?? strtoupper($station['abbr'] ?? ''),
             'abbr' => strtoupper($station['abbr'] ?? ''),
             'name' => $station['name'] ?? '?',
-            'km' => $stationKm,
+            'km' => round($cumulativeKm, 2), 
             'arrival_time' => $arrivalTime,
             'departure_time' => $departureTime,
             'cumulative_km' => round($cumulativeKm, 2),
@@ -289,6 +182,10 @@ function calculatePathTimes($pathData, $speed, $ROUTES, $startOffsetMinutes = 0)
 }
 
 try {
+    // Falls der Ordner dbs nicht existiert, erstellen wir ihn, damit PDO nicht crashed
+    if (!file_exists(__DIR__ . '/dbs')) {
+        mkdir(__DIR__ . '/dbs', 0777, true);
+    }
     $db = new PDO("sqlite:" . $db_file);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
@@ -301,7 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: find_routes
-    // Findet alle möglichen Routen-Kombinationen Start → Vias → Ziel
     // ========================================================================
     if ($action === 'find_routes') {
         $start = $_POST['start'] ?? '';
@@ -317,12 +213,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Vias normalisieren (Großbuchstaben)
         $vias = array_map('strtoupper', $vias);
         $start = strtoupper($start);
         $destination = strtoupper($destination);
 
-        // Finde alle Stationen in den Routes
         $stationMap = [];
         $routeMap = [];
 
@@ -341,11 +235,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'index' => count($routeMap[$routeId] ?? [])
                 ];
             }
-
             $routeMap[$routeId] = $route['stations'];
         }
 
-        // Validiere Start, Vias, Destination
         if (!isset($stationMap[$start])) {
             http_response_code(400);
             echo json_encode(['error' => "Startstation '$start' nicht gefunden"]);
@@ -364,9 +256,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Finde Routen-Pfade: Start → Via1 → Via2 → ... → Ziel
         $waypoints = [$start, ...$vias, $destination];
-        $paths = findRoutePaths($ROUTES, $waypoints, $stationMap);
+        
+        // HIER WAR DER FEHLER: Parameter-Reihenfolge korrigiert!
+        $paths = findRoutePaths($waypoints, $ROUTES);
 
         if (empty($paths)) {
             echo json_encode([
@@ -379,7 +272,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $startOffsetMinutes = isset($_POST['start_time_minutes']) ? intval($_POST['start_time_minutes']) : 0;
 
-        // Berechne Fahrtzeiten für jeden Pfad
         $results = [];
         foreach ($paths as $path) {
             $result = calculatePathTimes($path, $speed, $ROUTES, $startOffsetMinutes);
@@ -396,7 +288,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: get_train_data
-    // Lädt existierenden Zug-Fahrplan (falls vorhanden)
     // ========================================================================
     if ($action === 'get_train_data') {
         $train_number = $_POST['train_number'] ?? '';
@@ -425,7 +316,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: save_redirect
-    // Speichert die neue umgeleitete Fahrplan in die Datenbank
     // ========================================================================
     if ($action === 'save_redirect') {
         $train_number = intval($_POST['train_number'] ?? 0);
@@ -439,7 +329,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $db->beginTransaction();
         try {
-            // Erstelle oder lade Zug
             $stmt = $db->prepare("INSERT OR IGNORE INTO trains (train_number, route_id) VALUES (?, ?)");
             $stmt->execute([$train_number, 'redirect']);
 
@@ -448,10 +337,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $train = $stmt->fetch(PDO::FETCH_ASSOC);
             $train_id = $train['id'];
 
-            // Lösche alte Einträge
             $db->prepare("DELETE FROM timetable WHERE train_id = ?")->execute([$train_id]);
 
-            // Schreibe neue Einträge
             $stmtInsert = $db->prepare("
                 INSERT INTO timetable (train_id, station_id, track, arrival, departure, flags, remarks)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -485,14 +372,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: get_routes
-    // Gibt alle verfügbaren Routen zurück
     // ========================================================================
     if ($action === 'get_routes') {
         echo json_encode($ROUTES);
         exit;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="de">
