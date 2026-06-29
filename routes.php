@@ -438,26 +438,6 @@ $ROUTES = [
             ['id' => 'TH', 'name' => 'Thun', 'abbr' => 'TH', 'km' => 61.49],
         ]
     ],
-    'btb' => [
-        'id' => 'btb',
-        'name' => 'Emmental',
-        'stations' => [
-            ['id' => 'BDF', 'name' => 'Burgdorf', 'abbr' => 'BDF', 'km' => -6.93],
-            ['id' => 'BDFS', 'name' => 'Steinhof', 'abbr' => 'BDFS', 'km' => -5.03],
-            ['id' => 'OBB', 'name' => 'Oberburg', 'abbr' => 'OBB', 'km' => -3.37],
-            ['id' => 'HA', 'name' => 'Hasle-Rüegsau', 'abbr' => 'HA', 'km' => 0],
-            ['id' => 'SHIE', 'name' => 'Schafhausen i.E.', 'abbr' => 'SHIE', 'km' => 2.56],
-            ['id' => 'BIGE', 'name' => 'Bigenthal', 'abbr' => 'BIGE', 'km' => 6.83],
-            ['id' => 'WALK', 'name' => 'Walkringen', 'abbr' => 'WALK', 'km' => 8.89],
-            ['id' => 'BIG', 'name' => 'Biglen', 'abbr' => 'BIG', 'km' => 12.09],
-            ['id' => 'GH', 'name' => 'Grosshöchstetten', 'abbr' => 'GH', 'km' => 14.67],
-            ['id' => 'KF', 'name' => 'Konolfingen', 'abbr' => 'KF', 'km' => 18.74],
-            ['id' => 'STAL', 'name' => 'Stalden i.E.', 'abbr' => 'STAL', 'km' => 19.96],
-            ['id' => 'OD', 'name' => 'Oberdiessbach', 'abbr' => 'OD', 'km' => 23.65],
-            ['id' => 'BK', 'name' => 'Brenzikofen', 'abbr' => 'BK', 'km' => 26.08],
-            ['id' => 'HMB', 'name' => 'Heimberg', 'abbr' => 'HMB', 'km' => 29.38],
-        ]
-    ],
     'emmental-zo' => [
         'id' => 'emmental-zo',
         'name' => 'Emmental (Zollbrück)',
