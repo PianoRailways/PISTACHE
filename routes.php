@@ -380,14 +380,14 @@ $ROUTES = [
             ['id' => 'AARV', 'name' => 'Vorstadt', 'abbr' => 'AARV', 'km' => 27.77],
             ['id' => 'HAMU', 'name' => 'Hard-Mumenthl', 'abbr' => 'HAMU', 'km' => 28.09],
             ['id' => 'LTHG', 'name' => 'Gaswerk', 'abbr' => 'LTHG', 'km' => 29.43],
-            ['id' => 'LTHAA', 'name' => 'Langenthal', 'abbr' => 'LTHAA', 'km' => 30.53],
+            ['id' => 'LTHA', 'name' => 'Langenthal', 'abbr' => 'LTHA', 'km' => 30.53],
         ]
     ],
     'asm-r' => [
         'id' => 'asm-r',
         'name' => 'ASM-R',
         'stations' => [
-            ['id' => 'LTHAA', 'name' => 'Langenthal', 'abbr' => 'LTHAA', 'km' => 0.14],
+            ['id' => 'LTHA', 'name' => 'Langenthal', 'abbr' => 'LTHA', 'km' => 0.14],
             ['id' => 'LTHG', 'name' => 'Gaswerk', 'abbr' => 'LTHG', 'km' => 1.1],
             ['id' => 'LTIN', 'name' => 'Industrie Nord', 'abbr' => 'LTIN', 'km' => 1.92],
             ['id' => 'ROMU', 'name' => 'Mumenthal', 'abbr' => 'ROMU', 'km' => 1.92],
