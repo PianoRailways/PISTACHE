@@ -1139,9 +1139,9 @@ $ROUTES = [
             ['id' => 'RSST', 'name' => 'Rorschach Stadt', 'abbr' => 'RSST', 'km' => 66.27],
         ]
     ],
-    'holderbank' => [
-        'id' => 'holderbank',
-        'name' => 'Holderbank',
+    'holderbank-heitersberg' => [
+        'id' => 'holderbank-heitersberg',
+        'name' => 'Holderbank – Heitersberg',
         'stations' => [
             ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => -49.36],
             ['id' => 'AAGB', 'name' => 'Aarau GB', 'abbr' => 'AAGB', 'km' => -48.16],
@@ -1152,6 +1152,17 @@ $ROUTES = [
             ['id' => 'BG', 'name' => 'Brugg', 'abbr' => 'BG', 'km' => -31.27],
             ['id' => 'TG', 'name' => 'Turgi', 'abbr' => 'TG', 'km' => -27.43],
             ['id' => 'BD', 'name' => 'Baden', 'abbr' => 'BD', 'km' => -22.53],
+            ['id' => 'WE', 'name' => 'Wettingen', 'abbr' => 'WE', 'km' => -20.33],
+            ['id' => 'NHOF', 'name' => 'Neuenhof', 'abbr' => 'NHOF', 'km' => -18.79],
+            ['id' => 'KLW', 'name' => 'Killwangen-Spreitenach', 'abbr' => 'KLW', 'km' => -16.11],
+            ['id' => 'SILB', 'name' => 'Silbern', 'abbr' => 'SILB', 'km' => -13.3],
+            ['id' => 'DT', 'name' => 'Dietikon', 'abbr' => 'DT', 'km' => -11.07],
+            ['id' => 'GLZB', 'name' => 'Glanzenberg', 'abbr' => 'GLZB', 'km' => -9.55],
+            ['id' => 'SCHL', 'name' => 'Schlieren', 'abbr' => 'SCHL', 'km' => -7.51],
+            ['id' => 'EINF', 'name' => 'Einfang', 'abbr' => 'EINF', 'km' => -6.32],
+            ['id' => 'ZAS', 'name' => 'Altstetten', 'abbr' => 'ZAS', 'km' => -4.17],
+            ['id' => 'ZVB', 'name' => 'Vorbahnhof', 'abbr' => 'ZVB', 'km' => -1.96],
+            ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0],
         ]
     ],
     'frick' => [
@@ -2307,9 +2318,9 @@ $ROUTES = [
             ['id' => 'ZZ', 'name' => 'Bad Zurzach', 'abbr' => 'ZZ', 'km' => 48.11],
         ]
     ],
-    'heitersberg' => [
-        'id' => 'heitersberg',
-        'name' => 'Heitersberg',
+    'heitersberg-maeg' => [
+        'id' => 'heitersberg-maeg',
+        'name' => 'Heitersberg via Mägenwil',
         'stations' => [
             ['id' => 'WOES', 'name' => 'Wöschnau', 'abbr' => 'WOES', 'km' => -43.44],
             ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => -41.51],
