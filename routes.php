@@ -3598,7 +3598,7 @@ $ROUTES = [
         'id' => 'mittelthurgau',
         'name' => 'Mittelthurgau',
         'stations' => [
-            ['id' => 'WIL', 'name' => 'Wil', 'abbr' => 'BNG', 'km' => 0],
+            ['id' => 'WIL', 'name' => 'Wil', 'abbr' => 'WIL', 'km' => 0],
             ['id' => 'BRO', 'name' => 'Bronschhofen', 'abbr' => 'BRO', 'km' => 2.58],
             ['id' => 'BROA', 'name' => 'Bronschhofen AMP', 'abbr' => 'BROA', 'km' => 3.33],
             ['id' => 'BTW', 'name' => 'Bettwiesen', 'abbr' => 'BTW', 'km' => 5.45],
