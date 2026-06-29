@@ -256,7 +256,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $waypoints = [$start, ...$vias, $destination];
         
-        // Parameter-Reihenfolge korrigiert
         $paths = findRoutePaths($waypoints, $ROUTES);
 
         if (empty($paths)) {
@@ -518,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <thead>
                     <tr>
                         <th style="width: 30px;">✗</th>
-                        <th>Bahnhof</th>
+                        <th>Bahnhof (Kilometrierung)</th>
                         <th style="width: 60px;">Gleis</th>
                         <th style="width: 80px;">Ankunft</th>
                         <th style="width: 80px;">Abfahrt</th>
@@ -728,6 +727,9 @@ function buildEditorTable(path) {
         const wasInOldRoute = Array.isArray(oldTimetable) && oldTimetable.some(t => (t.station_id || '').toUpperCase() === abbr);
         const stationTimes = plannedTimes[index] || {};
 
+        // Hier wird die kumulierte Kilometerzahl formatiert
+        const displayKm = station.cumulative_km !== undefined ? Number(station.cumulative_km).toFixed(1) + ' km' : (station.km ? Number(station.km).toFixed(1) + ' km' : '— km');
+
         if (wasInOldRoute) {
             tr.style.background = 'rgba(34, 197, 94, 0.08)'; 
         } else {
@@ -741,7 +743,8 @@ function buildEditorTable(path) {
                        title="${wasInOldRoute ? 'Halt in alter Route' : 'Neuer Halt'}">
             </td>
             <td>
-                <strong>${station.name}</strong> (${abbr})
+                <strong>${station.name}</strong> (${abbr}) 
+                <span style="color: #38bdf8; font-size: 11px; font-family: monospace; background: #0f172a; padding: 2px 6px; border-radius: 3px; margin-left: 6px;">${displayKm}</span>
                 ${wasInOldRoute ? '<span style="color: #64748b; font-size: 11px; margin-left: 8px;">🗂️ alt</span>' : '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu</span>'}
             </td>
             <td><input type="text" name="stations[${abbr}][track]" placeholder="z.B. 3" size="5"></td>
