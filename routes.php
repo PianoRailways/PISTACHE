@@ -359,8 +359,8 @@ $ROUTES = [
             ['id' => 'OBBI', 'name' => 'Oberbipp', 'abbr' => 'OBBI', 'km' => 11.71],
             ['id' => 'OPIN', 'name' => 'Oberbipp Industrie', 'abbr' => 'OPIN', 'km' => 12.405],
             ['id' => 'BULI', 'name' => 'Buchli', 'abbr' => 'BULI', 'km' => 13.1],
-            ['id' => 'NB A', 'name' => 'Niederbipp', 'abbr' => 'NB A', 'km' => 14.54],
-            ['id' => 'NIIN A', 'name' => 'Niederbipp Industrie', 'abbr' => 'NIIN', 'km' => 15.5],
+            ['id' => 'NB', 'name' => 'Niederbipp', 'abbr' => 'NB', 'km' => 14.54],
+            ['id' => 'NIIN', 'name' => 'Niederbipp Industrie', 'abbr' => 'NIIN', 'km' => 15.5],
             ['id' => 'OEEN', 'name' => 'Oensingen', 'abbr' => 'OEEN', 'km' => 17],
         ]
     ],
@@ -369,8 +369,8 @@ $ROUTES = [
         'name' => 'ASM-A',
         'stations' => [
             ['id' => 'OEEN', 'name' => 'Oensingen', 'abbr' => 'OEEN', 'km' => 17],
-            ['id' => 'NIIN B', 'name' => 'Niederbipp Industrie', 'abbr' => 'NIIN', 'km' => 18.5],
-            ['id' => 'NB B', 'name' => 'Niederbipp', 'abbr' => 'NB B', 'km' => 19.8],
+            ['id' => 'NIIN', 'name' => 'Niederbipp Industrie', 'abbr' => 'NIIN', 'km' => 18.5],
+            ['id' => 'NB', 'name' => 'Niederbipp', 'abbr' => 'NB', 'km' => 19.8],
             ['id' => 'NBD', 'name' => 'Niederbipp Dorf', 'abbr' => 'NBD', 'km' => 20.19],
             ['id' => 'SNAG', 'name' => 'Scharnageln', 'abbr' => 'SNAG', 'km' => 20.78],
             ['id' => 'HZH', 'name' => 'Houzhüsli', 'abbr' => 'HZH', 'km' => 21.74],
