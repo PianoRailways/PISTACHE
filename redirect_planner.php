@@ -619,9 +619,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
     </div>
-        <h2>Gefundene Routen</h2>
-        <div id="results_list"></div>
-    </div>
 
     <!-- EDITOR PANEL -->
     <div class="panel editor-container" id="editor_panel">
@@ -857,6 +854,7 @@ function buildEditorTable(path) {
         const abbr = station.abbr.toUpperCase();
         const wasInOldRoute = oldTimetable.some(t => t.station_id.toUpperCase() === abbr);
         const stationTimes = plannedTimes[index] || {};
+        const kmDisplay = station.km !== undefined ? ` (km ${station.km.toFixed(1)})` : '';
 
         // Styling: Grün wenn alt, Blau wenn neu
         if (wasInOldRoute) {
@@ -872,7 +870,7 @@ function buildEditorTable(path) {
                        title="${wasInOldRoute ? 'Halt in alter Route - kann übersprungen werden' : 'Neuer Halt - wird nicht übersprungen'}">
             </td>
             <td>
-                <strong>${station.name}</strong> (${abbr})
+                <strong>${station.name}</strong> (${abbr})${kmDisplay}
                 ${wasInOldRoute ? '<span style="color: #64748b; font-size: 11px; margin-left: 8px;">🗂️ alt</span>' : '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu</span>'}
             </td>
             <td><input type="text" name="stations[${abbr}][track]" placeholder="z.B. 3" size="5"></td>
