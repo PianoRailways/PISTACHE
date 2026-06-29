@@ -243,6 +243,7 @@ $ROUTES = [
             ['id' => 'PARD', 'name' => 'Pardorea', 'abbr' => 'PARD', 'km' => 101.93],
             ['id' => 'FA', 'name' => 'Faido', 'abbr' => 'FA', 'km' => 106],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
+            ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
         ]
     ],
     'giubiasco' => [
