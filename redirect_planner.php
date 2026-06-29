@@ -9,7 +9,6 @@ set_exception_handler(function ($e) {
 
 require_once __DIR__ . '/routes.php';
 
-// Falls $ROUTES in routes.php definiert ist, stellen wir sicher, dass es existiert
 if (!isset($ROUTES)) {
     $ROUTES = []; 
 }
@@ -182,7 +181,6 @@ function calculatePathTimes($pathData, $speed, $ROUTES, $startOffsetMinutes = 0)
 }
 
 try {
-    // Falls der Ordner dbs nicht existiert, erstellen wir ihn, damit PDO nicht crashed
     if (!file_exists(__DIR__ . '/dbs')) {
         mkdir(__DIR__ . '/dbs', 0777, true);
     }
@@ -258,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $waypoints = [$start, ...$vias, $destination];
         
-        // HIER WAR DER FEHLER: Parameter-Reihenfolge korrigiert!
+        // Parameter-Reihenfolge korrigiert
         $paths = findRoutePaths($waypoints, $ROUTES);
 
         if (empty($paths)) {
@@ -481,7 +479,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- RESULTS PANEL -->
-    <div class="panel results-container" id="results_panel" style="display: none;">
+    <div class="panel results-container" id="results_panel">
         <h2>🛤️ Gefundene Routen</h2>
         <div id="results_list"></div>
     </div>
@@ -503,9 +501,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tbody id="loaded_timetable_tbody">
             </tbody>
         </table>
-    </div>
-        <h2>Gefundene Routen</h2>
-        <div id="results_list"></div>
     </div>
 
     <!-- EDITOR PANEL -->
@@ -563,7 +558,6 @@ async function initPlanner() {
     
     Object.assign(ROUTES, data);
     
-    // Baue Stations-Index
     for (const routeId in ROUTES) {
         const route = ROUTES[routeId];
         if (route.stations && Array.isArray(route.stations)) {
@@ -596,14 +590,6 @@ async function findRoutes() {
     const vias = viaInputs.map(i => i.value.trim().toUpperCase()).filter(v => v);
     const speed = currentSpeed;
 
-    console.log('🔍 DEBUG - Eingabeparameter:');
-    console.log('Start:', start);
-    console.log('Via-Inputs gefunden:', viaInputs.length);
-    viaInputs.forEach((inp, idx) => console.log(`  Via[${idx}] = "${inp.value}"`));
-    console.log('Gefilterte Vias:', vias);
-    console.log('Destination:', destination);
-    console.log('Speed:', speed);
-
     if (!start || !destination) {
         alert('Bitte gib Start und Ziel ein');
         return;
@@ -612,7 +598,7 @@ async function findRoutes() {
     const formData = new FormData();
     formData.append('action', 'find_routes');
     formData.append('start', start);
-    vias.forEach((via, idx) => formData.append(`vias[${idx}]`, via)); // Array-Format
+    vias.forEach((via, idx) => formData.append(`vias[${idx}]`, via)); 
     formData.append('destination', destination);
     formData.append('speed', speed);
     formData.append('start_time_minutes', getReferenceTimeMinutes());
@@ -682,79 +668,77 @@ function buildEditorTable(path) {
     document.getElementById('current_route_name').innerText = path.route_name || 'Umgeleitet';
     document.getElementById('current_train_info').style.display = 'block';
 
-    // Erstelle Set von umgeleiteten Station-IDs
-    const redirectedStationIds = new Set(path.stations.map(s => s.abbr.toUpperCase()));
     const redirectStart = path.stations[0].abbr.toUpperCase();
     const redirectEnd = path.stations[path.stations.length - 1].abbr.toUpperCase();
 
-    // ===== Finde Original-Stationen ZWISCHEN Start und End (die ausfallen) =====
     const falloutStations = [];
     let inRange = false;
     
-    oldTimetable.forEach(stop => {
-        const abbr = stop.station_id.toUpperCase();
-        
-        if (abbr === redirectStart) {
-            inRange = true;
-            return;
-        }
-        
-        if (abbr === redirectEnd) {
-            inRange = false;
-            return;
-        }
-        
-        if (inRange) {
-            falloutStations.push(stop);
-        }
-    });
+    if (Array.isArray(oldTimetable)) {
+        oldTimetable.forEach(stop => {
+            const abbr = (stop.station_id || '').toUpperCase();
+            
+            if (abbr === redirectStart) {
+                inRange = true;
+                return;
+            }
+            
+            if (abbr === redirectEnd) {
+                inRange = false;
+                return;
+            }
+            
+            if (inRange) {
+                falloutStations.push(stop);
+            }
+        });
+    }
 
-    // ===== TEIL 1: Original-Stationen VOR Umleitung =====
-    let foundStart = false;
-    oldTimetable.forEach(stop => {
-        const abbr = stop.station_id.toUpperCase();
-        if (abbr === redirectStart) {
-            foundStart = true;
-            return;
-        }
-        if (foundStart) return;
+    if (Array.isArray(oldTimetable)) {
+        let foundStart = false;
+        oldTimetable.forEach(stop => {
+            const abbr = (stop.station_id || '').toUpperCase();
+            if (abbr === redirectStart) {
+                foundStart = true;
+                return;
+            }
+            if (foundStart) return;
 
-        const tr = document.createElement('tr');
-        tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
-        
-        tr.innerHTML = `
-            <td class="checkbox-col"></td>
-            <td style="color: #94a3b8;">
-                <strong>${stop.station_id}</strong> (Original)
-            </td>
-            <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
-            <td></td>
-            <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
-        `;
-        tbody.appendChild(tr);
-    });
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(100, 116, 139, 0.2)'; 
+            
+            tr.innerHTML = `
+                <td class="checkbox-col"></td>
+                <td style="color: #94a3b8;">
+                    <strong>${stop.station_id}</strong> (Original)
+                </td>
+                <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
+                <td></td>
+                <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 
-    // ===== TEIL 2: Umgeleitete Stationen =====
     path.stations.forEach((station, index) => {
         const tr = document.createElement('tr');
         const abbr = station.abbr.toUpperCase();
-        const wasInOldRoute = oldTimetable.some(t => t.station_id.toUpperCase() === abbr);
+        const wasInOldRoute = Array.isArray(oldTimetable) && oldTimetable.some(t => (t.station_id || '').toUpperCase() === abbr);
         const stationTimes = plannedTimes[index] || {};
 
-        // Styling: Grün wenn alt, Blau wenn neu
         if (wasInOldRoute) {
-            tr.style.background = 'rgba(34, 197, 94, 0.08)'; // Grün für alte Halte
+            tr.style.background = 'rgba(34, 197, 94, 0.08)'; 
         } else {
-            tr.style.background = 'rgba(14, 165, 233, 0.08)'; // Blau für neue Halte
+            tr.style.background = 'rgba(14, 165, 233, 0.08)'; 
         }
 
         tr.innerHTML = `
             <td class="checkbox-col">
                 <input type="checkbox" id="skip_${abbr}" 
                        ${wasInOldRoute ? '' : 'disabled'} 
-                       title="${wasInOldRoute ? 'Halt in alter Route - kann übersprungen werden' : 'Neuer Halt - wird nicht übersprungen'}">
+                       title="${wasInOldRoute ? 'Halt in alter Route' : 'Neuer Halt'}">
             </td>
             <td>
                 <strong>${station.name}</strong> (${abbr})
@@ -770,9 +754,7 @@ function buildEditorTable(path) {
         tbody.appendChild(tr);
     });
 
-    // ===== TEIL 3: Ausfallstationen (Original zwischen Start und End) =====
     if (falloutStations.length > 0) {
-        // Trennlinie
         const separatorTr = document.createElement('tr');
         separatorTr.style.background = 'rgba(239, 68, 68, 0.15)';
         separatorTr.innerHTML = `<td colspan="7" style="padding: 10px; color: #ef4444; font-weight: bold; text-align: center;">⚠️ Ausfallstationen (Original)</td>`;
@@ -780,11 +762,11 @@ function buildEditorTable(path) {
 
         falloutStations.forEach(stop => {
             const tr = document.createElement('tr');
-            tr.style.background = 'rgba(239, 68, 68, 0.1)'; // Rot = Ausfall
+            tr.style.background = 'rgba(239, 68, 68, 0.15)'; 
             
             tr.innerHTML = `
                 <td class="checkbox-col">
-                    <input type="checkbox" id="fallout_${stop.station_id.toUpperCase()}" checked title="Dieser Halt fällt aus (ist nicht in der Umleitung)">
+                    <input type="checkbox" id="fallout_${stop.station_id.toUpperCase()}" checked>
                 </td>
                 <td style="color: #ef4444; text-decoration: line-through;">
                     <strong>${stop.station_id}</strong> ✗ AUSFALL
@@ -799,41 +781,42 @@ function buildEditorTable(path) {
         });
     }
 
-    // ===== TEIL 4: Original-Stationen NACH Umleitung =====
-    foundStart = false;
-    let foundEnd = false;
-    
-    oldTimetable.forEach(stop => {
-        const abbr = stop.station_id.toUpperCase();
+    if (Array.isArray(oldTimetable)) {
+        let foundStart = false;
+        let foundEnd = false;
         
-        if (abbr === redirectStart) {
-            foundStart = true;
-            return;
-        }
-        
-        if (abbr === redirectEnd) {
-            foundEnd = true;
-            return;
-        }
-        
-        if (!foundStart || !foundEnd) return;
+        oldTimetable.forEach(stop => {
+            const abbr = (stop.station_id || '').toUpperCase();
+            
+            if (abbr === redirectStart) {
+                foundStart = true;
+                return;
+            }
+            
+            if (abbr === redirectEnd) {
+                foundEnd = true;
+                return;
+            }
+            
+            if (!foundStart || !foundEnd) return;
 
-        const tr = document.createElement('tr');
-        tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
-        
-        tr.innerHTML = `
-            <td class="checkbox-col"></td>
-            <td style="color: #94a3b8;">
-                <strong>${stop.station_id}</strong> (Original)
-            </td>
-            <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
-            <td></td>
-            <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
-        `;
-        tbody.appendChild(tr);
-    });
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(100, 116, 139, 0.2)'; 
+            
+            tr.innerHTML = `
+                <td class="checkbox-col"></td>
+                <td style="color: #94a3b8;">
+                    <strong>${stop.station_id}</strong> (Original)
+                </td>
+                <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
+                <td></td>
+                <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 }
 
 function getReferenceTimeMinutes(path = null) {
@@ -842,7 +825,7 @@ function getReferenceTimeMinutes(path = null) {
     if (path && Array.isArray(path.stations)) {
         for (const station of path.stations) {
             const stationAbbr = (station.abbr || '').toUpperCase();
-            const matchingStop = oldTimetable.find(stop => (stop.station_id || '').toUpperCase() === stationAbbr);
+            const matchingStop = oldTimetable.find(stop => ((stop.station_id || '').toUpperCase() === stationAbbr));
             if (matchingStop) {
                 const timeStr = matchingStop.departure || matchingStop.arrival || '';
                 const minutes = timeToMinutes(timeStr);
@@ -927,23 +910,16 @@ async function loadTrainData() {
         
         if (data.train) {
             oldTimetable = data.timetable || [];
-            
-            // Info-Text aktualisieren
             const stationList = oldTimetable.map(t => t.station_id).join(' → ');
             document.getElementById('editor_info').innerHTML = `
                 <strong>Zug ${trainNum}</strong> geladen (Route: ${data.train.route_id})<br>
                 <span style="color: #64748b; font-size: 12px;">Alte Halte: ${stationList || 'keine'}</span>
             `;
-            
-            // Fahrplan-Tabelle anzeigen
             displayLoadedTimetable(trainNum, oldTimetable);
-            
-            console.log(`Zug ${trainNum} geladen mit ${oldTimetable.length} Haltestellen`);
         } else {
             oldTimetable = [];
             document.getElementById('editor_info').innerText = `Zug ${trainNum} nicht in DB - neuer Fahrplan wird erstellt`;
             document.getElementById('loaded_timetable_panel').style.display = 'none';
-            console.log(`Zug ${trainNum} nicht gefunden, neuer Fahrplan`);
         }
     } catch (err) {
         console.error('Fehler beim Laden des Zuges:', err);
