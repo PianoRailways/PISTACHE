@@ -3606,6 +3606,19 @@ $ROUTES = [
             ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => 92.85],
         ]
     ],
+    'st' => [
+        'id' => 'st',
+        'name' => 'ST',
+        'stations' => [
+            ['id' => 'SS', 'name' => 'Sursee', 'abbr' => 'SS', 'km' => 0],
+            ['id' => 'SSST', 'name' => 'Sursee Abzw. ST', 'abbr' => 'SSST', 'km' => 0.37],
+            ['id' => 'SSWM', 'name' => 'Wassermatten', 'abbr' => 'SSWM', 'km' => 2.04],
+            ['id' => 'GEUE', 'name' => 'Geuensee', 'abbr' => 'GEUE', 'km' => 3.75],
+            ['id' => 'BBK', 'name' => 'Bad Büron-Knutwil', 'abbr' => 'BBK', 'km' => 5.77],
+            ['id' => 'TRW', 'name' => 'Triengen-Winikon', 'abbr' => 'TRW', 'km' => 8.81],
+            ['id' => 'TRGE', 'name' => 'Gleisende', 'abbr' => 'TRGE', 'km' => 9],
+        ]
+    ],
     'doubs' => [
         'id' => 'doubs',
         'name' => 'Doubs',
