@@ -311,7 +311,7 @@ $ROUTES = [
             ['id' => 'ALCA', 'name' => 'Albate-Camerlata', 'abbr' => 'ALCA', 'km' => 215],
         ]
     ],
-    'acla-micl' => [
+    'alca-micl' => [
         'id' => 'milano',
         'name' => 'Milano-Como',
         'stations' => [
