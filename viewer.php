@@ -20,10 +20,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
+            padding: 5px 10px;
             background: #1e293b;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 10px;
             border: 1px solid #334155;
         }
         
@@ -33,7 +33,7 @@
             background: #334155;
             color: #fff;
             border: 1px solid #475569;
-            padding: 6px 10px;
+            padding: 3px 7px;
             border-radius: 4px;
             font-size: 12px;
             cursor: pointer;
@@ -203,10 +203,10 @@ function renderGraph() {
     const endMin = timeToMinutes(document.getElementById('graph_end').value) ?? 720;
     const totalVisibleMinutes = endMin - startMin;
 
-    const paddingTop = 100;
+    const paddingTop = 50;
     const paddingBottom = 90;
-    const paddingLeft = 100;
-    const paddingRight = 100;
+    const paddingLeft = 50;
+    const paddingRight = 50;
     
     const graphWidth = canvas.width - paddingLeft - paddingRight;
     const graphHeight = canvas.height - paddingTop - paddingBottom;
