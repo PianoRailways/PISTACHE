@@ -1090,6 +1090,7 @@ $ROUTES = [
             ['id' => 'RK', 'name' => 'Rotkreuz', 'abbr' => 'RK', 'km' => 99.36],
             ['id' => 'BRGL', 'name' => 'Brüglen', 'abbr' => 'BRGL', 'km' => 102.27],
             ['id' => 'MKR', 'name' => 'Meierskappel-Risch', 'abbr' => 'MKR', 'km' => 103.29],
+            ['id' => 'IM', 'name' => 'Immensee', 'abbr' => 'IM', 'km' => 107.20],
         ]
     ],
     'ic1-bn' => [
