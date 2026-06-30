@@ -1582,6 +1582,29 @@ $ROUTES = [
             ['id' => 'ORD', 'name' => 'Oberrieden', 'abbr' => 'ORD', 'km' => 14.52],
         ]
     ],
+    'höfe-march' => [
+        'id' => 'höfe-march',
+        'name' => 'TW - PF - ZB',
+        'stations' => [
+            ['id' => 'TW', 'name' => 'Thalwil', 'abbr' => 'TW', 'km' => 12.09],
+            ['id' => 'ORD', 'name' => 'Oberrieden', 'abbr' => 'ORD', 'km' => 14.23],
+            ['id' => 'HG', 'name' => 'Horgen', 'abbr' => 'HG', 'km' => 16.77],
+            ['id' => 'AU', 'name' => 'Au ZH', 'abbr' => 'AU', 'km' => 20.73],
+            ['id' => 'WAE', 'name' => 'Wädenswil', 'abbr' => 'WAE', 'km' => 23.97],
+            ['id' => 'RI', 'name' => 'Richterswil', 'abbr' => 'RI', 'km' => 27.46],
+            ['id' => 'HAF', 'name' => 'Hafen', 'abbr' => 'HAF', 'km' => 28.73],
+            ['id' => 'BAE', 'name' => 'Bäch', 'abbr' => 'BAE', 'km' => 29.37],
+            ['id' => 'FRB', 'name' => 'Freienbach SBB', 'abbr' => 'FRB', 'km' => 31.71],
+            ['id' => 'PF', 'name' => 'Pffäfion SZ', 'abbr' => 'PF', 'km' => 33.44],
+            ['id' => 'ALTD', 'name' => 'Altendorf', 'abbr' => 'ALTD', 'km' => 37.18],
+            ['id' => 'LA', 'name' => 'Lachen', 'abbr' => 'LA', 'km' => 39.58],
+            ['id' => 'SIB', 'name' => 'Sibnen-Wangen', 'abbr' => 'SIB', 'km' => 43.49],
+            ['id' => 'SCBU', 'name' => 'Schübelbach-Buttikon', 'abbr' => 'SCBU', 'km' => 46.57],
+            ['id' => 'RG', 'name' => 'Reichenburg', 'abbr' => 'RG', 'km' => 49.94],
+            ['id' => 'BIL', 'name' => 'Bilten', 'abbr' => 'BIL', 'km' => 54.23],
+            ['id' => 'ZB', 'name' => 'Ziegelbrücke', 'abbr' => 'ZB', 'km' => 57.15],
+        ]
+    ],
     'flughafenlinie' => [
         'id' => 'flughafenlinie',
         'name' => 'Flughafenlinie (Kloten - Effretikon)',
