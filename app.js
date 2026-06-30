@@ -310,9 +310,13 @@ function recalcRow(stationId, type, trigger) {
     if (!isFree && typeof propagateForward === 'function') {
         propagateForward(currentIndex + 1);
     } else if (isFree && typeof propagateTravelTimeWithReserve === 'function') {
-        // Ankunft geändert: eigene Zeile mit neu berechnen (Standzeitabbau für die eigene Abfahrt).
-        // Abfahrt geändert: eigene Zeile NICHT anfassen (manueller Wert bleibt), erst danach weiterrechnen.
-        propagateTravelTimeWithReserve(type === 'arr' ? currentIndex : currentIndex + 1);
+        if (type === 'arr') {
+            // Eigene Zeile: gerade eingetragener Wert bleibt, Standzeit→Abfahrt wird mitberechnet
+            propagateTravelTimeWithReserve(currentIndex, true);
+        } else {
+            // Abfahrt wurde editiert: eigene Zeile bleibt unangetastet, ab der nächsten neu rechnen
+            propagateTravelTimeWithReserve(currentIndex + 1, false);
+        }
     }
 }
 
@@ -938,114 +942,105 @@ async function saveTrainLink() {
 // ========================================================================
 
 /**
- * propagateTravelTimeWithReserve() - Free Editor Version
+ * propagateTravelTimeWithReserve() - Free Editor Version (Rewrite)
  * 
- * Propagiert die Fahrt mit 7%-Reserve IMMER neu
- * AUSNAHME: Wenn Flags ein Dispo-Kriterium (X, V, C, C4-C7) enthalten → nicht anfassen!
+ * Rechnet die Fahrt ab startIndex GARANTIERT komplett neu durch,
+ * unabhängig davon, was vorher in den Feldern der Folgestationen stand.
+ * Der Zustand (Ist-Abfahrt/Soll-Abfahrt der Vorstation) wird explizit
+ * durch die Schleife mitgeführt statt bei jeder Zeile neu aus dem DOM geraten.
  * 
- * 🔑 KEY FEATURE: Standzeit wird für Verspätungsabbau genutzt
- * - R-Flag = reservierte Standzeit (mind. 2 Min), sonst kann Verspätung abgebremst werden
+ * @param {number} startIndex - ab welcher Station neu gerechnet wird
+ * @param {boolean} preserveFirstArrival - true = die Ist-Ankunft an startIndex
+ *   wurde gerade vom Nutzer selbst eingetragen und wird übernommen statt überschrieben
  */
-function propagateTravelTimeWithReserve(startIndex = 0) {
+function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = false) {
     const form = document.getElementById('free_timetable_form');
     if (!form) return;
 
-    // Durchgehe alle Stationen ab startIndex in Reihenfolge
+    const getVal = (stId, field) => form.querySelector(`[name="stations[${stId}][${field}]"]`)?.value || '';
+    const setVal = (stId, field, val) => {
+        const f = form.querySelector(`[name="stations[${stId}][${field}]"]`);
+        if (f) f.value = val;
+    };
+    const setDelay = (stId, type, val) => {
+        const f = document.getElementById(`delay_${type}_${stId}`);
+        if (f) f.value = val;
+    };
+
+    // Ausgangsbasis: Ist-/Soll-Abfahrt der Station VOR startIndex
+    let prevIstDepMin = null;
+    let prevSollDepMin = null;
+    if (startIndex > 0) {
+        const prevSt = freeEditorStations[startIndex - 1];
+        prevIstDepMin = timeToMinutes(getVal(prevSt.id, 'actual_departure'));
+        prevSollDepMin = timeToMinutes(getVal(prevSt.id, 'departure'));
+    }
+
     for (let i = startIndex; i < freeEditorStations.length; i++) {
-        const currentStation = freeEditorStations[i];
-        const stId = currentStation.id;
+        const st = freeEditorStations[i];
+        const stId = st.id;
 
-        // Lese Soll-Ankunft und Soll-Abfahrt
-        const sollArrStr = form.querySelector(`[name="stations[${stId}][arrival]"]`)?.value;
-        const sollDepStr = form.querySelector(`[name="stations[${stId}][departure]"]`)?.value;
-        const flags = form.querySelector(`[name="stations[${stId}][flags]"]`)?.value || '';
-
-        // Wenn keine Abfahrt/Ankunft: überspring
-        if (!sollArrStr && !sollDepStr) continue;
-
-        // 🔒 SCHUTZ: Wenn Flags ein Dispo-Kriterium enthalten, NICHT anfassen
-        if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
-            console.log(`🔒 GESCHÜTZT: Halt ${stId} hat Dispo-Kriterium (${flags}) → wird übersprungen`);
-            continue;
-        }
-
+        const sollArrStr = getVal(stId, 'arrival');
+        const sollDepStr = getVal(stId, 'departure');
+        const flags = getVal(stId, 'flags');
         const sollArrMin = timeToMinutes(sollArrStr);
         const sollDepMin = timeToMinutes(sollDepStr);
 
-        // ---  IST-Zeiten auslesen ---
-        const istArrField = form.querySelector(`[name="stations[${stId}][actual_arrival]"]`);
-        const istDepField = form.querySelector(`[name="stations[${stId}][actual_departure]"]`);
-        let istArrMin = timeToMinutes(istArrField?.value);
-        let istDepMin = timeToMinutes(istDepField?.value);
+        if (!sollArrStr && !sollDepStr) continue;
 
-        // Wenn Ankunft fehlt, von vorheriger Abfahrt übernehmen
-        if (istArrMin === null && i > 0) {
-            const prevStation = freeEditorStations[i - 1];
-            const prevDepField = form.querySelector(`[name="stations[${prevStation.id}][actual_departure]"]`);
-            istArrMin = timeToMinutes(prevDepField?.value);
-            if (istArrMin !== null && istArrField) {
-                istArrField.value = minutesToTime(istArrMin);
-            }
+        // 🔒 Dispo-Kriterium: Zeile nicht anfassen, aber Kette ab ihrer (manuell/dispo
+        // gesetzten) Ist-Abfahrt fortsetzen, damit die NÄCHSTE Station korrekt rechnet
+        if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
+            console.log(`🔒 GESCHÜTZT: Halt ${stId} hat Dispo-Kriterium (${flags}) → wird übersprungen`);
+            const protIstDep = timeToMinutes(getVal(stId, 'actual_departure'));
+            prevIstDepMin = protIstDep !== null ? protIstDep : sollDepMin;
+            prevSollDepMin = sollDepMin;
+            continue;
         }
 
-        // Wenn Ankunft immer noch null, skip
+        // ========== ANKUNFT ==========
+        let istArrMin;
+        if (i === startIndex && preserveFirstArrival) {
+            // Das ist die Zeile, die der Nutzer gerade selbst editiert hat → Wert übernehmen
+            istArrMin = timeToMinutes(getVal(stId, 'actual_arrival'));
+            if (istArrMin === null) istArrMin = sollArrMin;
+        } else if (prevIstDepMin !== null && prevSollDepMin !== null && sollArrMin !== null) {
+            const sollFahrtzeit = sollArrMin - prevSollDepMin;
+            if (sollFahrtzeit > 0) {
+                // 7% Reserve: nie schneller als 93% der Soll-Fahrtzeit
+                const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
+                const istFahrtzeit = Math.max(minFahrtzeit, sollFahrtzeit);
+                istArrMin = prevIstDepMin + istFahrtzeit;
+            } else {
+                istArrMin = prevIstDepMin;
+            }
+            setVal(stId, 'actual_arrival', minutesToTime(istArrMin));
+        } else if (prevIstDepMin !== null) {
+            istArrMin = prevIstDepMin;
+            setVal(stId, 'actual_arrival', minutesToTime(istArrMin));
+        } else {
+            // Keine Vorgänger-Info vorhanden → bestehenden Wert beibehalten, sonst Soll
+            istArrMin = timeToMinutes(getVal(stId, 'actual_arrival'));
+            if (istArrMin === null) istArrMin = sollArrMin;
+        }
+
         if (istArrMin === null) continue;
 
-        // ========== STANDZEIT-VERWALTUNG ==========
-        // Soll-Standzeit
+        if (sollArrMin !== null) setDelay(stId, 'arr', istArrMin - sollArrMin);
+
+        // ========== STANDZEIT & ABFAHRT ==========
         let sollStandzeit = 0;
         if (sollArrMin !== null && sollDepMin !== null && sollDepMin >= sollArrMin) {
             sollStandzeit = sollDepMin - sollArrMin;
         }
 
-        // R-Flag prüfen (reservierte Standzeit)
         const hasRFlag = /R/i.test(flags);
         const minStandzeit = hasRFlag ? 2 : 0;
-
-        // Verspätung bei Ankunft
         const arrivalDelay = (sollArrMin !== null) ? (istArrMin - sollArrMin) : 0;
-
-        // Verfügbare Abbremsung = Soll-Standzeit - minimale Standzeit
         const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
         const actualBraking = Math.min(Math.max(0, arrivalDelay), availableBraking);
 
-        // 🔧 NEUE IST-ABFAHRT MIT STANDZEITABBAU
-        // Ist-Abfahrt = Soll-Abfahrt + (Verspätung bei Ankunft - Abbremsung)
-        if (i > 0) {
-            const prevStation = freeEditorStations[i - 1];
-            const prevSollDepStr = form.querySelector(`[name="stations[${prevStation.id}][departure]"]`)?.value;
-            const prevIstDepField = form.querySelector(`[name="stations[${prevStation.id}][actual_departure]"]`);
-            const prevIstDepMin = timeToMinutes(prevIstDepField?.value);
-
-            if (prevIstDepMin !== null && prevSollDepStr) {
-                const prevSollDepMin = timeToMinutes(prevSollDepStr);
-
-                // Soll-Fahrzeit
-                const sollFahrtzeit = (sollArrMin !== null) 
-                    ? (sollArrMin - prevSollDepMin) 
-                    : (sollDepMin - prevSollDepMin);
-
-                if (sollFahrtzeit > 0) {
-                    // 7% Reserve: Minimum-Fahrzeit = Sollfahrzeit * 0.93
-                    const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
-
-                    // Ist-Fahrzeit basierend auf bisher eingegeben Ist-Ankunft
-                    const istFahrtzeit = istArrMin - prevIstDepMin;
-
-                    // Verwende Max: entweder die eingegebene Ist-Fahrzeit oder Minimum (mit 7% Reserve)
-                    const effektiveFahrtzeit = Math.max(istFahrtzeit, minFahrtzeit);
-
-                    // Neue Ist-Ankunft berechnen
-                    istArrMin = prevIstDepMin + effektiveFahrtzeit;
-                    if (istArrField) {
-                        istArrField.value = minutesToTime(istArrMin);
-                    }
-                }
-            }
-        }
-
-        // ========== IST-ABFAHRT BERECHNEN MIT STANDZEITABBAU ==========
-        // Soll-Abfahrt + Restversp. = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
+        let istDepMin;
         if (sollDepMin !== null) {
             const remainingDelay = Math.max(0, arrivalDelay - actualBraking);
             istDepMin = sollDepMin + remainingDelay;
@@ -1053,22 +1048,13 @@ function propagateTravelTimeWithReserve(startIndex = 0) {
             istDepMin = istArrMin + minStandzeit;
         }
 
-        if (istDepField) {
-            istDepField.value = minutesToTime(istDepMin);
-        }
+        setVal(stId, 'actual_departure', minutesToTime(istDepMin));
+        if (sollDepMin !== null) setDelay(stId, 'dep', istDepMin - sollDepMin);
 
-        // Delay-Felder aktualisieren
-        const delayArrField = document.getElementById(`delay_arr_${stId}`);
-        const delayDepField = document.getElementById(`delay_dep_${stId}`);
+        // Zustand für nächste Iteration mitgeben
+        prevIstDepMin = istDepMin;
+        prevSollDepMin = sollDepMin !== null ? sollDepMin : sollArrMin;
 
-        if (sollArrMin !== null && delayArrField) {
-            delayArrField.value = istArrMin - sollArrMin;
-        }
-        if (sollDepMin !== null && delayDepField) {
-            delayDepField.value = istDepMin - sollDepMin;
-        }
-
-        // Debug-Ausgabe
         if (arrivalDelay > 0 || actualBraking > 0) {
             console.log(`📍 ${stId}: Ank.Versp=${arrivalDelay}min, Abbr=${actualBraking}min, Restversp=${Math.max(0, arrivalDelay - actualBraking)}min`);
         }
