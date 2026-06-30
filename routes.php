@@ -1579,7 +1579,7 @@ $ROUTES = [
             ['id' => 'KIL', 'name' => 'Kilchberg', 'abbr' => 'KIL', 'km' => 8.86],
             ['id' => 'RUES', 'name' => 'Rüschlikon', 'abbr' => 'RUES', 'km' => 10.64],
             ['id' => 'TW', 'name' => 'Thalwil', 'abbr' => 'TW', 'km' => 12.09],
-            ['id' => 'ORD', 'name' => 'Oberrieden Dorf', 'abbr' => 'ORD', 'km' => 14.52],
+            ['id' => 'ORD', 'name' => 'Oberrieden', 'abbr' => 'ORD', 'km' => 14.52],
         ]
     ],
     'flughafenlinie' => [
