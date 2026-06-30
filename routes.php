@@ -3267,7 +3267,7 @@ $ROUTES = [
         ['id' => 'LD', 'name' => 'Le Landeron', 'abbr' => 'LAN', 'km' => 87.72],
         ['id' => 'NV', 'name' => 'La Neuveville', 'abbr' => 'NEU', 'km' => 90.05],
         ['id' => 'LIG', 'name' => 'Ligerz', 'abbr' => 'LIG', 'km' => 94.0],
-        ['id' => 'TWM', 'name' => 'Twann', 'abbr' => 'TWA', 'km' => 95.98],
+        ['id' => 'TWN', 'name' => 'Twann', 'abbr' => 'TWN', 'km' => 95.98],
         ['id' => 'TUE', 'name' => 'Tüscherz', 'abbr' => 'TUS', 'km' => 99.95],
         ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BIE', 'km' => 104.50],
     ]
