@@ -309,6 +309,10 @@ function recalcRow(stationId, type, trigger) {
 
     if (!isFree && typeof propagateForward === 'function') {
         propagateForward(currentIndex + 1);
+    } else if (isFree && typeof propagateTravelTimeWithReserve === 'function') {
+        // Ankunft geändert: eigene Zeile mit neu berechnen (Standzeitabbau für die eigene Abfahrt).
+        // Abfahrt geändert: eigene Zeile NICHT anfassen (manueller Wert bleibt), erst danach weiterrechnen.
+        propagateTravelTimeWithReserve(type === 'arr' ? currentIndex : currentIndex + 1);
     }
 }
 
@@ -942,12 +946,12 @@ async function saveTrainLink() {
  * 🔑 KEY FEATURE: Standzeit wird für Verspätungsabbau genutzt
  * - R-Flag = reservierte Standzeit (mind. 2 Min), sonst kann Verspätung abgebremst werden
  */
-function propagateTravelTimeWithReserve() {
+function propagateTravelTimeWithReserve(startIndex = 0) {
     const form = document.getElementById('free_timetable_form');
     if (!form) return;
 
-    // Durchgehe alle Stationen in Reihenfolge
-    for (let i = 0; i < freeEditorStations.length; i++) {
+    // Durchgehe alle Stationen ab startIndex in Reihenfolge
+    for (let i = startIndex; i < freeEditorStations.length; i++) {
         const currentStation = freeEditorStations[i];
         const stId = currentStation.id;
 
@@ -1332,8 +1336,9 @@ async function saveFreeTimetable(e) {
         return;
     }
     
-    // ÄNDERUNG: Propagiere die Fahrzeit mit 7%-Reserve vor dem Speichern
-    propagateTravelTimeWithReserve();
+    // Propagation läuft jetzt live bei jeder Eingabe (siehe recalcRow).
+    // Ein erneuter Voll-Durchlauf hier würde manuell angepasste, spätere
+    // Verspätungen wieder überschreiben – daher bewusst entfernt.
     
     const formData = new FormData(document.getElementById('free_timetable_form'));
     formData.append('action', 'save_timetable');
