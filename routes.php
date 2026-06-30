@@ -2451,6 +2451,22 @@ $ROUTES = [
             ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => -33.2],
         ]
     ],
+    'rotkreuz' => [
+        'id' => 'rotkreuz',
+        'name' => 'Ebikon – Rotkreuz – Cham',
+        'stations' => [
+            ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => -66.74],
+            ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => -64.04],
+            ['id' => 'EBI', 'name' => 'Ebikon', 'abbr' => 'EBI', 'km' => -58.57],
+            ['id' => 'BURN', 'name' => 'Buchrain', 'abbr' => 'BURN', 'km' => -57.07],
+            ['id' => 'LBD', 'name' => 'Root D4', 'abbr' => 'LBD', 'km' => -55.26],
+            ['id' => 'GSK', 'name' => 'Gisikon-Root', 'abbr' => 'GSK', 'km' => -52.82],
+            ['id' => 'RK', 'name' => 'Rotkreuz', 'abbr' => 'RK', 'km' => -49],
+            ['id' => 'HUCH', 'name' => 'Chämleten', 'abbr' => 'HUCH', 'km' => -44.86],
+            ['id' => 'HUZY', 'name' => 'Zythus', 'abbr' => 'HUZY', 'km' => -44.36],
+            ['id' => 'CHAM', 'name' => 'Cham', 'abbr' => 'CHAM', 'km' => -43.57],
+        ]
+    ],
     'verkehrshaus' => [
         'id' => 'verkehrshaus',
         'name' => 'Verkehrshaus am See',
