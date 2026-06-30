@@ -567,7 +567,7 @@ async function renderGraph() {
 
             ctx.fillStyle = baseColor;
 
-            if (delayMin !== null && delayMin !== 0) {
+            if (delayMin !== null) {
                 const numberText = `${train.train_number} `;
                 const delayText = `(${delayMin > 0 ? '+' : ''}${delayMin})`;
 
