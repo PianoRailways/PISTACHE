@@ -1905,20 +1905,6 @@ $ROUTES = [
             ['id' => 'SIS', 'name' => 'Sissach', 'abbr' => 'SIS', 'km' => -21.1],
         ]
     ],
-    'ol-gäu' => [
-        'id' => 'ol-gäu',
-        'name' => 'Olten (Gäu)',
-        'stations' => [
-            ['id' => 'EG', 'name' => 'Egerkingen', 'abbr' => 'EG', 'km' => -49.1],
-            ['id' => 'HRK', 'name' => 'Härkingen Post', 'abbr' => 'HRK', 'km' => -47],
-            ['id' => 'HAE', 'name' => 'Hägendorf', 'abbr' => 'HAE', 'km' => -45.3],
-            ['id' => 'WBO', 'name' => 'Wangen b.O.', 'abbr' => 'WBO', 'km' => -43],
-            ['id' => 'OLH', 'name' => 'Hammer', 'abbr' => 'OLH', 'km' => -40.6],
-            ['id' => 'OL', 'name' => 'Olten', 'abbr' => 'OL', 'km' => -39.3],
-            ['id' => 'DU', 'name' => 'Dulliken', 'abbr' => 'DU', 'km' => -35.7],
-            ['id' => 'DK', 'name' => 'Däniken', 'abbr' => 'DK', 'km' => -32.9],
-        ]
-    ],
     'uetliberg' => [
         'id' => 'uetliberg',
         'name' => 'Uetlibergbahn',
@@ -1937,8 +1923,8 @@ $ROUTES = [
             ['id' => 'UEBE', 'name' => 'Uetliberg', 'abbr' => 'UEBE', 'km' => 9.13],
         ]
     ],
-    'sbb-szu' => [
-        'id' => 'sbb-szu',
+    'manessetunnel' => [
+        'id' => 'manessetunnel',
         'name' => 'Verbindungslinie Wiedikon - Giesshübel',
         'stations' => [
             ['id' => 'ZWIE', 'name' => 'Zürich Wiedikon', 'abbr' => 'ZWIE', 'km' => 0.08],
@@ -3290,6 +3276,9 @@ $ROUTES = [
             ['id' => 'HAE', 'name' => 'Hägendorf', 'abbr' => 'HAE', 'km' => -45.3],
             ['id' => 'WBO', 'name' => 'Wangen b.O.', 'abbr' => 'WBO', 'km' => -43],
             ['id' => 'OLH', 'name' => 'Hammer', 'abbr' => 'OLH', 'km' => -40.6],
+            ['id' => 'OL', 'name' => 'Olten', 'abbr' => 'OL', 'km' => -39.3],
+            ['id' => 'DU', 'name' => 'Dulliken', 'abbr' => 'DU', 'km' => -35.7],
+            ['id' => 'DK', 'name' => 'Däniken', 'abbr' => 'DK', 'km' => -32.9],
         ]
     ],
     'abs' => [
