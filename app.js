@@ -554,10 +554,44 @@ async function renderGraph() {
 
         const firstVisibleIst = istPoints.find(p => p.y !== null);
         if (firstVisibleIst) {
+            // Verspätung berechnen (Ist - Soll) anhand der ersten Station mit beiden Zeiten
+            let delayMin = null;
+            for (const item of validStops) {
+                const sollMin = timeToMinutes(item.stop.departure || item.stop.arrival);
+                const istMin = timeToMinutes(item.stop.actual_departure || item.stop.actual_arrival);
+                if (sollMin !== null && istMin !== null) {
+                    delayMin = istMin - sollMin;
+                    break;
+                }
+            }
+
             ctx.fillStyle = baseColor;
-            ctx.font = 'bold 11px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
+
+            if (delayMin !== null && delayMin !== 0) {
+                const numberText = `${train.train_number} `;
+                const delayText = `(${delayMin > 0 ? '+' : ''}${delayMin})`;
+
+                ctx.font = 'bold 11px sans-serif';
+                const numberWidth = ctx.measureText(numberText).width;
+                ctx.font = 'bold 9px sans-serif';
+                const delayWidth = ctx.measureText(delayText).width;
+
+                const totalWidth = numberWidth + delayWidth;
+                const startX = firstVisibleIst.x - (totalWidth / 2);
+
+                ctx.textAlign = 'left';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText(numberText, startX, firstVisibleIst.y - 8);
+
+                ctx.font = 'bold 9px sans-serif';
+                ctx.fillText(delayText, startX + numberWidth, firstVisibleIst.y - 8);
+
+                ctx.textAlign = 'center';
+            } else {
+                ctx.font = 'bold 11px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
+            }
         }
     });
     
