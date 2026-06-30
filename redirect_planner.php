@@ -9,6 +9,10 @@ set_exception_handler(function ($e) {
 
 require_once __DIR__ . '/routes.php';
 
+if (!isset($ROUTES)) {
+    $ROUTES = []; 
+}
+
 $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 
 // ========================================================================
@@ -16,187 +20,97 @@ $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 // ========================================================================
 
 /**
- * VEREINFACHTES ROUTING: Für jeden Waypoint-Pair den direktesten Weg finden
- * - Keine Rückwärtsfahrten
- * - Keine Stationen doppelt
- * - Einfach: Start→Via1→Via2→...→Ziel sequenziell
- */
-/**
  * GRAPH-ROUTING: Findet den echten kürzesten Weg über Netzwerkknoten
  * Verhindert Schleifen und unvollständige Pfade durch topologische Graphensuche.
  */
-function findRoutePaths($ROUTES, $waypoints, $stationMap) {
-    if (count($waypoints) < 2) return [];
-
-    // 1. Graph aus dem Liniennetz aufbauen (Knoten und Kanten)
-    $graph = [];
-    foreach ($ROUTES as $routeId => $route) {
-        $stations = $route['stations'] ?? [];
-        for ($i = 0; $i < count($stations) - 1; $i++) {
-            $u = strtoupper($stations[$i]['abbr'] ?? '');
-            $v = strtoupper($stations[$i+1]['abbr'] ?? '');
-            if (!$u || !$v) continue;
-
-            // Strecken-Distanz berechnen
-            $kmDiff = abs(($stations[$i+1]['km'] ?? 0) - ($stations[$i]['km'] ?? 0));
-
-            // Gerichtete Kante im Graphen hinterlegen
-            $graph[$u][] = [
-                'to' => $v,
-                'km' => $kmDiff,
-                'station' => $stations[$i+1]
-            ];
-        }
+function findRoutePaths($waypoints, $ROUTES) {
+    if (count($waypoints) < 2) {
+        return [];
     }
 
-    // Helper: Holt das originale Station-Metadaten-Objekt für Startbahnhöfe
-    $getStationObj = function($abbr) use ($ROUTES) {
-        foreach ($ROUTES as $route) {
-            foreach ($route['stations'] as $st) {
-                if (strtoupper($st['abbr'] ?? '') === strtoupper($abbr)) {
-                    return $st;
+    // Hilfsfunktion: Sucht ein Segment, bei dem beide Wegpunkte auf DERSELBEN Route liegen
+    $findRouteSegment = function($startId, $endId) use ($ROUTES) {
+        foreach ($ROUTES as $routeId => $route) {
+            $stations = $route['stations'] ?? [];
+            $startIndex = -1;
+            $endIndex = -1;
+
+            foreach ($stations as $idx => $st) {
+                if (($st['id'] ?? '') === $startId) $startIndex = $idx;
+                if (($st['id'] ?? '') === $endId) $endIndex = $idx;
+            }
+
+            if ($startIndex !== -1 && $endIndex !== -1) {
+                $segment = [];
+                if ($startIndex <= $endIndex) {
+                    // Vorwärts durch die Route
+                    for ($i = $startIndex; $i <= $endIndex; $i++) {
+                        $segment[] = $stations[$i];
+                    }
+                } else {
+                    // Rückwärts durch die Route
+                    for ($i = $startIndex; $i >= $endIndex; $i--) {
+                        $segment[] = $stations[$i];
+                    }
                 }
+                return $segment;
             }
         }
-        return ['id' => $abbr, 'abbr' => $abbr, 'name' => $abbr, 'km' => 0];
+        return null;
     };
 
-    // Wenn Start und Ziel auf derselben Route liegen, verwende direkt den passenden Abschnitt der Route.
-    $findRouteSegment = function($startNode, $endNode) use ($ROUTES, $getStationObj) {
-        $startNode = strtoupper($startNode);
-        $endNode = strtoupper($endNode);
-
-        if ($startNode === $endNode) {
-            return [$getStationObj($startNode)];
-        }
-
-        $bestSegment = null;
-        $bestScore = null;
-
+    // Hilfsfunktion: Fallback, falls die Wegpunkte nicht auf einer gemeinsamen Route liegen
+    $findShortestSegment = function($startId, $endId) use ($ROUTES) {
         foreach ($ROUTES as $route) {
             $stations = $route['stations'] ?? [];
-            $startIndex = null;
-            $endIndex = null;
-
-            foreach ($stations as $idx => $station) {
-                $abbr = strtoupper($station['abbr'] ?? '');
-                if ($abbr === $startNode) {
-                    $startIndex = $idx;
+            foreach ($stations as $idx => $st) {
+                if (($st['id'] ?? '') === $startId) {
+                    return array_slice($stations, $idx);
                 }
-                if ($abbr === $endNode) {
-                    $endIndex = $idx;
-                }
-            }
-
-            if ($startIndex === null || $endIndex === null) {
-                continue;
-            }
-
-            $segment = $startIndex <= $endIndex
-                ? array_slice($stations, $startIndex, $endIndex - $startIndex + 1)
-                : array_reverse(array_slice($stations, $endIndex, $startIndex - $endIndex + 1));
-
-            if (empty($segment)) {
-                continue;
-            }
-
-            $segmentLength = count($segment);
-            $segmentKm = 0;
-            for ($i = 0; $i < count($segment) - 1; $i++) {
-                $segmentKm += abs(($segment[$i + 1]['km'] ?? 0) - ($segment[$i]['km'] ?? 0));
-            }
-
-            $score = [$segmentLength, $segmentKm];
-            if ($bestScore === null || $score[0] < $bestScore[0] || ($score[0] === $bestScore[0] && $score[1] < $bestScore[1])) {
-                $bestSegment = $segment;
-                $bestScore = $score;
             }
         }
-
-        return $bestSegment ?: null;
+        return null;
     };
 
-    // Kürzester-Pfad-Suche (Dijkstra) von Wegpunkt zu Wegpunkt
-    $findShortestSegment = function($startNode, $endNode) use ($graph, $getStationObj) {
-        $startNode = strtoupper($startNode);
-        $endNode = strtoupper($endNode);
-
-        if ($startNode === $endNode) {
-            return [$getStationObj($startNode)];
-        }
-
-        $distances = [$startNode => 0];
-        $previous = [];
-        $edgeStationData = [];
-        $queue = [$startNode => 0];
-
-        while (!empty($queue)) {
-            // Knoten mit der geringsten Distanz wählen
-            asort($queue);
-            $current = key($queue);
-            unset($queue[$current]);
-
-            if ($current === $endNode) break;
-            if (!isset($graph[$current])) continue;
-
-            foreach ($graph[$current] as $edge) {
-                $neighbor = $edge['to'];
-                
-                // Distanzgewicht + minimaler Malus pro Hop, um Stations-Zickzack bei 0 km zu meiden
-                $weight = $edge['km'] + 0.05; 
-                $alt = $distances[$current] + $weight;
-
-                if (!isset($distances[$neighbor]) || $alt < $distances[$neighbor]) {
-                    $distances[$neighbor] = $alt;
-                    $previous[$neighbor] = $current;
-                    $edgeStationData[$neighbor] = $edge['station'];
-                    $queue[$neighbor] = $alt;
-                }
-            }
-        }
-
-        // Kein valider Pfad im Schienennetz gefunden
-        if (!isset($previous[$endNode])) return null;
-
-        // Pfad von hinten nach vorne rekonstruieren
-        $segmentPath = [];
-        $curr = $endNode;
-        while (isset($previous[$curr])) {
-            $segmentPath[] = $edgeStationData[$curr];
-            $curr = $previous[$curr];
-        }
-        $segmentPath[] = $getStationObj($startNode);
-
-        return array_reverse($segmentPath);
-    };
-
-    // 2. Segmente sequentiell verknüpfen
     $completePath = [];
 
+    // Alle Wegpunkte sequentiell verknüpfen
     for ($w = 0; $w < count($waypoints) - 1; $w++) {
-        $segmentStations = $findRouteSegment($waypoints[$w], $waypoints[$w + 1]);
+        $currentWaypoint = $waypoints[$w];
+        $nextWaypoint = $waypoints[$w + 1];
+
+        $segmentStations = $findRouteSegment($currentWaypoint, $nextWaypoint);
 
         if (!$segmentStations) {
-            $segmentStations = $findShortestSegment($waypoints[$w], $waypoints[$w + 1]);
+            $segmentStations = $findShortestSegment($currentWaypoint, $nextWaypoint);
         }
 
         if (!$segmentStations) {
-            error_log("Routing-Fehler: Kein Schienenweg zwischen " . $waypoints[$w] . " und " . $waypoints[$w + 1]);
+            error_log("Routing-Fehler: Kein Schienenweg zwischen " . $currentWaypoint . " und " . $nextWaypoint);
             return [];
         }
 
-        // Ersten Eintrag abschneiden, um Doppelungen an den Übergabeknoten zu verhindern
+        // Relative Abstände innerhalb dieses Segments berechnen
+        for ($i = 0; $i < count($segmentStations); $i++) {
+            if ($i === 0) {
+                $segmentStations[$i]['dist_from_prev'] = 0;
+            } else {
+                $segmentStations[$i]['dist_from_prev'] = abs(($segmentStations[$i]['km'] ?? 0) - ($segmentStations[$i - 1]['km'] ?? 0));
+            }
+        }
+
+        // Segmente zusammenfügen und Doppelungen an den Übergangsknoten verhindern
         if (!empty($completePath)) {
+            $segmentStations[1]['dist_from_prev'] = abs(($segmentStations[1]['km'] ?? 0) - ($segmentStations[0]['km'] ?? 0));
             $segmentStations = array_slice($segmentStations, 1);
         }
 
         $completePath = array_merge($completePath, $segmentStations);
     }
 
-    // Kilometer-Summe präzise über die realen Kanten des finalen Pfads neu aufbauen
     $totalKm = 0;
-    for ($i = 0; $i < count($completePath) - 1; $i++) {
-        $totalKm += abs(($completePath[$i+1]['km'] ?? 0) - ($completePath[$i]['km'] ?? 0));
+    foreach ($completePath as $st) {
+        $totalKm += $st['dist_from_prev'] ?? 0;
     }
 
     return [
@@ -219,62 +133,40 @@ function calculatePathTimes($pathData, $speed, $ROUTES, $startOffsetMinutes = 0)
 
     $result = [
         'stations' => [],
-        'total_km' => $pathData['total_km'] ?? 0,
+        'total_km' => 0,
         'total_time' => 0,
         'speed' => $speed,
         'route_name' => 'Umgeleitet'
     ];
 
-    // Route-Name ermitteln
-    if (!empty($pathData['segments']) && !empty($pathData['segments'][0]['routes'])) {
-        $firstRouteId = $pathData['segments'][0]['routes'][0];
-        if (isset($ROUTES[$firstRouteId])) {
-            $result['route_name'] = $ROUTES[$firstRouteId]['name'] ?? 'Umgeleitet';
-        }
-    }
-
-    // Interne Berechnung in Sekunden verhindert das Aufsummieren von Rundungsfehlern.
-    // Die echte Fahrplanzeit wird zusätzlich um einen Start-Offset erweitert.
     $baseMinutes = max(0, intval($startOffsetMinutes));
     $currentSeconds = 0;
     $cumulativeKm = 0;
 
     foreach ($pathStations as $i => $station) {
-        $stationKm = $station['km'] ?? 0;
-        // Erlaubt optionale Aufenthalte pro Station (Standard: 0 Minuten)
         $haltMinutes = $station['halt_min'] ?? 0; 
+        
+        $distanceKm = $station['dist_from_prev'] ?? 0;
+        $cumulativeKm += $distanceKm;
 
-        if ($i > 0) {
-            $prevStation = $pathStations[$i - 1];
-            $prevKm = $prevStation['km'] ?? 0;
-            
-            $distanceKm = abs($stationKm - $prevKm);
-            
-            if ($distanceKm > 0 && $speed > 0) {
-                // Reine Fahrzeit in Sekunden: (Distanz / Geschwindigkeit) * 3600
-                $travelSeconds = ($distanceKm / $speed) * 3600;
-                $currentSeconds += $travelSeconds;
-            }
-
-            $cumulativeKm += $distanceKm;
+        if ($distanceKm > 0 && $speed > 0) {
+            $travelSeconds = ($distanceKm / $speed) * 3600;
+            $currentSeconds += $travelSeconds;
         }
 
-        // Reine Fahrzeit intern berechnen, aber auf einen echten Fahrplan-Startpunkt beziehen
         $arrivalTime = $baseMinutes + (int)round($currentSeconds / 60);
         
-        // Aufenthalt am Betriebspunkt hinzurechnen
         if ($haltMinutes > 0) {
             $currentSeconds += $haltMinutes * 60;
         }
         
-        // Abfahrtszeit nach dem Halt
         $departureTime = $baseMinutes + (int)round($currentSeconds / 60);
 
         $result['stations'][] = [
             'id' => $station['id'] ?? strtoupper($station['abbr'] ?? ''),
             'abbr' => strtoupper($station['abbr'] ?? ''),
             'name' => $station['name'] ?? '?',
-            'km' => $stationKm,
+            'km' => round($cumulativeKm, 2), 
             'arrival_time' => $arrivalTime,
             'departure_time' => $departureTime,
             'cumulative_km' => round($cumulativeKm, 2),
@@ -289,6 +181,9 @@ function calculatePathTimes($pathData, $speed, $ROUTES, $startOffsetMinutes = 0)
 }
 
 try {
+    if (!file_exists(__DIR__ . '/dbs')) {
+        mkdir(__DIR__ . '/dbs', 0777, true);
+    }
     $db = new PDO("sqlite:" . $db_file);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
@@ -301,7 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: find_routes
-    // Findet alle möglichen Routen-Kombinationen Start → Vias → Ziel
     // ========================================================================
     if ($action === 'find_routes') {
         $start = $_POST['start'] ?? '';
@@ -317,12 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Vias normalisieren (Großbuchstaben)
         $vias = array_map('strtoupper', $vias);
         $start = strtoupper($start);
         $destination = strtoupper($destination);
 
-        // Finde alle Stationen in den Routes
         $stationMap = [];
         $routeMap = [];
 
@@ -341,11 +233,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'index' => count($routeMap[$routeId] ?? [])
                 ];
             }
-
             $routeMap[$routeId] = $route['stations'];
         }
 
-        // Validiere Start, Vias, Destination
         if (!isset($stationMap[$start])) {
             http_response_code(400);
             echo json_encode(['error' => "Startstation '$start' nicht gefunden"]);
@@ -364,9 +254,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Finde Routen-Pfade: Start → Via1 → Via2 → ... → Ziel
         $waypoints = [$start, ...$vias, $destination];
-        $paths = findRoutePaths($ROUTES, $waypoints, $stationMap);
+        
+        $paths = findRoutePaths($waypoints, $ROUTES);
 
         if (empty($paths)) {
             echo json_encode([
@@ -379,7 +269,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $startOffsetMinutes = isset($_POST['start_time_minutes']) ? intval($_POST['start_time_minutes']) : 0;
 
-        // Berechne Fahrtzeiten für jeden Pfad
         $results = [];
         foreach ($paths as $path) {
             $result = calculatePathTimes($path, $speed, $ROUTES, $startOffsetMinutes);
@@ -396,7 +285,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: get_train_data
-    // Lädt existierenden Zug-Fahrplan (falls vorhanden)
     // ========================================================================
     if ($action === 'get_train_data') {
         $train_number = $_POST['train_number'] ?? '';
@@ -425,7 +313,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: save_redirect
-    // Speichert die neue umgeleitete Fahrplan in die Datenbank
     // ========================================================================
     if ($action === 'save_redirect') {
         $train_number = intval($_POST['train_number'] ?? 0);
@@ -439,7 +326,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $db->beginTransaction();
         try {
-            // Erstelle oder lade Zug
             $stmt = $db->prepare("INSERT OR IGNORE INTO trains (train_number, route_id) VALUES (?, ?)");
             $stmt->execute([$train_number, 'redirect']);
 
@@ -448,10 +334,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $train = $stmt->fetch(PDO::FETCH_ASSOC);
             $train_id = $train['id'];
 
-            // Lösche alte Einträge
             $db->prepare("DELETE FROM timetable WHERE train_id = ?")->execute([$train_id]);
 
-            // Schreibe neue Einträge
             $stmtInsert = $db->prepare("
                 INSERT INTO timetable (train_id, station_id, track, arrival, departure, flags, remarks)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -485,14 +369,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: get_routes
-    // Gibt alle verfügbaren Routen zurück
     // ========================================================================
     if ($action === 'get_routes') {
         echo json_encode($ROUTES);
         exit;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -596,7 +478,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- RESULTS PANEL -->
-    <div class="panel results-container" id="results_panel" style="display: none;">
+    <div class="panel results-container" id="results_panel">
         <h2>🛤️ Gefundene Routen</h2>
         <div id="results_list"></div>
     </div>
@@ -635,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <thead>
                     <tr>
                         <th style="width: 30px;">✗</th>
-                        <th>Bahnhof</th>
+                        <th>Bahnhof (Kilometrierung)</th>
                         <th style="width: 60px;">Gleis</th>
                         <th style="width: 80px;">Ankunft</th>
                         <th style="width: 80px;">Abfahrt</th>
@@ -675,7 +557,6 @@ async function initPlanner() {
     
     Object.assign(ROUTES, data);
     
-    // Baue Stations-Index
     for (const routeId in ROUTES) {
         const route = ROUTES[routeId];
         if (route.stations && Array.isArray(route.stations)) {
@@ -708,14 +589,6 @@ async function findRoutes() {
     const vias = viaInputs.map(i => i.value.trim().toUpperCase()).filter(v => v);
     const speed = currentSpeed;
 
-    console.log('🔍 DEBUG - Eingabeparameter:');
-    console.log('Start:', start);
-    console.log('Via-Inputs gefunden:', viaInputs.length);
-    viaInputs.forEach((inp, idx) => console.log(`  Via[${idx}] = "${inp.value}"`));
-    console.log('Gefilterte Vias:', vias);
-    console.log('Destination:', destination);
-    console.log('Speed:', speed);
-
     if (!start || !destination) {
         alert('Bitte gib Start und Ziel ein');
         return;
@@ -724,7 +597,7 @@ async function findRoutes() {
     const formData = new FormData();
     formData.append('action', 'find_routes');
     formData.append('start', start);
-    vias.forEach((via, idx) => formData.append(`vias[${idx}]`, via)); // Array-Format
+    vias.forEach((via, idx) => formData.append(`vias[${idx}]`, via)); 
     formData.append('destination', destination);
     formData.append('speed', speed);
     formData.append('start_time_minutes', getReferenceTimeMinutes());
@@ -794,83 +667,85 @@ function buildEditorTable(path) {
     document.getElementById('current_route_name').innerText = path.route_name || 'Umgeleitet';
     document.getElementById('current_train_info').style.display = 'block';
 
-    // Erstelle Set von umgeleiteten Station-IDs
-    const redirectedStationIds = new Set(path.stations.map(s => s.abbr.toUpperCase()));
     const redirectStart = path.stations[0].abbr.toUpperCase();
     const redirectEnd = path.stations[path.stations.length - 1].abbr.toUpperCase();
 
-    // ===== Finde Original-Stationen ZWISCHEN Start und End (die ausfallen) =====
     const falloutStations = [];
     let inRange = false;
     
-    oldTimetable.forEach(stop => {
-        const abbr = stop.station_id.toUpperCase();
-        
-        if (abbr === redirectStart) {
-            inRange = true;
-            return;
-        }
-        
-        if (abbr === redirectEnd) {
-            inRange = false;
-            return;
-        }
-        
-        if (inRange) {
-            falloutStations.push(stop);
-        }
-    });
+    if (Array.isArray(oldTimetable)) {
+        oldTimetable.forEach(stop => {
+            const abbr = (stop.station_id || '').toUpperCase();
+            
+            if (abbr === redirectStart) {
+                inRange = true;
+                return;
+            }
+            
+            if (abbr === redirectEnd) {
+                inRange = false;
+                return;
+            }
+            
+            if (inRange) {
+                falloutStations.push(stop);
+            }
+        });
+    }
 
-    // ===== TEIL 1: Original-Stationen VOR Umleitung =====
-    let foundStart = false;
-    oldTimetable.forEach(stop => {
-        const abbr = stop.station_id.toUpperCase();
-        if (abbr === redirectStart) {
-            foundStart = true;
-            return;
-        }
-        if (foundStart) return;
+    if (Array.isArray(oldTimetable)) {
+        let foundStart = false;
+        oldTimetable.forEach(stop => {
+            const abbr = (stop.station_id || '').toUpperCase();
+            if (abbr === redirectStart) {
+                foundStart = true;
+                return;
+            }
+            if (foundStart) return;
 
-        const tr = document.createElement('tr');
-        tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
-        
-        tr.innerHTML = `
-            <td class="checkbox-col"></td>
-            <td style="color: #94a3b8;">
-                <strong>${stop.station_id}</strong> (Original)
-            </td>
-            <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
-            <td></td>
-            <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
-        `;
-        tbody.appendChild(tr);
-    });
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(100, 116, 139, 0.2)'; 
+            
+            tr.innerHTML = `
+                <td class="checkbox-col"></td>
+                <td style="color: #94a3b8;">
+                    <strong>${stop.station_id}</strong> (Original)
+                </td>
+                <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
+                <td></td>
+                <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 
-    // ===== TEIL 2: Umgeleitete Stationen =====
     path.stations.forEach((station, index) => {
         const tr = document.createElement('tr');
         const abbr = station.abbr.toUpperCase();
-        const wasInOldRoute = oldTimetable.some(t => t.station_id.toUpperCase() === abbr);
+        const wasInOldRoute = Array.isArray(oldTimetable) && oldTimetable.some(t => (t.station_id || '').toUpperCase() === abbr);
         const stationTimes = plannedTimes[index] || {};
         const kmDisplay = station.km !== undefined ? ` (km ${station.km.toFixed(1)})` : '';
 
-        // Styling: Grün wenn alt, Blau wenn neu
+        // Hier wird die kumulierte Kilometerzahl formatiert
+        const displayKm = station.cumulative_km !== undefined ? Number(station.cumulative_km).toFixed(1) + ' km' : (station.km ? Number(station.km).toFixed(1) + ' km' : '— km');
+
         if (wasInOldRoute) {
-            tr.style.background = 'rgba(34, 197, 94, 0.08)'; // Grün für alte Halte
+            tr.style.background = 'rgba(34, 197, 94, 0.08)'; 
         } else {
-            tr.style.background = 'rgba(14, 165, 233, 0.08)'; // Blau für neue Halte
+            tr.style.background = 'rgba(14, 165, 233, 0.08)'; 
         }
 
         tr.innerHTML = `
             <td class="checkbox-col">
                 <input type="checkbox" id="skip_${abbr}" 
                        ${wasInOldRoute ? '' : 'disabled'} 
-                       title="${wasInOldRoute ? 'Halt in alter Route - kann übersprungen werden' : 'Neuer Halt - wird nicht übersprungen'}">
+                       title="${wasInOldRoute ? 'Halt in alter Route' : 'Neuer Halt'}">
             </td>
             <td>
-                <strong>${station.name}</strong> (${abbr})${kmDisplay}
+                <strong>${station.name}</strong> (${abbr}) 
+                <span style="color: #38bdf8; font-size: 11px; font-family: monospace; background: #0f172a; padding: 2px 6px; border-radius: 3px; margin-left: 6px;">${displayKm}</span>
                 ${wasInOldRoute ? '<span style="color: #64748b; font-size: 11px; margin-left: 8px;">🗂️ alt</span>' : '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu</span>'}
             </td>
             <td><input type="text" name="stations[${abbr}][track]" placeholder="z.B. 3" size="5"></td>
@@ -883,9 +758,7 @@ function buildEditorTable(path) {
         tbody.appendChild(tr);
     });
 
-    // ===== TEIL 3: Ausfallstationen (Original zwischen Start und End) =====
     if (falloutStations.length > 0) {
-        // Trennlinie
         const separatorTr = document.createElement('tr');
         separatorTr.style.background = 'rgba(239, 68, 68, 0.15)';
         separatorTr.innerHTML = `<td colspan="7" style="padding: 10px; color: #ef4444; font-weight: bold; text-align: center;">⚠️ Ausfallstationen (Original)</td>`;
@@ -893,11 +766,11 @@ function buildEditorTable(path) {
 
         falloutStations.forEach(stop => {
             const tr = document.createElement('tr');
-            tr.style.background = 'rgba(239, 68, 68, 0.1)'; // Rot = Ausfall
+            tr.style.background = 'rgba(239, 68, 68, 0.15)'; 
             
             tr.innerHTML = `
                 <td class="checkbox-col">
-                    <input type="checkbox" id="fallout_${stop.station_id.toUpperCase()}" checked title="Dieser Halt fällt aus (ist nicht in der Umleitung)">
+                    <input type="checkbox" id="fallout_${stop.station_id.toUpperCase()}" checked>
                 </td>
                 <td style="color: #ef4444; text-decoration: line-through;">
                     <strong>${stop.station_id}</strong> ✗ AUSFALL
@@ -912,41 +785,42 @@ function buildEditorTable(path) {
         });
     }
 
-    // ===== TEIL 4: Original-Stationen NACH Umleitung =====
-    foundStart = false;
-    let foundEnd = false;
-    
-    oldTimetable.forEach(stop => {
-        const abbr = stop.station_id.toUpperCase();
+    if (Array.isArray(oldTimetable)) {
+        let foundStart = false;
+        let foundEnd = false;
         
-        if (abbr === redirectStart) {
-            foundStart = true;
-            return;
-        }
-        
-        if (abbr === redirectEnd) {
-            foundEnd = true;
-            return;
-        }
-        
-        if (!foundStart || !foundEnd) return;
+        oldTimetable.forEach(stop => {
+            const abbr = (stop.station_id || '').toUpperCase();
+            
+            if (abbr === redirectStart) {
+                foundStart = true;
+                return;
+            }
+            
+            if (abbr === redirectEnd) {
+                foundEnd = true;
+                return;
+            }
+            
+            if (!foundStart || !foundEnd) return;
 
-        const tr = document.createElement('tr');
-        tr.style.background = 'rgba(100, 116, 139, 0.2)'; // Grau = Original
-        
-        tr.innerHTML = `
-            <td class="checkbox-col"></td>
-            <td style="color: #94a3b8;">
-                <strong>${stop.station_id}</strong> (Original)
-            </td>
-            <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
-            <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
-            <td></td>
-            <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
-        `;
-        tbody.appendChild(tr);
-    });
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(100, 116, 139, 0.2)'; 
+            
+            tr.innerHTML = `
+                <td class="checkbox-col"></td>
+                <td style="color: #94a3b8;">
+                    <strong>${stop.station_id}</strong> (Original)
+                </td>
+                <td><input type="text" value="${stop.track || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.arrival || ''}" disabled style="opacity: 0.6;"></td>
+                <td><input type="time" value="${stop.departure || ''}" disabled style="opacity: 0.6;"></td>
+                <td></td>
+                <td><input type="text" value="${stop.remarks || ''}" disabled style="opacity: 0.6;"></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 }
 
 function getReferenceTimeMinutes(path = null) {
@@ -955,7 +829,7 @@ function getReferenceTimeMinutes(path = null) {
     if (path && Array.isArray(path.stations)) {
         for (const station of path.stations) {
             const stationAbbr = (station.abbr || '').toUpperCase();
-            const matchingStop = oldTimetable.find(stop => (stop.station_id || '').toUpperCase() === stationAbbr);
+            const matchingStop = oldTimetable.find(stop => ((stop.station_id || '').toUpperCase() === stationAbbr));
             if (matchingStop) {
                 const timeStr = matchingStop.departure || matchingStop.arrival || '';
                 const minutes = timeToMinutes(timeStr);
@@ -1040,23 +914,16 @@ async function loadTrainData() {
         
         if (data.train) {
             oldTimetable = data.timetable || [];
-            
-            // Info-Text aktualisieren
             const stationList = oldTimetable.map(t => t.station_id).join(' → ');
             document.getElementById('editor_info').innerHTML = `
                 <strong>Zug ${trainNum}</strong> geladen (Route: ${data.train.route_id})<br>
                 <span style="color: #64748b; font-size: 12px;">Alte Halte: ${stationList || 'keine'}</span>
             `;
-            
-            // Fahrplan-Tabelle anzeigen
             displayLoadedTimetable(trainNum, oldTimetable);
-            
-            console.log(`Zug ${trainNum} geladen mit ${oldTimetable.length} Haltestellen`);
         } else {
             oldTimetable = [];
             document.getElementById('editor_info').innerText = `Zug ${trainNum} nicht in DB - neuer Fahrplan wird erstellt`;
             document.getElementById('loaded_timetable_panel').style.display = 'none';
-            console.log(`Zug ${trainNum} nicht gefunden, neuer Fahrplan`);
         }
     } catch (err) {
         console.error('Fehler beim Laden des Zuges:', err);
