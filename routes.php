@@ -2455,7 +2455,7 @@ $ROUTES = [
         'id' => 'verkehrshaus',
         'name' => 'Verkehrshaus am See',
         'stations' => [
-            ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LT', 'km' => 0.02],
+            ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => 0.02],
             ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => 2.22],
             ['id' => 'LZVH', 'name' => 'Verkehrshaus', 'abbr' => 'LZVH', 'km' => 6.1],
             ['id' => 'MEGZ', 'name' => 'Meggen Zentrum', 'abbr' => 'MEGZ', 'km' => 9.5],
