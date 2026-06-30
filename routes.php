@@ -243,6 +243,7 @@ $ROUTES = [
             ['id' => 'PARD', 'name' => 'Pardorea', 'abbr' => 'PARD', 'km' => 101.93],
             ['id' => 'FA', 'name' => 'Faido', 'abbr' => 'FA', 'km' => 106],
             ['id' => 'BO', 'name' => 'Bodio', 'abbr' => 'BO', 'km' => 125.5],
+            ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
         ]
     ],
     'giubiasco' => [
@@ -310,7 +311,7 @@ $ROUTES = [
             ['id' => 'ALCA', 'name' => 'Albate-Camerlata', 'abbr' => 'ALCA', 'km' => 215],
         ]
     ],
-    'acla-micl' => [
+    'alca-micl' => [
         'id' => 'milano',
         'name' => 'Milano-Como',
         'stations' => [
@@ -437,26 +438,6 @@ $ROUTES = [
             ['id' => 'TH', 'name' => 'Thun', 'abbr' => 'TH', 'km' => 61.49],
         ]
     ],
-    'btb' => [
-        'id' => 'btb',
-        'name' => 'Emmental',
-        'stations' => [
-            ['id' => 'BDF', 'name' => 'Burgdorf', 'abbr' => 'BDF', 'km' => -6.93],
-            ['id' => 'BDFS', 'name' => 'Steinhof', 'abbr' => 'BDFS', 'km' => -5.03],
-            ['id' => 'OBB', 'name' => 'Oberburg', 'abbr' => 'OBB', 'km' => -3.37],
-            ['id' => 'HA', 'name' => 'Hasle-Rüegsau', 'abbr' => 'HA', 'km' => 0],
-            ['id' => 'SHIE', 'name' => 'Schafhausen i.E.', 'abbr' => 'SHIE', 'km' => 2.56],
-            ['id' => 'BIGE', 'name' => 'Bigenthal', 'abbr' => 'BIGE', 'km' => 6.83],
-            ['id' => 'WALK', 'name' => 'Walkringen', 'abbr' => 'WALK', 'km' => 8.89],
-            ['id' => 'BIG', 'name' => 'Biglen', 'abbr' => 'BIG', 'km' => 12.09],
-            ['id' => 'GH', 'name' => 'Grosshöchstetten', 'abbr' => 'GH', 'km' => 14.67],
-            ['id' => 'KF', 'name' => 'Konolfingen', 'abbr' => 'KF', 'km' => 18.74],
-            ['id' => 'STAL', 'name' => 'Stalden i.E.', 'abbr' => 'STAL', 'km' => 19.96],
-            ['id' => 'OD', 'name' => 'Oberdiessbach', 'abbr' => 'OD', 'km' => 23.65],
-            ['id' => 'BK', 'name' => 'Brenzikofen', 'abbr' => 'BK', 'km' => 26.08],
-            ['id' => 'HMB', 'name' => 'Heimberg', 'abbr' => 'HMB', 'km' => 29.38],
-        ]
-    ],
     'emmental-zo' => [
         'id' => 'emmental-zo',
         'name' => 'Emmental (Zollbrück)',
@@ -517,8 +498,8 @@ $ROUTES = [
         ['id' => 'TSCH', 'name' => 'Trubschachen', 'abbr' => 'TSCH', 'km' => 43.13],
     ]
 ],
-    'rm' => [
-        'id' => 'rm',
+    'langetental-vhb-rm' => [
+        'id' => 'langetental-vhb-rm',
         'name' => 'Huttwil RM',
         'stations' => [
             ['id' => 'LTH', 'name' => 'Langenthal', 'abbr' => 'LTH', 'km' => 0],
@@ -543,60 +524,6 @@ $ROUTES = [
 			['id' => 'WH', 'name' => 'Wolhusen', 'abbr' => 'WH', 'km' => 39.32],
         ]
     ],
-    'rm-huttwil' => [
-        'id' => 'rm-huttwil',
-        'name' => 'Langenthal - Huttwil - Gettnau',
-        'stations' => [
-            ['id' => 'LTH', 'name' => 'Langenthal', 'abbr' => 'LTH', 'km' => 0],
-            ['id' => 'LTHS', 'name' => 'Langenthal Süd', 'abbr' => 'LTHS', 'km' => 1.62],
-            ['id' => 'LOTZ', 'name' => 'Lotzwil', 'abbr' => 'LOTZ', 'km' => 3.42],
-            ['id' => 'GUBU', 'name' => 'Gutenburg', 'abbr' => 'GUBU', 'km' => 4.39],
-            ['id' => 'MADI', 'name' => 'Madiswil', 'abbr' => 'MADI', 'km' => 6.04],
-            ['id' => 'LHO', 'name' => 'Lindenholz', 'abbr' => 'LHO', 'km' => 7.52],
-            ['id' => 'KDI', 'name' => 'Kleindietwil', 'abbr' => 'KDI', 'km' => 8.44],
-            ['id' => 'RBA', 'name' => 'Rohrbach', 'abbr' => 'RBA', 'km' => 10.54],
-            ['id' => 'HWIL', 'name' => 'Huttwil', 'abbr' => 'HWIL', 'km' => 14.09],
-			['id' => 'GOND', 'name' => 'Gondiswil', 'abbr' => 'GOND', 'km' => 18.03],
-			['id' => 'HUEW', 'name' => 'Hüswil West', 'abbr' => 'HUEW', 'km' => 19],
-			['id' => 'HUE', 'name' => 'Hüswil', 'abbr' => 'HUE', 'km' => 19.81],
-			['id' => 'ZELL', 'name' => 'ZELL', 'abbr' => 'ZELL', 'km' => 21.69],
-			['id' => 'GET', 'name' => 'Gettnau', 'abbr' => 'GET', 'km' => 25.17],
-        ]
-    ],
-    'Langetental' => [
-        'id' => 'Langetental',
-        'name' => 'Langetental',
-        'stations' => [
-            ['id' => 'LTH', 'name' => 'Langenthal', 'abbr' => 'LTH', 'km' => 0],
-            ['id' => 'LTHS', 'name' => 'Langenthal Süd', 'abbr' => 'LTHS', 'km' => 1.62],
-            ['id' => 'LOTZ', 'name' => 'Lotzwil', 'abbr' => 'LOTZ', 'km' => 3.42],
-            ['id' => 'GUBU', 'name' => 'Gutenburg', 'abbr' => 'GUBU', 'km' => 4.39],
-            ['id' => 'MADI', 'name' => 'Madiswil', 'abbr' => 'MADI', 'km' => 6.04],
-            ['id' => 'LHO', 'name' => 'Lindenholz', 'abbr' => 'LHO', 'km' => 7.52],
-            ['id' => 'KDI', 'name' => 'Kleindietwil', 'abbr' => 'KDI', 'km' => 8.44],
-            ['id' => 'RBA', 'name' => 'Rohrbach', 'abbr' => 'RBA', 'km' => 10.54],
-            ['id' => 'HWIL', 'name' => 'Huttwil', 'abbr' => 'HWIL', 'km' => 14.09],
-        ]
-    ],
-    'vhb' => [
-        'id' => 'vhb',
-        'name' => 'Huttwi VHB',
-        'stations' => [
-            ['id' => 'RBA', 'name' => 'Rohrbach', 'abbr' => 'RBA', 'km' => 10.54],
-            ['id' => 'HWIL', 'name' => 'Huttwil', 'abbr' => 'HWIL', 'km' => 14.09],
-			['id' => 'GOND', 'name' => 'Gondiswil', 'abbr' => 'GOND', 'km' => 18.03],
-			['id' => 'HUEW', 'name' => 'Hüswil West', 'abbr' => 'HUEW', 'km' => 19],
-			['id' => 'HUE', 'name' => 'Hüswil', 'abbr' => 'HUE', 'km' => 19.81],
-			['id' => 'ZELL', 'name' => 'ZELL', 'abbr' => 'ZELL', 'km' => 21.69],
-			['id' => 'GET', 'name' => 'Gettnau', 'abbr' => 'GET', 'km' => 25.17],
-			['id' => 'GETG', 'name' => 'Makies', 'abbr' => 'GETG', 'km' => 26.3],
-			['id' => 'WSAU', 'name' => 'Willisau', 'abbr' => 'WSAU', 'km' => 28.75],
-			['id' => 'MAUW', 'name' => 'Kronospan', 'abbr' => 'MAUW', 'km' => 33.66],
-			['id' => 'MAU', 'name' => 'Menznau', 'abbr' => 'MAU', 'km' => 34.68],
-			['id' => 'WHW', 'name' => 'Weid', 'abbr' => 'WHW', 'km' => 37.71],
-			['id' => 'WH', 'name' => 'Wolhusen', 'abbr' => 'WH', 'km' => 39.32],
-        ]
-	],
     'thun-aare' => [
         'id' => 'thun-aare',
         'name' => 'Thun (SBB)',
@@ -636,6 +563,7 @@ $ROUTES = [
         'id' => 'thunersee-see',
         'name' => 'Thunersee (See)',
         'stations' => [
+            ['id' => 'GW', 'name' => 'Gwatt', 'abbr' => 'GW', 'km' => 3.1],
             ['id' => 'EIN', 'name' => 'Einigen', 'abbr' => 'EIN', 'km' => 5.4],
             ['id' => 'SPMN', 'name' => 'Spiezmoos Nord', 'abbr' => 'SPMN', 'km' => 8.2],
             ['id' => 'SP', 'name' => 'Spiez', 'abbr' => 'SP', 'km' => 9.7],
@@ -801,77 +729,6 @@ $ROUTES = [
             ['id' => 'VUAR', 'name' => 'Vuarennes', 'abbr' => 'VUAR', 'km' => -1],
             ['id' => 'CGE', 'name' => 'Collège', 'abbr' => 'CGE', 'km' => -0.65],
             ['id' => 'MX', 'name' => 'Montreux', 'abbr' => 'MX', 'km' => 0],
-        ]
-    ],
-    'mob-süd' => [
-        'id' => 'mob-süd',
-        'name' => 'MOB Süd',
-        'stations' => [
-            ['id' => 'LENK', 'name' => 'LENK', 'abbr' => 'LENK', 'km' => -75.29],
-            ['id' => 'BODE', 'name' => 'BODE', 'abbr' => 'BODE', 'km' => -73.74],
-            ['id' => 'MATE', 'name' => 'MATE', 'abbr' => 'MATE', 'km' => -70.92],
-            ['id' => 'STST', 'name' => 'STST', 'abbr' => 'STST', 'km' => -68.75],
-            ['id' => 'STOI', 'name' => 'STOI', 'abbr' => 'STOI', 'km' => -66.97],
-            ['id' => 'BLB', 'name' => 'BLB', 'abbr' => 'BLB', 'km' => -64.08],
-            ['id' => 'ZW', 'name' => 'ZW', 'abbr' => 'ZW', 'km' => -62.43],
-            ['id' => 'HALN', 'name' => 'HALN', 'abbr' => 'HALN', 'km' => -59.53],
-            ['id' => 'OES', 'name' => 'OES', 'abbr' => 'OES', 'km' => -56.89],
-            ['id' => 'SMO', 'name' => 'SMO', 'abbr' => 'SMO', 'km' => -53.06],
-            ['id' => 'SCR', 'name' => 'SCR', 'abbr' => 'SCR', 'km' => -50.85],
-            ['id' => 'GRUB', 'name' => 'GRUB', 'abbr' => 'GRUB', 'km' => -48.27],
-            ['id' => 'GST', 'name' => 'GST', 'abbr' => 'GST', 'km' => -45.76],
-            ['id' => 'SAAN', 'name' => 'SAAN', 'abbr' => 'SAAN', 'km' => -43.36],
-            ['id' => 'ROU', 'name' => 'ROU', 'abbr' => 'ROU', 'km' => -39.32],
-            ['id' => 'FLED', 'name' => 'FLED', 'abbr' => 'FLED', 'km' => -37.41],
-            ['id' => 'COMS', 'name' => 'COMS', 'abbr' => 'COMS', 'km' => -36.13],
-            ['id' => 'GRAC', 'name' => 'GRAC', 'abbr' => 'GRAC', 'km' => -34.54],
-            ['id' => 'PALZ', 'name' => 'PALZ', 'abbr' => 'PALZ', 'km' => -33.67],
-            ['id' => 'CHOE', 'name' => 'CHOE', 'abbr' => 'CHOE', 'km' => -32.67],
-        ]
-    ],
-    'mob-ouest' => [
-        'id' => 'mob-ouest',
-        'name' => 'MOB Ouest (Rougemont - Les Avants)',
-        'stations' => [
-            ['id' => 'ROU', 'name' => 'ROU', 'abbr' => 'ROU', 'km' => -39.32],
-            ['id' => 'FLED', 'name' => 'FLED', 'abbr' => 'FLED', 'km' => -37.41],
-            ['id' => 'COMS', 'name' => 'COMS', 'abbr' => 'COMS', 'km' => -36.13],
-            ['id' => 'GRAC', 'name' => 'GRAC', 'abbr' => 'GRAC', 'km' => -34.54],
-            ['id' => 'PALZ', 'name' => 'PALZ', 'abbr' => 'PALZ', 'km' => -33.67],
-            ['id' => 'CHOE', 'name' => 'CHOE', 'abbr' => 'CHOE', 'km' => -32.67],
-            ['id' => 'CHAU', 'name' => 'CHAU', 'abbr' => 'CHAU', 'km' => -29.38],
-            ['id' => 'ROSI', 'name' => 'ROSI', 'abbr' => 'ROSI', 'km' => -28.23],
-            ['id' => 'TINE', 'name' => 'TINE', 'abbr' => 'TINE', 'km' => -24.99],
-            ['id' => 'MTB', 'name' => 'MTB', 'abbr' => 'MTB', 'km' => -22.14],
-            ['id' => 'SCI', 'name' => 'SCI', 'abbr' => 'SCI', 'km' => -20.43],
-            ['id' => 'ALLI', 'name' => 'ALLI', 'abbr' => 'ALLI', 'km' => -16.97],
-            ['id' => 'CASE', 'name' => 'CASE', 'abbr' => 'CASE', 'km' => -15.19],
-            ['id' => 'JOR', 'name' => 'JOR', 'abbr' => 'JOR', 'km' => -12.63],
-            ['id' => 'AVA', 'name' => 'AVA', 'abbr' => 'AVA', 'km' => -10.85],
-        ]
-    ],
-    'mob-mx' => [
-        'id' => 'mob-mx',
-        'name' => 'MOB (MX)',
-        'stations' => [
-            ['id' => 'MTB', 'name' => 'MTB', 'abbr' => 'MTB', 'km' => -22.14],
-            ['id' => 'SCI', 'name' => 'SCI', 'abbr' => 'SCI', 'km' => -20.43],
-            ['id' => 'ALLI', 'name' => 'ALLI', 'abbr' => 'ALLI', 'km' => -16.97],
-            ['id' => 'CASE', 'name' => 'CASE', 'abbr' => 'CASE', 'km' => -15.19],
-            ['id' => 'JOR', 'name' => 'JOR', 'abbr' => 'JOR', 'km' => -12.63],
-            ['id' => 'AVA', 'name' => 'AVA', 'abbr' => 'AVA', 'km' => -10.85],
-            ['id' => 'SDY', 'name' => 'SDY', 'abbr' => 'SDY', 'km' => -9.2],
-            ['id' => 'CABY', 'name' => 'CABY', 'abbr' => 'CABY', 'km' => -7.15],
-            ['id' => 'SONZ', 'name' => 'SONZ', 'abbr' => 'SONZ', 'km' => -5.47],
-            ['id' => 'CHER', 'name' => 'CHER', 'abbr' => 'CHER', 'km' => -4.29],
-            ['id' => 'FON', 'name' => 'FON', 'abbr' => 'FON', 'km' => -3.28],
-            ['id' => 'PLAC', 'name' => 'PLAC', 'abbr' => 'PLAC', 'km' => -2.66],
-            ['id' => 'CHAL', 'name' => 'CHAL', 'abbr' => 'CHAL', 'km' => -2.15],
-            ['id' => 'COLD', 'name' => 'COLD', 'abbr' => 'COLD', 'km' => -1.75],
-            ['id' => 'BEMM', 'name' => 'BEMM', 'abbr' => 'BEMM', 'km' => -1.51],
-            ['id' => 'VUAR', 'name' => 'VUAR', 'abbr' => 'VUAR', 'km' => -1],
-            ['id' => 'CGE', 'name' => 'CGE', 'abbr' => 'CGE', 'km' => -0.65],
-            ['id' => 'MX', 'name' => 'MX', 'abbr' => 'MX', 'km' => 0],
         ]
     ],
     'kandersteg' => [
@@ -1434,24 +1291,6 @@ $ROUTES = [
             ['id' => 'STJ', 'name' => 'Morges-St-Jean', 'abbr' => 'STJ', 'km' => -11.16],
             ['id' => 'LON', 'name' => 'Lonay-Préverenges', 'abbr' => 'LON', 'km' => -10.12],
             ['id' => 'DEN', 'name' => '	Denges-Echandens', 'abbr' => 'DEN', 'km' => -8.38],
-        ]
-    ],
-    'coppet' => [
-        'id' => 'coppet',
-        'name' => 'Coppet',
-        'stations' => [
-            ['id' => 'GE', 'name' => 'Cornavin', 'abbr' => 'GE', 'km' => -60.26],    
-            ['id' => 'GESE', 'name' => 'Genève-Sécheron', 'abbr' => 'GESE', 'km' => -58.96],
-            ['id' => 'CHY', 'name' => 'Chambésy', 'abbr' => 'CHY', 'km' => -56.62],
-            ['id' => 'VEN', 'name' => 'Vengeron', 'abbr' => 'VEN', 'km' => -56.21],
-            ['id' => 'TUI', 'name' => 'Les Tuileries', 'abbr' => 'TUI', 'km' => -56.21],
-            ['id' => 'GDBE', 'name' => 'Genthod-Bellevue', 'abbr' => 'GDBE', 'km' => -54.77],
-            ['id' => 'CRGD', 'name' => 'Creux-de-Genthod', 'abbr' => 'CRGD', 'km' => -53.8],
-            ['id' => 'VSX', 'name' => 'Versoix', 'abbr' => 'VSX', 'km' => -51.95],
-            ['id' => 'PTC', 'name' => 'Pont-Céard', 'abbr' => 'PTC', 'km' => -51.06],
-            ['id' => 'MIES', 'name' => 'Mies', 'abbr' => 'MIES', 'km' => -49.46],
-            ['id' => 'TAN', 'name' => 'Tannay', 'abbr' => 'TAN', 'km' => -48.22],
-            ['id' => 'COP', 'name' => 'Coppet', 'abbr' => 'COP', 'km' => -47],
         ]
     ],
     'cop-geap' => [
@@ -2387,22 +2226,6 @@ $ROUTES = [
             ['id' => 'WE', 'name' => 'Wettingen', 'abbr' => 'WE', 'km' => 91.6],
         ]
     ],
-    'nazeli-rel' => [
-        'id' => 'nazeli-relevant',
-        'name' => 'Zofingen - Lenzburg (Nationalbahn)',
-        'stations' => [
-            ['id' => 'ZF', 'name' => 'Zofingen', 'abbr' => 'ZF', 'km' => 50.8],
-            ['id' => 'KGD', 'name' => 'Küngoldingen', 'abbr' => 'KGD', 'km' => 53.1],
-            ['id' => 'WAST', 'name' => 'Walterswil-Striegel', 'abbr' => 'WAST', 'km' => 55.7],
-            ['id' => 'SAF', 'name' => 'Safenwil', 'abbr' => 'SAF', 'km' => 57.4],
-            ['id' => 'KKO', 'name' => 'Kölliken Oberdorf', 'abbr' => 'KKO', 'km' => 60.1],
-            ['id' => 'KK', 'name' => 'Kölliken', 'abbr' => 'KK', 'km' => 61.7],
-            ['id' => 'OEF', 'name' => 'Oberentfelden', 'abbr' => 'OEF', 'km' => 64.7],
-            ['id' => 'SUHR', 'name' => 'Suhr', 'abbr' => 'SUHR', 'km' => 67.5],
-            ['id' => 'HU', 'name' => 'Hunzenschwil', 'abbr' => 'HU', 'km' => 71.0],
-            ['id' => 'LB', 'name' => 'Lenzburg', 'abbr' => 'LB', 'km' => 74.5],
-        ]
-    ],
     'lse' => [
         'id' => 'lse',
         'name' => 'Luzern - Stans - Engelberg (LSE)',
@@ -2647,7 +2470,6 @@ $ROUTES = [
             ['id' => 'GIU', 'name' => 'Giubiasco', 'abbr' => 'GIU', 'km' => 154.04],
         ]
     ],
-    // FIX: War vorher ebenfalls 'gottardo-berg-komplett' — Key korrigiert zu 'gottardo-berg-sud'
     'gottardo-berg-sud' => [
         'id' => 'gottardo-berg-sud',
         'name' => 'Gotthard-Berg-Süd (FL-CAST)',
@@ -3776,7 +3598,7 @@ $ROUTES = [
         'id' => 'mittelthurgau',
         'name' => 'Mittelthurgau',
         'stations' => [
-            ['id' => 'WIL', 'name' => 'Wil', 'abbr' => 'BNG', 'km' => 0],
+            ['id' => 'WIL', 'name' => 'Wil', 'abbr' => 'WIL', 'km' => 0],
             ['id' => 'BRO', 'name' => 'Bronschhofen', 'abbr' => 'BRO', 'km' => 2.58],
             ['id' => 'BROA', 'name' => 'Bronschhofen AMP', 'abbr' => 'BROA', 'km' => 3.33],
             ['id' => 'BTW', 'name' => 'Bettwiesen', 'abbr' => 'BTW', 'km' => 5.45],
