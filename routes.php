@@ -2228,6 +2228,33 @@ $ROUTES = [
             ['id' => 'ZUE', 'name' => 'Zürich HB', 'abbr' => 'ZUE', 'km' => 0],
         ]
     ],
+    'bdwm' => [
+        'id' => 'bdwm',
+        'name' => 'BDWM',
+        'stations' => [
+            ['id' => 'DTBD', 'name' => 'Dietikon', 'abbr' => 'DTBD', 'km' => -18.85],
+            ['id' => 'DTSS', 'name' => 'Schöneggstrasse', 'abbr' => 'DTSS', 'km' => -18.25],
+            ['id' => 'BEFR', 'name' => 'Bergfrieden', 'abbr' => 'BEFR', 'km' => -17.6],
+            ['id' => 'DSTO', 'name' => 'Stoffelbach', 'abbr' => 'DSTO', 'km' => -17.29],
+            ['id' => 'REPP', 'name' => 'Reppischhof', 'abbr' => 'REPP', 'km' => -16.23],
+            ['id' => 'RUD', 'name' => 'Rudolstetten', 'abbr' => 'RUD', 'km' => -14.11],
+            ['id' => 'RUHO', 'name' => 'Hofacker', 'abbr' => 'RUHO', 'km' => -13.51],
+            ['id' => 'BEWI', 'name' => 'Berikon-Widen', 'abbr' => 'BEWI', 'km' => -12.22],
+            ['id' => 'BEVE', 'name' => 'Belvédère', 'abbr' => 'BEVE', 'km' => -11.45],
+            ['id' => 'HEIN', 'name' => 'Heinrüti', 'abbr' => 'HEIN', 'km' => -10.64],
+            ['id' => 'ZUFH', 'name' => 'Hammergut', 'abbr' => 'ZUFH', 'km' => -9.67],
+            ['id' => 'ZUFI', 'name' => 'Zufikon', 'abbr' => 'ZUFI', 'km' => -9.13],
+            ['id' => 'BGBI', 'name' => 'Bibenlos-Sonnenhof', 'abbr' => 'BGBI', 'km' => -8.61],
+            ['id' => 'BREG', 'name' => 'Bremgarten', 'abbr' => 'BREG', 'km' => -8.23],
+            ['id' => 'BGOT', 'name' => 'Obertor', 'abbr' => 'BGOT', 'km' => -7.96],
+            ['id' => 'BGIS', 'name' => 'Isenlauf', 'abbr' => 'BGIS', 'km' => -7.45],
+            ['id' => 'BGW', 'name' => 'Bremgarten West', 'abbr' => 'BGW', 'km' => -6.96],
+            ['id' => 'ERDM', 'name' => 'Erdmannlistein', 'abbr' => 'ERDM', 'km' => -3.96],
+            ['id' => 'WOFU', 'name' => 'Fulenbach', 'abbr' => 'WOFU', 'km' => -2.84],
+            ['id' => 'WOOB', 'name' => 'Wohlen Oberdorf', 'abbr' => 'WOOB', 'km' => -1.5],
+            ['id' => 'WOBD', 'name' => 'Wohlen', 'abbr' => 'WOBD', 'km' => 0],
+        ]
+    ],
     'lupfig' => [
         'id' => 'lupfig',
         'name' => 'Heitersberg (RU - LB - LUPF - BG)',
