@@ -2533,6 +2533,20 @@ $ROUTES = [
             ['id' => 'BIA', 'name' => 'Biasca', 'abbr' => 'BIA', 'km' => 131.8],
         ]
     ],
+    'gornergrat' => [
+        'id' => 'gornergrat',
+        'name' => 'Gornergrat',
+        'stations' => [
+            ['id' => 'ZERG', 'name' => 'Zermatt GGB', 'abbr' => 'ZERG', 'km' => 0],
+            ['id' => 'ZFLR', 'name' => 'Ferienhaus legendär', 'abbr' => 'ZFLR', 'km' => 8],
+            ['id' => 'FIND', 'name' => 'Findelbach', 'abbr' => 'FIND', 'km' => 1.75],
+            ['id' => 'RIAL', 'name' => 'Riffelalp', 'abbr' => 'RIAL', 'km' => 4.03],
+            ['id' => 'RIBO', 'name' => 'Riffelboden', 'abbr' => 'RIBO', 'km' => 5.1],
+            ['id' => 'RIBE', 'name' => 'Riffelberg', 'abbr' => 'RIBE', 'km' => 6.47],
+            ['id' => 'ROBO', 'name' => 'Rotenboden', 'abbr' => 'ROBO', 'km' => 7.91],
+            ['id' => 'GOGR', 'name' => 'Gornergrat', 'abbr' => 'GOGR', 'km' => 9.34],
+        ]
+    ],
     'MGB' => [
         'id' => 'MGB',
         'name' => 'MGB',
