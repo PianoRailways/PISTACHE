@@ -3064,6 +3064,12 @@ $ROUTES = [
     'id' => 'lausanne-biel',
     'name' => 'Lausanne - Biel/Bienne',
     'stations' => [
+        ['id' => 'LS', 'name' => 'Lausanne', 'abbr' => 'LS', 'km' => 0],
+        ['id' => 'PRMA', 'name' => 'Prilly-Malley', 'abbr' => 'PRMA', 'km' => 2.35],
+        ['id' => 'REN', 'name' => 'Renens', 'abbr' => 'REN', 'km' => 4.51],
+        ['id' => 'BY', 'name' => 'Bussigny', 'abbr' => 'BY', 'km' => 6.93],
+        ['id' => 'VU', 'name' => 'Vufflens-la-Ville', 'abbr' => 'VU', 'km' => 10.97],
+        ['id' => 'COS', 'name' => 'Cossonay-Penthalaz', 'abbr' => 'COS', 'km' => 14.49],
         ['id' => 'DAIL', 'name' => 'Daillens', 'abbr' => 'DAI', 'km' => 19.12],
         ['id' => 'ECL', 'name' => 'Eclépens', 'abbr' => 'ECL', 'km' => 21.38],
         ['id' => 'BAV', 'name' => 'Bavois', 'abbr' => 'BAV', 'km' => 24.88],
