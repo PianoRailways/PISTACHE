@@ -237,7 +237,7 @@ function onRouteChanged() {
     loadAndRenderGraph();
 }
 
-// Segment-Status anzeigen/verstecken
+// Segment-Status anzeigen/verstecken + Tab-Titel aktualisieren
 function updateSegmentStatus() {
     const statusDiv = document.getElementById('segment_status');
     const routeSelect = document.getElementById('route_select');
@@ -245,6 +245,7 @@ function updateSegmentStatus() {
     
     if (!currentSegmentFrom && !currentSegmentTo) {
         statusDiv.style.display = 'none';
+        updatePageTitle();
         return;
     }
     
@@ -263,6 +264,19 @@ function updateSegmentStatus() {
     
     statusDiv.style.display = 'block';
     statusDiv.textContent = `Segment: ${fromName} → ${toName}`;
+    updatePageTitle(fromName, toName);
+}
+
+function updatePageTitle(fromName, toName) {
+    const routeSelect = document.getElementById('route_select');
+    const route = routesConfig[routeSelect.value];
+    const routeName = route ? route.name : 'Bildfahrplan';
+    
+    if (fromName && toName && fromName !== 'Start' && toName !== 'End') {
+        document.title = `${routeName} [${fromName}–${toName}] | Bildfahrplan`;
+    } else {
+        document.title = `${routeName} | Bildfahrplan`;
+    }
 }
 
 function updateInstanzTimeLabels() {
