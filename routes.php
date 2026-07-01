@@ -2123,7 +2123,7 @@ $ROUTES = [
     ],
     'züriberg-r' => [
         'id' => 'züriberg-r',
-        'name' => 'Altstetten-Rapperswil',
+        'name' => 'Altstetten – Uster – Rapperswil',
         'stations' => [
             ['id' => 'ZAS', 'name' => 'Altstetten', 'abbr' => 'ZAS', 'km' => 95.72],
             ['id' => 'ZHER', 'name' => 'Herdern', 'abbr' => 'ZHER', 'km' => 96.81],
@@ -2143,25 +2143,6 @@ $ROUTES = [
             ['id' => 'RUE', 'name' => 'Rüti', 'abbr' => 'RUE', 'km' => 133.9],
             ['id' => 'JONA', 'name' => 'Jona', 'abbr' => 'JONA', 'km' => 138.78],
             ['id' => 'RW', 'name' => 'Rapperswil', 'abbr' => 'RW', 'km' => 140.49],
-        ]
-    ],
-    'züriberg-rue' => [
-        'id' => 'züriberg-rue',
-        'name' => 'Züriberg-Rüti',
-        'stations' => [
-            ['id' => 'ZMUS', 'name' => 'Museumsstrasse', 'abbr' => 'ZMUS', 'km' => 99.84],
-            ['id' => 'ZSTH', 'name' => 'Stadelhofen', 'abbr' => 'ZSTH', 'km' => 101.59],
-            ['id' => 'ZHOT', 'name' => 'Hottingen', 'abbr' => 'ZHOT', 'km' => 102.71],
-            ['id' => 'STET', 'name' => 'Stettbach', 'abbr' => 'STET', 'km' => 106.94],
-            ['id' => 'NGUT', 'name' => 'Neugut', 'abbr' => 'NGUT', 'km' => 108.01],
-            ['id' => 'DUE', 'name' => 'Dübendorf', 'abbr' => 'DUE', 'km' => 108.9],
-            ['id' => 'SCWE', 'name' => 'Schwerzenbach', 'abbr' => 'SCWE', 'km' => 112.08],
-            ['id' => 'NAEN', 'name' => 'Nänikon-Greifensee', 'abbr' => 'NAEN', 'km' => 115.26],
-            ['id' => 'UST', 'name' => 'Uster', 'abbr' => 'UST', 'km' => 118.49],
-            ['id' => 'AAT', 'name' => 'Aathal', 'abbr' => 'AAT', 'km' => 122.46],
-            ['id' => 'WZ', 'name' => 'Wetzikon', 'abbr' => 'WZ', 'km' => 125.33],
-            ['id' => 'BUB', 'name' => 'Bubikon', 'abbr' => 'BUB', 'km' => 131.18],
-            ['id' => 'RUE', 'name' => 'Rüti', 'abbr' => 'RUE', 'km' => 133.9],
         ]
     ],
     'Kempttalbahn ' => [
