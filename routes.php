@@ -279,6 +279,21 @@ $ROUTES = [
             ['id' => 'CHI', 'name' => 'Chiasso', 'abbr' => 'CHI', 'km' => 206.17],
         ]
     ],
+    'vedeggio' => [
+        'id' => 'vedeggio',
+        'name' => 'BEL - Vedeggio',
+        'stations' => [
+            ['id' => 'BEL', 'name' => 'Bellinzona', 'abbr' => 'BEL', 'km' => 150.9],
+            ['id' => 'GIU', 'name' => 'Giubiasco', 'abbr' => 'GIU', 'km' => 154.0],
+            ['id' => 'VIGA', 'name' => 'Vigana', 'abbr' => 'VIGA', 'km' => 158.01],
+            ['id' => 'ALM', 'name' => 'Al Motto', 'abbr' => 'ALM', 'km' => 161.35],
+            ['id' => 'RIB', 'name' => 'Rivera-Bironico', 'abbr' => 'RIB', 'km' => 165.21],
+            ['id' => 'MEZ', 'name' => 'Mezzovico', 'abbr' => 'MEZ', 'km' => 168.86],
+            ['id' => 'MEZS', 'name' => 'Mezzovico-Sigirino', 'abbr' => 'MEZS', 'km' => 171.27],
+            ['id' => 'TAV', 'name' => 'Taverne-Torricella', 'abbr' => 'TAV', 'km' => 173.99],
+            ['id' => 'LGV', 'name' => 'Lugano-Vedeggio', 'abbr' => 'LGV', 'km' => 178.54],
+        ]
+    ],
     'gotthard-sud' => [
         'id' => 'gotthard-sud',
         'name' => 'Gotthard Süd',
