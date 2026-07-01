@@ -1891,18 +1891,6 @@ $ROUTES = [
             ['id' => 'RLG', 'name' => 'Rümlingen', 'abbr' => 'RLG', 'km' => -26.89],
             ['id' => 'SOM', 'name' => 'Sommerau', 'abbr' => 'SOM', 'km' => -25.28],
             ['id' => 'DIE', 'name' => 'Diepflingen', 'abbr' => 'DIE', 'km' => -23.7],
-        ]
-    ],
-    'läufelfingen2' => [
-        'id' => 'läufelfingen2',
-        'name' => 'Läufelfingen2',
-        'stations' => [
-            ['id' => 'TRI', 'name' => 'Trimbach', 'abbr' => 'TRI', 'km' => -36.28],
-            ['id' => 'LF', 'name' => 'Läufelfingen', 'abbr' => 'LF', 'km' => -30.82],
-            ['id' => 'BUC', 'name' => 'Buckten', 'abbr' => 'BUC', 'km' => -28.82],
-            ['id' => 'RLG', 'name' => 'Rümlingen', 'abbr' => 'RLG', 'km' => -26.89],
-            ['id' => 'SOM', 'name' => 'Sommerau', 'abbr' => 'SOM', 'km' => -25.28],
-            ['id' => 'DIE', 'name' => 'Diepflingen', 'abbr' => 'DIE', 'km' => -23.7],
             ['id' => 'SIS', 'name' => 'Sissach', 'abbr' => 'SIS', 'km' => -21.1],
         ]
     ],
