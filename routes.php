@@ -3330,7 +3330,8 @@ $ROUTES = [
         'id' => '400',
         'name' => '400 NBS',
         'stations' => [
-            ['id' => 'BNWD', 'name' => 'Wankdorf', 'abbr' => 'BNWD', 'km' => -3.23],
+            ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BN', 'km' => 0.02],
+            ['id' => 'BNWD', 'name' => 'Wankdorf', 'abbr' => 'BNWD', 'km' => 3.23],
             ['id' => 'LGUT', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => 4.9],
             ['id' => 'MATA', 'name' => 'Aespli', 'abbr' => 'MATA', 'km' => 12.3],
             ['id' => 'HERS', 'name' => 'Hersiwil', 'abbr' => 'HERS', 'km' => 30.1],
@@ -3346,6 +3347,7 @@ $ROUTES = [
         'id' => 'stammstrecke-abo',
         'name' => 'LGUT-BDF-ABO',
         'stations' => [
+            ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BN', 'km' => -105.96],
             ['id' => 'BNWD', 'name' => 'Wankdorf', 'abbr' => 'BNWD', 'km' => -102.95],
             ['id' => 'BNVL', 'name' => 'Löchligut', 'abbr' => 'LGUT', 'km' => -101.28],
             ['id' => 'ZOL', 'name' => 'Zollikofen', 'abbr' => 'ZOL', 'km' => -98.81],
