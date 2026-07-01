@@ -1113,7 +1113,7 @@ $ROUTES = [
         'name' => 'Bern – Lausanne',
         'stations' => [
             ['id' => 'BNBS', 'name' => 'Bümpliz Süd', 'abbr' => 'BNBS', 'km' => -93],
-            ['id' => 'BBSA', 'name' => 'Bümpliz Süd Abstellanlage', 'abbr' => 'BBSA', 'km' => -92],
+            ['id' => 'BBSA', 'name' => '', 'abbr' => '', 'km' => -92],
             ['id' => 'NWA', 'name' => 'Niederwangen', 'abbr' => 'NWA', 'km' => -91.04],
             ['id' => 'OWA', 'name' => 'Oberwangen', 'abbr' => 'OWA', 'km' => -89.37],
             ['id' => 'THO', 'name' => 'Thörishaus Station', 'abbr' => 'THO', 'km' => -88.2],
@@ -1123,7 +1123,7 @@ $ROUTES = [
             ['id' => 'SCMI', 'name' => 'Schmitten', 'abbr' => 'SCMI', 'km' => -77.86],
             ['id' => 'DUED', 'name' => 'Düdingen', 'abbr' => 'DUED', 'km' => -72.21],
             ['id' => 'FRPO', 'name' => 'Fribourg Poya', 'abbr' => 'FRPO', 'km' => -67.5],
-            ['id' => 'FRNO', 'name' => 'Fribourg Nord', 'abbr' => 'FRNO', 'km' => -66.5],
+            ['id' => 'FRNO', 'name' => '', 'abbr' => '', 'km' => -66.5],
             ['id' => 'FRI', 'name' => 'Fribourg/Freiburg', 'abbr' => 'FRI', 'km' => -65.99],
             ['id' => 'VG', 'name' => 'Villars-sur-Glâne', 'abbr' => 'VG', 'km' => -62.12],
             ['id' => 'MTR', 'name' => 'Matran', 'abbr' => 'MTR', 'km' => -60.38],
