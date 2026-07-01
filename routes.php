@@ -3489,6 +3489,9 @@ $ROUTES = [
         'id' => 'sempachersee',
         'name' => 'Sempachersee',
         'stations' => [
+            ['id' => 'OL', 'name' => 'Olten', 'abbr' => 'OL', 'km' => 39.29],
+            ['id' => 'ABO', 'name' => 'Aarburg-Oftringen', 'abbr' => 'ABO', 'km' => 43.01],
+            ['id' => 'ABOVL', 'name' => 'Aarburg-Süd', 'abbr' => '', 'km' => 44],
             ['id' => 'ZF', 'name' => 'Zofingen', 'abbr' => 'ZF', 'km' => 47.46],
             ['id' => 'BRIT', 'name' => 'Brittnau-Wikon', 'abbr' => 'BRIT', 'km' => 50.48],
             ['id' => 'REID', 'name' => 'Reiden', 'abbr' => 'REID', 'km' => 52.99],
@@ -3505,6 +3508,7 @@ $ROUTES = [
             ['id' => 'GSAG', 'name' => 'Gersag', 'abbr' => 'GSAG', 'km' => 89.16],
             ['id' => 'EBR', 'name' => 'Emmenbrücke', 'abbr' => 'EBR', 'km' => 90.19],
             ['id' => 'GTS', 'name' => 'Gütsch', 'abbr' => 'GTS', 'km' => 92.85],
+            ['id' => 'LZ', 'name' => 'Luzern', 'abbr' => 'LZ', 'km' => 95.09],
         ]
     ],
     'st' => [
