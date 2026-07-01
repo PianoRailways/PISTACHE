@@ -457,7 +457,7 @@ async function renderGraph() {
         
         // Name + km: alle OBEN, aber unterschiedlich hoch versetzt
         ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
-        ctx.font = '10px sans-serif';
+        ctx.font = '9px sans-serif';
         
         const isOddStation = index % 2 === 0; // 0,2,4... oben hoch / 1,3,5... oben tiefer
         
@@ -571,7 +571,7 @@ async function renderGraph() {
                 const numberText = `${train.train_number} `;
                 const delayText = `(${delayMin > 0 ? '+' : ''}${delayMin})`;
 
-                ctx.font = 'bold 12px sans-serif';
+                ctx.font = 'bold 15px sans-serif';
                 const numberWidth = ctx.measureText(numberText).width;
                 ctx.font = 'bold 10px sans-serif';
                 const delayWidth = ctx.measureText(delayText).width;
@@ -580,15 +580,15 @@ async function renderGraph() {
                 const startX = firstVisibleIst.x - (totalWidth / 2);
 
                 ctx.textAlign = 'left';
-                ctx.font = 'bold 11px sans-serif';
+                ctx.font = 'bold 15px sans-serif';
                 ctx.fillText(numberText, startX, firstVisibleIst.y - 8);
 
-                ctx.font = 'bold 9px sans-serif';
+                ctx.font = 'bold 10px sans-serif';
                 ctx.fillText(delayText, startX + numberWidth, firstVisibleIst.y - 8);
 
                 ctx.textAlign = 'center';
             } else {
-                ctx.font = 'bold 11px sans-serif';
+                ctx.font = 'bold 15px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
             }
