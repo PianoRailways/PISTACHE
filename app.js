@@ -451,13 +451,13 @@ async function renderGraph() {
 
         // Abbr. direkt über dem Canvas
         ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
-        ctx.font = 'bold 8px sans-serif';
+        ctx.font = 'bold 12px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(st.abbr, x, paddingTop - 5);
         
         // Name + km: alle OBEN, aber unterschiedlich hoch versetzt
         ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
-        ctx.font = '8px sans-serif';
+        ctx.font = '10px sans-serif';
         
         const isOddStation = index % 2 === 0; // 0,2,4... oben hoch / 1,3,5... oben tiefer
         
@@ -571,9 +571,9 @@ async function renderGraph() {
                 const numberText = `${train.train_number} `;
                 const delayText = `(${delayMin > 0 ? '+' : ''}${delayMin})`;
 
-                ctx.font = 'bold 11px sans-serif';
+                ctx.font = 'bold 12px sans-serif';
                 const numberWidth = ctx.measureText(numberText).width;
-                ctx.font = 'bold 9px sans-serif';
+                ctx.font = 'bold 10px sans-serif';
                 const delayWidth = ctx.measureText(delayText).width;
 
                 const totalWidth = numberWidth + delayWidth;
