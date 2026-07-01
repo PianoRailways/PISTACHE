@@ -317,10 +317,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'save_redirect') {
         $train_number = intval($_POST['train_number'] ?? 0);
         $stations_data = $_POST['stations'] ?? [];
+        $redirect_start = strtoupper(trim($_POST['redirect_start'] ?? ''));
+        $redirect_end = strtoupper(trim($_POST['redirect_end'] ?? ''));
 
-        if ($train_number <= 0 || empty($stations_data)) {
+        if ($train_number <= 0 || empty($stations_data) || empty($redirect_start) || empty($redirect_end)) {
             http_response_code(400);
-            echo json_encode(['error' => 'Zugnummer und Stations-Daten erforderlich']);
+            echo json_encode(['error' => 'Zugnummer, Stations-Daten und Umleitungs-Grenzen erforderlich']);
             exit;
         }
 
@@ -334,7 +336,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $train = $stmt->fetch(PDO::FETCH_ASSOC);
             $train_id = $train['id'];
 
-            $db->prepare("DELETE FROM timetable WHERE train_id = ?")->execute([$train_id]);
+            // Bestehenden Fahrplan in der ursprünglichen Reihenfolge laden
+            $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY arrival ASC, departure ASC, id ASC");
+            $stmt->execute([$train_id]);
+            $existingStops = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Index der Umleitungs-Start- und Endstation im bestehenden Fahrplan finden
+            $startIdx = null;
+            $endIdx = null;
+            foreach ($existingStops as $idx => $stop) {
+                $abbr = strtoupper($stop['station_id'] ?? '');
+                if ($startIdx === null && $abbr === $redirect_start) {
+                    $startIdx = $idx;
+                }
+                if ($abbr === $redirect_end) {
+                    $endIdx = $idx;
+                }
+            }
+
+            // Nur den Bereich zwischen (inkl.) Start und Ende der Umleitung löschen.
+            // Alles davor und danach bleibt unangetastet bestehen.
+            if ($startIdx !== null && $endIdx !== null && $endIdx >= $startIdx) {
+                $idsToDelete = [];
+                for ($i = $startIdx; $i <= $endIdx; $i++) {
+                    $idsToDelete[] = $existingStops[$i]['id'];
+                }
+                $placeholders = implode(',', array_fill(0, count($idsToDelete), '?'));
+                $db->prepare("DELETE FROM timetable WHERE id IN ($placeholders)")->execute($idsToDelete);
+            }
+            // Falls Start/Ende nicht im bestehenden Fahrplan gefunden werden (z.B. neuer Zug),
+            // wird nichts gelöscht - die neue Umleitungsstrecke wird einfach eingefügt.
 
             $stmtInsert = $db->prepare("
                 INSERT INTO timetable (train_id, station_id, track, arrival, departure, flags, remarks)
@@ -981,6 +1012,8 @@ async function saveRedirect(e) {
     const formData = new FormData(document.getElementById('redirect_form'));
     formData.append('action', 'save_redirect');
     formData.append('train_number', trainNum);
+    formData.append('redirect_start', selectedPath.stations[0].abbr.toUpperCase());
+    formData.append('redirect_end', selectedPath.stations[selectedPath.stations.length - 1].abbr.toUpperCase());
 
     try {
         const res = await fetch('', { method: 'POST', body: formData });
