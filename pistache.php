@@ -590,5 +590,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-echo json_encode(['status' => 'Pistache API läuft.', 'zeit' => date('H:i:s')]);
+echo json_encode(['status' => 'Pistache API laeuft.', 'zeit' => date('H:i:s')]);
 ?>
