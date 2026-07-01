@@ -1110,7 +1110,7 @@ $ROUTES = [
     ],
     'ic1-bn' => [
         'id' => 'ic1-bn',
-        'name' => 'Palézieux - Bern',
+        'name' => 'Bern – Lausanne',
         'stations' => [
             ['id' => 'BNBS', 'name' => 'Bümpliz Süd', 'abbr' => 'BNBS', 'km' => -93],
             ['id' => 'BBSA', 'name' => 'Bümpliz Süd Abstellanlage', 'abbr' => 'BBSA', 'km' => -92],
