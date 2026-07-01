@@ -2382,10 +2382,16 @@ $ROUTES = [
             ['id' => 'INN', 'name' => 'Innertkirchen', 'abbr' => 'INN', 'km' => 4.99],
         ]
     ],
-    'brünigbahn-m' => [
-        'id' => 'brünigbahn-m',
-        'name' => 'Brünigbahn (Meiringen)',
+    'brünigbahn-s' => [
+        'id' => 'brünigbahn-s',
+        'name' => 'Brünigbahn (Brienz/Meiringen)',
         'stations' => [
+            ['id' => 'IO', 'name' => 'Interlaken Ost', 'abbr' => 'IO', 'km' => -74.03],
+            ['id' => 'RIN', 'name' => 'Ringgenberg', 'abbr' => 'RIN', 'km' => -71],
+            ['id' => 'NR', 'name' => 'Niederried', 'abbr' => 'NR', 'km' => -68.31],
+            ['id' => 'OAB', 'name' => 'Oberried am Brienzersee', 'abbr' => 'OAB', 'km' => -65.02],
+            ['id' => 'EBLI', 'name' => 'Ebligen', 'abbr' => 'EBLI', 'km' => -61.94],
+            ['id' => 'BRZW', 'name' => 'Brienz West', 'abbr' => 'BRZW', 'km' => -59.3],
             ['id' => 'BRZ', 'name' => 'Brienz', 'abbr' => 'BRZ', 'km' => -57.77],
             ['id' => 'BRWS', 'name' => 'Brienzwiler West', 'abbr' => 'BRWS', 'km' => -54],
             ['id' => 'BRW', 'name' => 'Brienzwiler', 'abbr' => 'BRW', 'km' => -53.13],
@@ -2399,23 +2405,6 @@ $ROUTES = [
             ['id' => 'GI', 'name' => 'Giswil', 'abbr' => 'GI', 'km' => -29.27],
             ['id' => 'GIGR', 'name' => 'Giswil Gigersmatt', 'abbr' => 'GIGR', 'km' => -28],
             ['id' => 'EWMA', 'name' => 'Ewil Maxon', 'abbr' => 'EWMA', 'km' => -25.39],
-        ]
-    ],
-    'brünigbahn-s' => [
-        'id' => 'brünigbahn-s',
-        'name' => 'Brünigbahn (Brienz)',
-        'stations' => [
-            ['id' => 'IO', 'name' => 'Interlaken Ost', 'abbr' => 'IO', 'km' => -74.03],
-            ['id' => 'RIN', 'name' => 'Ringgenberg', 'abbr' => 'RIN', 'km' => -71],
-            ['id' => 'NR', 'name' => 'Niederried', 'abbr' => 'NR', 'km' => -68.31],
-            ['id' => 'OAB', 'name' => 'Oberried am Brienzersee', 'abbr' => 'OAB', 'km' => -65.02],
-            ['id' => 'EBLI', 'name' => 'Ebligen', 'abbr' => 'EBLI', 'km' => -61.94],
-            ['id' => 'BRZW', 'name' => 'Brienz West', 'abbr' => 'BRZW', 'km' => -59.3],
-            ['id' => 'BRZ', 'name' => 'Brienz', 'abbr' => 'BRZ', 'km' => -57.77],
-            ['id' => 'BRWS', 'name' => 'Brienzwiler West', 'abbr' => 'BRWS', 'km' => -54],
-            ['id' => 'BRW', 'name' => 'Brienzwiler', 'abbr' => 'BRW', 'km' => -53.13],
-            ['id' => 'UNTB', 'name' => 'Unterbach', 'abbr' => 'UNTB', 'km' => -50.84],
-            ['id' => 'MR', 'name' => 'Meiringen', 'abbr' => 'MR', 'km' => -45.47],
         ]
     ],
     'rootsee' => [
