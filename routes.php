@@ -1019,7 +1019,7 @@ $ROUTES = [
     ],
     'holderbank-heitersberg' => [
         'id' => 'holderbank-heitersberg',
-        'name' => 'Holderbank – Heitersberg',
+        'name' => 'Aarau – Holderbank – Brugg – Neuenhof – Zürich',
         'stations' => [
             ['id' => 'AA', 'name' => 'Aarau', 'abbr' => 'AA', 'km' => -49.36],
             ['id' => 'AAGB', 'name' => 'Aarau GB', 'abbr' => 'AAGB', 'km' => -48.16],
