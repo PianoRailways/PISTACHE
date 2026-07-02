@@ -57,8 +57,71 @@
         }
 
         button:hover, form:hover { background: #64748b; }
+        html, body {
+            height: 100%;
+            min-height: 100%;
+        }
+
+        body.controls-hidden {
+            margin: 0;
+        }
+
+        #header_section {
+            padding-right: 240px;
+        }
+
         canvas { background: #1e293b; border: 1px solid #475569; border-radius: 4px; display: block; }
-        
+
+        #graph_area {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #graph_canvas_container {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+        }
+
+        #graphCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .toggle-controls-btn {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: #2563eb;
+            color: #fff;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+        }
+
+        .controls-hidden #header_section,
+        .controls-hidden #controls_wrapper,
+        .controls-hidden #ticker_panel {
+            display: none !important;
+        }
+
+        .controls-hidden .panel {
+            background: transparent;
+            border: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .controls-hidden .main-layout {
+            gap: 0;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -79,16 +142,15 @@
 <div class="main-layout">
     
     <div class="left-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div id="header_section" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h1>Bildfahrplan Betriebslenkung</h1>
-			<div class="button-a"><a href="./blm">Zum&nbsp;Betriebslagemonitor</a></div>
-            <div style="font-size: 14px; color: #94a3b8;">
-                Status: <span style="color: #10b981; font-weight: bold;">● LIVE</span> (Zuschauermodus)
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div class="button-a"><a href="./blm">Zum&nbsp;Betriebslagemonitor</a></div>
             </div>
         </div>
 
         <div class="panel">
-            <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+            <div id="controls_wrapper" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
                 <label>
                     Strecke suchen:
                     <input type="text" id="route_filter" placeholder="Z.B. Mil..." onkeyup="filterRoutes()" style="width: 150px;">
@@ -163,8 +225,10 @@
 
             </div>
             
-            <div style="width: 100%; flex: 1;">
-                <canvas id="graphCanvas" width="1500" height="900" style="margin-top: 0; width: 100%; height: auto; display: block;"></canvas> <!-- Auflösung -->
+            <div id="graph_area">
+                <div id="graph_canvas_container">
+                    <canvas id="graphCanvas" width="1500" height="900" style="margin-top: 0; width: 100%; height: 100%; display: block;"></canvas> <!-- Auflösung -->
+                </div>
             </div>
             
             <input type="time" id="graph_start" value="11:45" style="display: none;">
@@ -179,6 +243,8 @@
     </div>
 </div>
 
+<button type="button" id="toggle_controls_btn" class="toggle-controls-btn" onclick="toggleControls()">Steuerelemente ausblenden</button>
+
 <div id="editor_panel" style="display: none;">
     <div id="timetable_body"></div> </div>
 <form id="timetable_form" style="display: none;"></form>
@@ -191,6 +257,20 @@ var activeTrains = [];
 var autoScrollInterval = null;
 var currentSegmentFrom = '';
 var currentSegmentTo = '';
+
+function getDynamicSTSTime(instanz) {
+    const refReal = new Date('2026-06-27T21:41:00');
+    const now = new Date();
+    const elapsedMinutes = Math.floor((now - refReal) / 60000);
+    const instanzDuration = 960;
+    const instanzStartMinutes = 300;
+    const refMinutesSinceStart = (instanz === 'instanz1') ? 701 : 101;
+    let currentMinutesSinceStart = (refMinutesSinceStart + elapsedMinutes) % instanzDuration;
+    if (currentMinutesSinceStart < 0) {
+        currentMinutesSinceStart += instanzDuration;
+    }
+    return instanzStartMinutes + currentMinutesSinceStart;
+}
 
 // Hilfsfunktion zur Manipulation der URL-Parameter ohne Neuladen
 function updateUrlParameter(key, value) {
@@ -363,7 +443,18 @@ function applyAutoScroll() {
     };
 
     const windowBack = getWindowValue('window_back', 15);
-    const windowForward = getWindowValue('window_forward', 60);
+    let windowForward = getWindowValue('window_forward', 60);
+
+    const canvas = document.getElementById('graphCanvas');
+    if (canvas) {
+        const canvasHeight = canvas.getBoundingClientRect().height;
+        if (canvasHeight < 520) {
+            windowForward = Math.min(windowForward, 30);
+        } else if (canvasHeight < 700) {
+            windowForward = Math.min(windowForward, 40);
+        }
+    }
+
     const startMinutes = ((adjustedStsMinutes - windowBack + 1440) % 1440);
     const endMinutes = ((adjustedStsMinutes + windowForward + 1440) % 1440);
     
@@ -505,6 +596,8 @@ async function initZuschauer() {
 async function loadAndRenderGraph() {
     const routeSelect = document.getElementById('route_select');
     if (!routeSelect || !routeSelect.value) return;
+
+    resizeGraphCanvas();
     
     currentRouteId = routeSelect.value; 
     
@@ -681,6 +774,50 @@ function toggleTicker() {
         loadAndRenderGraph();
     }
 }
+
+let resizeGraphTimeout;
+function resizeGraphCanvas() {
+    const canvas = document.getElementById('graphCanvas');
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+
+    if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+    }
+}
+
+function toggleControls() {
+    const button = document.getElementById('toggle_controls_btn');
+    document.body.classList.toggle('controls-hidden');
+
+    if (button) {
+        button.innerText = document.body.classList.contains('controls-hidden') ? 'Steuerelemente einblenden' : 'Steuerelemente ausblenden';
+    }
+
+    resizeGraphCanvas();
+    if (typeof renderGraph === 'function') {
+        renderGraph();
+    } else if (typeof loadAndRenderGraph === 'function') {
+        loadAndRenderGraph();
+    }
+}
+
+window.addEventListener('resize', () => {
+    clearTimeout(resizeGraphTimeout);
+    resizeGraphTimeout = setTimeout(() => {
+        resizeGraphCanvas();
+        if (typeof renderGraph === 'function') {
+            renderGraph();
+        } else if (typeof loadAndRenderGraph === 'function') {
+            loadAndRenderGraph();
+        }
+    }, 120);
+});
 </script>
 </body>
 </html>
