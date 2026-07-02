@@ -3011,6 +3011,7 @@ $ROUTES = [
             ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => 13],
             ['id' => 'PIE', 'name' => 'Pieterlen', 'abbr' => 'PIE', 'km' => 15.2],
             ['id' => 'BIBD', 'name' => 'Champ de Boujean', 'abbr' => 'BIBD', 'km' => 19],
+            ['id' => 'BIPO', 'name' => 'Biel Mett Abzw.', 'abbr' => 'BIMA', 'km' => 20.36],
             ['id' => 'BIM', 'name' => 'Mâche', 'abbr' => 'BIM', 'km' => 20.8],
             ['id' => 'BI', 'name' => 'Bienne', 'abbr' => 'BI', 'km' => 24.4],
         ]
@@ -3279,7 +3280,7 @@ $ROUTES = [
         'stations' => [
             ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => -99.37],
             ['id' => 'BIM', 'name' => 'Biel Mett', 'abbr' => 'BIM', 'km' => -96.25],
-            ['id' => 'BIMA', 'name' => 'Biel Mett Abzw.', 'abbr' => 'BIMA', 'km' => -95.81],
+            ['id' => 'BIPO', 'name' => 'Biel Mett Abzw.', 'abbr' => 'BIMA', 'km' => -95.81],
             ['id' => 'BIBD', 'name' => 'Bözingenfeld', 'abbr' => 'BIBD', 'km' => -93.98],
             ['id' => 'PIE', 'name' => 'Pieterlen', 'abbr' => 'PIE', 'km' => -90.21],
             ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => -87.99],
