@@ -334,8 +334,12 @@ async function renderGraph() {
 
     const canvas = document.getElementById('graphCanvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const offscreenCanvas = document.createElement('canvas');
+    offscreenCanvas.width = canvas.width;
+    offscreenCanvas.height = canvas.height;
+    const ctx = offscreenCanvas.getContext('2d');
+    ctx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
 
     let stations = routesConfig[currentRouteId].stations;
     if (!stations || stations.length === 0) return;
@@ -374,8 +378,8 @@ async function renderGraph() {
     const paddingLeft = 50;
     const paddingRight = 50;
     
-    const graphWidth = canvas.width - paddingLeft - paddingRight;
-    const graphHeight = canvas.height - paddingTop - paddingBottom;
+    const graphWidth = offscreenCanvas.width - paddingLeft - paddingRight;
+    const graphHeight = offscreenCanvas.height - paddingTop - paddingBottom;
 
     const minKm = stations[0].km;
     const maxKm = stations[stations.length - 1].km;
@@ -639,6 +643,10 @@ async function renderGraph() {
         ctx.restore();
     }
 })();
+
+    const visibleCtx = canvas.getContext('2d');
+    visibleCtx.clearRect(0, 0, canvas.width, canvas.height);
+    visibleCtx.drawImage(offscreenCanvas, 0, 0);
 }
 function getDynamicSTSTime(instanz) {
     // Fixer Referenzpunkt aus deinem Live-Abgleich
