@@ -394,8 +394,12 @@ function updateTimeMode() {
         fixedTimeContainer.style.display = "none";
         
         applyAutoScroll();
+        renderGraphOnly();
         if (autoScrollInterval) clearInterval(autoScrollInterval);
-        autoScrollInterval = setInterval(applyAutoScroll, 10000);
+        autoScrollInterval = setInterval(() => {
+            applyAutoScroll();
+            renderGraphOnly();
+        }, 10000);
     } else {
         // Fixes Fenster
         offsetContainer.style.display = "none";
@@ -408,6 +412,7 @@ function updateTimeMode() {
         // Wenn Instanz 1 oder 2 im fixen Modus gewählt sind, berechnen wir die feste aktuelle Zeit
         if (basis !== 'manual') {
             applyAutoScroll();
+            renderGraphOnly();
         } else {
             loadAndRenderGraph();
         }
@@ -466,9 +471,9 @@ function applyAutoScroll() {
         document.getElementById('graph_end').value = endTime;
     }
     
-    if (typeof loadAndRenderGraph === 'function') {
-        loadAndRenderGraph();
-    }
+    // NICHT loadAndRenderGraph() hier aufrufen!
+    // Die Zeitwerte sind jetzt aktualisiert, aber der Redraw passiert nur
+    // beim 30-Sekunden-Interval in initZuschauer().
 }
 </script>
 
@@ -583,7 +588,7 @@ async function initZuschauer() {
             loadAndRenderTicker();
         }, 30000);
         
-        // Update Instanz-Zeit-Labels alle 10 Sekunden
+        // Update Instanz-Zeit-Labels alle 60 Sekunden (nicht alle 10 - das triggert applyAutoScroll!)
         setInterval(() => {
             updateInstanzTimeLabels();
         }, 60000);
@@ -629,12 +634,16 @@ async function loadAndRenderGraph() {
         }
         
         activeTrains = trainsData;
-        
-        if (typeof renderGraph === 'function') {
-            renderGraph();
-        }
+        renderGraphOnly();
     } catch (e) {
         console.error("Fehler beim Laden der Fahrplandaten für Zuschauer:", e);
+    }
+}
+
+// Nur zeichnen, keine neuen Daten laden
+function renderGraphOnly() {
+    if (typeof renderGraph === 'function') {
+        renderGraph();
     }
 }
 
