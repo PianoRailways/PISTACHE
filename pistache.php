@@ -85,7 +85,14 @@ function isHaltProtected($flags) {
 function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_dep_min) {
     if (empty($flags)) return $current_delay;
 
-    if (!preg_match('/^(X|V|C[4-7]?)\((\d+)\)/i', trim($flags), $matches)) {
+    $trimmedFlags = trim($flags);
+
+    // D = Durchfahrt: Frühere Abfahrten sind hier erlaubt, daher keine zusätzliche Verzögerung erzwingen.
+    if (preg_match('/\bD\b/i', $trimmedFlags)) {
+        return $current_delay;
+    }
+
+    if (!preg_match('/^(X|V|C[4-7]?)(\d+)/i', $trimmedFlags, $matches)) {
         return $current_delay;
     }
 
