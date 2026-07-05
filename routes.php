@@ -1609,7 +1609,7 @@ $ROUTES = [
             ['id' => 'RRID', 'name' => 'Niederholz', 'abbr' => 'RRID', 'km' => 0.76],
             ['id' => 'RRIE', 'name' => 'Riehen', 'abbr' => 'RRIE', 'km' => 2.92],
             ['id' => 'RLST', 'name' => 'Stetten', 'abbr' => 'RLST', 'km' => 5.02],
-            ['id' => 'RLRS', 'name' => 'Museum/Burghof', 'abbr' => 'RLRS', 'km' => 5.8],
+            ['id' => 'RLRS', 'name' => 'Museum/Burghof (Schillerstrasse)', 'abbr' => 'RLRS', 'km' => 5.8],
             ['id' => 'RLR', 'name' => 'Lörrach', 'abbr' => 'RLR', 'km' => 6.51],
             ['id' => 'RLRW', 'name' => 'Schwarzwaldstrasse', 'abbr' => 'RLRW', 'km' => 7.8],
             ['id' => 'RHAH', 'name' => 'Haagen/Messe', 'abbr' => 'RHAH', 'km' => 9.06],
@@ -1622,6 +1622,20 @@ $ROUTES = [
             ['id' => 'RFN', 'name' => 'Fahrnau', 'abbr' => 'RFN', 'km' => 21.93],
             ['id' => 'RHSN', 'name' => 'Hausen-Raitbach', 'abbr' => 'RHSN', 'km' => 24.03],
             ['id' => 'RZ', 'name' => 'Zell im Wiesental', 'abbr' => 'RZ', 'km' => 27.16],
+        ]
+    ],
+    'gartenbahn' => [
+        'id' => 'gartenbahn',
+        'name' => 'Gartenbahn Weil – Lörrach',
+        'stations' => [
+            ['id' => 'RW', 'name' => 'Weil am Rhein', 'abbr' => 'RW', 'km' => 0],
+            ['id' => 'RWGA', 'name' => 'Gartenstadt', 'abbr' => 'RWGA', 'km' => 1.085],
+            ['id' => 'RWPF', 'name' => 'Pfädlistrasse', 'abbr' => 'RWPF', 'km' => 1.855],
+            ['id' => 'RWEI', 'name' => 'Weil Ost', 'abbr' => 'RWEI', 'km' => 2.495],
+            ['id' => 'RLRD', 'name' => 'Dammstrasse', 'abbr' => 'RLRD', 'km' => 4.395],
+            ['id' => 'RLST', 'name' => 'Stetten', 'abbr' => 'RLST', 'km' => 4.836],
+            ['id' => 'RLRS', 'name' => 'Museum/Burghof (Schillerstrasse)', 'abbr' => 'RLRS', 'km' => 5.616],
+            ['id' => 'RLR', 'name' => 'Lörrach Hbf', 'abbr' => 'RLR', 'km' => 6.326],
         ]
     ],
     'seebahn' => [
