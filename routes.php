@@ -1599,6 +1599,17 @@ $ROUTES = [
             ['id' => 'BS', 'name' => 'Basel SBB', 'abbr' => 'BS', 'km' => 142.6],
         ]
     ],
+    'rb-rw' => [
+        'id' => 'rb-rw',
+        'name' => 'Basel Bad – Weil',
+        'stations' => [
+            ['id' => 'BS', 'name' => 'Basel SBB', 'abbr' => 'BS', 'km' => 274.54],
+            ['id' => 'GELN', 'name' => 'Gellert Nord', 'abbr' => 'GELN', 'km' => 273.12],
+            ['id' => 'RB', 'name' => 'Badischer Bahnhof', 'abbr' => 'RB', 'km' => 270.688],
+            ['id' => 'RW', 'name' => 'Weil am Rhein', 'abbr' => 'RW', 'km' => 267.6],
+            ['id' => 'RHL', 'name' => 'Haltingen', 'abbr' => 'RHL', 'km' => 265.301],
+        ]
+    ],
     'wiesentalbahn' => [
         'id' => 'wiesentalbahn',
         'name' => 'Wiesentalbahn',
