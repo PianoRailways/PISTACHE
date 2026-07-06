@@ -38,6 +38,7 @@
 	<p>redirect_planner</p>
 	<p>setup</p>
 	<p>viewer</p>
+	<p>routeToBetriebsstellen</p>
 	<hr />
 	<hr />
 	<h1 id="link">Nützliche Links</h1>
