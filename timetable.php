@@ -717,7 +717,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="font-weight: bold; margin-bottom: 6px; border-bottom: 1px solid #666; padding-bottom: 6px;">Tastenkombinationen:</div>
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">R</kbd> Route suchen</div>
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">T</kbd> Zug suchen</div>
-        <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">F</kbd> Freier Editor</div>
+        <!-- <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">F</kbd> Freier Editor</div>-->
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Shift+F</kbd> Zu Flags</div>
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Esc</kbd> Schliessen</div>
     </div>
