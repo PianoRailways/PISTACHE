@@ -3202,7 +3202,7 @@ $ROUTES = [
         ['id' => 'EP', 'name' => 'Ependes', 'abbr' => 'EP', 'km' => 32.70],
         ['id' => 'YV', 'name' => 'Yverdon-les-Bains', 'abbr' => 'YV', 'km' => 39.13],
         ['id' => 'YVPA', 'name' => 'Yverdon Y-Parc', 'abbr' => 'YVPA', 'km' => 40],
-        ['id' => 'GRA', 'name' => 'Grandson', 'abbr' => 'GRA', 'km' => 42.71],
+        ['id' => 'GRS', 'name' => 'Grandson', 'abbr' => 'GRS', 'km' => 42.71],
         ['id' => 'ONB', 'name' => 'Onnens-Bonvillard', 'abbr' => 'ONB', 'km' => 46],
         ['id' => 'CC', 'name' => 'Concise', 'abbr' => 'CC', 'km' => 50.75],
         ['id' => 'VAU', 'name' => 'Vaumarcus', 'abbr' => 'VAU', 'km' => 54.85],
