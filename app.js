@@ -1,4 +1,5 @@
 let currentRouteId = '';
+let canvasTooltip = null; // Global-Variable
 
 const colorMap = {
     'autumn': '#92400e',
@@ -484,7 +485,9 @@ async function renderGraph() {
         ctx.fillText(`km ${st.km}`, x, textY + 8);
     });
 
-    // Zuglinien zeichnen
+    // Sammle alle Zuglinien-Segmente für Hover-Tooltip
+    const trainSegments = [];
+
     trains.forEach((train) => {
         const baseColor = getTrainColor(train.train_number, train.name);
         
@@ -559,7 +562,21 @@ async function renderGraph() {
             ctx.textAlign = 'center';
             ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
         }
+
+        // Cache für Tooltip Hit-Testing
+        trainSegments.push({
+            train: train,
+            points: istPoints  // Nutze IST-Linie für Hover (sichtbare Linie)
+        });
     });
+
+    // Tooltip aktivieren
+    if (!canvasTooltip && canvas) {
+        canvasTooltip = new CanvasTooltip(canvas);
+    }
+    if (canvasTooltip) {
+        canvasTooltip.cacheTrainSegments(trainSegments);
+    }
     
     ctx.globalAlpha = 1.0;
     ctx.setLineDash([]);
