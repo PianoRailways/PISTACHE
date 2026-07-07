@@ -204,3 +204,70 @@ tr.dragging {
     margin-right: 5px;
     cursor: move;
 }
+
+/* Das Haupt-Layout erzwingt, dass beide Spalten die gleiche Höhe einnehmen */
+.main-layout { 
+    display: flex; 
+    gap: 20px; 
+    max-width: 1600px; 
+    margin: 0 auto; 
+    align-items: stretch; /* WICHTIG: Dehnt alle Kind-Elemente auf die exakt gleiche Höhe */
+}
+
+/* Die linke Spalte wächst flexibel und bildet die Basis für die Gesamthöhe */
+.left-content { 
+    flex: 1; 
+    min-width: 0; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* Das linke Panel dehnt sich ebenfalls aus, falls nötig */
+.panel { 
+    background: #1e293b; 
+    border: 1px solid #334155; 
+    padding: 20px; 
+    border-radius: 8px; 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+h1 { color: #f1f5f9; font-size: 24px; margin: 0; }
+label { color: #94a3b8; font-size: 14px; }
+select, input[type="time"], button, form { 
+    background: #334155; 
+    color: #fff; 
+    border: 1px solid #475569; 
+    padding: 7px 10px; 
+    border-radius: 4px; 
+    font-size: 14px;
+}
+button, form { cursor: pointer; background: #475569; font-weight: bold; }
+
+.button-a a {
+    color: #ffffff;
+    text-decoration: none;
+    background: #eb0000;
+    padding: 6px 15px;
+    border-radius: 6px;
+    margin-left: 5px;
+    transition: background 0.2s ease;
+}
+
+button:hover, form:hover { background: #64748b; }
+canvas { background: #1e293b; border: 1px solid #475569; border-radius: 4px; display: block; }
+
+.hidden {
+    display: none !important;
+}
+
+.segment-info {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-left: 10px;
+    padding: 6px 12px;
+    background: #0f172a;
+    border-radius: 4px;
+    border-left: 3px solid #0ea5e9;
+}

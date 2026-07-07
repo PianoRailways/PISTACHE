@@ -4,138 +4,6 @@
     <meta charset="UTF-8">
     <title>STS/RCS: Bildfahrplan</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body { margin: 20px; background: #0f172a; color: #f8fafc; font-family: sans-serif; }
-        
-        /* Das Haupt-Layout erzwingt, dass beide Spalten die gleiche Höhe einnehmen */
-        .main-layout { 
-            display: flex; 
-            gap: 20px; 
-            margin: 0 auto; 
-            align-items: stretch; /* WICHTIG: Dehnt alle Kind-Elemente auf die exakt gleiche Höhe */
-        }
-        
-        /* Die linke Spalte wächst flexibel und bildet die Basis für die Gesamthöhe */
-        .left-content { 
-            flex: 1; 
-            min-width: 0; 
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Das linke Panel dehnt sich ebenfalls aus, falls nötig */
-        .panel { 
-            background: #1e293b; 
-            border: 1px solid #334155; 
-            padding: 20px; 
-            border-radius: 8px; 
-            flex: 1; 
-            display: flex;
-            flex-direction: column;
-        }
-        
-        h1 { color: #f1f5f9; font-size: 24px; margin: 0; }
-        label { color: #94a3b8; font-size: 14px; }
-        select, input[type="time"], button, form { 
-            background: #334155; 
-            color: #fff; 
-            border: 1px solid #475569; 
-            padding: 7px 10px; 
-            border-radius: 4px; 
-            font-size: 14px;
-        }
-        button, form { cursor: pointer; background: #475569; font-weight: bold; }
-
-        .button-a a {
-            color: #ffffff;
-            text-decoration: none;
-            background: #eb0000;
-            padding: 6px 15px;
-            border-radius: 6px;
-            margin-left: 5px;
-            transition: background 0.2s ease;
-        }
-
-        button:hover, form:hover { background: #64748b; }
-        html, body {
-            height: 100%;
-            min-height: 100%;
-        }
-
-        body.controls-hidden {
-            margin: 0;
-        }
-
-        #header_section {
-            padding-right: 240px;
-        }
-
-        canvas { background: #1e293b; border: 1px solid #475569; border-radius: 4px; display: block; }
-
-        #graph_area {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #graph_canvas_container {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-        }
-
-        #graphCanvas {
-            width: 100%;
-            height: 100%;
-        }
-
-        .toggle-controls-btn {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 1000;
-            background: #2563eb;
-            color: #fff;
-            border: 1px solid #475569;
-            border-radius: 6px;
-            padding: 10px 14px;
-            cursor: pointer;
-            font-size: 13px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
-        }
-
-        .controls-hidden #header_section,
-        .controls-hidden #controls_wrapper,
-        .controls-hidden #ticker_panel {
-            display: none !important;
-        }
-
-        .controls-hidden .panel {
-            background: transparent;
-            border: none;
-            padding: 0;
-            border-radius: 0;
-        }
-
-        .controls-hidden .main-layout {
-            gap: 0;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .segment-info {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-left: 10px;
-            padding: 6px 12px;
-            background: #0f172a;
-            border-radius: 4px;
-            border-left: 3px solid #0ea5e9;
-        }
-    </style>
 </head>
 <body>
 
@@ -225,10 +93,8 @@
 
             </div>
             
-            <div id="graph_area">
-                <div id="graph_canvas_container">
-                    <canvas id="graphCanvas" width="1500" height="900" style="margin-top: 0; width: 100%; height: 100%; display: block;"></canvas> <!-- Auflösung -->
-                </div>
+            <div style="width: 100%; flex: 1;">
+                <canvas id="graphCanvas" width="1500" height="900" style="margin-top: 0; width: 100%; height: auto; display: block;"></canvas> <!-- Auflösung -->
             </div>
             
             <input type="time" id="graph_start" value="11:45" style="display: none;">
@@ -382,10 +248,6 @@ function updateTimeMode() {
     
     const offsetContainer = document.getElementById('offset_container');
     const fixedTimeContainer = document.getElementById('fixed_time_container');
-    const instanceWindowContainer = document.getElementById('instance_window_container');
-    const showInstanceWindow = basis === 'instanz1' || basis === 'instanz2';
-    
-    instanceWindowContainer.style.display = showInstanceWindow ? 'flex' : 'none';
     
     // Sichtbarkeiten regeln
     if (mode === 'auto') {
@@ -394,12 +256,8 @@ function updateTimeMode() {
         fixedTimeContainer.style.display = "none";
         
         applyAutoScroll();
-        renderGraphOnly();
         if (autoScrollInterval) clearInterval(autoScrollInterval);
-        autoScrollInterval = setInterval(() => {
-            applyAutoScroll();
-            renderGraphOnly();
-        }, 10000);
+        autoScrollInterval = setInterval(applyAutoScroll, 10000);
     } else {
         // Fixes Fenster
         offsetContainer.style.display = "none";
@@ -412,7 +270,6 @@ function updateTimeMode() {
         // Wenn Instanz 1 oder 2 im fixen Modus gewählt sind, berechnen wir die feste aktuelle Zeit
         if (basis !== 'manual') {
             applyAutoScroll();
-            renderGraphOnly();
         } else {
             loadAndRenderGraph();
         }
@@ -440,28 +297,9 @@ function applyAutoScroll() {
         // Nutzt die dynamische 16h-Berechnung für Instanz 1 oder 2
         adjustedStsMinutes = getDynamicSTSTime(basis);
     }
-
-    const getWindowValue = (inputId, fallback) => {
-        const input = document.getElementById(inputId);
-        const parsed = parseInt(input?.value || fallback, 10);
-        return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-    };
-
-    const windowBack = getWindowValue('window_back', 15);
-    let windowForward = getWindowValue('window_forward', 60);
-
-    const canvas = document.getElementById('graphCanvas');
-    if (canvas) {
-        const canvasHeight = canvas.getBoundingClientRect().height;
-        if (canvasHeight < 520) {
-            windowForward = Math.min(windowForward, 30);
-        } else if (canvasHeight < 700) {
-            windowForward = Math.min(windowForward, 40);
-        }
-    }
-
-    const startMinutes = ((adjustedStsMinutes - windowBack + 1440) % 1440);
-    const endMinutes = ((adjustedStsMinutes + windowForward + 1440) % 1440);
+    
+    const startMinutes = ((adjustedStsMinutes - 15 + 1440) % 1440);
+    const endMinutes = ((adjustedStsMinutes + 60 + 1440) % 1440);
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
@@ -471,9 +309,9 @@ function applyAutoScroll() {
         document.getElementById('graph_end').value = endTime;
     }
     
-    // NICHT loadAndRenderGraph() hier aufrufen!
-    // Die Zeitwerte sind jetzt aktualisiert, aber der Redraw passiert nur
-    // beim 30-Sekunden-Interval in initZuschauer().
+    if (typeof loadAndRenderGraph === 'function') {
+        loadAndRenderGraph();
+    }
 }
 </script>
 
@@ -588,10 +426,10 @@ async function initZuschauer() {
             loadAndRenderTicker();
         }, 30000);
         
-        // Update Instanz-Zeit-Labels alle 60 Sekunden (nicht alle 10 - das triggert applyAutoScroll!)
+        // Update Instanz-Zeit-Labels alle 10 Sekunden
         setInterval(() => {
             updateInstanzTimeLabels();
-        }, 60000);
+        }, 10000);
 
     } catch (e) {
         console.error("Fehler beim Initialisieren der Zuschaueransicht:", e);
@@ -601,8 +439,6 @@ async function initZuschauer() {
 async function loadAndRenderGraph() {
     const routeSelect = document.getElementById('route_select');
     if (!routeSelect || !routeSelect.value) return;
-
-    resizeGraphCanvas();
     
     currentRouteId = routeSelect.value; 
     
@@ -634,16 +470,12 @@ async function loadAndRenderGraph() {
         }
         
         activeTrains = trainsData;
-        renderGraphOnly();
+        
+        if (typeof renderGraph === 'function') {
+            renderGraph();
+        }
     } catch (e) {
         console.error("Fehler beim Laden der Fahrplandaten für Zuschauer:", e);
-    }
-}
-
-// Nur zeichnen, keine neuen Daten laden
-function renderGraphOnly() {
-    if (typeof renderGraph === 'function') {
-        renderGraph();
     }
 }
 
@@ -783,50 +615,6 @@ function toggleTicker() {
         loadAndRenderGraph();
     }
 }
-
-let resizeGraphTimeout;
-function resizeGraphCanvas() {
-    const canvas = document.getElementById('graphCanvas');
-    if (!canvas) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    const width = Math.max(1, Math.round(rect.width * dpr));
-    const height = Math.max(1, Math.round(rect.height * dpr));
-
-    if (canvas.width !== width || canvas.height !== height) {
-        canvas.width = width;
-        canvas.height = height;
-    }
-}
-
-function toggleControls() {
-    const button = document.getElementById('toggle_controls_btn');
-    document.body.classList.toggle('controls-hidden');
-
-    if (button) {
-        button.innerText = document.body.classList.contains('controls-hidden') ? 'Steuerelemente einblenden' : 'Steuerelemente ausblenden';
-    }
-
-    resizeGraphCanvas();
-    if (typeof renderGraph === 'function') {
-        renderGraph();
-    } else if (typeof loadAndRenderGraph === 'function') {
-        loadAndRenderGraph();
-    }
-}
-
-window.addEventListener('resize', () => {
-    clearTimeout(resizeGraphTimeout);
-    resizeGraphTimeout = setTimeout(() => {
-        resizeGraphCanvas();
-        if (typeof renderGraph === 'function') {
-            renderGraph();
-        } else if (typeof loadAndRenderGraph === 'function') {
-            loadAndRenderGraph();
-        }
-    }, 120);
-});
 </script>
 </body>
 </html>
