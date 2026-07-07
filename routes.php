@@ -1286,6 +1286,9 @@ $ROUTES = [
         'id' => 'ic1-bn',
         'name' => 'Bern – Lausanne',
         'stations' => [
+            ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BN', 'km' => -97.18],
+            ['id' => 'BNWM', 'name' => 'Weyermannshaus', 'abbr' => 'BNWM', 'km' => -94.92],
+            ['id' => 'BNAS', 'name' => 'Ausserholligen SBB', 'abbr' => 'BNAS', 'km' => -94.11],
             ['id' => 'BNBS', 'name' => 'Bümpliz Süd', 'abbr' => 'BNBS', 'km' => -93],
             ['id' => 'BBSA', 'name' => '', 'abbr' => '', 'km' => -92],
             ['id' => 'NWA', 'name' => 'Niederwangen', 'abbr' => 'NWA', 'km' => -91.04],
