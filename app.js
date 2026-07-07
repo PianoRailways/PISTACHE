@@ -80,7 +80,7 @@ function buildEditorTable() {
         tr.id = `row_${st.id}`;
         
         tr.innerHTML = `
-            <td><strong>${st.name} (${st.abbr})</strong></td>
+            <td>${st.name} <strong>(${st.abbr})</strong></td>
             <td><input type="text" name="stations[${st.id}][track]" size="3"></td>
             
             <td>
