@@ -80,7 +80,7 @@ function buildEditorTable() {
         tr.id = `row_${st.id}`;
         
         tr.innerHTML = `
-            <td><strong>${st.name} (${st.abbr})</strong></td>
+            <td>${st.name} <strong>(${st.abbr})</strong></td>
             <td><input type="text" name="stations[${st.id}][track]" size="3"></td>
             
             <td>
@@ -334,12 +334,8 @@ async function renderGraph() {
 
     const canvas = document.getElementById('graphCanvas');
     if (!canvas) return;
-
-    const offscreenCanvas = document.createElement('canvas');
-    offscreenCanvas.width = canvas.width;
-    offscreenCanvas.height = canvas.height;
-    const ctx = offscreenCanvas.getContext('2d');
-    ctx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     let stations = routesConfig[currentRouteId].stations;
     if (!stations || stations.length === 0) return;
@@ -378,8 +374,8 @@ async function renderGraph() {
     const paddingLeft = 50;
     const paddingRight = 50;
     
-    const graphWidth = offscreenCanvas.width - paddingLeft - paddingRight;
-    const graphHeight = offscreenCanvas.height - paddingTop - paddingBottom;
+    const graphWidth = canvas.width - paddingLeft - paddingRight;
+    const graphHeight = canvas.height - paddingTop - paddingBottom;
 
     const minKm = stations[0].km;
     const maxKm = stations[stations.length - 1].km;
@@ -455,13 +451,13 @@ async function renderGraph() {
 
         // Abbr. direkt über dem Canvas
         ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
-        ctx.font = 'bold 12px sans-serif';
+        ctx.font = 'bold 8px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(st.abbr, x, paddingTop - 5);
         
         // Name + km: alle OBEN, aber unterschiedlich hoch versetzt
         ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
-        ctx.font = '9px sans-serif';
+        ctx.font = '8px sans-serif';
         
         const isOddStation = index % 2 === 0; // 0,2,4... oben hoch / 1,3,5... oben tiefer
         
@@ -558,44 +554,10 @@ async function renderGraph() {
 
         const firstVisibleIst = istPoints.find(p => p.y !== null);
         if (firstVisibleIst) {
-            // Verspätung berechnen (Ist - Soll) anhand der ersten Station mit beiden Zeiten
-            let delayMin = null;
-            for (const item of validStops) {
-                const sollMin = timeToMinutes(item.stop.departure || item.stop.arrival);
-                const istMin = timeToMinutes(item.stop.actual_departure || item.stop.actual_arrival);
-                if (sollMin !== null && istMin !== null) {
-                    delayMin = istMin - sollMin;
-                    break;
-                }
-            }
-
             ctx.fillStyle = baseColor;
-
-            if (delayMin !== null) {
-                const numberText = `${train.train_number} `;
-                const delayText = `(${delayMin > 0 ? '+' : ''}${delayMin})`;
-
-                ctx.font = 'bold 15px sans-serif';
-                const numberWidth = ctx.measureText(numberText).width;
-                ctx.font = 'bold 10px sans-serif';
-                const delayWidth = ctx.measureText(delayText).width;
-
-                const totalWidth = numberWidth + delayWidth;
-                const startX = firstVisibleIst.x - (totalWidth / 2);
-
-                ctx.textAlign = 'left';
-                ctx.font = 'bold 15px sans-serif';
-                ctx.fillText(numberText, startX, firstVisibleIst.y - 8);
-
-                ctx.font = 'bold 10px sans-serif';
-                ctx.fillText(delayText, startX + numberWidth, firstVisibleIst.y - 8);
-
-                ctx.textAlign = 'center';
-            } else {
-                ctx.font = 'bold 15px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
-            }
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
         }
     });
     
@@ -643,10 +605,6 @@ async function renderGraph() {
         ctx.restore();
     }
 })();
-
-    const visibleCtx = canvas.getContext('2d');
-    visibleCtx.clearRect(0, 0, canvas.width, canvas.height);
-    visibleCtx.drawImage(offscreenCanvas, 0, 0);
 }
 function getDynamicSTSTime(instanz) {
     // Fixer Referenzpunkt aus deinem Live-Abgleich
@@ -1068,17 +1026,21 @@ function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = f
 
         if (istArrMin === null) continue;
 
-        if (sollArrMin !== null) setDelay(stId, 'arr', istArrMin - sollArrMin);
-
-        // ========== STANDZEIT & ABFAHRT ==========
+        // ========== STANDZEIT-VERWALTUNG ==========
+        // Soll-Standzeit
         let sollStandzeit = 0;
         if (sollArrMin !== null && sollDepMin !== null && sollDepMin >= sollArrMin) {
             sollStandzeit = sollDepMin - sollArrMin;
         }
 
+        // R-Flag prüfen (reservierte Standzeit)
         const hasRFlag = /R/i.test(flags);
         const minStandzeit = hasRFlag ? 2 : 0;
+
+        // Verspätung bei Ankunft
         const arrivalDelay = (sollArrMin !== null) ? (istArrMin - sollArrMin) : 0;
+
+        // Verfügbare Abbremsung = Soll-Standzeit - minimale Standzeit
         const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
         const actualBraking = Math.min(Math.max(0, arrivalDelay), availableBraking);
 
