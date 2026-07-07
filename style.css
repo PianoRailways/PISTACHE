@@ -74,7 +74,6 @@ h1 {
 .main-layout {
     display: flex;
     gap: 20px;
-    max-width: 1600px;
     margin: 0 auto;
     align-items: stretch;
 }
