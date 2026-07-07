@@ -3481,6 +3481,25 @@ $ROUTES = [
             ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BN', 'km' => 0],
         ]
     ],
+    'STB' => [
+        'id' => 'STB',
+        'name' => 'Sensetalbahn',
+        'stations' => [
+            ['id' => 'LPN', 'name' => 'Laupen', 'abbr' => 'LPN', 'km' => -6.8],
+            ['id' => 'FBGH', 'name' => 'Freiburghaus', 'abbr' => 'FBGH', 'km' => -4.14],
+            ['id' => 'NGG', 'name' => 'Neuenegg', 'abbr' => 'NGG', 'km' => -1.72],
+            ['id' => 'FLMD', 'name' => 'Flamatt Dorf', 'abbr' => 'FLMD', 'km' => -0.68],
+            ['id' => 'FLM', 'name' => 'Flamatt', 'abbr' => 'FLM', 'km' => 0.04],
+            ['id' => 'THOD', 'name' => 'Thörishaus Dorf', 'abbr' => 'THOD', 'km' => 2.85],
+            ['id' => 'THO', 'name' => 'Thörishaus', 'abbr' => 'THO', 'km' => 4.17],
+            ['id' => 'OWA', 'name' => 'Oberwangen', 'abbr' => 'OWA', 'km' => 5.34],
+            ['id' => 'NWA', 'name' => 'Niederwangen', 'abbr' => 'NWA', 'km' => 7.01],
+            ['id' => 'BNBS', 'name' => 'Bümpliz Süd', 'abbr' => 'BNBS', 'km' => 8.97],
+            ['id' => 'BNAS', 'name' => 'Europaplatz/Ausserholligen SBB', 'abbr' => 'BNAS', 'km' => 10.08],
+            ['id' => 'BNWM', 'name' => 'Weyermannshaus', 'abbr' => 'BNWM', 'km' => 10.89],
+            ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BN', 'km' => 13.15],
+        ]
+    ],
     'moudon-avenches' => [
         'id' => 'moudon-avenches',
         'name' => 'Palézieux - Payerne - Murten - Kerzers',
