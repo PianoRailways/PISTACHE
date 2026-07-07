@@ -3695,12 +3695,16 @@ $ROUTES = [
             ['id' => 'BNFI', 'name' => 'Fischermätteli', 'abbr' => 'BNFI', 'km' => -3.53],
             ['id' => 'BNAH', 'name' => 'Ausserholligen GBS (Europaplatz)', 'abbr' => 'BNAH', 'km' => -3.12],
             ['id' => 'HOL', 'name' => 'Holligen', 'abbr' => 'HOL', 'km' => -2.71],
+            ['id' => 'BNWM', 'name' => 'Weyermannshaus', 'abbr' => 'BNWM', 'km' => -2.23],
+            ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BNWM', 'km' => -0.11],
         ]
     ],
     'gürbetal' => [
         'id' => '303',
         'name' => '303 - Gürbetal',
         'stations' => [
+            ['id' => 'BN', 'name' => 'Bern', 'abbr' => 'BNWM', 'km' => 0.11],
+            ['id' => 'BNWM', 'name' => 'Weyermannshaus', 'abbr' => 'BNWM', 'km' => 2.23],
             ['id' => 'HOL', 'name' => 'Holligen', 'abbr' => 'HOL', 'km' => 2.71],
 			['id' => 'BNAH', 'name' => 'Ausserholligen GBS (Europaplatz)', 'abbr' => 'BNAH', 'km' => 3.12],
 			['id' => 'BNFI', 'name' => 'Bern Fischermätteli', 'abbr' => 'BNFI', 'km' => 3.52],
