@@ -1,7 +1,6 @@
 /**
  * Canvas Hover Tooltip System (erweitert mit Light/Dark-Mode)
- * 
- * Zeigt bei Mouseover über einer Zuglinie ein Popup mit:
+ * * Zeigt bei Mouseover über einer Zuglinie ein Popup mit:
  * - Zugnummer
  * - Aktueller Position (nächste Station)
  * - Verspätung
@@ -66,60 +65,101 @@ class CanvasTooltip {
      * Cache alle sichtbaren Zuglinien-Segmente
      */
     cacheTrainSegments(trainSegments) {
-        this.trainSegments = trainSegments;
+        this.trainSegments = trainSegments || [];
     }
 
     /**
-     * Handle Mousemove: Hit-Test durchführen
+     * Handle Mousemove: Berebereitet Koordinaten vor und führt Hit-Test durch
      */
     handleMouseMove(event) {
-        const rect = this.canvas.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
+        if (!this.trainSegments || this.trainSegments.length === 0) {
+            this.hidePopup();
+            return;
+        }
 
+        const rect = this.canvas.getBoundingClientRect();
+        const computedStyle = window.getComputedStyle(this.canvas);
+        
+        // 1. CSS-Rahmen und Padding abziehen
+        const borderLeft = parseFloat(computedStyle.borderLeftWidth) || 0;
+        const borderTop = parseFloat(computedStyle.borderTopWidth) || 0;
+        const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+        const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+        
+        let mouseX = event.clientX - rect.left - borderLeft - paddingLeft;
+        let mouseY = event.clientY - rect.top - borderTop - paddingTop;
+        
+        // 2. Skalierung ausgleichen (falls CSS-Größe von interner Canvas-Größe abweicht)
+        const contentWidth = rect.width - borderLeft - parseFloat(computedStyle.borderRightWidth) - paddingLeft - parseFloat(computedStyle.paddingRight);
+        const contentHeight = rect.height - borderTop - parseFloat(computedStyle.borderBottomWidth) - paddingTop - parseFloat(computedStyle.paddingBottom);
+        
+        if (contentWidth > 0 && contentHeight > 0) {
+            mouseX *= (this.canvas.width / contentWidth);
+            mouseY *= (this.canvas.height / contentHeight);
+        }
+
+        // HINWEIS: Falls dein Graf ein internes Zeichen-Padding nutzt (z.B. GRAPH_PADDING = 40),
+        // musst du dieses hier ebenfalls abziehen:
+        // mouseX -= 40;
+        // mouseY -= 40;
+
+        // 3. Hit-Test im bereinigten Koordinatenraum ausführen
         const hit = this.findHitTrain(mouseX, mouseY);
 
         if (hit) {
-            this.showPopup(hit.train, hit.point, mouseX, mouseY);
+            // Die visuelle Platzierung nutzt die stabilen Viewport-Koordinaten (clientX/Y)
+            this.showPopup(hit.train, hit.point, event.clientX, event.clientY);
         } else {
             this.hidePopup();
         }
     }
 
     /**
-     * Prüfe, ob Maus über einer Zuglinie liegt
+     * Prüfe, welches Segment der Maus am nächsten liegt (Minimalabstand)
      */
     findHitTrain(mouseX, mouseY) {
+        let bestHit = null;
+        let minDistance = this.hitThreshold;
+
         for (const segment of this.trainSegments) {
+            if (!segment || !segment.points || segment.points.length === 0) continue;
+            
             const points = segment.points;
             
             for (let i = 0; i < points.length; i++) {
                 const p1 = points[i];
                 const p2 = points[i + 1];
 
-                if (!p1 || !p2) continue;
+                if (!p1) continue;
 
+                // Punkt-Prüfung
                 const distToP1 = Math.hypot(mouseX - p1.x, mouseY - p1.y);
-                if (distToP1 < this.hitThreshold) {
-                    return { train: segment.train, point: p1 };
+                if (distToP1 < minDistance) {
+                    minDistance = distToP1;
+                    bestHit = { train: segment.train, point: p1 };
                 }
 
-                const dist = this.distanceToLineSegment(
+                if (!p2) continue;
+
+                // Linien-Prüfung
+                const distToLine = this.distanceToLineSegment(
                     mouseX, mouseY,
                     p1.x, p1.y,
                     p2.x, p2.y
                 );
-                if (dist < this.hitThreshold) {
+                
+                if (distToLine < minDistance) {
+                    minDistance = distToLine;
                     const d1 = Math.hypot(mouseX - p1.x, mouseY - p1.y);
                     const d2 = Math.hypot(mouseX - p2.x, mouseY - p2.y);
-                    return {
+                    bestHit = {
                         train: segment.train,
                         point: d1 < d2 ? p1 : p2
                     };
                 }
             }
         }
-        return null;
+        return bestHit;
     }
 
     /**
@@ -157,7 +197,7 @@ class CanvasTooltip {
     /**
      * Erstelle/zeige Popup mit Mode-spezifischen Styles
      */
-    showPopup(train, point, mouseX, mouseY) {
+    showPopup(train, point, clientX, clientY) {
         if (!this.popup) {
             this.popup = document.createElement('div');
             this.popup.id = 'canvas-tooltip';
@@ -167,14 +207,13 @@ class CanvasTooltip {
         const popupHTML = this.formatPopupContent(train, point);
         this.popup.innerHTML = popupHTML;
 
-        // Styles basierend auf Dark/Light Mode
         this.applyModeStyles();
 
-        // Position
+        // Platzierung relativ zum Viewport via position: fixed
         const offsetX = 15;
         const offsetY = 10;
-        this.popup.style.left = (mouseX + offsetX) + 'px';
-        this.popup.style.top = (mouseY + offsetY) + 'px';
+        this.popup.style.left = (clientX + offsetX) + 'px';
+        this.popup.style.top = (clientY + offsetY) + 'px';
         this.popup.style.display = 'block';
 
         this.isVisible = true;
@@ -274,49 +313,43 @@ class CanvasTooltip {
     }
 
     /**
-     * Finde nächste Station zum aktuellen Punkt
+     * Finde die geografisch nächste Station zum getroffenen Punkt im Canvas
      */
     findNextStop(train, point) {
-        if (!train.stops) return null;
+        if (!train.stops || !point) return null;
 
-        const sortedStops = [...train.stops].sort((a, b) => {
-            const timeA = this.timeToMinutes(a.departure || a.arrival);
-            const timeB = this.timeToMinutes(b.departure || b.arrival);
-            return timeA - timeB;
-        });
+        const stations = routesConfig[currentRouteId]?.stations || [];
+        const allStations = Object.values(routesConfig).flatMap(r => r.stations || []);
 
-        let closest = null;
-        let minTimeDist = Infinity;
+        let closestStop = null;
+        let minGeoDist = Infinity;
 
-        for (const stop of sortedStops) {
+        for (const stop of train.stops) {
             if (!stop.arrival && !stop.departure) continue;
 
-            const stopTime = this.timeToMinutes(stop.departure || stop.arrival);
-            if (stopTime === null) continue;
+            const stationConfig = stations.find(s => s.id === stop.station_id) ||
+                                  allStations.find(s => s.id === stop.station_id);
 
-            if (!closest) {
-                closest = stop;
+            if (!stationConfig || stationConfig.x === undefined || stationConfig.y === undefined) {
+                continue;
+            }
+
+            // Geografische Distanz zwischen dem Punkt auf dem Canvas und den Koordinaten der Station ermitteln
+            const geoDist = Math.hypot(point.x - stationConfig.x, point.y - stationConfig.y);
+
+            if (geoDist < minGeoDist) {
+                minGeoDist = geoDist;
+                closestStop = {
+                    station_name: stationConfig.name || `Station ${stop.station_id}`,
+                    arrival: stop.arrival || null,
+                    actual_arrival: stop.actual_arrival || null,
+                    departure: stop.departure || null,
+                    actual_departure: stop.actual_departure || null
+                };
             }
         }
 
-        if (closest) {
-            const stationId = closest.station_id;
-            const stations = routesConfig[currentRouteId]?.stations || [];
-            const station = stations.find(s => s.id === stationId) ||
-                           Object.values(routesConfig)
-                               .flatMap(r => r.stations || [])
-                               .find(s => s.id === stationId);
-
-            return {
-                station_name: station?.name || `Station ${stationId}`,
-                arrival: closest.arrival || null,
-                actual_arrival: closest.actual_arrival || null,
-                departure: closest.departure || null,
-                actual_departure: closest.actual_departure || null
-            };
-        }
-
-        return null;
+        return closestStop;
     }
 
     /**
