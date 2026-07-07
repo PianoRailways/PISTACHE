@@ -1,6 +1,6 @@
 /**
- * Canvas Hover Tooltip System (erweitert mit Fahrplan-Ausschnitt und Light/Dark-Mode)
- * * Zeigt bei Mouseover über einer Zuglinie ein Popup mit:
+ * Canvas Hover Tooltip System (vollständig korrigiert)
+ * Zeigt bei Mouseover über einer Zuglinie ein Popup mit:
  * - Zugnummer
  * - Fahrplanausschnitt des aktuellen Streckenabschnitts (Station, Soll/Ist-Zeiten, Flags)
  */
@@ -59,8 +59,7 @@ class CanvasTooltip {
     }
 
     /**
-     * Cache alle sichtbaren Zuglinien-Segmente.
-     * Muss beim Leeren des Graphen mit [] aufgerufen werden.
+     * Cache alle sichtbaren Zuglinien-Segmente
      */
     cacheTrainSegments(trainSegments) {
         this.trainSegments = trainSegments || [];
@@ -78,7 +77,7 @@ class CanvasTooltip {
         const rect = this.canvas.getBoundingClientRect();
         const computedStyle = window.getComputedStyle(this.canvas);
         
-        // 1. CSS-Rahmen und Padding abziehen
+        // CSS-Rahmen und Padding abziehen
         const borderLeft = parseFloat(computedStyle.borderLeftWidth) || 0;
         const borderTop = parseFloat(computedStyle.borderTopWidth) || 0;
         const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
@@ -87,7 +86,7 @@ class CanvasTooltip {
         let mouseX = event.clientX - rect.left - borderLeft - paddingLeft;
         let mouseY = event.clientY - rect.top - borderTop - paddingTop;
         
-        // 2. Skalierung ausgleichen (falls CSS-Größe von interner Canvas-Größe abweicht)
+        // Skalierung ausgleichen, falls CSS-Größe von interner Canvas-Größe abweicht
         const contentWidth = rect.width - borderLeft - parseFloat(computedStyle.borderRightWidth) - paddingLeft - parseFloat(computedStyle.paddingRight);
         const contentHeight = rect.height - borderTop - parseFloat(computedStyle.borderBottomWidth) - paddingTop - parseFloat(computedStyle.paddingBottom);
         
@@ -96,16 +95,9 @@ class CanvasTooltip {
             mouseY *= (this.canvas.height / contentHeight);
         }
 
-        // HINWEIS: Falls dein Graf ein internes Zeichen-Padding nutzt (z.B. GRAPH_PADDING = 40),
-        // muss dieses hier abgezogen werden, um im selben Koordinatenraum zu liegen:
-        // mouseX -= 40;
-        // mouseY -= 40;
-
-        // 3. Hit-Test im bereinigten Koordinatenraum ausführen
         const hit = this.findHitTrain(mouseX, mouseY);
 
         if (hit) {
-            // Nutzen der stabilen Viewport-Koordinaten (clientX/Y) für die Platzierung des DOM-Elements
             this.showPopup(hit.train, hit.index, event.clientX, event.clientY);
         } else {
             this.hidePopup();
@@ -113,7 +105,7 @@ class CanvasTooltip {
     }
 
     /**
-     * Prüfe, welches Segment der Maus am nächsten liegt (Minimalabstand)
+     * Prüfe, welches Segment der Maus am nächsten liegt
      */
     findHitTrain(mouseX, mouseY) {
         let bestHit = null;
@@ -124,7 +116,6 @@ class CanvasTooltip {
             
             const points = segment.points;
             
-            // Schleife läuft bis length - 1, da wir immer Paare (i und i+1) prüfen
             for (let i = 0; i < points.length - 1; i++) {
                 const p1 = points[i];
                 const p2 = points[i + 1];
@@ -141,7 +132,7 @@ class CanvasTooltip {
                     minDistance = distToLine;
                     bestHit = {
                         train: segment.train,
-                        index: i // Speichert das exakte Teilstück des Fahrplans
+                        index: i // Speichert den exakten Linienabschnitt
                     };
                 }
             }
@@ -194,7 +185,6 @@ class CanvasTooltip {
         this.popup.innerHTML = this.formatPopupContent(train, segmentIndex);
         this.applyModeStyles();
 
-        // Positionierung relativ zum Viewport
         const offsetX = 15;
         const offsetY = 10;
         this.popup.style.left = (clientX + offsetX) + 'px';
@@ -220,7 +210,7 @@ class CanvasTooltip {
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             transition: background 0.15s, color 0.15s, border-color 0.15s;
-            min-width: 280px;
+            min-width: 300px;
         `;
 
         if (this.isDarkMode) {
@@ -246,9 +236,54 @@ class CanvasTooltip {
     formatPopupContent(train, segmentIndex) {
         if (!train || !train.stops) return '';
 
-        // Extraktion der beiden Stationen des aktuellen Linienabschnitts
-        const stopA = train.stops[segmentIndex];
-        const stopB = train.stops[segmentIndex + 1];
+        const stations = routesConfig[currentRouteId]?.stations || [];
+        const allStations = Object.values(routesConfig).flatMap(r => r.stations || []);
+
+        // 1. Rekonstruktion des exakten validStops-Arrays analog zu app.js
+        const validStops = train.stops
+            .map(stop => {
+                const st = stations.find(s => s.id === stop.station_id);
+                return st ? { stop, km: st.km } : null;
+            })
+            .filter(item => item !== null);
+
+        validStops.sort((a, b) => {
+            const timeA = this.timeToMinutes(a.stop.departure || a.stop.arrival);
+            const timeB = this.timeToMinutes(b.stop.departure || b.stop.arrival);
+            return timeA - timeB;
+        });
+
+        // 2. Erstellung des exakten Point-Index-Mappings
+        const pointMapping = [];
+        validStops.forEach((item, idx) => {
+            const arrMin = this.timeToMinutes(item.stop.actual_arrival || item.stop.arrival);
+            const depMin = this.timeToMinutes(item.stop.actual_departure || item.stop.departure);
+
+            if (arrMin !== null) pointMapping.push({ stopIndex: idx, type: 'arr' });
+            if (depMin !== null) pointMapping.push({ stopIndex: idx, type: 'dep' });
+        });
+
+        // 3. Zuordnung der beiden Stationen über das ermittelte Segment
+        let stopA = null;
+        let stopB = null;
+
+        const p1Map = pointMapping[segmentIndex];
+        const p2Map = pointMapping[segmentIndex + 1];
+
+        if (p1Map && p2Map) {
+            if (p1Map.stopIndex === p2Map.stopIndex) {
+                // Zug steht am selben Bahnhof (Segment zwischen AN- und AB-Zeit)
+                stopA = validStops[p1Map.stopIndex]?.stop;
+                stopB = validStops[p1Map.stopIndex + 1]?.stop; 
+            } else {
+                // Zug fährt zwischen zwei Bahnhöfen
+                stopA = validStops[p1Map.stopIndex]?.stop;
+                stopB = validStops[p2Map.stopIndex]?.stop;
+            }
+        } else if (p1Map) {
+            stopA = validStops[p1Map.stopIndex]?.stop;
+            stopB = validStops[p1Map.stopIndex + 1]?.stop;
+        }
 
         let html = `
             <div style="font-weight: bold; margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}; padding-bottom: 4px;">
@@ -257,24 +292,19 @@ class CanvasTooltip {
         `;
 
         if (stopA || stopB) {
-            const stations = routesConfig[currentRouteId]?.stations || [];
-            const allStations = Object.values(routesConfig).flatMap(r => r.stations || []);
-
-            // Hilfsfunktion zur Ermittlung der Betriebsstellen-Abkürzung (z.B. DS100)
             const getStationCode = (stop) => {
-                if (!stop) return '—';
+                if (!stop) return '-';
                 const config = stations.find(s => s.id === stop.station_id) ||
                                allStations.find(s => s.id === stop.station_id);
-                return config?.code || config?.short_name || config?.name || stop.station_id;
+                return config?.abbr || config?.code || config?.short_name || config?.name || stop.station_id;
             };
 
-            // Formatierung der Soll/Ist-Zellen inklusive farblicher Kennzeichnung bei Abweichung
             const formatTimeCell = (soll, ist) => {
-                if (!soll && !ist) return '<td style="padding: 4px 6px; opacity: 0.5;">—</td>';
-                let cell = `<td style="padding: 4px 6px;">${soll || '—'}`;
+                if (!soll && !ist) return '<td style="padding: 4px 6px; opacity: 0.5;">-</td>';
+                let cell = `<td style="padding: 4px 6px;">${soll || '-'}`;
                 if (ist && ist !== soll) {
                     const delay = this.getDelayMinutes(soll, ist);
-                    const color = delay > 0 ? '#ef4444' : '#22c55e'; // Rot bei Verspätung, Grün bei Vorzeitigkeit
+                    const color = delay > 0 ? '#ef4444' : '#22c55e';
                     cell += ` <span style="color: ${color}; font-size: 11px; font-weight: bold;">(${ist})</span>`;
                 }
                 cell += `</td>`;
@@ -296,14 +326,15 @@ class CanvasTooltip {
                     <tbody>
             `;
 
-            // Zeige die zwei Stationen des aktuellen Abschnitts an
-            [stopA, stopB].forEach((stop) => {
-                if (!stop) return;
+            // Filtert Duplikate aus, falls am Anfang/Ende der Strecke nur eine Station greift
+            const displayStops = [stopA, stopB].filter((v, i, a) => v && a.indexOf(v) === i);
+
+            displayStops.forEach((stop) => {
                 html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
                 html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
                 html += formatTimeCell(stop.arrival, stop.actual_arrival);
                 html += formatTimeCell(stop.departure, stop.actual_departure);
-                html += `<td style="padding: 6px 6px; font-size: 11px; opacity: 0.8; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stop.flags || stop.remarks || '—'}</td>`;
+                html += `<td style="padding: 6px 6px; font-size: 11px; opacity: 0.8; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stop.flags || stop.remarks || '-'}</td>`;
                 html += `</tr>`;
             });
 
