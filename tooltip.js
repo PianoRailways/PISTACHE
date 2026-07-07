@@ -1,10 +1,8 @@
 /**
- * Canvas Hover Tooltip System (erweitert mit Light/Dark-Mode)
+ * Canvas Hover Tooltip System (erweitert mit Fahrplan-Ausschnitt und Light/Dark-Mode)
  * * Zeigt bei Mouseover über einer Zuglinie ein Popup mit:
  * - Zugnummer
- * - Aktueller Position (nächste Station)
- * - Verspätung
- * - Soll/Ist-Zeit
+ * - Fahrplanausschnitt des aktuellen Streckenabschnitts (Station, Soll/Ist-Zeiten, Flags)
  */
 
 class CanvasTooltip {
@@ -45,13 +43,12 @@ class CanvasTooltip {
         this.canvas.addEventListener('mousemove', this.boundMouseMove);
         this.canvas.addEventListener('mouseleave', this.boundMouseLeave);
         
-        // Höre auf Mode-Wechsel
         const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
         darkModeQuery.addEventListener('change', this.boundColorSchemeChange);
     }
 
     /**
-     * Detach Listener (falls nötig)
+     * Detach Listener
      */
     detachListeners() {
         this.canvas.removeEventListener('mousemove', this.boundMouseMove);
@@ -62,14 +59,15 @@ class CanvasTooltip {
     }
 
     /**
-     * Cache alle sichtbaren Zuglinien-Segmente
+     * Cache alle sichtbaren Zuglinien-Segmente.
+     * Muss beim Leeren des Graphen mit [] aufgerufen werden.
      */
     cacheTrainSegments(trainSegments) {
         this.trainSegments = trainSegments || [];
     }
 
     /**
-     * Handle Mousemove: Berebereitet Koordinaten vor und führt Hit-Test durch
+     * Handle Mousemove: Berechnet Koordinaten und führt präzisen Hit-Test durch
      */
     handleMouseMove(event) {
         if (!this.trainSegments || this.trainSegments.length === 0) {
@@ -99,7 +97,7 @@ class CanvasTooltip {
         }
 
         // HINWEIS: Falls dein Graf ein internes Zeichen-Padding nutzt (z.B. GRAPH_PADDING = 40),
-        // musst du dieses hier ebenfalls abziehen:
+        // muss dieses hier abgezogen werden, um im selben Koordinatenraum zu liegen:
         // mouseX -= 40;
         // mouseY -= 40;
 
@@ -107,8 +105,8 @@ class CanvasTooltip {
         const hit = this.findHitTrain(mouseX, mouseY);
 
         if (hit) {
-            // Die visuelle Platzierung nutzt die stabilen Viewport-Koordinaten (clientX/Y)
-            this.showPopup(hit.train, hit.point, event.clientX, event.clientY);
+            // Nutzen der stabilen Viewport-Koordinaten (clientX/Y) für die Platzierung des DOM-Elements
+            this.showPopup(hit.train, hit.index, event.clientX, event.clientY);
         } else {
             this.hidePopup();
         }
@@ -122,26 +120,17 @@ class CanvasTooltip {
         let minDistance = this.hitThreshold;
 
         for (const segment of this.trainSegments) {
-            if (!segment || !segment.points || segment.points.length === 0) continue;
+            if (!segment || !segment.points || segment.points.length < 2) continue;
             
             const points = segment.points;
             
-            for (let i = 0; i < points.length; i++) {
+            // Schleife läuft bis length - 1, da wir immer Paare (i und i+1) prüfen
+            for (let i = 0; i < points.length - 1; i++) {
                 const p1 = points[i];
                 const p2 = points[i + 1];
 
-                if (!p1) continue;
+                if (!p1 || !p2) continue;
 
-                // Punkt-Prüfung
-                const distToP1 = Math.hypot(mouseX - p1.x, mouseY - p1.y);
-                if (distToP1 < minDistance) {
-                    minDistance = distToP1;
-                    bestHit = { train: segment.train, point: p1 };
-                }
-
-                if (!p2) continue;
-
-                // Linien-Prüfung
                 const distToLine = this.distanceToLineSegment(
                     mouseX, mouseY,
                     p1.x, p1.y,
@@ -150,11 +139,9 @@ class CanvasTooltip {
                 
                 if (distToLine < minDistance) {
                     minDistance = distToLine;
-                    const d1 = Math.hypot(mouseX - p1.x, mouseY - p1.y);
-                    const d2 = Math.hypot(mouseX - p2.x, mouseY - p2.y);
                     bestHit = {
                         train: segment.train,
-                        point: d1 < d2 ? p1 : p2
+                        index: i // Speichert das exakte Teilstück des Fahrplans
                     };
                 }
             }
@@ -163,7 +150,7 @@ class CanvasTooltip {
     }
 
     /**
-     * Berechne Entfernung Punkt zu Linie
+     * Berechne kürzeste Entfernung von Punkt zu einem Liniensegment
      */
     distanceToLineSegment(px, py, x1, y1, x2, y2) {
         const A = px - x1;
@@ -195,21 +182,19 @@ class CanvasTooltip {
     }
 
     /**
-     * Erstelle/zeige Popup mit Mode-spezifischen Styles
+     * Erstelle und zeigt das Popup
      */
-    showPopup(train, point, clientX, clientY) {
+    showPopup(train, segmentIndex, clientX, clientY) {
         if (!this.popup) {
             this.popup = document.createElement('div');
             this.popup.id = 'canvas-tooltip';
             document.body.appendChild(this.popup);
         }
 
-        const popupHTML = this.formatPopupContent(train, point);
-        this.popup.innerHTML = popupHTML;
-
+        this.popup.innerHTML = this.formatPopupContent(train, segmentIndex);
         this.applyModeStyles();
 
-        // Platzierung relativ zum Viewport via position: fixed
+        // Positionierung relativ zum Viewport
         const offsetX = 15;
         const offsetY = 10;
         this.popup.style.left = (clientX + offsetX) + 'px';
@@ -227,27 +212,28 @@ class CanvasTooltip {
 
         const commonStyles = `
             position: fixed;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 6px;
             font-size: 13px;
             pointer-events: none;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            transition: background 0.2s, color 0.2s, border 0.2s;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            min-width: 280px;
         `;
 
         if (this.isDarkMode) {
             this.popup.style.cssText = `
                 ${commonStyles}
-                background: rgba(30, 41, 59, 0.95);
+                background: rgba(22, 28, 45, 0.96);
                 color: #f1f5f9;
                 border: 1px solid #0ea5e9;
             `;
         } else {
             this.popup.style.cssText = `
                 ${commonStyles}
-                background: rgba(255, 255, 255, 0.95);
+                background: rgba(255, 255, 255, 0.96);
                 color: #1e293b;
                 border: 1px solid #3b82f6;
             `;
@@ -255,119 +241,90 @@ class CanvasTooltip {
     }
 
     /**
-     * Formatiere Popup-Inhalt
+     * Formatiert den Tabelleninhalt für den aktuellen Streckenabschnitt
      */
-    formatPopupContent(train, point) {
+    formatPopupContent(train, segmentIndex) {
         if (!train || !train.stops) return '';
 
-        const nextStop = this.findNextStop(train, point);
-        const delay = this.calculateDelay(train, nextStop);
+        // Extraktion der beiden Stationen des aktuellen Linienabschnitts
+        const stopA = train.stops[segmentIndex];
+        const stopB = train.stops[segmentIndex + 1];
 
         let html = `
-            <div style="font-weight: bold; margin-bottom: 6px; font-size: 14px;">
+            <div style="font-weight: bold; margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}; padding-bottom: 4px;">
                 Zug ${train.train_number}
             </div>
         `;
 
-        if (nextStop) {
+        if (stopA || stopB) {
+            const stations = routesConfig[currentRouteId]?.stations || [];
+            const allStations = Object.values(routesConfig).flatMap(r => r.stations || []);
+
+            // Hilfsfunktion zur Ermittlung der Betriebsstellen-Abkürzung (z.B. DS100)
+            const getStationCode = (stop) => {
+                if (!stop) return '—';
+                const config = stations.find(s => s.id === stop.station_id) ||
+                               allStations.find(s => s.id === stop.station_id);
+                return config?.code || config?.short_name || config?.name || stop.station_id;
+            };
+
+            // Formatierung der Soll/Ist-Zellen inklusive farblicher Kennzeichnung bei Abweichung
+            const formatTimeCell = (soll, ist) => {
+                if (!soll && !ist) return '<td style="padding: 4px 6px; opacity: 0.5;">—</td>';
+                let cell = `<td style="padding: 4px 6px;">${soll || '—'}`;
+                if (ist && ist !== soll) {
+                    const delay = this.getDelayMinutes(soll, ist);
+                    const color = delay > 0 ? '#ef4444' : '#22c55e'; // Rot bei Verspätung, Grün bei Vorzeitigkeit
+                    cell += ` <span style="color: ${color}; font-size: 11px; font-weight: bold;">(${ist})</span>`;
+                }
+                cell += `</td>`;
+                return cell;
+            };
+
+            const gridColor = this.isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+
             html += `
-                <div style="margin-bottom: 4px;">
-                    <strong>Station:</strong> ${nextStop.station_name || 'Unbekannt'}
-                </div>
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}; opacity: 0.7; font-size: 11px;">
+                            <th style="padding: 4px 6px;">Station</th>
+                            <th style="padding: 4px 6px;">AN (Ist)</th>
+                            <th style="padding: 4px 6px;">AB (Ist)</th>
+                            <th style="padding: 4px 6px;">Flags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
             `;
 
-            if (nextStop.arrival || nextStop.actual_arrival) {
-                html += `
-                    <div style="margin-bottom: 2px; font-size: 12px;">
-                        <strong>Soll Ank.:</strong> ${nextStop.arrival || '–'}
-                    </div>
-                `;
-            }
+            // Zeige die zwei Stationen des aktuellen Abschnitts an
+            [stopA, stopB].forEach((stop) => {
+                if (!stop) return;
+                html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
+                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
+                html += formatTimeCell(stop.arrival, stop.actual_arrival);
+                html += formatTimeCell(stop.departure, stop.actual_departure);
+                html += `<td style="padding: 6px 6px; font-size: 11px; opacity: 0.8; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stop.flags || stop.remarks || '—'}</td>`;
+                html += `</tr>`;
+            });
 
-            if (nextStop.actual_arrival) {
-                html += `
-                    <div style="margin-bottom: 2px; font-size: 12px;">
-                        <strong>Ist Ank.:</strong> ${nextStop.actual_arrival}
-                    </div>
-                `;
-            }
-
-            if (delay !== null) {
-                const delayColor = delay > 0 ? '#ef4444' : delay < 0 ? '#22c55e' : '#cbd5e1';
-                const delaySign = delay > 0 ? '+' : '';
-                const borderColor = this.isDarkMode ? 'rgba(255, 222, 21, 0.3)' : 'rgba(59, 130, 246, 0.2)';
-                
-                html += `
-                    <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid ${borderColor};">
-                        <span style="color: ${delayColor}; font-weight: bold;">
-                            Verspätung: ${delaySign}${delay} min
-                        </span>
-                    </div>
-                `;
-            }
+            html += `
+                    </tbody>
+                </table>
+            `;
         } else {
-            html += `<div style="color: #94a3b8; font-size: 12px;">Keine Stationen zugeordnet</div>`;
+            html += `<div style="color: #94a3b8; font-size: 12px;">Kein Streckenabschnitt ermittelbar</div>`;
         }
 
         return html;
     }
 
     /**
-     * Finde die geografisch nächste Station zum getroffenen Punkt im Canvas
+     * Berechnet die Differenz zwischen zwei Zeitstrings in Minuten
      */
-    findNextStop(train, point) {
-        if (!train.stops || !point) return null;
-
-        const stations = routesConfig[currentRouteId]?.stations || [];
-        const allStations = Object.values(routesConfig).flatMap(r => r.stations || []);
-
-        let closestStop = null;
-        let minGeoDist = Infinity;
-
-        for (const stop of train.stops) {
-            if (!stop.arrival && !stop.departure) continue;
-
-            const stationConfig = stations.find(s => s.id === stop.station_id) ||
-                                  allStations.find(s => s.id === stop.station_id);
-
-            if (!stationConfig || stationConfig.x === undefined || stationConfig.y === undefined) {
-                continue;
-            }
-
-            // Geografische Distanz zwischen dem Punkt auf dem Canvas und den Koordinaten der Station ermitteln
-            const geoDist = Math.hypot(point.x - stationConfig.x, point.y - stationConfig.y);
-
-            if (geoDist < minGeoDist) {
-                minGeoDist = geoDist;
-                closestStop = {
-                    station_name: stationConfig.name || `Station ${stop.station_id}`,
-                    arrival: stop.arrival || null,
-                    actual_arrival: stop.actual_arrival || null,
-                    departure: stop.departure || null,
-                    actual_departure: stop.actual_departure || null
-                };
-            }
-        }
-
-        return closestStop;
-    }
-
-    /**
-     * Berechne Verspätung in Minuten
-     */
-    calculateDelay(train, stop) {
-        if (!stop) return null;
-
-        const sollTime = stop.arrival || stop.departure;
-        const istTime = stop.actual_arrival || stop.actual_departure;
-
-        if (!sollTime || !istTime) return null;
-
+    getDelayMinutes(sollTime, istTime) {
         const sollMin = this.timeToMinutes(sollTime);
         const istMin = this.timeToMinutes(istTime);
-
-        if (sollMin === null || istMin === null) return null;
-
+        if (sollMin === null || istMin === null) return 0;
         return istMin - sollMin;
     }
 
