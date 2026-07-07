@@ -1403,6 +1403,10 @@ $ROUTES = [
             ['id' => 'SY', 'name' => 'Satigny', 'abbr' => 'SY', 'km' => 69.37],
             ['id' => 'RUS', 'name' => 'Russin', 'abbr' => 'RUS', 'km' => 72.83],
             ['id' => 'LP', 'name' => 'La Plaine', 'abbr' => 'LP', 'km' => 74.78],
+            ['id' => 'LPFR', 'name' => 'La Plaine Frontière', 'abbr' => 'LPFR', 'km' => 75.6],
+            ['id' => 'POCH', 'name' => 'Pougny-Chancy', 'abbr' => 'POCH', 'km' => 80.131],
+            ['id' => 'BELG', 'name' => 'Longeray bif', 'abbr' => 'BELG', 'km' => 88.143],
+            ['id' => 'BELG', 'name' => 'Bellegarde-sur-Valserine (Ain)', 'abbr' => 'BELG', 'km' => 93.51],
         ]
     ],
     'tpf-sud' => [
