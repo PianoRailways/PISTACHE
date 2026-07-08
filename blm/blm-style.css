@@ -1,7 +1,7 @@
 body { margin: 20px; background: #0f172a; color: #f8fafc; font-family: sans-serif; }
 
 .countdown-container {
-    max-width: 930px;
+    max-width: 900px;
     margin: 0 auto;
     height: 4px;
     background: #222;
@@ -66,7 +66,7 @@ footer {
     background: #c50000;
 }
 
-.filter-panel { background: #1e293b; padding: 15px; margin-bottom: 20px; border-radius: 4px; display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
+.filter-panel { background: #1e293b; padding: 15px; margin: 0 auto 20px auto; max-width: 900px; border-radius: 4px; display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; box-sizing: border-box; }
 .filter-panel label { font-size: 12px; font-weight: bold; display: block; margin-bottom: 5px; color: #fff; }
 .filter-panel select, .filter-panel input, .filter-panel button { padding: 6px; border: 1px solid #555; background: #222; color: #fff; border-radius: 3px; }
 .filter-panel button { background: #eb0000; font-weight: bold; cursor: pointer; border: none; padding: 6px 15px; }
