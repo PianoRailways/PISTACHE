@@ -955,6 +955,32 @@ $ROUTES = [
             ['id' => 'DOFM', 'name' => '', 'abbr' => '', 'km' => 186.28],
         ]
     ],
+    'LEB' => [
+        'id' => 'LEB',
+        'name' => 'LEB',
+        'stations' => [
+            ['id' => 'LSFL', 'name' => 'Lausanne-Flon', 'abbr' => 'LSFL', 'km' => 0],
+            ['id' => 'LSCH', 'name' => 'Lausanne-Chauderon', 'abbr' => 'LSCH', 'km' => 0.5],
+            ['id' => 'UPRI', 'name' => 'Union-Prilly', 'abbr' => 'UPRI', 'km' => 1.56],
+            ['id' => 'PRCH', 'name' => 'Prilly-Chasseur', 'abbr' => 'PRCH', 'km' => 2.17],
+            ['id' => 'CEF', 'name' => 'Cery-Fleur-de-Lys', 'abbr' => 'CEF', 'km' => 2.7],
+            ['id' => 'JOUM', 'name' => 'Jouxtens-Mézery', 'abbr' => 'JOUM', 'km' => 3.25],
+            ['id' => 'LELX', 'name' => 'Le Lussex', 'abbr' => 'LELX', 'km' => 4.22],
+            ['id' => 'ROSL', 'name' => 'Romanel-sur-Lausanne', 'abbr' => 'ROSL', 'km' => 4.9],
+            ['id' => 'VECA', 'name' => 'Vernand-Camarès', 'abbr' => 'VECA', 'km' => 5.85],
+            ['id' => 'BEAI', 'name' => 'Bel-Air LEB', 'abbr' => 'BEAI', 'km' => 6.7],
+            ['id' => 'CHES', 'name' => 'Cheseaux', 'abbr' => 'CHES', 'km' => 7.36],
+            ['id' => 'RIPE', 'name' => 'Les Ripes', 'abbr' => 'RIPE', 'km' => 8.24],
+            ['id' => 'ETA', 'name' => 'Etagnières', 'abbr' => 'ETA', 'km' => 9.22],
+            ['id' => 'ASNS', 'name' => 'Assens', 'abbr' => 'ASNS', 'km' => 10.81],
+            ['id' => 'ECH', 'name' => 'Echallens', 'abbr' => 'ECH', 'km' => 14.1],
+            ['id' => 'SROC', 'name' => 'Sur Roche', 'abbr' => 'SROC', 'km' => 14.75],
+            ['id' => 'GRES', 'name' => 'Grésaley', 'abbr' => 'GRES', 'km' => 15.16],
+            ['id' => 'SUGN', 'name' => 'Sugnens', 'abbr' => 'SUGN', 'km' => 17.44],
+            ['id' => 'FEY', 'name' => 'Fey', 'abbr' => 'FEY', 'km' => 20.16],
+            ['id' => 'BERC', 'name' => 'Bercher', 'abbr' => 'BERC', 'km' => 22.82],
+        ]
+    ],
     'monthey-cff' => [
         'id' => 'monthey-cff',
         'name' => 'Monthey (CFF)',
