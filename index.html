@@ -46,7 +46,7 @@
                 <br>
                 <label>
                     Modus:
-                    <select id="time_mode" onchange="updateTimeMode()">
+                    <select id="time_mode" onchange="onModeOrBasisChanged()">
                         <option value="auto" selected>Auto-Scroll</option>
                         <option value="fixed">Fixes Fenster</option>
                     </select>
@@ -54,7 +54,7 @@
 
                 <label>
                     Zeitbasis:
-                    <select id="time_basis" onchange="updateTimeMode(); updateInstanzTimeLabels();">
+                    <select id="time_basis" onchange="onModeOrBasisChanged(); updateInstanzTimeLabels();">
                         <option value="instanz1" selected>STS Instanz 1</option>
                         <option value="instanz2">STS Instanz 2</option>
                         <option value="manual">Eigenes Offset / Zeit</option>
@@ -64,11 +64,11 @@
                 <div id="instance_window_container" style="display: flex; gap: 10px; align-items: center;">
                     <label>
                         Zurück (Min):
-                        <input type="number" id="window_back" value="15" min="0" max="720" style="width: 60px;" onchange="updateTimeMode()">
+                        <input type="number" id="window_back" value="15" min="0" max="720" style="width: 60px;" onchange="onWindowChanged()">
                     </label>
                     <label>
                         Vorwärts (Min):
-                        <input type="number" id="window_forward" value="60" min="0" max="720" style="width: 60px;" onchange="updateTimeMode()">
+                        <input type="number" id="window_forward" value="60" min="0" max="720" style="width: 60px;" onchange="onWindowChanged()">
                     </label>
                 </div>
 
@@ -240,6 +240,22 @@ function updateInstanzTimeLabels() {
     }
 }
 
+// Wird bei Änderung von Modus (time_mode) oder Zeitbasis (time_basis) aufgerufen:
+// schreibt die aktuelle Auswahl in die URL und wendet sie an
+function onModeOrBasisChanged() {
+    updateUrlParameter('mode', document.getElementById('time_mode').value);
+    updateUrlParameter('basis', document.getElementById('time_basis').value);
+    updateTimeMode();
+}
+
+// Wird bei Änderung von Zurück (Min) / Vorwärts (Min) aufgerufen:
+// schreibt die Werte in die URL und wendet sie an
+function onWindowChanged() {
+    updateUrlParameter('back', document.getElementById('window_back').value);
+    updateUrlParameter('forward', document.getElementById('window_forward').value);
+    updateTimeMode();
+}
+
 function updateTimeMode() {
     const mode = document.getElementById('time_mode').value;
     const basis = document.getElementById('time_basis').value;
@@ -296,8 +312,14 @@ function applyAutoScroll() {
         adjustedStsMinutes = getDynamicSTSTime(basis);
     }
     
-    const startMinutes = ((adjustedStsMinutes - 15 + 1440) % 1440);
-    const endMinutes = ((adjustedStsMinutes + 60 + 1440) % 1440);
+    // Zurück (Min) / Vorwärts (Min) aus den Eingabefeldern lesen (vorher hartkodiert: -15 / +60)
+    const backInput = document.getElementById('window_back');
+    const forwardInput = document.getElementById('window_forward');
+    const back = backInput ? parseInt(backInput.value || 0, 10) : 15;
+    const forward = forwardInput ? parseInt(forwardInput.value || 0, 10) : 60;
+    
+    const startMinutes = ((adjustedStsMinutes - back + 1440) % 1440);
+    const endMinutes = ((adjustedStsMinutes + forward + 1440) % 1440);
     
     const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, '0')}:${String(startMinutes % 60).padStart(2, '0')}`;
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`;
@@ -313,8 +335,8 @@ function applyAutoScroll() {
 }
 </script>
 
-<script src="tooltip.js"></script>
-<script src="app.js"></script>
+<script src="tooltip.js?v=20260709"></script>
+<script src="app.js?v=20260709"></script>
 
 <script>
 async function initZuschauer() {
@@ -337,6 +359,10 @@ async function initZuschauer() {
         const paramTicker = urlParams.get('ticker')?.toLowerCase(); // Sucht nach ?ticker=...
         const paramSegmentFrom = urlParams.get('segment_from'); // Segment Start
         const paramSegmentTo = urlParams.get('segment_to'); // Segment End
+        const paramBack = urlParams.get('back'); // Zurück (Min)
+        const paramForward = urlParams.get('forward'); // Vorwärts (Min)
+        const paramMode = urlParams.get('mode'); // Modus (auto/fixed)
+        const paramBasis = urlParams.get('basis'); // Zeitbasis (instanz1/instanz2/manual)
         
         // Ticker-Sichtbarkeit über URL initialisieren
         const ticker = document.getElementById('ticker_panel');
@@ -346,6 +372,27 @@ async function initZuschauer() {
             tickerBtn.innerText = 'Ticker ausblenden';
             tickerBtn.style.background = '#334155';
         }
+        
+        // Zurück/Vorwärts, Modus und Zeitbasis über URL initialisieren
+        if (paramBack !== null && paramBack !== '') {
+            document.getElementById('window_back').value = paramBack;
+        }
+        if (paramForward !== null && paramForward !== '') {
+            document.getElementById('window_forward').value = paramForward;
+        }
+        if (paramMode === 'auto' || paramMode === 'fixed') {
+            document.getElementById('time_mode').value = paramMode;
+        }
+        if (paramBasis === 'instanz1' || paramBasis === 'instanz2' || paramBasis === 'manual') {
+            document.getElementById('time_basis').value = paramBasis;
+        }
+        
+        // Aktuellen Stand (aus URL oder Default) sofort in die URL schreiben,
+        // damit die Einstellung von Anfang an sichtbar/teilbar ist
+        updateUrlParameter('back', document.getElementById('window_back').value);
+        updateUrlParameter('forward', document.getElementById('window_forward').value);
+        updateUrlParameter('mode', document.getElementById('time_mode').value);
+        updateUrlParameter('basis', document.getElementById('time_basis').value);
         
         let firstId = null;
         let matchedId = null;
