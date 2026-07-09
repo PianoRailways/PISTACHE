@@ -3204,8 +3204,8 @@ $ROUTES = [
             ['id' => 'CHZ', 'name' => 'Choindez', 'abbr' => 'CHZ', 'km' => -79.2],
             ['id' => 'ROHX', 'name' => 'Roches BE', 'abbr' => 'ROHX', 'km' => -75.8],
             ['id' => 'MOU', 'name' => 'Moutier', 'abbr' => 'MOU', 'km' => -73.4],
-            ['id' => 'GN', 'name' => 'Grenchen Nord', 'abbr' => 'GN', 'km' => 62.7],
-            ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => 60.4],
+            ['id' => 'GN', 'name' => 'Grenchen Nord', 'abbr' => 'GN', 'km' => -62.7],
+            ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => -60.4],
         ]
     ],
     'grenchenberg' => [
