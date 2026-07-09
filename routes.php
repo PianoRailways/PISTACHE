@@ -3363,6 +3363,18 @@ $ROUTES = [
         ['id' => 'TWN', 'name' => 'Twann', 'abbr' => 'TWN', 'km' => 95.98],
         ['id' => 'TUE', 'name' => 'Tüscherz', 'abbr' => 'TUE', 'km' => 99.95],
         ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => 104.50],
+        ['id' => 'BIM', 'name' => 'Biel Mett', 'abbr' => 'BIM', 'km' => 107.62],
+        ['id' => 'BIPO', 'name' => 'Biel Mett Abzw.', 'abbr' => 'BIMA', 'km' => 108.06],
+        ['id' => 'BIBD', 'name' => 'Bözingenfeld', 'abbr' => 'BIBD', 'km' => 109.89],
+        ['id' => 'PIE', 'name' => 'Pieterlen', 'abbr' => 'PIE', 'km' => 113.66],
+        ['id' => 'LEN', 'name' => 'Lengnau', 'abbr' => 'LEN', 'km' => 115.88],
+        ['id' => 'GS', 'name' => 'Grenchen Süd', 'abbr' => 'GS', 'km' => 118.56],
+        ['id' => 'BET', 'name' => 'Bettlach', 'abbr' => 'BET', 'km' => 120.75],
+        ['id' => 'SEL', 'name' => 'Selzach', 'abbr' => 'SEL', 'km' => 122.98],
+        ['id' => 'BELL', 'name' => 'Bellach', 'abbr' => 'BELL', 'km' => 126.98],
+        ['id' => 'SOAD', 'name' => 'Allmend', 'abbr' => 'SOAD', 'km' => 128.02],
+        ['id' => 'SW', 'name' => 'Alt-Solothurn', 'abbr' => 'SW', 'km' => 128.89],
+        ['id' => 'SO', 'name' => 'Solothurn', 'abbr' => 'SO', 'km' => 129.87],
     ]
 ],
 'sm-ls-grs' => [
