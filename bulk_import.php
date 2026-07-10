@@ -2,6 +2,7 @@
 /**
  * CLI-Fahrplan-Importer für STS-Dateien
  * Schreibt alle .txt-Dateien eines Ordners direkt in die SQLite-Datenbank.
+ * Unterstützt Mehrfach-Halte an gleicher Station mit sequence_index.
  */
 
 if (php_sapi_name() !== 'cli') {
@@ -32,10 +33,12 @@ $db->exec("CREATE TABLE IF NOT EXISTS trains (
     successor_sts_zid TEXT
 )");
 
+// NEUE STRUKTUR: sequence_index für Mehrfach-Halte an gleicher Station
 $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    train_id INTEGER, 
-    station_id TEXT, 
+    train_id INTEGER NOT NULL, 
+    station_id TEXT NOT NULL, 
+    sequence_index INTEGER NOT NULL DEFAULT 0,
     track TEXT, 
     arrival TEXT, 
     departure TEXT, 
@@ -43,21 +46,9 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     actual_departure TEXT,
     flags TEXT, 
     remarks TEXT, 
-    UNIQUE(train_id, station_id)
+    FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
+    UNIQUE(train_id, station_id, sequence_index)
 )");
-
-// 🔧 WICHTIG: Nachrüsten der neuen Spalten, falls sie in älteren DBs fehlen
-try {
-    $db->exec("ALTER TABLE timetable ADD COLUMN actual_arrival TEXT");
-} catch (Exception $e) {
-    // Spalte existiert bereits
-}
-
-try {
-    $db->exec("ALTER TABLE timetable ADD COLUMN actual_departure TEXT");
-} catch (Exception $e) {
-    // Spalte existiert bereits
-}
 
 // Prüfen, ob der Import-Ordner existiert
 if (!is_dir($import_folder)) {
@@ -205,24 +196,43 @@ foreach ($files as $file_path) {
                 $stmt->execute([$zugNum]);
                 $train_id = $stmt->fetchColumn();
 
+                // Gruppiere Stops nach Station für sequence_index
+                $stopsByStation = [];
+                foreach ($stops as $r) {
+                    $sid = $r['station_id'];
+                    if (!isset($stopsByStation[$sid])) {
+                        $stopsByStation[$sid] = [];
+                    }
+                    $stopsByStation[$sid][] = $r;
+                }
+
+                // Speichere jeden Stop mit aufsteigendem sequence_index
                 $stmt = $db->prepare("
-                    INSERT INTO timetable (train_id, station_id, track, arrival, departure, flags, remarks) 
-                    VALUES (?, ?, ?, ?, ?, ?, '')
-                    ON CONFLICT(train_id, station_id) DO UPDATE SET
+                    INSERT INTO timetable (train_id, station_id, sequence_index, track, arrival, departure, flags, remarks) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, '')
+                    ON CONFLICT(train_id, station_id, sequence_index) DO UPDATE SET
                         track = CASE WHEN excluded.track != '' THEN excluded.track ELSE timetable.track END,
                         arrival = CASE WHEN excluded.arrival != '' THEN excluded.arrival ELSE timetable.arrival END,
                         departure = CASE WHEN excluded.departure != '' THEN excluded.departure ELSE timetable.departure END,
                         flags = CASE WHEN excluded.flags != '' THEN excluded.flags ELSE timetable.flags END
                 ");
                 
-                foreach ($stops as $r) {
-                    $stmt->execute([
-                        $train_id, $r['station_id'], $r['track'], $r['arrival'], $r['departure'], $r['flags']
-                    ]);
+                foreach ($stopsByStation as $stId => $stationStops) {
+                    foreach ($stationStops as $idx => $r) {
+                        $stmt->execute([
+                            $train_id, 
+                            $r['station_id'], 
+                            $idx,  // sequence_index
+                            $r['track'], 
+                            $r['arrival'], 
+                            $r['departure'], 
+                            $r['flags']
+                        ]);
+                    }
                 }
             }
             $db->commit();
-            echo "OK (" . count($trains_by_number) . " Züge eingepflegt)\n";
+            echo "OK (" . count($trains_by_number) . " Züge eingepflegt mit Mehrfach-Halt-Unterstützung)\n";
         } catch (Exception $e) {
             $db->rollBack();
             echo "FEHLER: " . $e->getMessage() . "\n";
@@ -233,3 +243,4 @@ foreach ($files as $file_path) {
 }
 
 echo "\nFertig! Alle Fahrpläne wurden in die Instanz integriert.\n";
+?>
