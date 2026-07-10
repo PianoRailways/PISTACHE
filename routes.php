@@ -1476,6 +1476,33 @@ $ROUTES = [
             ['id' => 'VAL', 'name' => 'Vallorbe', 'abbr' => 'VAL', 'km' => 46.31],
         ]
     ],
+    'nstcm' => [
+        'id' => 'nstcm',
+        'name' => 'NStCM',
+        'stations' => [
+            ['id' => 'NY', 'name' => '', 'abbr' => '', 'km' => 0.0],    
+            ['id' => 'NGAS', 'name' => 'Nyon', 'abbr' => 'NGAS', 'km' => 0.23],
+            ['id' => 'PLAN', 'name' => 'Plantaz', 'abbr' => 'PLAN', 'km' => 1.08],
+            ['id' => 'VUAP', 'name' => 'La Vuarpillère', 'abbr' => 'VUAP', 'km' => 2.43],
+            ['id' => 'ASE', 'name' => 'Asse', 'abbr' => 'ASE', 'km' => 2.95],
+            ['id' => 'TRED', 'name' => 'Trélex-Dépôt', 'abbr' => 'TRED', 'km' => 3.5],
+            ['id' => 'TREL', 'name' => 'Trlélex', 'abbr' => 'TREL', 'km' => 4.41],
+            ['id' => 'GIVI', 'name' => 'Givrins', 'abbr' => 'GIVI', 'km' => 6.38],
+            ['id' => 'GEN', 'name' => 'Genolier', 'abbr' => 'GEN', 'km' => 7.5],
+            ['id' => 'SUCH', 'name' => 'Sus-Châtel', 'abbr' => 'SUCH', 'km' => 7.39],
+            ['id' => 'JOCL', 'name' => 'La Joy-Clinique', 'abbr' => 'JOCL', 'km' => 8.69],
+            ['id' => 'MUI', 'name' => 'Le Muids', 'abbr' => 'MUI', 'km' => 10.01],
+            ['id' => 'BASS', 'name' => 'Bassins', 'abbr' => 'BASS', 'km' => 10.93],
+            ['id' => 'ARZ', 'name' => 'Arzier', 'abbr' => 'ARZ', 'km' => 12.81],
+            ['id' => 'CHMO', 'name' => 'La Chèvrerie', 'abbr' => 'CHMO', 'km' => 17.05],
+            ['id' => 'STCE', 'name' => 'St-Cergue', 'abbr' => 'STCE', 'km' => 19.1],
+            ['id' => 'CHES', 'name' => 'Les Chesaux', 'abbr' => 'CHES', 'km' => 20.33],
+            ['id' => 'PRAL', 'name' => 'Les Pralies', 'abbr' => 'PRAL', 'km' => 22.11],
+            ['id' => 'GIVR', 'name' => 'La Givrine', 'abbr' => 'GIVR', 'km' => 23.26],
+            ['id' => 'LAGI', 'name' => '', 'abbr' => '', 'km' => 23.26],
+            ['id' => 'CURE', 'name' => 'La Cure', 'abbr' => 'CURE', 'km' => 26.97],
+        ]
+    ],
     'mbc' => [
         'id' => 'mbc',
         'name' => 'MBC',
