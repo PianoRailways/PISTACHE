@@ -477,40 +477,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // 5. ZUKÜNFTIGE IST-DATEN SELEKTIV ZURÜCKSETZEN (Geschützte Halte auslassen!)
-        $stmtStops = $db->prepare("
-            SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
-            ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC
-        ");
-        $stmtStops->execute([$train_id]);
-        $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
-
-        $current_found = false;
-        $stops_to_clear = [];
-
-        foreach ($all_stops as $s) {
-            if ($s['station_id'] == $station_id) {
-                $current_found = true;
-                continue; // Aktuelle Station überspringen, updaten wir gleich gezielt
-            }
-            if ($current_found) {
-                // Wenn der Folgehalt geschützt ist (!), darf er NICHT auf NULL zurückgesetzt werden!
-                if (strpos($s['flags'] ?? '', '!') !== false) {
-                    write_log("🔒 BEREINIGUNG: Folgehalt ID {$s['id']} ist geschützt (!) und wird nicht zurückgesetzt.");
-                    continue;
-                }
-                $stops_to_clear[] = $s['id'];
-            }
-        }
-
-        if (!empty($stops_to_clear)) {
-            $clause = implode(',', array_fill(0, count($stops_to_clear), '?'));
-            $stmtClear = $db->prepare("
-                UPDATE timetable 
-                SET actual_arrival = NULL, actual_departure = NULL 
-                WHERE id IN ($clause)
+        if (!$am_gleis_flag) {
+            $stmtStops = $db->prepare(" 
+                SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
+                ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC
             ");
-            $stmtClear->execute($stops_to_clear);
-            write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
+            $stmtStops->execute([$train_id]);
+            $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
+
+            $current_found = false;
+            $stops_to_clear = [];
+
+            foreach ($all_stops as $s) {
+                if ($s['station_id'] == $station_id) {
+                    $current_found = true;
+                    continue; // Aktuelle Station überspringen, updaten wir gleich gezielt
+                }
+                if ($current_found) {
+                    // Wenn der Folgehalt geschützt ist (!), darf er NICHT auf NULL zurückgesetzt werden!
+                    if (strpos($s['flags'] ?? '', '!') !== false) {
+                        write_log("🔒 BEREINIGUNG: Folgehalt ID {$s['id']} ist geschützt (!) und wird nicht zurückgesetzt.");
+                        continue;
+                    }
+                    $stops_to_clear[] = $s['id'];
+                }
+            }
+
+            if (!empty($stops_to_clear)) {
+                $clause = implode(',', array_fill(0, count($stops_to_clear), '?'));
+                $stmtClear = $db->prepare(" 
+                    UPDATE timetable 
+                    SET actual_arrival = NULL, actual_departure = NULL 
+                    WHERE id IN ($clause)
+                ");
+                $stmtClear->execute($stops_to_clear);
+                write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
+            }
+        } else {
+            write_log("ℹ️ AM GLEIS: Vorab-Löschung der IST-Daten übersprungen.");
         }
 
         // 6. Aktuelle Station in DB schreiben (NEUE CODE: Nutze die fetched 'id' um sicherzugehen)
