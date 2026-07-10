@@ -160,13 +160,15 @@ button:hover {
 }
 
 .button-a a {
-    color: #ffffff;
-    text-decoration: none;
     background: var(--danger);
-    padding: 6px 15px;
-    border-radius: 6px;
-    margin-left: 5px;
-    transition: background 0.2s ease;
+    color: white;
+    border: none;
+    padding: 4px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 /* ============================================================================
