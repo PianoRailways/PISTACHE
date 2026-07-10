@@ -111,6 +111,8 @@ function evaluateDispoCriteria($db, $station_id, $flags, $current_delay, $soll_d
         FROM timetable tt
         JOIN trains t ON tt.train_id = t.id
         WHERE t.train_number = ? AND tt.station_id = ?
+        ORDER BY tt.sequence_index ASC
+        LIMIT 1
     ");
     $stmt->execute([$conflictTrainNum, $station_id]);
     $conflictStop = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -159,6 +161,7 @@ function propagateTravelTimeWithReserve($db, $trainId) {
         WHERE train_id = ?
         ORDER BY 
             CASE WHEN arrival != '' THEN arrival ELSE departure END ASC,
+            sequence_index ASC,
             id ASC
     ");
     $stmt->execute([$trainId]);
@@ -302,7 +305,7 @@ function recalculateDelayCascade($db, $current_zid, $current_delay) {
     $next_train_id = $next_train['id'];
     $next_train_num = $next_train['train_number'];
     
-    $stmtStops = $db->prepare("SELECT station_id, arrival, departure, actual_arrival, actual_departure, flags FROM timetable WHERE train_id = ? ORDER BY id ASC");
+    $stmtStops = $db->prepare("SELECT station_id, arrival, departure, actual_arrival, actual_departure, flags FROM timetable WHERE train_id = ? ORDER BY sequence_index ASC, id ASC");
     $stmtStops->execute([$next_train_id]);
     $next_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
     
@@ -332,7 +335,7 @@ function recalculateDelayCascade($db, $current_zid, $current_delay) {
         $act_arr = minutesToTime($act_arr_min);
         $act_dep = minutesToTime($act_dep_min);
         
-        $stmtUp = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, remarks = ? WHERE train_id = ? AND station_id = ?");
+        $stmtUp = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, remarks = ? WHERE train_id = ? AND station_id = ? ORDER BY sequence_index ASC LIMIT 1");
         $stmtUp->execute([$act_arr, $act_dep, "+" . ($act_dep_min - $soll_dep_min) . " Min (Kaskade)", $next_train_id, $station_id]);
     }
 }
@@ -416,8 +419,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // 3. Soll-Zeiten holen
-        $stmt = $db->prepare("SELECT arrival, departure, flags FROM timetable WHERE train_id = ? AND station_id = ?");
+        // 3. Soll-Zeiten holen (NEUER CODE: sequence_index berücksichtigen)
+        // Mit sequence_index: Nimm den ersten Halt an dieser Station (sequence_index=0)
+        $stmt = $db->prepare("
+            SELECT id, arrival, departure, flags 
+            FROM timetable 
+            WHERE train_id = ? AND station_id = ? 
+            ORDER BY sequence_index ASC 
+            LIMIT 1
+        ");
         $stmt->execute([$train_id, $station_id]);
         $timetable_entry = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -451,7 +461,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 5. ZUKÜNFTIGE IST-DATEN SELEKTIV ZURÜCKSETZEN (Geschützte Halte auslassen!)
         $stmtStops = $db->prepare("
             SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
-            ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC
+            ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC
         ");
         $stmtStops->execute([$train_id]);
         $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
@@ -485,14 +495,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
         }
 
-        // 6. Aktuelle Station in DB schreiben
+        // 6. Aktuelle Station in DB schreiben (NEUE CODE: Nutze die fetched 'id' um sicherzugehen)
         if ($am_gleis_flag) {
             // Bei "Am Gleis" bleibt der eventuell vorhandene alte Ist-Ankunftswert unberührt
-            $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE train_id = ? AND station_id = ?");
-            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $train_id, $station_id]);
+            $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
+            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $timetable_entry['id']]);
         } else {
-            $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? WHERE train_id = ? AND station_id = ?");
-            $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $train_id, $station_id]);
+            $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
+            $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $timetable_entry['id']]);
         }
         
         write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
@@ -507,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtLastStop = $db->prepare(" 
                 SELECT departure, arrival, actual_departure, actual_arrival FROM timetable 
                 WHERE train_id = ? 
-                ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, id DESC 
+                ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, sequence_index DESC, id DESC 
                 LIMIT 1
             ");
             $stmtLastStop->execute([$train_id]);
@@ -571,7 +581,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $result = [];
         foreach ($trains as $t) {
-            $stmt2 = $db->prepare("SELECT station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks FROM timetable WHERE train_id = ? ORDER BY id ASC");
+            $stmt2 = $db->prepare("SELECT station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks FROM timetable WHERE train_id = ? ORDER BY sequence_index ASC, id ASC");
             $stmt2->execute([$t['id']]);
             $stops = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 

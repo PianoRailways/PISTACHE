@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Pfad zur Datenbank im Unterordner /dbs/
 $db_file = __DIR__ . '/dbs/fahrplan.sqlite';
 
 try {
@@ -27,16 +26,19 @@ try {
     // Ignorieren falls Spalte existiert
 }
 
+// NEUE STRUKTUR: sequence_index für Mehrfach-Halte an gleicher Station
 $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    train_id INTEGER, 
-    station_id TEXT, 
+    train_id INTEGER NOT NULL, 
+    station_id TEXT NOT NULL, 
+    sequence_index INTEGER NOT NULL DEFAULT 0,
     track TEXT, 
     arrival TEXT, 
     departure TEXT, 
     flags TEXT, 
     remarks TEXT, 
-    UNIQUE(train_id, station_id)
+    FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
+    UNIQUE(train_id, station_id, sequence_index)
 )");
 
 $message = "";
@@ -56,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (!empty($records) && !empty($route_id)) {
         $db->beginTransaction();
         try {
+            // Gruppiere Records nach Zug und Station
             $trains_by_number = [];
             foreach ($records as $r) {
                 $zugNum = intval($r['train_number'] ?? 0);
@@ -71,12 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $sts_zid = $sts_zids[$zugNum] ?? null;
                 $successor_zid = $successor_zids[$zugNum] ?? null;
                 
+                // Füge Zug ein oder ignoriere, falls bereits vorhanden
                 $stmt = $db->prepare("
                     INSERT OR IGNORE INTO trains (train_number, route_id, sts_zid, successor_sts_zid) 
                     VALUES (?, ?, ?, ?)
                 ");
                 $stmt->execute([$zugNum, $route_id, $sts_zid, $successor_zid]);
 
+                // Update ZIDs, falls Zug bereits existierte
                 $updates = [];
                 $params = [];
                 if ($sts_zid) {
@@ -94,34 +99,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     $stmt->execute($params);
                 }
 
+                // Hole Train-ID
                 $stmt = $db->prepare("SELECT id FROM trains WHERE train_number = ?");
                 $stmt->execute([$zugNum]);
                 $train_id = $stmt->fetchColumn();
 
+                // Gruppiere Stops nach Station für sequence_index
+                $stopsByStation = [];
+                foreach ($stops as $r) {
+                    $sid = $r['station_id'] ?? '';
+                    if (empty($sid)) continue;
+                    
+                    if (!isset($stopsByStation[$sid])) {
+                        $stopsByStation[$sid] = [];
+                    }
+                    $stopsByStation[$sid][] = $r;
+                }
+
+                // Speichere jeden Stop mit aufsteigendem sequence_index
                 $stmt = $db->prepare("
-                    INSERT INTO timetable (train_id, station_id, track, arrival, departure, flags, remarks) 
-                    VALUES (?, ?, ?, ?, ?, ?, '')
-                    ON CONFLICT(train_id, station_id) DO UPDATE SET
+                    INSERT INTO timetable (train_id, station_id, sequence_index, track, arrival, departure, flags, remarks) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, '')
+                    ON CONFLICT(train_id, station_id, sequence_index) DO UPDATE SET
                         track = CASE WHEN excluded.track != '' THEN excluded.track ELSE timetable.track END,
                         arrival = CASE WHEN excluded.arrival != '' THEN excluded.arrival ELSE timetable.arrival END,
                         departure = CASE WHEN excluded.departure != '' THEN excluded.departure ELSE timetable.departure END,
                         flags = CASE WHEN excluded.flags != '' THEN excluded.flags ELSE timetable.flags END
                 ");
                 
-                foreach ($stops as $r) {
-                    $stmt->execute([
-                        $train_id, 
-                        $r['station_id'] ?? '', 
-                        $r['track'] ?? '', 
-                        $r['arrival'] ?? '', 
-                        $r['departure'] ?? '', 
-                        $r['flags'] ?? ''
-                    ]);
+                foreach ($stopsByStation as $stId => $stationStops) {
+                    foreach ($stationStops as $idx => $r) {
+                        $stmt->execute([
+                            $train_id, 
+                            $r['station_id'] ?? '', 
+                            $idx,  // sequence_index
+                            $r['track'] ?? '', 
+                            $r['arrival'] ?? '', 
+                            $r['departure'] ?? '', 
+                            $r['flags'] ?? ''
+                        ]);
+                    }
                 }
             }
             
             $db->commit();
-            $message = "✓ Erfolgreich gespeichert! Die Daten aus allen Dateien wurden sauber in die Fahrpläne integriert.";
+            $message = "✓ Erfolgreich gespeichert! Die Daten aus allen Dateien wurden sauber in die Fahrpläne integriert. Mehrfach-Halte werden korrekt erfasst.";
         } catch (Exception $e) {
             $db->rollBack();
             $message = "✗ Fehler beim Speichern: " . $e->getMessage();
@@ -185,6 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $station_id = $gleisSpalte;
                 $track = "";
 
+                // Verarbeite verschiedene Formate
                 if (strpos($gleisSpalte, ' ') !== false) {
                     $parts = explode(' ', $gleisSpalte, 2);
                     $station_id = $parts[0];
@@ -230,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
 
         if ($total_files_parsed > 0) {
-            $message = "✓ $total_files_parsed Datei(en) erfolgreich analysiert. Bitte überprüfe die Vorschau unten.";
+            $message = "✓ $total_files_parsed Datei(en) erfolgreich analysiert. Mehrfach-Halte werden automatisch mit sequence_index erfasst. Bitte überprüfe die Vorschau unten.";
         } else {
             $message = "✗ Keine gültigen Dateien hochgeladen.";
         }
@@ -280,7 +303,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     <div class="info">
         <strong>ℹ️ Funktionsweise:</strong> <br>
-        Wähle eine oder mehrere Fahrplan-Textdateien gleichzeitig aus. Das Skript liest alle Daten nacheinander im Speicher ein und verknüpft die Züge chronologisch über alle Dateien hinweg für die Nachfolger-Berechnung. Es werden keine Dateien dauerhaft auf dem Server abgelegt.
+        Wähle eine oder mehrere Fahrplan-Textdateien gleichzeitig aus. Das Skript liest alle Daten nacheinander im Speicher ein und verknüpft die Züge chronologisch über alle Dateien hinweg für die Nachfolger-Berechnung. Mehrfach-Halte an gleicher Station werden automatisch mit <code>sequence_index</code> erfasst. Es werden keine Dateien dauerhaft auf dem Server abgelegt.
     </div>
 
     <form method="POST" enctype="multipart/form-data">
@@ -308,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         
         <div>
             <span class="stat">✓ <?= count(array_unique(array_column($preview_data, 'train_number'))) ?> Züge</span>
-            <span class="stat">✓ <?= count($preview_data) ?> Haltestellen</span>
+            <span class="stat">✓ <?= count($preview_data) ?> Haltestellen (mit Mehrfach-Halten)</span>
             <span class="stat">✓ <?= count(array_filter($sts_zids)) ?> mit ZID</span>
         </div>
         
@@ -343,7 +366,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             <td><strong><?= htmlspecialchars($row['zid'] ?? '-') ?></strong></td>
                             <td><strong style="color: #4ade80;"><?= htmlspecialchars($row['successor_zid'] ?? '-') ?></strong></td>
                             <td><?= htmlspecialchars($row['train_number']) ?></td>
-                            <td colspan="2">← Gefunden mit <?= count(array_filter($preview_data, fn($r) => $r['train_number'] == $train_num)) ?> Haltestellen</td>
+                            <td colspan="2">← Gefunden mit <?= count(array_filter($preview_data, fn($r) => $r['train_number'] == $train_num)) ?> Haltestellen (inklusive Mehrfach-Halte)</td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
