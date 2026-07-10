@@ -556,12 +556,27 @@ async function renderGraph() {
         drawPointChain(istPoints);
 
         const firstVisibleIst = istPoints.find(p => p.y !== null);
-        if (firstVisibleIst) {
-            ctx.fillStyle = baseColor;
-            ctx.font = 'bold 11px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText(train.train_number, firstVisibleIst.x, firstVisibleIst.y - 8);
-        }
+                if (firstVisibleIst) {
+                    ctx.fillStyle = baseColor;
+                    ctx.font = 'bold 11px sans-serif';
+                    ctx.textAlign = 'center';
+                    
+                    // Berechne Verspätung an der ersten sichtbaren Station
+                    let delayText = '';
+                    const firstStop = validStops[0];
+                    if (firstStop) {
+                        const sollDep = timeToMinutes(firstStop.stop.departure || firstStop.stop.arrival);
+                        const istDep = timeToMinutes(firstStop.stop.actual_departure || firstStop.stop.actual_arrival);
+                        if (sollDep !== null && istDep !== null) {
+                            const delay = istDep - sollDep;
+                            if (delay !== 0) {
+                                delayText = ` (${delay > 0 ? '+' : ''}${delay})`;
+                            }
+                        }
+                    }
+                    
+                    ctx.fillText(train.train_number + delayText, firstVisibleIst.x, firstVisibleIst.y - 8);
+                }
 
         // Cache für Tooltip Hit-Testing
         trainSegments.push({
