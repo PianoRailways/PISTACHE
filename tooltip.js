@@ -210,7 +210,7 @@ class CanvasTooltip {
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             transition: background 0.15s, color 0.15s, border-color 0.15s;
-            min-width: 300px;
+            min-width: 520px;
         `;
 
         if (this.isDarkMode) {
@@ -299,16 +299,30 @@ class CanvasTooltip {
                 return config?.abbr || config?.code || config?.short_name || config?.name || stop.station_id;
             };
 
-            const formatTimeCell = (soll, ist) => {
-                if (!soll && !ist) return '<td style="padding: 4px 6px; opacity: 0.5;">-</td>';
-                let cell = `<td style="padding: 4px 6px;">${soll || '-'}`;
-                if (ist && ist !== soll) {
-                    const delay = this.getDelayMinutes(soll, ist);
-                    const color = delay > 0 ? '#ef4444' : '#22c55e';
-                    cell += ` <span style="color: ${color}; font-size: 11px; font-weight: bold;">(${ist})</span>`;
+            const formatTimeValue = (value) => value || '-';
+
+            const formatDelayValue = (soll, ist) => {
+                const delay = this.getDelayMinutes(soll, ist);
+                if (!soll || !ist) return '<span style="opacity: 0.45;">-</span>';
+                if (delay === 0) return '<span style="color: #94a3b8;">+0</span>';
+                const color = delay > 0 ? '#ef4444' : '#22c55e';
+                const sign = delay > 0 ? '+' : '';
+                return `<span style="color: ${color}; font-weight: bold;">${sign}${delay}</span>`;
+            };
+
+            const formatTextCell = (value, extraStyle = '') => {
+                if (!value) {
+                    return `<td style="padding: 4px 6px; opacity: 0.55; ${extraStyle}">-</td>`;
                 }
-                cell += `</td>`;
-                return cell;
+                return `<td style="padding: 4px 6px; ${extraStyle}">${value}</td>`;
+            };
+
+            const formatTimeCell = (soll, ist) => {
+                const sollText = formatTimeValue(soll);
+                const istText = formatTimeValue(ist);
+                return `<td style="padding: 4px 6px; white-space: nowrap;">${sollText}</td>
+                        <td style="padding: 4px 6px; white-space: nowrap;">${istText}</td>
+                        <td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(soll, ist)}</td>`;
             };
 
             const gridColor = this.isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
@@ -318,8 +332,12 @@ class CanvasTooltip {
                     <thead>
                         <tr style="border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}; opacity: 0.7; font-size: 11px;">
                             <th style="padding: 4px 6px;">Station</th>
-                            <th style="padding: 4px 6px;">AN (Ist)</th>
-                            <th style="padding: 4px 6px;">AB (Ist)</th>
+                            <th style="padding: 4px 6px;">SOLL-AN</th>
+                            <th style="padding: 4px 6px;">IST-AN</th>
+                            <th style="padding: 4px 6px;">ΔAN</th>
+                            <th style="padding: 4px 6px;">SOLL-ab</th>
+                            <th style="padding: 4px 6px;">IST-ab</th>
+                            <th style="padding: 4px 6px;">Δab</th>
                             <th style="padding: 4px 6px;">Flags</th>
                         </tr>
                     </thead>
@@ -331,10 +349,11 @@ class CanvasTooltip {
 
             displayStops.forEach((stop) => {
                 html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
-                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
+                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
                 html += formatTimeCell(stop.arrival, stop.actual_arrival);
                 html += formatTimeCell(stop.departure, stop.actual_departure);
-                html += `<td style="padding: 6px 6px; font-size: 11px; opacity: 0.8; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stop.flags || stop.remarks || '-'}</td>`;
+                const flagsText = [stop.flags, stop.remarks].filter(Boolean).join(' · ');
+                html += formatTextCell(flagsText, 'font-size: 11px; opacity: 0.85; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;');
                 html += `</tr>`;
             });
 
