@@ -3860,6 +3860,17 @@ $ROUTES = [
             ['id' => 'BI', 'name' => 'Biel/Bienne', 'abbr' => 'BI', 'km' => 33.6],
         ]
     ],
+    'kriegsschlaufe' => [
+        'id' => 'kriegsschlaufe',
+        'name' => 'Kriegsschlaufe',
+        'stations' => [
+            ['id' => 'ZF', 'name' => 'Zofingen', 'abbr' => 'ZF', 'km' => 39.68],
+            ['id' => 'ABOS', 'name' => 'Aarburg Süd', 'abbr' => 'ABOS', 'km' => 43.14],
+            ['id' => 'ABOW', 'name' => 'Aarburg West', 'abbr' => 'ABOW', 'km' => 43.97],
+            ['id' => 'BFG', 'name' => 'Bifang', 'abbr' => 'BFG', 'km' => 44.86],
+            ['id' => 'RTR', 'name' => 'Rothrist', 'abbr' => 'RTR', 'km' => 46.2],
+        ]
+    ],
     'sempachersee' => [
         'id' => 'sempachersee',
         'name' => 'Sempachersee',
