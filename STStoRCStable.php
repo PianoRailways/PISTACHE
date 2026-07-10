@@ -41,6 +41,12 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     UNIQUE(train_id, station_id, sequence_index)
 )");
 
+$stmtColumns = $db->query("PRAGMA table_info(timetable)");
+$existingColumns = $stmtColumns ? $stmtColumns->fetchAll(PDO::FETCH_COLUMN, 1) : [];
+if (!in_array('sequence_index', $existingColumns, true)) {
+    $db->exec("ALTER TABLE timetable ADD COLUMN sequence_index INTEGER NOT NULL DEFAULT 0");
+}
+
 $message = "";
 $preview_data = [];
 $current_route = $_POST['route_id'] ?? 'sempachersee';
@@ -117,27 +123,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
 
                 // Speichere jeden Stop mit aufsteigendem sequence_index
-                $stmt = $db->prepare("
-                    INSERT INTO timetable (train_id, station_id, sequence_index, track, arrival, departure, flags, remarks) 
+                $stmtFindExisting = $db->prepare("
+                    SELECT id
+                    FROM timetable
+                    WHERE train_id = ? AND station_id = ? AND sequence_index = ?
+                    LIMIT 1
+                ");
+                $stmtUpdateStop = $db->prepare("
+                    UPDATE timetable
+                    SET track = ?,
+                        arrival = ?,
+                        departure = ?,
+                        flags = ?
+                    WHERE id = ?
+                ");
+                $stmtInsertStop = $db->prepare("
+                    INSERT INTO timetable (train_id, station_id, sequence_index, track, arrival, departure, flags, remarks)
                     VALUES (?, ?, ?, ?, ?, ?, ?, '')
-                    ON CONFLICT(train_id, station_id, sequence_index) DO UPDATE SET
-                        track = CASE WHEN excluded.track != '' THEN excluded.track ELSE timetable.track END,
-                        arrival = CASE WHEN excluded.arrival != '' THEN excluded.arrival ELSE timetable.arrival END,
-                        departure = CASE WHEN excluded.departure != '' THEN excluded.departure ELSE timetable.departure END,
-                        flags = CASE WHEN excluded.flags != '' THEN excluded.flags ELSE timetable.flags END
                 ");
                 
                 foreach ($stopsByStation as $stId => $stationStops) {
                     foreach ($stationStops as $idx => $r) {
-                        $stmt->execute([
-                            $train_id, 
-                            $r['station_id'] ?? '', 
-                            $idx,  // sequence_index
-                            $r['track'] ?? '', 
-                            $r['arrival'] ?? '', 
-                            $r['departure'] ?? '', 
-                            $r['flags'] ?? ''
-                        ]);
+                        $stmtFindExisting->execute([$train_id, $r['station_id'] ?? '', $idx]);
+                        $existingId = $stmtFindExisting->fetchColumn();
+
+                        if ($existingId) {
+                            $stmtUpdateStop->execute([
+                                $r['track'] ?? '',
+                                $r['arrival'] ?? '',
+                                $r['departure'] ?? '',
+                                $r['flags'] ?? '',
+                                $existingId
+                            ]);
+                        } else {
+                            $stmtInsertStop->execute([
+                                $train_id,
+                                $r['station_id'] ?? '',
+                                $idx,
+                                $r['track'] ?? '',
+                                $r['arrival'] ?? '',
+                                $r['departure'] ?? '',
+                                $r['flags'] ?? ''
+                            ]);
+                        }
                     }
                 }
             }
