@@ -38,12 +38,10 @@ $db->exec("CREATE TABLE IF NOT EXISTS trains (
     successor_sts_zid TEXT
 )");
 
-// NEUE STRUKTUR: sequence_index für Mehrfach-Halte an gleicher Station
 $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    train_id INTEGER NOT NULL,
-    station_id TEXT NOT NULL,
-    sequence_index INTEGER NOT NULL DEFAULT 0,
+    train_id INTEGER,
+    station_id TEXT,
     track TEXT,
     arrival TEXT,
     departure TEXT,
@@ -52,7 +50,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     flags TEXT,
     remarks TEXT,
     FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
-    UNIQUE(train_id, station_id, sequence_index)
+    UNIQUE(train_id, station_id)
 )");
 
 // ========================================================================
@@ -121,13 +119,11 @@ function recalculateDelayCascade($db, $current_sts_zid, $delay_minutes) {
 
     $handoverStation = $lastStopCurrent['station_id'];
 
-    // 4. Finde denselben Bahnhof im Folgezug (ersten Halt)
+    // 4. Finde denselben Bahnhof im Folgezug
     $stmtHandoverStopSuccessor = $db->prepare("
         SELECT id, arrival, departure, actual_arrival, actual_departure, flags
         FROM timetable
         WHERE train_id = ? AND station_id = ?
-        ORDER BY sequence_index ASC
-        LIMIT 1
     ");
     $stmtHandoverStopSuccessor->execute([$successorTrain['id'], $handoverStation]);
     $handoverStopSuccessor = $stmtHandoverStopSuccessor->fetch(PDO::FETCH_ASSOC);
@@ -150,22 +146,31 @@ function recalculateDelayCascade($db, $current_sts_zid, $delay_minutes) {
     $successor_standzeit = max(0, $successor_soll_departure - $successor_soll_arrival);
 
     // 7. Berechne die neue Ist-Ankunft des Folgezuges
+    //    Neue Ankunft = alte Ist-Ankunft + Verspätung des vorherigen Zuges
     $successor_ist_arrival = $toMin($handoverStopSuccessor['actual_arrival']);
     
     if ($successor_ist_arrival === 0) {
+        // Falls noch keine Ist-Ankunft erfasst: von Soll ausgehen
         $successor_ist_arrival = $successor_soll_arrival;
     }
 
+    // Neue Ist-Ankunft = alte Ist-Ankunft + Verspätung
     $new_successor_ist_arrival = $successor_ist_arrival + $delay_minutes;
 
     // 8. Berechne die neue Ist-Abfahrt unter Standzeit-Schutz
+    //    Wenn Folgezug eine R- oder E-Flag hat: Standzeit = mind. 1 Min
+    //    Sonst: Standzeit kann auf 0 reduziert werden (zum Verzug abbremsen)
+    
     $flags = $handoverStopSuccessor['flags'] ?? '';
     $minStandzeit = 0;
     if (preg_match('/[RE]/i', $flags)) {
-        $minStandzeit = 1;
+        $minStandzeit = 1; // R- oder E-Flag: Minimum 1 Min Standzeit
     }
 
+    // Tatsächliche Standzeit = max(Soll-Standzeit, Minimum)
     $effective_standzeit = max($successor_standzeit, $minStandzeit);
+
+    // Neue Ist-Abfahrt = neue Ankunft + effektive Standzeit
     $new_successor_ist_departure = $new_successor_ist_arrival + $effective_standzeit;
 
     // 9. Hilfsfunktion: Minuten zu Zeit-String
@@ -197,11 +202,7 @@ function recalculateDelayCascade($db, $current_sts_zid, $delay_minutes) {
     }
 }
 
-/**
- * evaluateDispoCriteria()
- * 
- * Bewertet Dispo-Kriterien und setzt die Abfahrtszeit entsprechend
- */
+//Diskri
 function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr, $actualDepartureStr) {
     if (empty($flags)) return $actualDepartureStr;
 
@@ -226,8 +227,6 @@ function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr
         FROM timetable tt
         JOIN trains t ON tt.train_id = t.id
         WHERE t.train_number = ? AND tt.station_id = ?
-        ORDER BY tt.sequence_index ASC
-        LIMIT 1
     ");
     $stmt->execute([$conflictTrainNum, $currentStationId]);
     $conflictStop = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -252,8 +251,10 @@ function evaluateDispoCriteria($db, $currentStationId, $flags, $planDepartureStr
     };
 
     $refMinutes = $timeToMin($refTimeStr);
+    
     $baseDepartureStr = !empty($actualDepartureStr) ? $actualDepartureStr : $planDepartureStr;
     $baseMinutes = $timeToMin($baseDepartureStr);
+    
     $minDepartureMinutes = $refMinutes + $buffer;
 
     if ($minDepartureMinutes > $baseMinutes) {
@@ -292,16 +293,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$train_num]);
         $train = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $db->prepare("SELECT station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks FROM timetable WHERE train_id = ? ORDER BY arrival ASC, departure ASC, sequence_index ASC");
+        $stmt = $db->prepare("SELECT station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks FROM timetable WHERE train_id = ? ORDER BY arrival ASC, id ASC");
         $stmt->execute([$train['id']]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $timetable = [];
         foreach ($rows as $row) {
-            // Für den Editor: nutze station_id als Schlüssel (nur erste sequence_index wird angezeigt)
-            if (!isset($timetable[$row['station_id']])) {
-                $timetable[$row['station_id']] = $row;
-            }
+            $timetable[$row['station_id']] = $row;
         }
 
         echo json_encode(['train' => $train, 'timetable' => $timetable]);
@@ -315,9 +313,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->beginTransaction();
         try {
             $stmtUpsert = $db->prepare("
-                INSERT INTO timetable (train_id, station_id, sequence_index, track, arrival, departure, actual_arrival, actual_departure, flags, remarks) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ON CONFLICT(train_id, station_id, sequence_index) DO UPDATE SET
+                INSERT INTO timetable (train_id, station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(train_id, station_id) DO UPDATE SET
                     track = excluded.track,
                     arrival = excluded.arrival,
                     departure = excluded.departure,
@@ -327,7 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     remarks = excluded.remarks
             ");
 
-            $stmtDelete = $db->prepare("DELETE FROM timetable WHERE train_id = ? AND station_id = ? AND sequence_index = 0");
+            $stmtDelete = $db->prepare("DELETE FROM timetable WHERE train_id = ? AND station_id = ?");
 
             foreach ($data as $st_id => $fields) {
                 $isEmpty = empty($fields['arrival']) && empty($fields['departure']) && empty($fields['track']) && 
@@ -345,11 +343,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $departureIst = evaluateDispoCriteria($db, $st_id, $flags, $departureSoll, $departureIst);
                     }
 
-                    // Speichere mit sequence_index = 0 (Editor kümmert sich nicht um Mehrfach-Halte)
                     $stmtUpsert->execute([
                         $train_id,
                         $st_id,
-                        0,  // sequence_index
                         $fields['track'] ?? '',
                         $fields['arrival'] ?? '',
                         $departureSoll, 
@@ -380,7 +376,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtFirst = $db->prepare("
                 SELECT station_id FROM timetable 
                 WHERE train_id = ? 
-                ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC 
+                ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC 
                 LIMIT 1
             ");
             $stmtFirst->execute([$train_id]);
@@ -391,9 +387,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($route_id === 'free' || !isset($current_config[$route_id])) {
                     $stmtAllStops = $db->prepare("
-                        SELECT DISTINCT station_id FROM timetable 
+                        SELECT station_id FROM timetable 
                         WHERE train_id = ? 
-                        ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC
+                        ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, id ASC
                     ");
                     $stmtAllStops->execute([$train_id]);
                     $virtualStations = [];
@@ -421,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtLastStop = $db->prepare("
                     SELECT departure, arrival, actual_departure, actual_arrival FROM timetable 
                     WHERE train_id = ? 
-                    ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, sequence_index DESC, id DESC 
+                    ORDER BY CASE WHEN departure != '' THEN departure ELSE arrival END DESC, id DESC 
                     LIMIT 1
                 ");
                 $stmtLastStop->execute([$train_id]);
@@ -489,7 +485,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $all_data = [];
         foreach ($trains as $t) {
-            $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY arrival ASC, sequence_index ASC, id ASC");
+            $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY arrival ASC, id ASC");
             $stmt->execute([$t['id']]);
             $all_data[] = [
                 'train_number' => $t['train_number'],
@@ -547,7 +543,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>RCS: Editor</title>
+    <title>Bildfahrplan-Editor</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -606,6 +602,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" id="train_number" inputmode="numeric" pattern="[0-9]*" maxlength="6" 
                            placeholder="z.B. 421" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                     <button type="submit">Editor öffnen</button>
+                    <!-- <button type="button" style="background-color: #8b5cf6;" 
+                    onclick="activateFreeEditor()">📝 Freier Editor</button> -->
                 </form>
             </div>
         </div>
@@ -658,6 +656,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
+    <!-- FREIER EDITOR PANEL -->
     <div id="free_editor_panel" class="panel hidden">
         <h2>📝 Freier Fahrplan-Editor</h2>
         <p style="color: #666; margin-bottom: 15px;">Erstelle einen Fahrplan ohne vordefinierte Route. Stationen werden manuell hinzugefügt.</p>
@@ -718,6 +717,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="font-weight: bold; margin-bottom: 6px; border-bottom: 1px solid #666; padding-bottom: 6px;">Tastenkombinationen:</div>
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">R</kbd> Route suchen</div>
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">T</kbd> Zug suchen</div>
+        <!-- <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">F</kbd> Freier Editor</div>-->
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Shift+F</kbd> Zu Flags</div>
         <div><kbd style="background: #444; padding: 2px 6px; border-radius: 3px;">Esc</kbd> Schliessen</div>
     </div>
@@ -773,38 +773,45 @@ function filterRoutes() {
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
+    // Browser-Shortcuts wie Strg/Cmd+F oder F3 nicht blockieren
     if (e.ctrlKey || e.metaKey || e.altKey) {
         return;
     }
 
+    // Nicht triggern wenn man in Textfeldern tippt (ausser Escape)
     const isInInput = document.activeElement.tagName === 'INPUT' || 
                       document.activeElement.tagName === 'TEXTAREA' ||
                       document.activeElement.tagName === 'SELECT';
     
     const key = e.key.toLowerCase();
     
+    // R - Route Filter fokussieren
     if (key === 'r' && !isInInput) {
         e.preventDefault();
         document.getElementById('route_filter').focus();
         document.getElementById('route_filter').select();
     }
     
+    // T - Zug-Nummer fokussieren
     if (key === 't' && !isInInput) {
         e.preventDefault();
         document.getElementById('train_number').focus();
         document.getElementById('train_number').select();
     }
     
+    // F - Freier Editor öffnen (nur wenn kein Input aktiv)
     if (key === 'f' && !isInInput && !e.shiftKey) {
         e.preventDefault();
         activateFreeEditor();
     }
     
+    // Shift+F - Zu Flags springen
     if (key === 'f' && e.shiftKey) {
         e.preventDefault();
         jumpToFlags();
     }
     
+    // Escape - Editor/Dialog schliessen
     if (key === 'escape') {
         e.preventDefault();
         const editorPanel = document.getElementById('editor_panel');
@@ -818,16 +825,19 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Hilfsfunktion: Zu Flags springen
 function jumpToFlags() {
     const editorPanel = document.getElementById('editor_panel');
     const freeEditorPanel = document.getElementById('free_editor_panel');
     
     let firstFlagInput = null;
     
+    // Normale Editor-Tabelle
     if (!editorPanel.classList.contains('hidden')) {
         firstFlagInput = editorPanel.querySelector('#editor_table input[name*="flags"]');
     }
     
+    // Freier Editor-Tabelle
     if (!freeEditorPanel.classList.contains('hidden')) {
         firstFlagInput = freeEditorPanel.querySelector('#free_editor_table input[name*="flags"]');
     }
@@ -835,14 +845,17 @@ function jumpToFlags() {
     if (firstFlagInput) {
         firstFlagInput.focus();
         firstFlagInput.select();
+        // Scrolle zum Input
         firstFlagInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
 
+// Overwrite: activateFreeEditor - mit sofortigem Fokus auf Zugnummerfeld
 const originalActivateFreeEditor = activateFreeEditor;
 if (originalActivateFreeEditor) {
     activateFreeEditor = function() {
         originalActivateFreeEditor();
+        // Nach dem Öffnen sofort das Zugnummerfeld fokussieren
         setTimeout(() => {
             const trainNumberField = document.getElementById('free_train_number');
             if (trainNumberField) {
