@@ -11,7 +11,7 @@
     
     <div class="left-content">
         <div id="header_section" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h1>Bildfahrplan Betriebslenkung</h1>
+            <h1>Grafik</h1>
             <div style="display: flex; gap: 10px; align-items: center;">
                 <div class="button-a"><a href="./blm">Zum&nbsp;Betriebslagemonitor</a></div>
             </div>
@@ -214,12 +214,12 @@ function updateSegmentStatus() {
 function updatePageTitle(fromName, toName) {
     const routeSelect = document.getElementById('route_select');
     const route = routesConfig[routeSelect.value];
-    const routeName = route ? route.name : 'Bildfahrplan';
+    const routeName = route ? route.name : 'Grafik';
     
     if (fromName && toName && fromName !== 'Start' && toName !== 'End') {
-        document.title = `${routeName} [${fromName}–${toName}] | Bildfahrplan`;
+        document.title = `[${fromName}–${toName}] ${routeName} | Grafik`;
     } else {
-        document.title = `${routeName} | Bildfahrplan`;
+        document.title = `${routeName} | Grafik`;
     }
 }
 

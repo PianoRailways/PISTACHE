@@ -547,7 +547,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bildfahrplan-Editor</title>
+    <title>RCS: Editor</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
