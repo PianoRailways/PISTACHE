@@ -42,6 +42,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     train_id INTEGER,
     station_id TEXT,
+    sequence_index INTEGER NOT NULL DEFAULT 0,
     track TEXT,
     arrival TEXT,
     departure TEXT,
@@ -50,8 +51,14 @@ $db->exec("CREATE TABLE IF NOT EXISTS timetable (
     flags TEXT,
     remarks TEXT,
     FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE,
-    UNIQUE(train_id, station_id)
+    UNIQUE(train_id, station_id, sequence_index)
 )");
+
+$stmtColumns = $db->query("PRAGMA table_info(timetable)");
+$existingColumns = $stmtColumns ? $stmtColumns->fetchAll(PDO::FETCH_COLUMN, 1) : [];
+if (!in_array('sequence_index', $existingColumns, true)) {
+    $db->exec("ALTER TABLE timetable ADD COLUMN sequence_index INTEGER NOT NULL DEFAULT 0");
+}
 
 // ========================================================================
 // FOLGEZUG-VERSPÄTUNGS-PROPAGATION (Cascade Delay)
@@ -312,17 +319,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $db->beginTransaction();
         try {
-            $stmtUpsert = $db->prepare("
+            $stmtFindExisting = $db->prepare("
+                SELECT id
+                FROM timetable
+                WHERE train_id = ? AND station_id = ?
+                ORDER BY id ASC
+                LIMIT 1
+            ");
+
+            $stmtUpdateRow = $db->prepare("
+                UPDATE timetable
+                SET track = ?,
+                    arrival = ?,
+                    departure = ?,
+                    actual_arrival = ?,
+                    actual_departure = ?,
+                    flags = ?,
+                    remarks = ?
+                WHERE id = ?
+            ");
+
+            $stmtInsertRow = $db->prepare("
                 INSERT INTO timetable (train_id, station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ON CONFLICT(train_id, station_id) DO UPDATE SET
-                    track = excluded.track,
-                    arrival = excluded.arrival,
-                    departure = excluded.departure,
-                    actual_arrival = excluded.actual_arrival,
-                    actual_departure = excluded.actual_departure,
-                    flags = excluded.flags,
-                    remarks = excluded.remarks
             ");
 
             $stmtDelete = $db->prepare("DELETE FROM timetable WHERE train_id = ? AND station_id = ?");
@@ -343,17 +362,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $departureIst = evaluateDispoCriteria($db, $st_id, $flags, $departureSoll, $departureIst);
                     }
 
-                    $stmtUpsert->execute([
-                        $train_id,
-                        $st_id,
-                        $fields['track'] ?? '',
-                        $fields['arrival'] ?? '',
-                        $departureSoll, 
-                        $fields['actual_arrival'] ?? '',
-                        $departureIst,
-                        $flags,
-                        $fields['remarks'] ?? ''
-                    ]);
+                    $stmtFindExisting->execute([$train_id, $st_id]);
+                    $existingRowId = $stmtFindExisting->fetchColumn();
+
+                    if ($existingRowId) {
+                        $stmtUpdateRow->execute([
+                            $fields['track'] ?? '',
+                            $fields['arrival'] ?? '',
+                            $departureSoll,
+                            $fields['actual_arrival'] ?? '',
+                            $departureIst,
+                            $flags,
+                            $fields['remarks'] ?? '',
+                            $existingRowId
+                        ]);
+                    } else {
+                        $stmtInsertRow->execute([
+                            $train_id,
+                            $st_id,
+                            $fields['track'] ?? '',
+                            $fields['arrival'] ?? '',
+                            $departureSoll,
+                            $fields['actual_arrival'] ?? '',
+                            $departureIst,
+                            $flags,
+                            $fields['remarks'] ?? ''
+                        ]);
+                    }
                 }
             }
 

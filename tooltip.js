@@ -210,7 +210,7 @@ class CanvasTooltip {
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             transition: background 0.15s, color 0.15s, border-color 0.15s;
-            min-width: 300px;
+            min-width: 520px;
         `;
 
         if (this.isDarkMode) {
@@ -251,6 +251,74 @@ class CanvasTooltip {
             const timeA = this.timeToMinutes(a.stop.departure || a.stop.arrival);
             const timeB = this.timeToMinutes(b.stop.departure || b.stop.arrival);
             return timeA - timeB;
+        });
+
+        const normalizeDelayFromMinutes = (istMin, sollMin) => {
+            if (istMin === null || sollMin === null) return null;
+
+            let diff = istMin - sollMin;
+            if (diff < -720) diff += 1440;
+            if (diff > 720) diff -= 1440;
+
+            return diff;
+        };
+
+        const derivedDelayByStop = new Map();
+        let previousIstDeparture = null;
+        let previousSollDeparture = null;
+
+        validStops.forEach((item) => {
+            const stop = item.stop;
+            const sollArrMin = this.timeToMinutes(stop.arrival);
+            const sollDepMin = this.timeToMinutes(stop.departure);
+            const actualArrMin = this.timeToMinutes(stop.actual_arrival);
+            const actualDepMin = this.timeToMinutes(stop.actual_departure);
+
+            let istArrMin = actualArrMin;
+            if (istArrMin === null) {
+                if (previousIstDeparture !== null && previousSollDeparture !== null && sollArrMin !== null) {
+                    const sollTravelMinutes = Math.max(0, sollArrMin - previousSollDeparture);
+                    istArrMin = previousIstDeparture + sollTravelMinutes;
+                } else if (previousIstDeparture !== null) {
+                    istArrMin = previousIstDeparture;
+                } else {
+                    istArrMin = sollArrMin;
+                }
+            }
+
+            const arrivalDelay = normalizeDelayFromMinutes(istArrMin, sollArrMin);
+
+            let istDepMin = actualDepMin;
+            if (istDepMin === null) {
+                if (sollDepMin !== null) {
+                    let sollStandzeit = 0;
+                    if (sollArrMin !== null) {
+                        sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
+                    }
+
+                    const hasRFlag = /R/i.test(stop.flags || '');
+                    const minStandzeit = hasRFlag ? 2 : 0;
+                    const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+                    const actualBraking = Math.min(Math.max(0, arrivalDelay || 0), availableBraking);
+                    const remainingDelay = Math.max(0, (arrivalDelay || 0) - actualBraking);
+
+                    istDepMin = sollDepMin + remainingDelay;
+                } else if (istArrMin !== null) {
+                    istDepMin = istArrMin;
+                }
+            }
+
+            const departureDelay = normalizeDelayFromMinutes(istDepMin, sollDepMin);
+
+            derivedDelayByStop.set(stop, {
+                arrivalDelay,
+                departureDelay
+            });
+
+            if (istDepMin !== null) {
+                previousIstDeparture = istDepMin;
+            }
+            previousSollDeparture = sollDepMin !== null ? sollDepMin : sollArrMin;
         });
 
         // 2. Erstellung des exakten Point-Index-Mappings
@@ -299,27 +367,56 @@ class CanvasTooltip {
                 return config?.abbr || config?.code || config?.short_name || config?.name || stop.station_id;
             };
 
-            const formatTimeCell = (soll, ist) => {
-                if (!soll && !ist) return '<td style="padding: 4px 6px; opacity: 0.5;">-</td>';
-                let cell = `<td style="padding: 4px 6px;">${soll || '-'}`;
-                if (ist && ist !== soll) {
-                    const delay = this.getDelayMinutes(soll, ist);
-                    const color = delay > 0 ? '#ef4444' : '#22c55e';
-                    cell += ` <span style="color: ${color}; font-size: 11px; font-weight: bold;">(${ist})</span>`;
+            const formatTimeValue = (value) => value || '-';
+
+            const formatDelayValue = (delay) => {
+                if (delay === null || delay === undefined) return '<span style="opacity: 0.45;">-</span>';
+                if (delay === 0) return '<span style="color: #94a3b8;">+0</span>';
+                const color = delay > 0 ? '#ef4444' : '#22c55e';
+                const sign = delay > 0 ? '+' : '';
+                return `<span style="color: ${color}; font-weight: bold;">${sign}${delay}</span>`;
+            };
+
+            const formatTextCell = (value, extraStyle = '') => {
+                if (!value) {
+                    return `<td style="padding: 4px 6px; opacity: 0.55; ${extraStyle}">-</td>`;
                 }
-                cell += `</td>`;
-                return cell;
+                return `<td style="padding: 4px 6px; ${extraStyle}">${value}</td>`;
+            };
+
+            const formatTimeCell = (soll, ist) => {
+                const sollText = formatTimeValue(soll);
+                const istText = formatTimeValue(ist);
+                return `<td style="padding: 4px 6px; white-space: nowrap;">${sollText}</td>
+                        <td style="padding: 4px 6px; white-space: nowrap;">${istText}</td>
+                        <td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(null)}</td>`;
             };
 
             const gridColor = this.isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+            const computeDelayMinutes = (sollTime, istTime) => {
+                const sollMin = this.timeToMinutes(sollTime);
+                const istMin = this.timeToMinutes(istTime);
+
+                if (sollMin === null || istMin === null) return null;
+
+                let diff = istMin - sollMin;
+                if (diff < -720) diff += 1440;
+                if (diff > 720) diff -= 1440;
+
+                return diff;
+            };
 
             html += `
                 <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
                     <thead>
                         <tr style="border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}; opacity: 0.7; font-size: 11px;">
                             <th style="padding: 4px 6px;">Station</th>
-                            <th style="padding: 4px 6px;">AN (Ist)</th>
-                            <th style="padding: 4px 6px;">AB (Ist)</th>
+                            <th style="padding: 4px 6px;">SOLL-AN</th>
+                            <th style="padding: 4px 6px;">IST-AN</th>
+                            <th style="padding: 4px 6px;">ΔAN</th>
+                            <th style="padding: 4px 6px;">SOLL-ab</th>
+                            <th style="padding: 4px 6px;">IST-ab</th>
+                            <th style="padding: 4px 6px;">Δab</th>
                             <th style="padding: 4px 6px;">Flags</th>
                         </tr>
                     </thead>
@@ -331,10 +428,41 @@ class CanvasTooltip {
 
             displayStops.forEach((stop) => {
                 html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
-                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
-                html += formatTimeCell(stop.arrival, stop.actual_arrival);
-                html += formatTimeCell(stop.departure, stop.actual_departure);
-                html += `<td style="padding: 6px 6px; font-size: 11px; opacity: 0.8; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stop.flags || stop.remarks || '-'}</td>`;
+                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
+                const arrivalDelay = computeDelayMinutes(stop.arrival, stop.actual_arrival);
+                let departureDelay = computeDelayMinutes(stop.departure, stop.actual_departure);
+
+                if (departureDelay === null && stop.departure) {
+                    const arrivalBaseDelay = arrivalDelay || 0;
+                    const sollArrMin = this.timeToMinutes(stop.arrival);
+                    const sollDepMin = this.timeToMinutes(stop.departure);
+
+                    if (sollDepMin !== null) {
+                        let sollStandzeit = 0;
+                        if (sollArrMin !== null) {
+                            sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
+                        }
+
+                        const hasRFlag = /R/i.test(stop.flags || '');
+                        const minStandzeit = hasRFlag ? 2 : 0;
+                        const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+                        const actualBraking = Math.min(Math.max(0, arrivalBaseDelay), availableBraking);
+                        const remainingDelay = Math.max(0, arrivalBaseDelay - actualBraking);
+
+                        departureDelay = remainingDelay;
+                    }
+                }
+
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.arrival)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.actual_arrival)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(arrivalDelay)}</td>`;
+
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.departure)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.actual_departure)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(departureDelay)}</td>`;
+
+                const flagsText = [stop.flags, stop.remarks].filter(Boolean).join(' · ');
+                html += formatTextCell(flagsText, 'font-size: 11px; opacity: 0.85; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;');
                 html += `</tr>`;
             });
 
@@ -356,7 +484,16 @@ class CanvasTooltip {
         const sollMin = this.timeToMinutes(sollTime);
         const istMin = this.timeToMinutes(istTime);
         if (sollMin === null || istMin === null) return 0;
-        return istMin - sollMin;
+
+        let diff = istMin - sollMin;
+
+        // Zeitangaben sind im Fahrplan oft auf denselben 24h-Rahmen bezogen.
+        // Damit ein Vergleich über Mitternacht nicht als -1430 Minuten erscheint,
+        // normalisieren wir auf den plausibelsten Tagesabstand.
+        if (diff < -720) diff += 1440;
+        if (diff > 720) diff -= 1440;
+
+        return diff;
     }
 
     /**

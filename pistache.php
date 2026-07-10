@@ -65,6 +65,23 @@ function minutesToTime($m) {
     return sprintf("%02d:%02d", $h, $min);
 }
 
+function getEffectiveAmGleisDelay(array $timetable_entry, int $incoming_delay) {
+    $incoming_delay = max(0, $incoming_delay);
+
+    $scheduled_departure = $timetable_entry['departure'] ?? '';
+    $current_departure = $timetable_entry['actual_departure'] ?? '';
+
+    $scheduled_minutes = timeToMinutes($scheduled_departure);
+    $current_minutes = timeToMinutes($current_departure);
+
+    if ($scheduled_minutes === null || $current_minutes === null) {
+        return $incoming_delay;
+    }
+
+    $current_delay = max(0, $current_minutes - $scheduled_minutes);
+    return max($incoming_delay, $current_delay);
+}
+
 // =========================================================================
 // PRÜFE OB HALT MIT DISPO-FLAG GESCHÜTZT IST
 // =========================================================================
@@ -421,13 +438,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 3. Soll-Zeiten holen (NEUER CODE: sequence_index berücksichtigen)
         // Mit sequence_index: Nimm den ersten Halt an dieser Station (sequence_index=0)
-        $stmt = $db->prepare("
-            SELECT id, arrival, departure, flags 
-            FROM timetable 
-            WHERE train_id = ? AND station_id = ? 
-            ORDER BY sequence_index ASC 
-            LIMIT 1
-        ");
+        $stmt = $db->prepare("\n            SELECT id, arrival, departure, actual_departure, flags \n            FROM timetable \n            WHERE train_id = ? AND station_id = ? \n            ORDER BY sequence_index ASC \n            LIMIT 1\n        ");
         $stmt->execute([$train_id, $station_id]);
         $timetable_entry = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -448,10 +459,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $am_gleis = $_POST['am_gleis'] ?? $input_data['am_gleis'] ?? '0';
         $am_gleis_flag = ($am_gleis === '1' || $am_gleis === true);
 
+        $effective_delay = $delay;
+
         if ($am_gleis_flag) {
+            $effective_delay = getEffectiveAmGleisDelay($timetable_entry, $delay);
             $actual_arrival = null; 
-            $actual_departure = addMinutes($timetable_entry['departure'], $delay);
-            write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$delay Min)");
+            $actual_departure = addMinutes($timetable_entry['departure'], $effective_delay);
+            if ($effective_delay > $delay) {
+                write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - Abfahrtsverspätung wird von +$delay auf +$effective_delay Min angehoben");
+            } else {
+                write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$effective_delay Min)");
+            }
         } else {
             $actual_arrival = addMinutes($timetable_entry['arrival'], $delay);
             $actual_departure = addMinutes($timetable_entry['departure'], $delay);
@@ -459,53 +477,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // 5. ZUKÜNFTIGE IST-DATEN SELEKTIV ZURÜCKSETZEN (Geschützte Halte auslassen!)
-        $stmtStops = $db->prepare("
-            SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
-            ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC
-        ");
-        $stmtStops->execute([$train_id]);
-        $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
-
-        $current_found = false;
-        $stops_to_clear = [];
-
-        foreach ($all_stops as $s) {
-            if ($s['station_id'] == $station_id) {
-                $current_found = true;
-                continue; // Aktuelle Station überspringen, updaten wir gleich gezielt
-            }
-            if ($current_found) {
-                // Wenn der Folgehalt geschützt ist (!), darf er NICHT auf NULL zurückgesetzt werden!
-                if (strpos($s['flags'] ?? '', '!') !== false) {
-                    write_log("🔒 BEREINIGUNG: Folgehalt ID {$s['id']} ist geschützt (!) und wird nicht zurückgesetzt.");
-                    continue;
-                }
-                $stops_to_clear[] = $s['id'];
-            }
-        }
-
-        if (!empty($stops_to_clear)) {
-            $clause = implode(',', array_fill(0, count($stops_to_clear), '?'));
-            $stmtClear = $db->prepare("
-                UPDATE timetable 
-                SET actual_arrival = NULL, actual_departure = NULL 
-                WHERE id IN ($clause)
+        if (!$am_gleis_flag) {
+            $stmtStops = $db->prepare(" 
+                SELECT id, station_id, flags FROM timetable WHERE train_id = ? 
+                ORDER BY CASE WHEN arrival != '' THEN arrival ELSE departure END ASC, sequence_index ASC, id ASC
             ");
-            $stmtClear->execute($stops_to_clear);
-            write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
+            $stmtStops->execute([$train_id]);
+            $all_stops = $stmtStops->fetchAll(PDO::FETCH_ASSOC);
+
+            $current_found = false;
+            $stops_to_clear = [];
+
+            foreach ($all_stops as $s) {
+                if ($s['station_id'] == $station_id) {
+                    $current_found = true;
+                    continue; // Aktuelle Station überspringen, updaten wir gleich gezielt
+                }
+                if ($current_found) {
+                    // Wenn der Folgehalt geschützt ist (!), darf er NICHT auf NULL zurückgesetzt werden!
+                    if (strpos($s['flags'] ?? '', '!') !== false) {
+                        write_log("🔒 BEREINIGUNG: Folgehalt ID {$s['id']} ist geschützt (!) und wird nicht zurückgesetzt.");
+                        continue;
+                    }
+                    $stops_to_clear[] = $s['id'];
+                }
+            }
+
+            if (!empty($stops_to_clear)) {
+                $clause = implode(',', array_fill(0, count($stops_to_clear), '?'));
+                $stmtClear = $db->prepare(" 
+                    UPDATE timetable 
+                    SET actual_arrival = NULL, actual_departure = NULL 
+                    WHERE id IN ($clause)
+                ");
+                $stmtClear->execute($stops_to_clear);
+                write_log("🧹 BEREINIGUNG: " . count($stops_to_clear) . " ungeschützte Folgehalte für neue Propagation zurückgesetzt.");
+            }
+        } else {
+            write_log("ℹ️ AM GLEIS: Vorab-Löschung der IST-Daten übersprungen.");
         }
 
         // 6. Aktuelle Station in DB schreiben (NEUE CODE: Nutze die fetched 'id' um sicherzugehen)
         if ($am_gleis_flag) {
             // Bei "Am Gleis" bleibt der eventuell vorhandene alte Ist-Ankunftswert unberührt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
-            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Am Gleis)", $timetable_entry['id']]);
+            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $effective_delay . " (Am Gleis)", $timetable_entry['id']]);
         } else {
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
             $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $timetable_entry['id']]);
         }
         
-        write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +$delay Min gesetzt.");
+        write_log("🎉 DB-UPDATE: Zug $train_num an $station_abbr auf +" . ($am_gleis_flag ? $effective_delay : $delay) . " Min gesetzt.");
         write_log("DEBUG: Starte Propagation der aktuellen Fahrt von Zug $train_num bis zum Ende des Fahrplans.");
 
         // 7. Freie Fahrt für die 7%-Reserve-Propagation über die bereinigten Folgehalte
