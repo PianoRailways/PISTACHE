@@ -1476,6 +1476,42 @@ $ROUTES = [
             ['id' => 'VAL', 'name' => 'Vallorbe', 'abbr' => 'VAL', 'km' => 46.31],
         ]
     ],
+    'mbc' => [
+        'id' => 'mbc',
+        'name' => 'MBC',
+        'stations' => [
+            ['id' => 'MOR', 'name' => 'Morges', 'abbr' => 'MOR', 'km' => 0],
+            ['id' => 'GOT', 'name' => 'La Gottaz', 'abbr' => 'GOT', 'km' => 0.98],
+            ['id' => 'PRL', 'name' => 'Prélionne', 'abbr' => 'PRL', 'km' => 1.48],
+            ['id' => 'CHGN', 'name' => 'Chigny', 'abbr' => 'CHGN', 'km' => 2.45],
+            ['id' => 'VUF', 'name' => 'Vufflens-le-Château', 'abbr' => 'VUF', 'km' => 3.59],
+            ['id' => 'MARA', 'name' => 'Le Marais', 'abbr' => 'MARA', 'km' => 4.48],
+            ['id' => 'BUSM', 'name' => 'Bussy-Chardonney', 'abbr' => 'BUSM', 'km' => 5.78],
+            ['id' => 'YENS', 'name' => 'Yens', 'abbr' => 'YENS', 'km' => 7.45],
+            ['id' => 'CHAC', 'name' => 'Chardonney-Château', 'abbr' => 'CHAC', 'km' => 9.39],
+            ['id' => 'REV', 'name' => 'Reverolle', 'abbr' => 'REV', 'km' => 10.18],
+            ['id' => 'APPL', 'name' => 'Apples', 'abbr' => 'APPL', 'km' => 11.55],
+            ['id' => 'FRD', 'name' => 'Ballens-Froideville', 'abbr' => 'FRD', 'km' => 14.23],
+            ['id' => 'BALL', 'name' => 'Ballens', 'abbr' => 'BALL', 'km' => 15.59],
+            ['id' => 'BIER', 'name' => 'Biêre', 'abbr' => 'BIER', 'km' => 19.08],
+            ['id' => 'BICA', 'name' => 'Casernes', 'abbr' => 'BICA', 'km' => 1.89],
+        ]
+    ],
+    'mbc2' => [
+        'id' => 'mbc2',
+        'name' => 'MBC2',
+        'stations' => [
+            ['id' => 'FRD', 'name' => 'Ballens-Froideville', 'abbr' => 'FRD', 'km' => -2.6],
+            ['id' => 'APPL', 'name' => 'Apples', 'abbr' => 'APPL', 'km' => 0.08],
+            ['id' => 'MANE', 'name' => 'Le Manège', 'abbr' => 'MANE', 'km' => 1.33],
+            ['id' => 'PASE', 'name' => 'Pampigny-Sévery', 'abbr' => 'PASE', 'km' => 3.27],
+            ['id' => 'MAUZ', 'name' => 'Mauraz', 'abbr' => 'MAUZ', 'km' => 4.35],
+            ['id' => 'TUIE', 'name' => 'Tuilerie', 'abbr' => 'TUIE', 'km' => 6.05],
+            ['id' => 'MORI', 'name' => 'Montricher', 'abbr' => 'MORI', 'km' => 7.71],
+            ['id' => 'VIAB', 'name' => 'Villars-Bozon', 'abbr' => 'VIAB', 'km' => 9.71],
+            ['id' => 'ISLE', 'name' => 'LIsle-Mont-la-Ville', 'abbr' => 'ISLE', 'km' => 10.68],
+        ]
+    ],
     'nyon' => [
         'id' => 'nyon',
         'name' => 'Nyon',
