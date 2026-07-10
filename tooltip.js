@@ -253,6 +253,74 @@ class CanvasTooltip {
             return timeA - timeB;
         });
 
+        const normalizeDelayFromMinutes = (istMin, sollMin) => {
+            if (istMin === null || sollMin === null) return null;
+
+            let diff = istMin - sollMin;
+            if (diff < -720) diff += 1440;
+            if (diff > 720) diff -= 1440;
+
+            return diff;
+        };
+
+        const derivedDelayByStop = new Map();
+        let previousIstDeparture = null;
+        let previousSollDeparture = null;
+
+        validStops.forEach((item) => {
+            const stop = item.stop;
+            const sollArrMin = this.timeToMinutes(stop.arrival);
+            const sollDepMin = this.timeToMinutes(stop.departure);
+            const actualArrMin = this.timeToMinutes(stop.actual_arrival);
+            const actualDepMin = this.timeToMinutes(stop.actual_departure);
+
+            let istArrMin = actualArrMin;
+            if (istArrMin === null) {
+                if (previousIstDeparture !== null && previousSollDeparture !== null && sollArrMin !== null) {
+                    const sollTravelMinutes = Math.max(0, sollArrMin - previousSollDeparture);
+                    istArrMin = previousIstDeparture + sollTravelMinutes;
+                } else if (previousIstDeparture !== null) {
+                    istArrMin = previousIstDeparture;
+                } else {
+                    istArrMin = sollArrMin;
+                }
+            }
+
+            const arrivalDelay = normalizeDelayFromMinutes(istArrMin, sollArrMin);
+
+            let istDepMin = actualDepMin;
+            if (istDepMin === null) {
+                if (sollDepMin !== null) {
+                    let sollStandzeit = 0;
+                    if (sollArrMin !== null) {
+                        sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
+                    }
+
+                    const hasRFlag = /R/i.test(stop.flags || '');
+                    const minStandzeit = hasRFlag ? 2 : 0;
+                    const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+                    const actualBraking = Math.min(Math.max(0, arrivalDelay || 0), availableBraking);
+                    const remainingDelay = Math.max(0, (arrivalDelay || 0) - actualBraking);
+
+                    istDepMin = sollDepMin + remainingDelay;
+                } else if (istArrMin !== null) {
+                    istDepMin = istArrMin;
+                }
+            }
+
+            const departureDelay = normalizeDelayFromMinutes(istDepMin, sollDepMin);
+
+            derivedDelayByStop.set(stop, {
+                arrivalDelay,
+                departureDelay
+            });
+
+            if (istDepMin !== null) {
+                previousIstDeparture = istDepMin;
+            }
+            previousSollDeparture = sollDepMin !== null ? sollDepMin : sollArrMin;
+        });
+
         // 2. Erstellung des exakten Point-Index-Mappings
         const pointMapping = [];
         validStops.forEach((item, idx) => {
@@ -301,9 +369,8 @@ class CanvasTooltip {
 
             const formatTimeValue = (value) => value || '-';
 
-            const formatDelayValue = (soll, ist) => {
-                const delay = this.getDelayMinutes(soll, ist);
-                if (!soll || !ist) return '<span style="opacity: 0.45;">-</span>';
+            const formatDelayValue = (delay) => {
+                if (delay === null || delay === undefined) return '<span style="opacity: 0.45;">-</span>';
                 if (delay === 0) return '<span style="color: #94a3b8;">+0</span>';
                 const color = delay > 0 ? '#ef4444' : '#22c55e';
                 const sign = delay > 0 ? '+' : '';
@@ -322,10 +389,22 @@ class CanvasTooltip {
                 const istText = formatTimeValue(ist);
                 return `<td style="padding: 4px 6px; white-space: nowrap;">${sollText}</td>
                         <td style="padding: 4px 6px; white-space: nowrap;">${istText}</td>
-                        <td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(soll, ist)}</td>`;
+                        <td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(null)}</td>`;
             };
 
             const gridColor = this.isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+            const computeDelayMinutes = (sollTime, istTime) => {
+                const sollMin = this.timeToMinutes(sollTime);
+                const istMin = this.timeToMinutes(istTime);
+
+                if (sollMin === null || istMin === null) return null;
+
+                let diff = istMin - sollMin;
+                if (diff < -720) diff += 1440;
+                if (diff > 720) diff -= 1440;
+
+                return diff;
+            };
 
             html += `
                 <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
@@ -350,8 +429,38 @@ class CanvasTooltip {
             displayStops.forEach((stop) => {
                 html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
                 html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
-                html += formatTimeCell(stop.arrival, stop.actual_arrival);
-                html += formatTimeCell(stop.departure, stop.actual_departure);
+                const arrivalDelay = computeDelayMinutes(stop.arrival, stop.actual_arrival);
+                let departureDelay = computeDelayMinutes(stop.departure, stop.actual_departure);
+
+                if (departureDelay === null && stop.departure) {
+                    const arrivalBaseDelay = arrivalDelay || 0;
+                    const sollArrMin = this.timeToMinutes(stop.arrival);
+                    const sollDepMin = this.timeToMinutes(stop.departure);
+
+                    if (sollDepMin !== null) {
+                        let sollStandzeit = 0;
+                        if (sollArrMin !== null) {
+                            sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
+                        }
+
+                        const hasRFlag = /R/i.test(stop.flags || '');
+                        const minStandzeit = hasRFlag ? 2 : 0;
+                        const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+                        const actualBraking = Math.min(Math.max(0, arrivalBaseDelay), availableBraking);
+                        const remainingDelay = Math.max(0, arrivalBaseDelay - actualBraking);
+
+                        departureDelay = remainingDelay;
+                    }
+                }
+
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.arrival)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.actual_arrival)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(arrivalDelay)}</td>`;
+
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.departure)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.actual_departure)}</td>`;
+                html += `<td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(departureDelay)}</td>`;
+
                 const flagsText = [stop.flags, stop.remarks].filter(Boolean).join(' · ');
                 html += formatTextCell(flagsText, 'font-size: 11px; opacity: 0.85; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;');
                 html += `</tr>`;
@@ -375,7 +484,16 @@ class CanvasTooltip {
         const sollMin = this.timeToMinutes(sollTime);
         const istMin = this.timeToMinutes(istTime);
         if (sollMin === null || istMin === null) return 0;
-        return istMin - sollMin;
+
+        let diff = istMin - sollMin;
+
+        // Zeitangaben sind im Fahrplan oft auf denselben 24h-Rahmen bezogen.
+        // Damit ein Vergleich über Mitternacht nicht als -1430 Minuten erscheint,
+        // normalisieren wir auf den plausibelsten Tagesabstand.
+        if (diff < -720) diff += 1440;
+        if (diff > 720) diff -= 1440;
+
+        return diff;
     }
 
     /**
