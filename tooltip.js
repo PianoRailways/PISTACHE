@@ -436,12 +436,12 @@ class CanvasTooltip {
     }
 
     /**
-     * Konvertiere Zeit "HH:MM" zu Minuten
+     * Konvertiere Zeit "HH:MM" oder "HH:MM:SS" zu Minuten
      */
     timeToMinutes(timeStr) {
         if (!timeStr) return null;
         const parts = timeStr.split(':');
-        if (parts.length !== 2) return null;
+        if (parts.length < 2) return null;
         const h = parseInt(parts[0], 10);
         const m = parseInt(parts[1], 10);
         if (isNaN(h) || isNaN(m)) return null;
