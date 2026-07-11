@@ -1,5 +1,5 @@
 /**
- * Canvas Hover Tooltip System (vollständig korrigiert)
+ * Canvas Hover Tooltip System
  * Zeigt bei Mouseover über einer Zuglinie ein Popup mit:
  * - Zugnummer
  * - Fahrplanausschnitt des aktuellen Streckenabschnitts (Station, Soll/Ist-Zeiten, Flags)
@@ -132,7 +132,7 @@ class CanvasTooltip {
                     minDistance = distToLine;
                     bestHit = {
                         train: segment.train,
-                        index: i // Speichert den exakten Linienabschnitt
+                        index: i
                     };
                 }
             }
@@ -173,7 +173,7 @@ class CanvasTooltip {
     }
 
     /**
-     * Erstelle und zeigt das Popup
+     * Erstelle und zeige das Popup
      */
     showPopup(train, segmentIndex, clientX, clientY) {
         if (!this.popup) {
@@ -239,99 +239,43 @@ class CanvasTooltip {
         const stations = routesConfig[currentRouteId]?.stations || [];
         const allStations = Object.values(routesConfig).flatMap(r => r.stations || []);
 
-        // 1. Rekonstruktion des exakten validStops-Arrays analog zu app.js
+        // ── 1. validStops aufbauen: alle Stops mit Station-Config ────────────────
+        // Auch Stationen aus anderen Routen berücksichtigen (für Umleitungen etc.)
         const validStops = train.stops
             .map(stop => {
-                const st = stations.find(s => s.id === stop.station_id);
+                const st = stations.find(s => s.id === stop.station_id)
+                        || allStations.find(s => s.id === stop.station_id);
                 return st ? { stop, km: st.km } : null;
             })
             .filter(item => item !== null);
 
+        // Sortierung nach Soll-Zeit (Ist-Zeit kann fehlen)
         validStops.sort((a, b) => {
             const timeA = this.timeToMinutes(a.stop.departure || a.stop.arrival);
             const timeB = this.timeToMinutes(b.stop.departure || b.stop.arrival);
-            return timeA - timeB;
+            return (timeA ?? 0) - (timeB ?? 0);
         });
 
-        const normalizeDelayFromMinutes = (istMin, sollMin) => {
-            if (istMin === null || sollMin === null) return null;
-
-            let diff = istMin - sollMin;
-            if (diff < -720) diff += 1440;
-            if (diff > 720) diff -= 1440;
-
-            return diff;
-        };
-
-        const derivedDelayByStop = new Map();
-        let previousIstDeparture = null;
-        let previousSollDeparture = null;
-
-        validStops.forEach((item) => {
-            const stop = item.stop;
-            const sollArrMin = this.timeToMinutes(stop.arrival);
-            const sollDepMin = this.timeToMinutes(stop.departure);
-            const actualArrMin = this.timeToMinutes(stop.actual_arrival);
-            const actualDepMin = this.timeToMinutes(stop.actual_departure);
-
-            let istArrMin = actualArrMin;
-            if (istArrMin === null) {
-                if (previousIstDeparture !== null && previousSollDeparture !== null && sollArrMin !== null) {
-                    const sollTravelMinutes = Math.max(0, sollArrMin - previousSollDeparture);
-                    istArrMin = previousIstDeparture + sollTravelMinutes;
-                } else if (previousIstDeparture !== null) {
-                    istArrMin = previousIstDeparture;
-                } else {
-                    istArrMin = sollArrMin;
-                }
-            }
-
-            const arrivalDelay = normalizeDelayFromMinutes(istArrMin, sollArrMin);
-
-            let istDepMin = actualDepMin;
-            if (istDepMin === null) {
-                if (sollDepMin !== null) {
-                    let sollStandzeit = 0;
-                    if (sollArrMin !== null) {
-                        sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
-                    }
-
-                    const hasRFlag = /R/i.test(stop.flags || '');
-                    const minStandzeit = hasRFlag ? 2 : 0;
-                    const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
-                    const actualBraking = Math.min(Math.max(0, arrivalDelay || 0), availableBraking);
-                    const remainingDelay = Math.max(0, (arrivalDelay || 0) - actualBraking);
-
-                    istDepMin = sollDepMin + remainingDelay;
-                } else if (istArrMin !== null) {
-                    istDepMin = istArrMin;
-                }
-            }
-
-            const departureDelay = normalizeDelayFromMinutes(istDepMin, sollDepMin);
-
-            derivedDelayByStop.set(stop, {
-                arrivalDelay,
-                departureDelay
-            });
-
-            if (istDepMin !== null) {
-                previousIstDeparture = istDepMin;
-            }
-            previousSollDeparture = sollDepMin !== null ? sollDepMin : sollArrMin;
-        });
-
-        // 2. Erstellung des exakten Point-Index-Mappings
+        // ── 2. pointMapping: exakt so wie app.js die Canvas-Punkte erzeugt ──────
+        //
+        // BUG-FIX: Früher wurde `actual_arrival || arrival` verwendet.
+        // Bei reinen Abfahrtshalten (arrival=null, nur departure gesetzt) fehlte
+        // dadurch ein Mapping-Eintrag, was zu undefined p1Map/p2Map führte.
+        //
+        // Korrekte Logik: Ein Punkt wird eingefügt für jede Zeit, die app.js
+        // tatsächlich zeichnet – also arrival ODER departure, jeweils wenn != null.
+        // Reihenfolge: erst arrival, dann departure (analog zur Zeichenreihenfolge).
         const pointMapping = [];
         validStops.forEach((item, idx) => {
-            const arrMin = this.timeToMinutes(item.stop.actual_arrival || item.stop.arrival);
-            const depMin = this.timeToMinutes(item.stop.actual_departure || item.stop.departure);
+            // Verwende Ist-Zeit falls vorhanden, sonst Soll-Zeit – genau wie app.js
+            const hasArr = !!(item.stop.actual_arrival || item.stop.arrival);
+            const hasDep = !!(item.stop.actual_departure || item.stop.departure);
 
-            if (arrMin !== null) pointMapping.push({ stopIndex: idx, type: 'arr' });
-            if (depMin !== null) pointMapping.push({ stopIndex: idx, type: 'dep' });
+            if (hasArr) pointMapping.push({ stopIndex: idx, type: 'arr' });
+            if (hasDep) pointMapping.push({ stopIndex: idx, type: 'dep' });
         });
 
-        // 3. Zuordnung der beiden Stationen über das ermittelte Segment
+        // ── 3. Stationen aus segmentIndex ableiten ───────────────────────────────
         let stopA = null;
         let stopB = null;
 
@@ -340,71 +284,102 @@ class CanvasTooltip {
 
         if (p1Map && p2Map) {
             if (p1Map.stopIndex === p2Map.stopIndex) {
-                // Zug steht am selben Bahnhof (Segment zwischen AN- und AB-Zeit)
+                // Segment liegt zwischen Ankunft und Abfahrt desselben Bahnhofs
+                // → zeige diesen Halt + den nächsten
                 stopA = validStops[p1Map.stopIndex]?.stop;
-                stopB = validStops[p1Map.stopIndex + 1]?.stop; 
+                stopB = validStops[p1Map.stopIndex + 1]?.stop;
             } else {
-                // Zug fährt zwischen zwei Bahnhöfen
+                // Fahrt zwischen zwei Bahnhöfen
                 stopA = validStops[p1Map.stopIndex]?.stop;
                 stopB = validStops[p2Map.stopIndex]?.stop;
             }
         } else if (p1Map) {
+            // Letztes Segment: nur Startpunkt bekannt
             stopA = validStops[p1Map.stopIndex]?.stop;
             stopB = validStops[p1Map.stopIndex + 1]?.stop;
         }
 
+        // Fallback: wenn immer noch nichts ermittelt, ersten/letzten Stop nehmen
+        if (!stopA && !stopB && validStops.length > 0) {
+            stopA = validStops[0]?.stop;
+            stopB = validStops[1]?.stop;
+        }
+
+        // ── Hilfsfunktionen ──────────────────────────────────────────────────────
+
+        const getStationCode = (stop) => {
+            if (!stop) return '-';
+            const config = stations.find(s => s.id === stop.station_id)
+                        || allStations.find(s => s.id === stop.station_id);
+            return config?.abbr || config?.code || config?.short_name || config?.name || stop.station_id;
+        };
+
+        const formatTimeValue = (value) => value || '-';
+
+        // BUG-FIX: früher immer formatDelayValue(null) – jetzt echten Wert übergeben
+        const formatDelayValue = (delay) => {
+            if (delay === null || delay === undefined) return '<span style="opacity: 0.45;">-</span>';
+            if (delay === 0) return '<span style="color: #94a3b8;">±0</span>';
+            const color = delay > 0 ? '#ef4444' : '#22c55e';
+            const sign = delay > 0 ? '+' : '';
+            return `<span style="color: ${color}; font-weight: bold;">${sign}${delay}</span>`;
+        };
+
+        const computeDelayMinutes = (sollTime, istTime) => {
+            const sollMin = this.timeToMinutes(sollTime);
+            const istMin = this.timeToMinutes(istTime);
+            if (sollMin === null || istMin === null) return null;
+            let diff = istMin - sollMin;
+            if (diff < -720) diff += 1440;
+            if (diff > 720) diff -= 1440;
+            return diff;
+        };
+
+        /**
+         * Schätzt die Abfahrtsverspätung wenn actual_departure fehlt,
+         * basierend auf der Ankunftsverspätung und der verfügbaren Standzeit.
+         */
+        const estimateDepartureDelay = (stop, arrivalDelay) => {
+            const sollArrMin = this.timeToMinutes(stop.arrival);
+            const sollDepMin = this.timeToMinutes(stop.departure);
+            if (sollDepMin === null) return null;
+
+            const baseDelay = arrivalDelay ?? 0;
+            if (baseDelay === 0) return 0;
+
+            let sollStandzeit = 0;
+            if (sollArrMin !== null) {
+                sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
+            }
+
+            const hasRFlag = /\bR\b/i.test(stop.flags || '');
+            const minStandzeit = hasRFlag ? 1 : 0;
+            const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
+            const actualBraking = Math.min(Math.max(0, baseDelay), availableBraking);
+            return Math.max(0, baseDelay - actualBraking);
+        };
+
+        const formatTextCell = (value, extraStyle = '') => {
+            if (!value) {
+                return `<td style="padding: 4px 6px; opacity: 0.55; ${extraStyle}">-</td>`;
+            }
+            return `<td style="padding: 4px 6px; ${extraStyle}">${value}</td>`;
+        };
+
+        // ── 4. HTML aufbauen ─────────────────────────────────────────────────────
+
         let html = `
-            <div style="font-weight: bold; margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}; padding-bottom: 4px;">
+            <div style="font-weight: bold; margin-bottom: 8px; font-size: 14px;
+                        border-bottom: 1px solid ${this.isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'};
+                        padding-bottom: 4px;">
                 Zug ${train.train_number}
             </div>
         `;
 
-        if (stopA || stopB) {
-            const getStationCode = (stop) => {
-                if (!stop) return '-';
-                const config = stations.find(s => s.id === stop.station_id) ||
-                               allStations.find(s => s.id === stop.station_id);
-                return config?.abbr || config?.code || config?.short_name || config?.name || stop.station_id;
-            };
+        const displayStops = [stopA, stopB].filter((v, i, a) => v && a.indexOf(v) === i);
 
-            const formatTimeValue = (value) => value || '-';
-
-            const formatDelayValue = (delay) => {
-                if (delay === null || delay === undefined) return '<span style="opacity: 0.45;">-</span>';
-                if (delay === 0) return '<span style="color: #94a3b8;">+0</span>';
-                const color = delay > 0 ? '#ef4444' : '#22c55e';
-                const sign = delay > 0 ? '+' : '';
-                return `<span style="color: ${color}; font-weight: bold;">${sign}${delay}</span>`;
-            };
-
-            const formatTextCell = (value, extraStyle = '') => {
-                if (!value) {
-                    return `<td style="padding: 4px 6px; opacity: 0.55; ${extraStyle}">-</td>`;
-                }
-                return `<td style="padding: 4px 6px; ${extraStyle}">${value}</td>`;
-            };
-
-            const formatTimeCell = (soll, ist) => {
-                const sollText = formatTimeValue(soll);
-                const istText = formatTimeValue(ist);
-                return `<td style="padding: 4px 6px; white-space: nowrap;">${sollText}</td>
-                        <td style="padding: 4px 6px; white-space: nowrap;">${istText}</td>
-                        <td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(null)}</td>`;
-            };
-
-            const gridColor = this.isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
-            const computeDelayMinutes = (sollTime, istTime) => {
-                const sollMin = this.timeToMinutes(sollTime);
-                const istMin = this.timeToMinutes(istTime);
-
-                if (sollMin === null || istMin === null) return null;
-
-                let diff = istMin - sollMin;
-                if (diff < -720) diff += 1440;
-                if (diff > 720) diff -= 1440;
-
-                return diff;
-            };
+        if (displayStops.length > 0) {
+            const gridColor = this.isDarkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)';
 
             html += `
                 <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
@@ -423,45 +398,28 @@ class CanvasTooltip {
                     <tbody>
             `;
 
-            // Filtert Duplikate aus, falls am Anfang/Ende der Strecke nur eine Station greift
-            const displayStops = [stopA, stopB].filter((v, i, a) => v && a.indexOf(v) === i);
-
             displayStops.forEach((stop) => {
-                html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
-                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
+                // Ankunftsverspätung: direkt aus Ist/Soll
                 const arrivalDelay = computeDelayMinutes(stop.arrival, stop.actual_arrival);
+
+                // Abfahrtsverspätung: direkt wenn IST vorhanden, sonst schätzen
                 let departureDelay = computeDelayMinutes(stop.departure, stop.actual_departure);
-
                 if (departureDelay === null && stop.departure) {
-                    const arrivalBaseDelay = arrivalDelay || 0;
-                    const sollArrMin = this.timeToMinutes(stop.arrival);
-                    const sollDepMin = this.timeToMinutes(stop.departure);
-
-                    if (sollDepMin !== null) {
-                        let sollStandzeit = 0;
-                        if (sollArrMin !== null) {
-                            sollStandzeit = Math.max(0, sollDepMin - sollArrMin);
-                        }
-
-                        const hasRFlag = /R/i.test(stop.flags || '');
-                        const minStandzeit = hasRFlag ? 2 : 0;
-                        const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
-                        const actualBraking = Math.min(Math.max(0, arrivalBaseDelay), availableBraking);
-                        const remainingDelay = Math.max(0, arrivalBaseDelay - actualBraking);
-
-                        departureDelay = remainingDelay;
-                    }
+                    departureDelay = estimateDepartureDelay(stop, arrivalDelay);
                 }
 
+                const flagsText = [stop.flags, stop.remarks].filter(Boolean).join(' · ');
+
+                html += `<tr style="border-bottom: 1px solid ${gridColor};">`;
+                html += `<td style="font-weight: bold; padding: 6px 6px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${getStationCode(stop)}</td>`;
                 html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.arrival)}</td>`;
                 html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.actual_arrival)}</td>`;
+                // BUG-FIX: arrivalDelay statt null übergeben
                 html += `<td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(arrivalDelay)}</td>`;
-
                 html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.departure)}</td>`;
                 html += `<td style="padding: 4px 6px; white-space: nowrap;">${formatTimeValue(stop.actual_departure)}</td>`;
+                // BUG-FIX: departureDelay statt null übergeben
                 html += `<td style="padding: 4px 6px; white-space: nowrap; text-align: center;">${formatDelayValue(departureDelay)}</td>`;
-
-                const flagsText = [stop.flags, stop.remarks].filter(Boolean).join(' · ');
                 html += formatTextCell(flagsText, 'font-size: 11px; opacity: 0.85; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;');
                 html += `</tr>`;
             });
@@ -471,29 +429,10 @@ class CanvasTooltip {
                 </table>
             `;
         } else {
-            html += `<div style="color: #94a3b8; font-size: 12px;">Kein Streckenabschnitt ermittelbar</div>`;
+            html += `<div style="color: #94a3b8; font-size: 12px;">Keine Haltedaten verfügbar</div>`;
         }
 
         return html;
-    }
-
-    /**
-     * Berechnet die Differenz zwischen zwei Zeitstrings in Minuten
-     */
-    getDelayMinutes(sollTime, istTime) {
-        const sollMin = this.timeToMinutes(sollTime);
-        const istMin = this.timeToMinutes(istTime);
-        if (sollMin === null || istMin === null) return 0;
-
-        let diff = istMin - sollMin;
-
-        // Zeitangaben sind im Fahrplan oft auf denselben 24h-Rahmen bezogen.
-        // Damit ein Vergleich über Mitternacht nicht als -1430 Minuten erscheint,
-        // normalisieren wir auf den plausibelsten Tagesabstand.
-        if (diff < -720) diff += 1440;
-        if (diff > 720) diff -= 1440;
-
-        return diff;
     }
 
     /**
