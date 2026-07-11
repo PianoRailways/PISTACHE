@@ -527,7 +527,7 @@ $ROUTES = [
             ['id' => 'RBA', 'name' => 'Rohrbach', 'abbr' => 'RBA', 'km' => 10.54],
             ['id' => 'HWIL', 'name' => 'Huttwil', 'abbr' => 'HWIL', 'km' => 14.09],
 			['id' => 'GOND', 'name' => 'Gondiswil', 'abbr' => 'GOND', 'km' => 18.03],
-			['id' => 'HUEW', 'name' => 'Hüswil West', 'abbr' => 'HUEW', 'km' => 19],
+			['id' => 'HUSW', 'name' => 'Hüswil West', 'abbr' => 'HUSW', 'km' => 19],
 			['id' => 'HUE', 'name' => 'Hüswil', 'abbr' => 'HUE', 'km' => 19.81],
 			['id' => 'ZELL', 'name' => 'ZELL', 'abbr' => 'ZELL', 'km' => 21.69],
 			['id' => 'GET', 'name' => 'Gettnau', 'abbr' => 'GET', 'km' => 25.17],
