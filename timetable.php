@@ -737,7 +737,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <div class="panel">
+    <!-- <div class="panel">
         <h2>Grafischer Fahrplan</h2>
         <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
             <label>Zeitfenster von: <input type="time" id="graph_start" value="11:30" onchange="renderGraph()"></label>
@@ -745,7 +745,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button onclick="renderGraph()">Aktualisieren</button>
         </div>
         <canvas id="graphCanvas" width="1200" height="800"></canvas>
-    </div>
+    </div>-->
 
     <!-- Keyboard Shortcuts Legende -->
     <div id="keyboard_legend" style="position: fixed; bottom: 20px; right: 20px; background: rgba(30, 30, 30, 0.95); color: #fff; padding: 12px 16px; border-radius: 6px; font-size: 12px; font-family: monospace; border: 1px solid #555; z-index: 9999; line-height: 1.6;">
