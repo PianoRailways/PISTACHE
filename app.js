@@ -500,11 +500,12 @@ async function renderGraph() {
 
         if (validStops.length < 2) return;
 
-        validStops.sort((a, b) => {
-            const timeA = timeToMinutes(a.stop.departure || a.stop.arrival);
-            const timeB = timeToMinutes(b.stop.departure || b.stop.arrival);
-            return timeA - timeB;
-        });
+        // Ist-Zeit bevorzugt vor Soll-Zeit sortieren (logische/tatsächliche Reihenfolge).
+        // Bei Umleitungen behält der Resume-Halt seine alte (frühere) Soll-Zeit
+        // (siehe redirect_planner.php) - bei reiner Soll-Sortierung würde die
+        // IST-Linie sonst zeitlich zurückspringen statt durchgehend zu verlaufen.
+        const getStopSortTime = (stop) => timeToMinutes(stop.actual_departure || stop.actual_arrival || stop.departure || stop.arrival);
+        validStops.sort((a, b) => getStopSortTime(a.stop) - getStopSortTime(b.stop));
 
         const sollPoints = [];
         validStops.forEach(item => {

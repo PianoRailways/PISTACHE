@@ -303,7 +303,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY arrival ASC, departure ASC, id ASC");
+        // Ist-Zeit bevorzugt vor Soll-Zeit sortieren (logische/tatsächliche Reihenfolge).
+        // Wichtig für bereits umgeleitete Fahrpläne: der Resume-Halt behält seine alte
+        // (frühere) Soll-Zeit, würde also bei reiner Soll-Sortierung vor den
+        // Umleitungshalten einsortiert werden.
+        $stmt = $db->prepare("
+            SELECT * FROM timetable
+            WHERE train_id = ?
+            ORDER BY COALESCE(NULLIF(actual_arrival,''), NULLIF(actual_departure,''), NULLIF(arrival,''), NULLIF(departure,'')) ASC, id ASC
+        ");
         $stmt->execute([$train['id']]);
         $timetable = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -313,6 +321,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ========================================================================
     // ACTION: save_redirect
+    // ========================================================================
+    //
+    // Umleitungs-Logik (SBB-Vorbild):
+    // - redirect_start = letzter normaler Halt VOR der Umleitung (z.B. Bern)
+    //   -> bleibt komplett unangetastet, falls er bereits existiert.
+    // - redirect_end   = Resume-Halt, an dem der Zug wieder auf die Originalroute
+    //   trifft (z.B. Wanzwil) -> Soll-Zeit bleibt Original, nur Ist-Zeit wird auf
+    //   die via Umleitung berechnete Ankunft/Abfahrt aktualisiert.
+    // - Alle Halte ECHT DAZWISCHEN sind reine Umleitungs-Halte (existieren nicht auf
+    //   der Originalroute) -> werden neu eingefügt mit Soll = Ist = berechnete Zeit
+    //   und Flag ">" als Branch-Marker (SBB-Konvention).
+    // - Die umfahrenen Original-Halte (z.B. Mattstetten, Rothrist) werden dabei aus
+    //   dem Fahrplan gelöscht.
     // ========================================================================
     if ($action === 'save_redirect') {
         $train_number = intval($_POST['train_number'] ?? 0);
@@ -336,8 +357,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $train = $stmt->fetch(PDO::FETCH_ASSOC);
             $train_id = $train['id'];
 
-            // Bestehenden Fahrplan in der ursprünglichen Reihenfolge laden
-            $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY arrival ASC, departure ASC, id ASC");
+            // Bestehenden Fahrplan in tatsächlicher/logischer Reihenfolge laden (Ist vor Soll).
+            // Jede Station kommt beim aktuellen Schema nur einmal pro Zug vor.
+            $stmt = $db->prepare("
+                SELECT * FROM timetable
+                WHERE train_id = ?
+                ORDER BY COALESCE(NULLIF(actual_arrival,''), NULLIF(actual_departure,''), NULLIF(arrival,''), NULLIF(departure,'')) ASC, id ASC
+            ");
             $stmt->execute([$train_id]);
             $existingStops = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -354,38 +380,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            // Nur den Bereich zwischen (inkl.) Start und Ende der Umleitung löschen.
-            // Alles davor und danach bleibt unangetastet bestehen.
-            if ($startIdx !== null && $endIdx !== null && $endIdx >= $startIdx) {
+            // Nur die Halte STRIKT ZWISCHEN Start und Ende löschen (umfahrene Original-Halte
+            // und/oder Halte einer vorherigen Umleitungsplanung). Start- und Endhalt selbst
+            // werden nie gelöscht, sondern unten gezielt behandelt.
+            if ($startIdx !== null && $endIdx !== null && $endIdx > $startIdx + 1) {
                 $idsToDelete = [];
-                for ($i = $startIdx; $i <= $endIdx; $i++) {
+                for ($i = $startIdx + 1; $i < $endIdx; $i++) {
                     $idsToDelete[] = $existingStops[$i]['id'];
                 }
-                $placeholders = implode(',', array_fill(0, count($idsToDelete), '?'));
-                $db->prepare("DELETE FROM timetable WHERE id IN ($placeholders)")->execute($idsToDelete);
+                if (!empty($idsToDelete)) {
+                    $placeholders = implode(',', array_fill(0, count($idsToDelete), '?'));
+                    $db->prepare("DELETE FROM timetable WHERE id IN ($placeholders)")->execute($idsToDelete);
+                }
             }
             // Falls Start/Ende nicht im bestehenden Fahrplan gefunden werden (z.B. neuer Zug),
-            // wird nichts gelöscht - die neue Umleitungsstrecke wird einfach eingefügt.
+            // wird nichts gelöscht - die entsprechenden Grenz-Halte werden unten frisch eingefügt.
 
-            $stmtInsert = $db->prepare("
-                INSERT INTO timetable (train_id, station_id, track, arrival, departure, flags, remarks)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+            $stmtInsertRow = $db->prepare("
+                INSERT INTO timetable (train_id, station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ");
+            $stmtUpdateResumeActual = $db->prepare("
+                UPDATE timetable
+                SET actual_arrival = ?, actual_departure = ?
+                WHERE id = ?
             ");
 
             foreach ($stations_data as $st_id => $fields) {
+                $abbr = strtoupper($st_id);
                 $isEmpty = empty($fields['arrival']) && empty($fields['departure']) && empty($fields['track']);
+                if ($isEmpty) continue;
 
-                if (!$isEmpty) {
-                    $stmtInsert->execute([
-                        $train_id,
-                        $st_id,
-                        $fields['track'] ?? '',
-                        $fields['arrival'] ?? '',
-                        $fields['departure'] ?? '',
-                        $fields['flags'] ?? '',
-                        $fields['remarks'] ?? ''
-                    ]);
+                $computedArrival = $fields['arrival'] ?? '';
+                $computedDeparture = $fields['departure'] ?? '';
+
+                if ($abbr === $redirect_start) {
+                    // Start der Umleitung: bleibt unangetastet, falls bereits vorhanden.
+                    if ($startIdx === null) {
+                        $stmtInsertRow->execute([
+                            $train_id, $st_id, $fields['track'] ?? '',
+                            $computedArrival, $computedDeparture,
+                            $computedArrival, $computedDeparture, // kein Original vorhanden -> Ist = Soll
+                            '', $fields['remarks'] ?? ''
+                        ]);
+                    }
+                    continue;
                 }
+
+                if ($abbr === $redirect_end) {
+                    // Resume-Halt: Soll bleibt Original, nur Ist wird aktualisiert.
+                    if ($endIdx !== null) {
+                        $stmtUpdateResumeActual->execute([
+                            $computedArrival, $computedDeparture, $existingStops[$endIdx]['id']
+                        ]);
+                    } else {
+                        // Kein Original vorhanden (z.B. neuer Zug) -> Soll = Ist = berechnete Zeit
+                        $stmtInsertRow->execute([
+                            $train_id, $st_id, $fields['track'] ?? '',
+                            $computedArrival, $computedDeparture,
+                            $computedArrival, $computedDeparture,
+                            '', $fields['remarks'] ?? ''
+                        ]);
+                    }
+                    continue;
+                }
+
+                // Echter Umleitungs-Halt (existiert nicht auf der Originalroute):
+                // Soll = Ist = berechnete Umleitungszeit, Flag ">" markiert Umleitung (Branch-Marker).
+                $existingFlag = trim($fields['flags'] ?? '');
+                $newFlag = ($existingFlag === '') ? '>' : ('>' . $existingFlag);
+
+                $stmtInsertRow->execute([
+                    $train_id, $st_id, $fields['track'] ?? '',
+                    $computedArrival, $computedDeparture,
+                    $computedArrival, $computedDeparture,
+                    $newFlag, $fields['remarks'] ?? ''
+                ]);
             }
 
             $db->commit();
@@ -762,11 +832,30 @@ function buildEditorTable(path) {
         // Hier wird die kumulierte Kilometerzahl formatiert
         const displayKm = station.cumulative_km !== undefined ? Number(station.cumulative_km).toFixed(1) + ' km' : (station.km ? Number(station.km).toFixed(1) + ' km' : '— km');
 
-        if (wasInOldRoute) {
+        const isStart = (abbr === redirectStart);
+        const isEnd = (abbr === redirectEnd);
+
+        if (isStart && wasInOldRoute) {
+            tr.style.background = 'rgba(100, 116, 139, 0.25)';
+        } else if (isEnd && wasInOldRoute) {
+            tr.style.background = 'rgba(251, 146, 60, 0.12)';
+        } else if (wasInOldRoute) {
             tr.style.background = 'rgba(34, 197, 94, 0.08)'; 
         } else {
             tr.style.background = 'rgba(14, 165, 233, 0.08)'; 
         }
+
+        let badge = wasInOldRoute ? '<span style="color: #64748b; font-size: 11px; margin-left: 8px;">🗂️ alt</span>' : '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu</span>';
+        if (isStart && wasInOldRoute) {
+            badge = '<span style="color: #94a3b8; font-size: 11px; margin-left: 8px;">🔒 bleibt unverändert</span>';
+        } else if (isEnd && wasInOldRoute) {
+            badge = '<span style="color: #fb923c; font-size: 11px; margin-left: 8px;">🔁 Soll bleibt, Ist wird aktualisiert</span>';
+        } else if (!isStart && !isEnd && !wasInOldRoute) {
+            badge = '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu · Flag "&gt;"</span>';
+        }
+
+        const timeFieldsDisabled = (isStart && wasInOldRoute) ? 'disabled title="Start-Halt bleibt unangetastet"' : '';
+        const timeLabelHint = (isEnd && wasInOldRoute) ? ' title="Wird als Ist-Zeit übernommen, Soll bleibt original"' : '';
 
         tr.innerHTML = `
             <td class="checkbox-col">
@@ -777,13 +866,13 @@ function buildEditorTable(path) {
             <td>
                 <strong>${station.name}</strong> (${abbr}) 
                 <span style="color: #38bdf8; font-size: 11px; font-family: monospace; background: #0f172a; padding: 2px 6px; border-radius: 3px; margin-left: 6px;">${displayKm}</span>
-                ${wasInOldRoute ? '<span style="color: #64748b; font-size: 11px; margin-left: 8px;">🗂️ alt</span>' : '<span style="color: #0ea5e9; font-size: 11px; margin-left: 8px;">✨ neu</span>'}
+                ${badge}
             </td>
-            <td><input type="text" name="stations[${abbr}][track]" placeholder="z.B. 3" size="5"></td>
-            <td><input type="time" name="stations[${abbr}][arrival]" value="${minutesToTime(stationTimes.arrival)}"></td>
-            <td><input type="time" name="stations[${abbr}][departure]" value="${minutesToTime(stationTimes.departure)}"></td>
-            <td><input type="text" name="stations[${abbr}][halt]" placeholder="H oder H2" size="5"></td>
-            <td><input type="text" name="stations[${abbr}][remarks]" placeholder="Bemerkung"></td>
+            <td><input type="text" name="stations[${abbr}][track]" placeholder="z.B. 3" size="5" ${timeFieldsDisabled}></td>
+            <td><input type="time" name="stations[${abbr}][arrival]" value="${minutesToTime(stationTimes.arrival)}" ${timeFieldsDisabled}${timeLabelHint}></td>
+            <td><input type="time" name="stations[${abbr}][departure]" value="${minutesToTime(stationTimes.departure)}" ${timeFieldsDisabled}${timeLabelHint}></td>
+            <td><input type="text" name="stations[${abbr}][halt]" placeholder="H oder H2" size="5" ${timeFieldsDisabled}></td>
+            <td><input type="text" name="stations[${abbr}][remarks]" placeholder="Bemerkung" ${timeFieldsDisabled}></td>
         `;
 
         tbody.appendChild(tr);

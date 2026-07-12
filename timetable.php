@@ -300,7 +300,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$train_num]);
         $train = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $db->prepare("SELECT station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks FROM timetable WHERE train_id = ? ORDER BY arrival ASC, id ASC");
+        // Ist-Zeit bevorzugt vor Soll-Zeit sortieren (logische/tatsächliche Reihenfolge).
+        // Wichtig für den Freien Editor bei umgeleiteten Zügen: der Resume-Halt behält
+        // seine alte (frühere) Soll-Zeit und würde bei reiner Soll-Sortierung vor den
+        // Umleitungshalten einsortiert werden - siehe redirect_planner.php.
+        $stmt = $db->prepare("SELECT station_id, track, arrival, departure, actual_arrival, actual_departure, flags, remarks FROM timetable WHERE train_id = ? ORDER BY COALESCE(NULLIF(actual_arrival,''), NULLIF(actual_departure,''), NULLIF(arrival,''), NULLIF(departure,'')) ASC, id ASC");
         $stmt->execute([$train['id']]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -520,7 +524,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $all_data = [];
         foreach ($trains as $t) {
-            $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY arrival ASC, id ASC");
+            // Ist-Zeit bevorzugt vor Soll-Zeit (siehe get_or_create_train weiter oben).
+            $stmt = $db->prepare("SELECT * FROM timetable WHERE train_id = ? ORDER BY COALESCE(NULLIF(actual_arrival,''), NULLIF(actual_departure,''), NULLIF(arrival,''), NULLIF(departure,'')) ASC, id ASC");
             $stmt->execute([$t['id']]);
             $all_data[] = [
                 'train_number' => $t['train_number'],
