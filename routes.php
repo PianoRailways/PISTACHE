@@ -370,7 +370,6 @@ $ROUTES = [
             ['id' => 'FLUM', 'name' => 'Flumenthal', 'abbr' => 'FLUM', 'km' => 6.23],
             ['id' => 'SIGG', 'name' => 'Siggeren', 'abbr' => 'SIGG', 'km' => 7],
             ['id' => 'ATTI', 'name' => 'Attiswil', 'abbr' => 'ATTI', 'km' => 7.76],
-            ['id' => 'W', 'name' => 'Wende', 'abbr' => 'W', 'km' => 10],
             ['id' => 'WIED', 'name' => 'Widsbach', 'abbr' => 'WIED', 'km' => 10.32],
             ['id' => 'OBBI', 'name' => 'Oberbipp', 'abbr' => 'OBBI', 'km' => 11.71],
             ['id' => 'OPIN', 'name' => 'Oberbipp Industrie', 'abbr' => 'OPIN', 'km' => 12.405],
