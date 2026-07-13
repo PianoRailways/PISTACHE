@@ -246,6 +246,7 @@ def main():
                             von_einfahrt = details_root.get('von', '')
                             
                             delay_minutes = parse_delay(verspaetung_str)
+                            print(f"   [DEBUG] ZID {zid} '{name}': verspaetung='{verspaetung_str}' → delay={delay_minutes} Min (sichtbar={sichtbar}, von={von_einfahrt})")
                             
                             # ===== SICHTBARE ZÜGE (sichtbar='true') =====
                             if sichtbar == 'true' and aktuelles_gleis:
