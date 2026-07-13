@@ -447,7 +447,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // SCHUTZ: Prüfe ob die aktuelle Station mit "!" markiert ist
+        // SCHUTZ: Prüfe ob die aktuelle Station mit "!" oder anderen geschützten Flags markiert ist
         $flags = $timetable_entry['flags'] ?? '';
         if (strpos($flags, '!') !== false) {
             write_log("🔒 GESCHÜTZT: Zug $train_num an $station_abbr ist mit ! markiert → Plugin-Update ignoriert");
@@ -457,11 +457,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 4. Ist-Zeiten berechnen
         $am_gleis = $_POST['am_gleis'] ?? $input_data['am_gleis'] ?? '0';
+        $sichtbar = $_POST['sichtbar'] ?? $input_data['sichtbar'] ?? 'true';
         $am_gleis_flag = ($am_gleis === '1' || $am_gleis === true);
+        $sichtbar_flag = ($sichtbar === 'true' || $sichtbar === '1' || $sichtbar === true);
 
         $effective_delay = $delay;
 
-        if ($am_gleis_flag) {
+        // VORLAUF-SZENARIO: sichtbar=false + am_gleis=false → NUR Abgangsverspätung (actual_arrival=NULL)
+        if (!$sichtbar_flag && !$am_gleis_flag) {
+            write_log("📍 VORLAUF-VORAB: Zug $train_num an $station_abbr - NUR Abfahrtsverspätung wird gesetzt (+$delay Min, Ankunft unbekannt)");
+            $actual_arrival = null;
+            $actual_departure = addMinutes($timetable_entry['departure'], $delay);
+        } else if ($am_gleis_flag) {
             $effective_delay = getEffectiveAmGleisDelay($timetable_entry, $delay);
             $actual_arrival = null; 
             $actual_departure = addMinutes($timetable_entry['departure'], $effective_delay);
@@ -471,6 +478,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$effective_delay Min)");
             }
         } else {
+            // Standard Vorlauf (sichtbar=true, am_gleis=false) → An- und Abfahrt
             $actual_arrival = addMinutes($timetable_entry['arrival'], $delay);
             $actual_departure = addMinutes($timetable_entry['departure'], $delay);
             write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$delay Min)");
@@ -522,7 +530,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Bei "Am Gleis" bleibt der eventuell vorhandene alte Ist-Ankunftswert unberührt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
             $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $effective_delay . " (Am Gleis)", $timetable_entry['id']]);
+        } else if (!$sichtbar_flag && !$am_gleis_flag) {
+            // VORLAUF-VORAB: Nur actual_departure setzen (Ankunft = NULL bleiben lassen)
+            $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
+            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Vorlauf)", $timetable_entry['id']]);
         } else {
+            // Standard Vorlauf: An- und Abfahrt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
             $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $timetable_entry['id']]);
         }

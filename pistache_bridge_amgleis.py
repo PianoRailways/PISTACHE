@@ -10,7 +10,7 @@ import re
 # =========================================================================
 STS_HOST = "127.0.0.1"
 STS_PORT = 3691
-RCS_URL = "https://rcs.stellwerksim.ch/dev/pistache.php"
+RCS_URL = "https://rcs.stellwerksim.ch/pistache.php"
 POLLING_INTERVAL = 60
 DEBUG_XML = True
 # =========================================================================
@@ -19,26 +19,33 @@ SPIELER_NAME = "Unbekannter Spieler"
 STELLWERK_NAME = "Unbekanntes Stellwerk"
 
 def extract_station_abbr(gleis_str):
-    """Extrahiert Stationsabbreviatur aus Gleisnummer: HWIL3 -> HWIL"""
+    """Extrahiert Stationsabbreviatur aus Gleisnummer/Einfahrt: HWIL3 -> HWIL, TG 130 -> TG"""
     if not gleis_str:
         return None
-    match = re.match(r'^([A-Z]+)', gleis_str.strip())
+    # Entferne Leerzeichen und nimm nur die Buchstaben am Anfang
+    gleis_str = gleis_str.strip()
+    match = re.match(r'^([A-Z]+)', gleis_str)
     if match:
         return match.group(1)
     return None
 
-def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False):
-    """Sendet Zugdaten an RCS mit amgleis Status."""
+def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
+    """Sendet Zugdaten an RCS mit amgleis und sichtbar Status."""
     payload = {
         'action': 'plugin_update_delay',
         'sts_zid': str(sts_zid),
         'station_abbr': str(station_abbr),
         'delay': int(delay),
         'am_gleis': '1' if am_gleis else '0',
+        'sichtbar': 'true' if sichtbar else 'false',
         'sts_user': SPIELER_NAME,
         'sts_sim': STELLWERK_NAME
     }
-    print(f"   [POST] Sende an RCS -> ZID: {sts_zid}, Halt: {station_abbr}, Verspätung: {delay} Min (Am Gleis: {am_gleis})...")
+    
+    sichtbar_str = "SICHTBAR" if sichtbar else "VORLAUF"
+    am_gleis_str = "Am Gleis" if am_gleis else "Fahrplan"
+    
+    print(f"   [POST] Sende an RCS → ZID: {sts_zid}, Halt: {station_abbr}, Verspätung: +{delay} Min ({sichtbar_str}, {am_gleis_str})...")
     try:
         response = requests.post(RCS_URL, data=payload, timeout=8)
         if response.status_code == 200:
@@ -89,7 +96,7 @@ def parse_delay(verspaetung_str):
 def main():
     global SPIELER_NAME, STELLWERK_NAME
     print("==========================================================")
-    print("      Stellwerksim zu RCS Bridge (ALL-TRAINS ACTIVE)      ")
+    print("  Stellwerksim zu RCS Bridge (INKL. VORLAUF-VERSPÄTUNG)   ")
     print("==========================================================")
     print(f"Verbinde zu lokalem STS-Spiel ({STS_HOST}:{STS_PORT})...")
     
@@ -107,7 +114,7 @@ def main():
         print(f"[STS Empfangen] {init_msg.strip()}")
 
     print("[STS Senden] Registriere das RCS-Plugin...")
-    register_xml = "<register name='RCS-Pistache-Bridge' autor='Dispo' version='1.6' protokoll='1' text='Live-Exporter' />\n"
+    register_xml = "<register name='RCS-Pistache-Bridge' autor='Dispo' version='1.7' protokoll='1' text='Live-Exporter mit Vorlauf' />\n"
     s.sendall(register_xml.encode('utf-8'))
     
     reg_status = read_xml_response(s, expected_end_tag="</status>")
@@ -166,39 +173,33 @@ def main():
                             aktuelles_gleis = details_root.get('gleis', '')
                             sichtbar = details_root.get('sichtbar', 'false')
                             am_gleis_status = details_root.get('amgleis', 'false') == 'true'
+                            von_einfahrt = details_root.get('von', '')
                             
                             delay_minutes = parse_delay(verspaetung_str)
                             
-                            # ===== SICHTBARE ZÜGE =====
+                            # ===== SICHTBARE ZÜGE (sichtbar='true') =====
                             if sichtbar == 'true' and aktuelles_gleis:
                                 station_abbr = extract_station_abbr(aktuelles_gleis)
                                 
                                 if station_abbr:
-                                    print(f"   [ZUG AKTIV] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis} → {station_abbr} (Am Gleis: {am_gleis_status})")
-                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=am_gleis_status)
+                                    print(f"   [✓ SICHTBAR] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis} (Am Gleis: {am_gleis_status})")
+                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=am_gleis_status, sichtbar=True)
                                 else:
-                                    print(f"   [ZUG AKTIV, WARNUNG] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}, aber konnte keine Abbr extrahieren")
+                                    print(f"   [✗ WARNUNG] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}, aber konnte keine Abbr extrahieren")
+                            
+                            # ===== UNSICHTBARE ZÜGE (VORLAUF) - Mit "von" Einfahrt =====
+                            elif sichtbar == 'false' and von_einfahrt:
+                                station_abbr = extract_station_abbr(von_einfahrt)
                                 
-                            # ===== UNSICHTBARE ZÜGE (VORLAUF) =====
+                                if station_abbr:
+                                    print(f"   [⏳ VORLAUF] {name} (ZID: {zid}) von {von_einfahrt} → Verspätung ab {station_abbr} gemeldet")
+                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=False, sichtbar=False)
+                                else:
+                                    print(f"   [⏳ VORLAUF-SKIP] {name} (ZID: {zid}) von {von_einfahrt}, aber konnte keine Abbr extrahieren")
+                            
+                            # ===== UNSICHTBARE ZÜGE OHNE "von" INFO =====
                             elif sichtbar == 'false':
-                                s.sendall(f"<zugfahrplan zid='{zid}' />\n".encode('utf-8'))
-                                fahrplan_data = read_xml_response(s, expected_end_tag="</zugfahrplan>")
-                                
-                                station_placeholder = None
-                                if fahrplan_data:
-                                    try:
-                                        fplan_root = ET.fromstring(fahrplan_data.strip())
-                                        erster_halt = fplan_root.find('halt')
-                                        if erster_halt is not None:
-                                            station_placeholder = erster_halt.get('mgl')
-                                    except Exception:
-                                        pass
-                                
-                                if station_placeholder:
-                                    print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, gemeldet an: {station_placeholder}")
-                                    send_to_rcs(zid, station_placeholder, delay_minutes, am_gleis=False)
-                                else:
-                                    print(f"   [ZUG VORANKÜNDIGUNG] {name} (ZID: {zid}) im Zulauf, aber kein Fahrplanhalt verfügbar.")
+                                print(f"   [⏳ VORLAUF-INFO] {name} (ZID: {zid}) unsichtbar, aber kein 'von' Feld vorhanden → SKIP")
                                 
             except Exception as e:
                 print(f"❌ Fehler in Schleife: {e}")
