@@ -2546,6 +2546,8 @@ $ROUTES = [
             ['id' => 'BIRR', 'name' => 'Birr', 'abbr' => 'BIRR', 'km' => -5.29],
             ['id' => 'LUPF', 'name' => 'Lupfig', 'abbr' => 'LUPF', 'km' => -4.24],
             ['id' => 'BG', 'name' => 'Brugg', 'abbr' => 'BG', 'km' => 0],
+            ['id' => 'TG', 'name' => 'Turgi', 'abbr' => 'TG', 'km' => 3.84],
+            ['id' => 'BD', 'name' => 'Baden', 'abbr' => 'BD', 'km' => 8.74],
         ]
     ],
     'nazeli' => [
