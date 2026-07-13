@@ -18,6 +18,10 @@ DEBUG_XML = True
 SPIELER_NAME = "Unbekannter Spieler"
 STELLWERK_NAME = "Unbekanntes Stellwerk"
 
+# ========== SMART DIFF: Letzte Delays merken ==========
+last_reported_delays = {}  # Format: {zid: {'station_abbr': delay, ...}, ...}
+# =====================================================
+
 def extract_station_abbr(gleis_str):
     """Extrahiert Stationsabbreviatur aus Gleisnummer/Einfahrt: HWIL3 -> HWIL, TG 130 -> TG"""
     if not gleis_str:
@@ -30,7 +34,30 @@ def extract_station_abbr(gleis_str):
     return None
 
 def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
-    """Sendet Zugdaten an RCS mit amgleis und sichtbar Status."""
+    """Sendet Zugdaten an RCS mit amgleis und sichtbar Status.
+    
+    Smart Diff: Sendet nur wenn sich der Delay tatsächlich geändert hat.
+    """
+    global last_reported_delays
+    
+    # Erstelle eindeutigen Schlüssel für diese Zugposition
+    key = f"{sts_zid}:{station_abbr}"
+    
+    # Prüfe ob wir diese Kombination schon kennen
+    if sts_zid in last_reported_delays:
+        last_delay = last_reported_delays[sts_zid].get(station_abbr)
+        
+        # Wenn sich nichts geändert hat: SKIP
+        if last_delay is not None and last_delay == delay:
+            print(f"   [⊘ SKIP] ZID: {sts_zid}, Halt: {station_abbr} → Delay unverändert (+{delay} Min), Update gespart")
+            return
+    
+    # Änderung erkannt oder erste Meldung: Sende zu RCS
+    sichtbar_str = "SICHTBAR" if sichtbar else "VORLAUF"
+    am_gleis_str = "Am Gleis" if am_gleis else "Fahrplan"
+    
+    print(f"   [POST] Sende an RCS → ZID: {sts_zid}, Halt: {station_abbr}, Verspätung: +{delay} Min ({sichtbar_str}, {am_gleis_str})...")
+    
     payload = {
         'action': 'plugin_update_delay',
         'sts_zid': str(sts_zid),
@@ -42,10 +69,6 @@ def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
         'sts_sim': STELLWERK_NAME
     }
     
-    sichtbar_str = "SICHTBAR" if sichtbar else "VORLAUF"
-    am_gleis_str = "Am Gleis" if am_gleis else "Fahrplan"
-    
-    print(f"   [POST] Sende an RCS → ZID: {sts_zid}, Halt: {station_abbr}, Verspätung: +{delay} Min ({sichtbar_str}, {am_gleis_str})...")
     try:
         response = requests.post(RCS_URL, data=payload, timeout=8)
         if response.status_code == 200:
@@ -54,6 +77,10 @@ def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
                 msg = res_json.get('message', str(res_json))
                 if res_json.get('success'):
                     print(f"   -> 🎉 [RCS ERFOLG] {msg}")
+                    # Speichere den gemeldeten Delay
+                    if sts_zid not in last_reported_delays:
+                        last_reported_delays[sts_zid] = {}
+                    last_reported_delays[sts_zid][station_abbr] = delay
                 else:
                     print(f"   -> ℹ️ [RCS INFO] {msg}")
             except ValueError:
@@ -143,6 +170,7 @@ def main():
             print(f"⚠️ Konnte Anlageninfo nicht parsen: {ex}")
 
     print("\n[Bereit] Starte Überwachungsschleife...")
+    print("[Info] Smart Diff aktiviert — Updates nur bei Änderungen der Verspätung")
     s.settimeout(None)
 
     try:
