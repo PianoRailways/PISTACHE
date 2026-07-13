@@ -1265,6 +1265,8 @@ $ROUTES = [
             ['id' => 'BGS', 'name' => 'Brugg Süd', 'abbr' => 'BGS', 'km' => -31.14],
             ['id' => 'LUPF', 'name' => 'Lupfig', 'abbr' => 'LUPF', 'km' => -28.06],
             ['id' => 'BIRR', 'name' => 'Birr', 'abbr' => 'BIRR', 'km' => -27.01],
+            ['id' => 'BRGG', 'name' => 'Brunegg', 'abbr' => 'BRGG', 'km' => -25.26],
+            ['id' => 'MAEG', 'name' => 'Mägenwil', 'abbr' => 'MAEG', 'km' => -19.86],
         ]
     ],
     'basel-rf' => [
