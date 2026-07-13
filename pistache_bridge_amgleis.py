@@ -22,6 +22,36 @@ STELLWERK_NAME = "Unbekanntes Stellwerk"
 last_reported_delays = {}  # Format: {zid: {'station_abbr': delay, ...}, ...}
 # =====================================================
 
+# ========== STATISTIK-TRACKING ==========
+class LoopStats:
+    def __init__(self):
+        self.total_trains = 0
+        self.visible_trains = 0
+        self.invisible_trains = 0
+        self.local_trains = 0
+        self.updates_sent = 0
+        self.updates_skipped = 0
+        self.errors = 0
+        self.rcs_failures = 0
+    
+    def report(self):
+        """Gibt formatierte Statistik aus"""
+        print("\n" + "="*70)
+        print("📊 DURCHLAUF-STATISTIK")
+        print("="*70)
+        print(f"   Züge insgesamt:        {self.total_trains}")
+        print(f"   ├─ Sichtbar:           {self.visible_trains}")
+        print(f"   ├─ Vorlauf (von Info): {self.invisible_trains}")
+        print(f"   └─ Lokal (Vorgängerzug): {self.local_trains}")
+        print()
+        print(f"   Updates gesendet:      {self.updates_sent} 🎉")
+        print(f"   Updates übersprungen:  {self.updates_skipped} ⊘ (Traffic gespart: {self.updates_skipped * 100 // max(1, self.updates_sent + self.updates_skipped)}%)")
+        print()
+        print(f"   Fehler insgesamt:      {self.errors} ❌")
+        print(f"   RCS-Verbindungsfehler: {self.rcs_failures}")
+        print("="*70 + "\n")
+# ==========================================
+
 def extract_station_abbr(gleis_str):
     """Extrahiert Stationsabbreviatur aus Gleisnummer/Einfahrt: HWIL3 -> HWIL, TG 130 -> TG"""
     if not gleis_str:
@@ -33,12 +63,15 @@ def extract_station_abbr(gleis_str):
         return match.group(1)
     return None
 
-def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
+def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True, stats=None):
     """Sendet Zugdaten an RCS mit amgleis und sichtbar Status.
     
     Smart Diff: Sendet nur wenn sich der Delay tatsächlich geändert hat.
     """
     global last_reported_delays
+    
+    if stats is None:
+        stats = LoopStats()
     
     # Erstelle eindeutigen Schlüssel für diese Zugposition
     key = f"{sts_zid}:{station_abbr}"
@@ -49,7 +82,8 @@ def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
         
         # Wenn sich nichts geändert hat: SKIP
         if last_delay is not None and last_delay == delay:
-            print(f"   [⊘ SKIP] ZID: {sts_zid}, Halt: {station_abbr} → Delay unverändert (+{delay} Min), Update gespart")
+            print(f"   [⊘ SKIP] ZID: {sts_zid}, Halt: {station_abbr} → Delay unverändert (+{delay} Min)")
+            stats.updates_skipped += 1
             return
     
     # Änderung erkannt oder erste Meldung: Sende zu RCS
@@ -76,19 +110,23 @@ def send_to_rcs(sts_zid, station_abbr, delay, am_gleis=False, sichtbar=True):
                 res_json = response.json()
                 msg = res_json.get('message', str(res_json))
                 if res_json.get('success'):
-                    print(f"   -> 🎉 [RCS ERFOLG] {msg}")
+                    print(f"   -> 🎉 [RCS ERFOLG]")
                     # Speichere den gemeldeten Delay
                     if sts_zid not in last_reported_delays:
                         last_reported_delays[sts_zid] = {}
                     last_reported_delays[sts_zid][station_abbr] = delay
+                    stats.updates_sent += 1
                 else:
                     print(f"   -> ℹ️ [RCS INFO] {msg}")
             except ValueError:
                 print(f"   -> ⚠️ [WARNUNG] Server-Antwort war kein valides JSON.")
+                stats.errors += 1
         else:
             print(f"   -> ❌ [FEHLER] Serverfehler-Text: {response.text[:200]}")
+            stats.rcs_failures += 1
     except requests.exceptions.RequestException as e:
         print(f"   -> ❌ [NETZWERKFEHLER] Verbindung fehlgeschlagen: {e}")
+        stats.rcs_failures += 1
 
 def read_xml_response(sock, expected_end_tag=None):
     """ Liest Daten blockweise mit Timeout-Schutz """
@@ -176,6 +214,8 @@ def main():
     try:
         while True:
             print(f"\n==================== DURCHLAUF: {time.strftime('%H:%M:%S')} ====================")
+            stats = LoopStats()
+            
             s.sendall(b"<zugliste />\n")
             xml_data = read_xml_response(s, expected_end_tag="</zugliste>")
             if not xml_data:
@@ -186,6 +226,8 @@ def main():
                 root = ET.fromstring(xml_data.strip())
                 if root.tag == "zugliste":
                     zug_elements = root.findall('zug')
+                    stats.total_trains = len(zug_elements)
+                    
                     for zug in zug_elements:
                         zid = zug.get('zid')
                         name = zug.get('name')
@@ -207,31 +249,40 @@ def main():
                             
                             # ===== SICHTBARE ZÜGE (sichtbar='true') =====
                             if sichtbar == 'true' and aktuelles_gleis:
+                                stats.visible_trains += 1
                                 station_abbr = extract_station_abbr(aktuelles_gleis)
                                 
                                 if station_abbr:
                                     print(f"   [✓ SICHTBAR] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis} (Am Gleis: {am_gleis_status})")
-                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=am_gleis_status, sichtbar=True)
+                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=am_gleis_status, sichtbar=True, stats=stats)
                                 else:
                                     print(f"   [✗ WARNUNG] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}, aber konnte keine Abbr extrahieren")
+                                    stats.errors += 1
                             
                             # ===== UNSICHTBARE ZÜGE (VORLAUF) - Mit "von" Einfahrt =====
                             elif sichtbar == 'false' and von_einfahrt and von_einfahrt.strip():
+                                stats.invisible_trains += 1
                                 station_abbr = extract_station_abbr(von_einfahrt)
                                 
                                 if station_abbr:
                                     print(f"   [⏳ VORLAUF] {name} (ZID: {zid}) von {von_einfahrt} → Verspätung ab {station_abbr} gemeldet")
-                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=False, sichtbar=False)
+                                    send_to_rcs(zid, station_abbr, delay_minutes, am_gleis=False, sichtbar=False, stats=stats)
                                 else:
                                     print(f"   [⏳ VORLAUF-SKIP] {name} (ZID: {zid}) von {von_einfahrt}, aber konnte keine Abbr extrahieren")
+                                    stats.errors += 1
                             
                             # ===== UNSICHTBARE ZÜGE MIT LOKALEM START =====
                             elif sichtbar == 'false' and not von_einfahrt:
+                                stats.local_trains += 1
                                 print(f"   [ℹ️ LOKAL] {name} (ZID: {zid}) startet lokal (Vorgängerzug) → PISTACHE propagiert bereits")
                                 
             except Exception as e:
                 print(f"❌ Fehler in Schleife: {e}")
-
+                stats.errors += 1
+            
+            # Gib Statistik aus
+            stats.report()
+            
             time.sleep(POLLING_INTERVAL)
     except KeyboardInterrupt:
         print("\nBeendet.")
