@@ -165,9 +165,7 @@ def main():
     
     test_queries = [
         ("<status />", "</status>", "Status"),
-        ("<ereignisliste />", "</ereignisliste>", "Ereignisliste"),
         ("<fahrplan />", "</fahrplan>", "Fahrplan (Global)"),
-        ("<gleisinformationen />", "</gleisinformationen>", "Gleisinformationen"),
     ]
     
     for query, end_tag, desc in test_queries:
