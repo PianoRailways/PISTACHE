@@ -1260,8 +1260,11 @@ $ROUTES = [
             ['id' => 'SDO', 'name' => 'Schinznach Dorf', 'abbr' => 'SDO', 'km' => -39.2],
             ['id' => 'VIL', 'name' => 'Villnachern', 'abbr' => 'VIL', 'km' => -35.9],
             ['id' => 'BGN', 'name' => 'Brugg Nord', 'abbr' => 'BGN', 'km' => -32.4],
-            ['id' => 'BG VL', 'name' => 'Brugg VL', 'abbr' => 'BG VL', 'km' => -31.8],
+            ['id' => 'BGV', 'name' => 'Brugg VL', 'abbr' => 'BGV', 'km' => -31.8],
             ['id' => 'BG', 'name' => 'Brugg', 'abbr' => 'BG', 'km' => -31.2],
+            ['id' => 'BGS', 'name' => 'Brugg Süd', 'abbr' => 'BGS', 'km' => -31.14],
+            ['id' => 'LUPF', 'name' => 'Lupfig', 'abbr' => 'LUPF', 'km' => -28.06],
+            ['id' => 'BIRR', 'name' => 'Birr', 'abbr' => 'BIRR', 'km' => -27.01],
         ]
     ],
     'basel-rf' => [
