@@ -188,7 +188,7 @@ def main():
                                     print(f"   [✗ WARNUNG] {name} (ZID: {zid}) auf Gleis {aktuelles_gleis}, aber konnte keine Abbr extrahieren")
                             
                             # ===== UNSICHTBARE ZÜGE (VORLAUF) - Mit "von" Einfahrt =====
-                            elif sichtbar == 'false' and von_einfahrt:
+                            elif sichtbar == 'false' and von_einfahrt and von_einfahrt.strip():
                                 station_abbr = extract_station_abbr(von_einfahrt)
                                 
                                 if station_abbr:
@@ -197,9 +197,9 @@ def main():
                                 else:
                                     print(f"   [⏳ VORLAUF-SKIP] {name} (ZID: {zid}) von {von_einfahrt}, aber konnte keine Abbr extrahieren")
                             
-                            # ===== UNSICHTBARE ZÜGE OHNE "von" INFO =====
-                            elif sichtbar == 'false':
-                                print(f"   [⏳ VORLAUF-INFO] {name} (ZID: {zid}) unsichtbar, aber kein 'von' Feld vorhanden → SKIP")
+                            # ===== UNSICHTBARE ZÜGE MIT LOKALEM START =====
+                            elif sichtbar == 'false' and not von_einfahrt:
+                                print(f"   [ℹ️ LOKAL] {name} (ZID: {zid}) startet lokal (Vorgängerzug) → PISTACHE propagiert bereits")
                                 
             except Exception as e:
                 print(f"❌ Fehler in Schleife: {e}")
