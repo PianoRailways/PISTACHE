@@ -2,7 +2,7 @@
 """
 STS API Demo Plugin - Exploriert die verfügbaren Daten aus der STS-API
 Testet: Zugliste, Zugdetails, Zugfahrplan, Gleisinformationen, etc.
-Testet grundstätzliche Dinge, ev. nicht ins Detail.
+Liest den Zugfahrplan genauer aus.
 """
 
 import socket
@@ -99,14 +99,11 @@ def main():
     init_msg = read_xml_response(s, expected_end_tag="</status>")
     if init_msg:
         print(f"✓ Erhalten:\n{init_msg}\n")
-        parse_and_display_xml(init_msg, "Willkommensnachricht")
     
     # 2. Plugin registrieren
-    print("\n[Schritt 2] Registriere Demo-Plugin...")
+    print("[Schritt 2] Registriere Demo-Plugin...")
     register_xml = "<register name='RCS-Demo-Explorer' autor='Demo' version='1.0' protokoll='1' text='API-Explorer' />\n"
     reg_response = send_request(s, register_xml, expected_tag="</status>")
-    if reg_response:
-        parse_and_display_xml(reg_response, "Register-Response")
     
     # 3. Anlageninfo abfragen
     print("\n[Schritt 3] Frage Anlageninfo ab...")
@@ -127,54 +124,57 @@ def main():
             if zuege:
                 print(f"\n✓ Gefunden: {len(zuege)} Züge\n")
                 
-                for idx, zug in enumerate(zuege[:3], 1):  # Nur erste 3 für Demo
+                # ============================================================
+                # NEUER FOKUS: Nur unsichtbare Züge analysieren
+                # ============================================================
+                unsichtbare_zuege = []
+                
+                for idx, zug in enumerate(zuege[:15], 1):  # Erste 15 Züge checken
                     zid = zug.get('zid')
                     name = zug.get('name')
                     
-                    print(f"\n--- ZUG {idx}: {name} (ZID: {zid}) ---")
+                    s.sendall(f"<zugdetails zid='{zid}' />\n".encode('utf-8'))
+                    details_data = read_xml_response(s, expected_end_tag=None)
+                    if not details_data:
+                        continue
                     
-                    # 5a. Zugdetails abfragen
-                    print(f"  └─ Frage Zugdetails ab...")
-                    details_response = send_request(s, f"<zugdetails zid='{zid}' />\n", expected_tag="</zugdetails>")
-                    if details_response:
-                        parse_and_display_xml(details_response, f"Zugdetails (ZID {zid})")
+                    details_root = ET.fromstring(details_data.strip())
+                    sichtbar = details_root.get('sichtbar', 'false')
+                    von = details_root.get('von', '')
                     
-                    time.sleep(0.5)
+                    # Sammle nur unsichtbare Züge
+                    if sichtbar == 'false':
+                        unsichtbare_zuege.append({
+                            'zid': zid,
+                            'name': name,
+                            'von': von,
+                            'xml': details_data,
+                            'root': details_root
+                        })
+                
+                print(f"\n{'='*70}")
+                print(f"UNSICHTBARE ZÜGE (sichtbar='false'): {len(unsichtbare_zuege)} gefunden")
+                print(f"{'='*70}\n")
+                
+                for uz in unsichtbare_zuege:
+                    print(f"[UNSICHTBAR] ZID {uz['zid']}: {uz['name']}")
+                    print(f"  von Attribut: '{uz['von']}'")
+                    print(f"  Alle Attribute: {uz['root'].attrib}")
                     
-                    # 5b. Zugfahrplan abfragen
-                    print(f"  └─ Frage Zugfahrplan ab...")
-                    fahrplan_response = send_request(s, f"<zugfahrplan zid='{zid}' />\n", expected_tag="</zugfahrplan>")
-                    if fahrplan_response:
-                        parse_and_display_xml(fahrplan_response, f"Zugfahrplan (ZID {zid})")
+                    # Zeige fehlende Felder
+                    if not uz['von']:
+                        print(f"  ⚠️ KEIN 'von' FELD VORHANDEN!")
+                        print(f"  Vorhanden: {', '.join(uz['root'].attrib.keys())}")
+                    else:
+                        print(f"  ✓ 'von' existiert: {uz['von']}")
                     
-                    time.sleep(0.5)
-                    
-                    # 5c. Zugposition abfragen (falls verfügbar)
-                    print(f"  └─ Frage Zugposition ab...")
-                    pos_response = send_request(s, f"<zugposition zid='{zid}' />\n", expected_tag="</zugposition>")
-                    if pos_response:
-                        parse_and_display_xml(pos_response, f"Zugposition (ZID {zid})")
-                    
-                    time.sleep(0.5)
+                    print()
+                    time.sleep(0.3)
+                
             else:
                 print("❌ Keine Züge in der Zugliste gefunden.")
         except Exception as e:
             print(f"❌ Fehler beim Parsen der Zugliste: {e}")
-    
-    # 6. Zusätzliche Queries testen
-    print("\n[Schritt 6] Teste weitere API-Befehle...\n")
-    
-    test_queries = [
-        ("<status />", "</status>", "Status"),
-        ("<fahrplan />", "</fahrplan>", "Fahrplan (Global)"),
-    ]
-    
-    for query, end_tag, desc in test_queries:
-        print(f"\n[Test] {desc}...")
-        response = send_request(s, query + "\n", expected_tag=end_tag)
-        if response:
-            parse_and_display_xml(response, desc)
-        time.sleep(0.5)
     
     print("\n" + "="*70)
     print("  Demo beendet")
