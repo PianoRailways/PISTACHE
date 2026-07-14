@@ -463,12 +463,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $effective_delay = $delay;
         
-        // ========== VERFRÜHUNGS-REGEL ==========
-        // Nur Züge mit Zugnummer < 30000 dürfen Verfrühungen (negative Delays) haben
-        if ($train_num >= 27000 && $delay < 0) {
-            write_log("⏸️ VERFRÜHUNGS-SCHUTZ: Zug $train_num (>= 30000) darf nicht verfrüht werden. Delay wird von $delay auf 0 begrenzt.");
+        // ========== VERFRÜHUNGS-REGEL FÜR ABFAHRT ==========
+        // Nur bei D (Durchfahrt) oder A (verfrühte Abfahrt erlaubt) darf Abfahrt verfrüht werden
+        // Bei Halt (kein D/A Flag) wird Abfahrtsverspätung auf 0 begrenzt
+        $flags = $timetable_entry['flags'] ?? '';
+        $hasD = preg_match('/\bD\b/i', $flags);
+        $hasA = preg_match('/\bA\b/i', $flags);
+        $allowEarlyDeparture = $hasD || $hasA;
+        
+        if (!$allowEarlyDeparture && $delay < 0) {
+            write_log("⏸️ ABFAHRTS-SCHUTZ: Halt ohne D/A Flag darf nicht verfrüht werden. Abfahrtsverspätung wird von $delay auf 0 begrenzt.");
             $effective_delay = 0;
-            $delay = 0;
         }
         // =======================================
 
