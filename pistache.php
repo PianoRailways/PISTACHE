@@ -65,8 +65,14 @@ function minutesToTime($m) {
     return sprintf("%02d:%02d", $h, $min);
 }
 
-function getEffectiveAmGleisDelay(array $timetable_entry, int $incoming_delay) {
-    $incoming_delay = max(0, $incoming_delay);
+function allowsEarlyDeparture($flags) {
+    return !empty($flags) && preg_match('/\b(D|A)\b/i', trim($flags));
+}
+
+function getEffectiveAmGleisDelay(array $timetable_entry, int $incoming_delay, bool $allowEarlyDeparture = false) {
+    if (!$allowEarlyDeparture) {
+        $incoming_delay = max(0, $incoming_delay);
+    }
 
     $scheduled_departure = $timetable_entry['departure'] ?? '';
     $current_departure = $timetable_entry['actual_departure'] ?? '';
@@ -78,7 +84,16 @@ function getEffectiveAmGleisDelay(array $timetable_entry, int $incoming_delay) {
         return $incoming_delay;
     }
 
-    $current_delay = max(0, $current_minutes - $scheduled_minutes);
+    $current_delay = $current_minutes - $scheduled_minutes;
+
+    if ($allowEarlyDeparture && $incoming_delay < 0) {
+        return $incoming_delay;
+    }
+
+    if (!$allowEarlyDeparture) {
+        $current_delay = max(0, $current_delay);
+    }
+
     return max($incoming_delay, $current_delay);
 }
 
@@ -222,12 +237,17 @@ function propagateTravelTimeWithReserve($db, $trainId) {
         $istArrMin = $timeToMin($stop['actual_arrival']);
         $istDepMin = $timeToMin($stop['actual_departure']);
         $hasActualDepartureOnly = ($istArrMin === null && $istDepMin !== null);
+        $allowEarlyDeparture = allowsEarlyDeparture($flags);
+        $currentDepartureDelay = ($istDepMin !== null && $sollDepMin !== null) ? ($istDepMin - $sollDepMin) : null;
 
         // ========== ANKUNFT BERECHNEN ==========
         if ($hasActualDepartureOnly) {
             if ($sollArrMin !== null && $sollDepMin !== null) {
                 $scheduledStandzeit = max(0, $sollDepMin - $sollArrMin);
-                $istArrMin = max(0, $istDepMin - $scheduledStandzeit);
+                $istArrMin = $istDepMin - $scheduledStandzeit;
+                if (!$allowEarlyDeparture) {
+                    $istArrMin = max(0, $istArrMin);
+                }
             } else {
                 $istArrMin = $istDepMin;
             }
@@ -270,7 +290,12 @@ function propagateTravelTimeWithReserve($db, $trainId) {
             $actualBraking = min(max(0, $arrivalDelay), $availableBraking);
 
             // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
-            $remainingDelay = max(0, $arrivalDelay - $actualBraking);
+            $remainingDelay = $arrivalDelay - $actualBraking;
+            if (!$allowEarlyDeparture) {
+                $remainingDelay = max(0, $remainingDelay);
+            } elseif ($sollArrMin === null && $currentDepartureDelay !== null && $currentDepartureDelay < 0) {
+                $remainingDelay = $currentDepartureDelay;
+            }
             $istDepMin = $sollDepMin + $remainingDelay;
 
             error_log("📍 $stationId: Ank.Versp={$arrivalDelay}min, Abbr={$actualBraking}min, Restversp={$remainingDelay}min");
@@ -467,9 +492,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Nur bei D (Durchfahrt) oder A (verfrühte Abfahrt erlaubt) darf Abfahrt verfrüht werden
         // Bei Halt (kein D/A Flag) wird Abfahrtsverspätung auf 0 begrenzt
         $flags = $timetable_entry['flags'] ?? '';
-        $hasD = preg_match('/\bD\b/i', $flags);
-        $hasA = preg_match('/\bA\b/i', $flags);
-        $allowEarlyDeparture = $hasD || $hasA;
+        $allowEarlyDeparture = allowsEarlyDeparture($flags);
         
         if (!$allowEarlyDeparture && $delay < 0) {
             write_log("⏸️ ABFAHRTS-SCHUTZ: Halt ohne D/A Flag darf nicht verfrüht werden. Abfahrtsverspätung wird von $delay auf 0 begrenzt.");
@@ -478,7 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // =======================================
 
         if ($am_gleis_flag) {
-            $effective_delay = getEffectiveAmGleisDelay($timetable_entry, $delay);
+            $effective_delay = getEffectiveAmGleisDelay($timetable_entry, $delay, $allowEarlyDeparture);
             $actual_arrival = null; 
             $actual_departure = addMinutes($timetable_entry['departure'], $effective_delay);
             if ($effective_delay > $delay) {
