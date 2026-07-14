@@ -447,7 +447,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // SCHUTZ: Prüfe ob die aktuelle Station mit "!" oder anderen geschützten Flags markiert ist
+        // SCHUTZ: Prüfe ob die aktuelle Station mit "!" markiert ist
         $flags = $timetable_entry['flags'] ?? '';
         if (strpos($flags, '!') !== false) {
             write_log("🔒 GESCHÜTZT: Zug $train_num an $station_abbr ist mit ! markiert → Plugin-Update ignoriert");
@@ -462,13 +462,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sichtbar_flag = ($sichtbar === 'true' || $sichtbar === '1' || $sichtbar === true);
 
         $effective_delay = $delay;
+        
+        // ========== VERFRÜHUNGS-REGEL ==========
+        // Nur Züge mit Zugnummer < 30000 dürfen Verfrühungen (negative Delays) haben
+        if ($train_num >= 27000 && $delay < 0) {
+            write_log("⏸️ VERFRÜHUNGS-SCHUTZ: Zug $train_num (>= 30000) darf nicht verfrüht werden. Delay wird von $delay auf 0 begrenzt.");
+            $effective_delay = 0;
+            $delay = 0;
+        }
+        // =======================================
 
-        // VORLAUF-SZENARIO: sichtbar=false + am_gleis=false → NUR Abgangsverspätung (actual_arrival=NULL)
-        if (!$sichtbar_flag && !$am_gleis_flag) {
-            write_log("📍 VORLAUF-VORAB: Zug $train_num an $station_abbr - NUR Abfahrtsverspätung wird gesetzt (+$delay Min, Ankunft unbekannt)");
-            $actual_arrival = null;
-            $actual_departure = addMinutes($timetable_entry['departure'], $delay);
-        } else if ($am_gleis_flag) {
+        if ($am_gleis_flag) {
             $effective_delay = getEffectiveAmGleisDelay($timetable_entry, $delay);
             $actual_arrival = null; 
             $actual_departure = addMinutes($timetable_entry['departure'], $effective_delay);
@@ -478,10 +482,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 write_log("⏳ AM GLEIS: Zug $train_num an $station_abbr - nur Abfahrt wird geändert (+$effective_delay Min)");
             }
         } else {
-            // Standard Vorlauf (sichtbar=true, am_gleis=false) → An- und Abfahrt
-            $actual_arrival = addMinutes($timetable_entry['arrival'], $delay);
-            $actual_departure = addMinutes($timetable_entry['departure'], $delay);
-            write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$delay Min)");
+            // VORLAUF-SZENARIO: sichtbar=false + am_gleis=false → NUR Abgangsverspätung
+            if (!$sichtbar_flag && !$am_gleis_flag) {
+                write_log("📍 VORLAUF-VORAB: Zug $train_num an $station_abbr - NUR Abfahrtsverspätung wird gesetzt (+$effective_delay Min, Ankunft unbekannt)");
+                $actual_arrival = null;
+                $actual_departure = addMinutes($timetable_entry['departure'], $effective_delay);
+            } else {
+                // Standard Vorlauf (sichtbar=true, am_gleis=false) → An- und Abfahrt
+                $actual_arrival = addMinutes($timetable_entry['arrival'], $effective_delay);
+                $actual_departure = addMinutes($timetable_entry['departure'], $effective_delay);
+                write_log("📍 VORLAUF: Zug $train_num an $station_abbr - An- und Abfahrt werden geändert (+$effective_delay Min)");
+            }
         }
 
         // 5. ZUKÜNFTIGE IST-DATEN SELEKTIV ZURÜCKSETZEN (Geschützte Halte auslassen!)
@@ -530,12 +541,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Bei "Am Gleis" bleibt der eventuell vorhandene alte Ist-Ankunftswert unberührt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
             $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $effective_delay . " (Am Gleis)", $timetable_entry['id']]);
-        } else if (!$sichtbar_flag && !$am_gleis_flag) {
-            // VORLAUF-VORAB: Nur actual_departure setzen (Ankunft = NULL bleiben lassen)
-            $stmtUpdate = $db->prepare("UPDATE timetable SET actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
-            $stmtUpdate->execute([$actual_departure, $track_number ?? '', "+" . $delay . " (Vorlauf)", $timetable_entry['id']]);
         } else {
-            // Standard Vorlauf: An- und Abfahrt
             $stmtUpdate = $db->prepare("UPDATE timetable SET actual_arrival = ?, actual_departure = ?, track = ?, remarks = ? WHERE id = ?");
             $stmtUpdate->execute([$actual_arrival, $actual_departure, $track_number ?? '', "+" . $delay, $timetable_entry['id']]);
         }
