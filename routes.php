@@ -936,12 +936,14 @@ $ROUTES = [
 			['id' => 'LL', 'name' => 'Lalden', 'abbr' => 'LL', 'km' => 67.29],
 			['id' => 'MUND', 'name' => 'Mundbach', 'abbr' => 'MUND', 'km' => 70.35],
 			['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 73.82],
+			['id' => 'H', 'name' => '', 'abbr' => 'H', 'km' => 73.82],
         ]
     ],
     'simplon' => [
         'id' => 'simplon',
         'name' => 'Simplon (BR-DO)',
         'stations' => [
+            ['id' => 'H', 'name' => '', 'abbr' => '', 'km' => 145.55],
             ['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 145.55],
             ['id' => 'BRTU', 'name' => 'Brig Tunnel', 'abbr' => 'BRTU', 'km' => 147.15],
             ['id' => 'STGD', 'name' => 'Stazione Galleria', 'abbr' => 'STGD', 'km' => 156.34],
@@ -1053,6 +1055,7 @@ $ROUTES = [
             ['id' => 'VI', 'name' => 'Visp', 'abbr' => 'VI', 'km' => 136.66],
             ['id' => 'GAMS', 'name' => 'Gamsen SBB', 'abbr' => 'GAMS', 'km' => 141.44],
             ['id' => 'BR', 'name' => 'Brig', 'abbr' => 'BR', 'km' => 145.45],
+            ['id' => 'H', 'name' => 'H', 'abbr' => '', 'km' => 145.45],
         ]
     ],
     'vallorcine' => [
