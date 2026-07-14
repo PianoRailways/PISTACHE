@@ -603,7 +603,7 @@ async function renderGraph() {
                     const badgeY = textY - 10; // Vertikale Ausrichtung des Badges
 
                     // Grauer Hintergrund
-                    ctx.fillStyle = '#e0e0e0'; // Angenehmes Hellgrau, optional anpassbar
+                    ctx.fillStyle = '#0f172a'; // Angenehmes Hellgrau, optional anpassbar
                     
                     // Zeichnet ein abgerundetes Rechteck für eine sauberere Optik
                     ctx.beginPath();
