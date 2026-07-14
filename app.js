@@ -555,69 +555,84 @@ async function renderGraph() {
         ctx.setLineDash([]); 
         drawPointChain(istPoints);
 
-        const firstVisibleIst = istPoints.find(p => p.y !== null);
-            if (firstVisibleIst) {
-                ctx.font = 'bold 11px sans-serif';
-                ctx.textAlign = 'left'; // Umstellung auf 'left' erleichtert die präzise Positionierung der Segmente
+        // === ZUGNUMMER & BADGES ZWISCHEN DEN ABSCHNITTEN ZEICHNEN ===
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'left';
+
+        const trainNum = train.train_number;
+
+        // 1. Verspätung für den Zug ermitteln (wird einheitlich im Badge angezeigt)
+        let delayText = '';
+        const firstStop = validStops[0];
+        if (firstStop) {
+            const sollDep = timeToMinutes(firstStop.stop.departure || firstStop.stop.arrival);
+            const istDep = timeToMinutes(firstStop.stop.actual_departure || firstStop.stop.actual_arrival);
+            if (sollDep !== null && istDep !== null) {
+                const delay = istDep - sollDep;
+                if (delay !== 0) {
+                    delayText = `${delay > 0 ? '+' : ''}${delay}`;
+                }
+            }
+        }
+
+        // 2. Breiten im Voraus berechnen
+        const trainNumWidth = ctx.measureText(trainNum).width;
+        const spacing = 4; // Abstand zwischen Zugnummer und Verspätungs-Badge
+        const paddingX = 4; // Innerer Abstand des Badges (links/rechts)
+        let delayWidth = 0;
+        if (delayText) {
+            delayWidth = ctx.measureText(delayText).width;
+        }
+        const totalWidth = trainNumWidth + (delayText ? spacing + delayWidth + (paddingX * 2) : 0);
+
+        // 3. Jedes Segment der Ist-Linie prüfen und bei ausreichendem Abstand beschriften
+        for (let i = 0; i < istPoints.length - 1; i++) {
+            const p1 = istPoints[i];
+            const p2 = istPoints[i + 1];
+
+            // Nur zeichnen, wenn beide Punkte im sichtbaren Canvas-Bereich liegen
+            if (p1.y !== null && p2.y !== null) {
+                // Die Y-Pixelwerte wieder in Minuten umrechnen, um die zeitliche Differenz zu bestimmen
+                const time1 = startMin + ((p1.y - paddingTop) / graphHeight) * totalVisibleMinutes;
+                const time2 = startMin + ((p2.y - paddingTop) / graphHeight) * totalVisibleMinutes;
                 
-                // 1. Texte ermitteln
-                const trainNum = train.train_number;
-                let delayText = '';
-                const firstStop = validStops[0];
-                if (firstStop) {
-                    const sollDep = timeToMinutes(firstStop.stop.departure || firstStop.stop.arrival);
-                    const istDep = timeToMinutes(firstStop.stop.actual_departure || firstStop.stop.actual_arrival);
-                    if (sollDep !== null && istDep !== null) {
-                        const delay = istDep - sollDep;
-                        if (delay !== 0) {
-                            delayText = `${delay > 0 ? '+' : ''}${delay}`;
+                if (Math.abs(time2 - time1) >= 3) {
+                    // Mittelpunkt des aktuellen Segments bestimmen
+                    const midX = (p1.x + p2.x) / 2;
+                    const midY = (p1.y + p2.y) / 2;
+
+                    // Startpunkt für die Zentrierung des Gesamtelements (Text + Badge)
+                    const startX = midX - (totalWidth / 2);
+                    const textY = midY - 8; // Leicht über dem Liniensegment positionieren
+
+                    // Zugnummer zeichnen
+                    ctx.fillStyle = baseColor;
+                    ctx.fillText(trainNum, startX, textY);
+
+                    // Verspätungs-Badge zeichnen (falls Verspätung vorhanden)
+                    if (delayText) {
+                        const badgeX = startX + trainNumWidth + spacing;
+                        const badgeWidth = delayWidth + (paddingX * 2);
+                        const badgeHeight = 14;
+                        const badgeY = textY - 10;
+
+                        // Grauer Hintergrund (hier an den Darkmode-Wert #0f172a angepasst)
+                        ctx.fillStyle = '#0f172a';
+                        
+                        ctx.beginPath();
+                        if (typeof ctx.roundRect === 'function') {
+                            ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 3);
+                        } else {
+                            ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
                         }
+                        ctx.fill();
+
+                        // Verspätungstext über den Hintergrund legen (in Originalfarbe des Zuges)
+                        ctx.fillStyle = baseColor;
+                        ctx.fillText(delayText, badgeX + paddingX, textY);
                     }
                 }
-
-                // 2. Breiten messen für die Zentrierung des Gesamtkonstrukts
-                const trainNumWidth = ctx.measureText(trainNum).width;
-                const spacing = 4; // Abstand zwischen Zugnummer und Verspätungs-Badge
-                const paddingX = 4; // Innerer Abstand des Badges (links/rechts)
-                const paddingY = 2; // Innerer Abstand des Badges (oben/unten)
-                
-                let delayWidth = 0;
-                if (delayText) {
-                    delayWidth = ctx.measureText(delayText).width;
-                }
-
-                // Gesamtbreite berechnen, um den Startpunkt (X) für eine zentrierte Ausrichtung zu finden
-                const totalWidth = trainNumWidth + (delayText ? spacing + delayWidth + (paddingX * 2) : 0);
-                const startX = firstVisibleIst.x - (totalWidth / 2);
-                const textY = firstVisibleIst.y - 8;
-
-                // 3. Zugnummer zeichnen
-                ctx.fillStyle = baseColor;
-                ctx.fillText(trainNum, startX, textY);
-
-                // 4. Verspätungs-Badge zeichnen (falls Verspätung vorhanden)
-                if (delayText) {
-                    const badgeX = startX + trainNumWidth + spacing;
-                    const badgeWidth = delayWidth + (paddingX * 2);
-                    const badgeHeight = 14; // Passend zur 11px Schriftgröße
-                    const badgeY = textY - 10; // Vertikale Ausrichtung des Badges
-
-                    // Grauer Hintergrund
-                    ctx.fillStyle = '#0f172a'; // Angenehmes Hellgrau, optional anpassbar
-                    
-                    // Zeichnet ein abgerundetes Rechteck für eine sauberere Optik
-                    ctx.beginPath();
-                    if (typeof ctx.roundRect === 'function') {
-                        ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 3);
-                    } else {
-                        ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
-                    }
-                    ctx.fill();
-
-                    // Verspätungstext über den grauen Hintergrund zeichnen
-                    ctx.fillStyle = baseColor; // Schriftfarbe bleibt identisch
-                    ctx.fillText(delayText, badgeX + paddingX, textY);
-                }
+            }
         }
 
         // Cache für Tooltip Hit-Testing
