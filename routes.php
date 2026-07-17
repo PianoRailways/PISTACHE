@@ -2715,10 +2715,12 @@ $ROUTES = [
             ['id' => 'CAST', 'name' => 'Castione-Arbedo', 'abbr' => 'CAST', 'km' => 176.73],
         ]
     ],
-    'gottardo-berg-komplett' => [
-        'id' => 'gottardo-berg-komplett',
-        'name' => 'Gotthard-Berg (GD-GIU)',
+    'gotthardbahn' => [
+        'id' => 'gotthardbahn',
+        'name' => 'Gotthardbahn (Immensee - Chiasso)',
         'stations' => [
+            ['id' => 'IM', 'name' => 'Immensee', 'abbr' => 'IM', 'km' => 0.26],
+            ['id' => 'BRM', 'name' => 'Brunnmatt', 'abbr' => 'BRM', 'km' => 4.29],
             ['id' => 'GD', 'name' => 'Arth-Goldau', 'abbr' => 'GD', 'km' => 8.86],
             ['id' => 'SCHW', 'name' => 'Schwyz', 'abbr' => 'SCHW', 'km' => 17.01],
             ['id' => 'BRU', 'name' => 'Brunnen', 'abbr' => 'BRU', 'km' => 20.52],
