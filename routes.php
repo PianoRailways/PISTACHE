@@ -3129,9 +3129,13 @@ $ROUTES = [
         ['id' => 'BX', 'name' => 'Buix', 'abbr' => 'BX', 'km' => -47.96],
         ['id' => 'BCT', 'name' => 'Bassecourt', 'abbr' => 'BCT', 'km' => -46.06],
         ['id' => 'DLF', 'name' => 'Delle-Frontière', 'abbr' => 'DLF', 'km' => -44.88],
-        ['id' => 'DELL', 'name' => 'Delle (F)', 'abbr' => 'DELL', 'km' => -44.5],
-        ['id' => 'JONC', 'name' => 'Joncherey (F)', 'abbr' => 'JONC', 'km' => -42.41],
-        ['id' => 'GVIL', 'name' => 'Grandvillars (F)', 'abbr' => 'GVIL', 'km' => -39.9],
+        ['id' => 'DEL', 'name' => 'Delle (F)', 'abbr' => 'DEL', 'km' => -44.5],
+        ['id' => 'JCR', 'name' => 'Joncherey (F) (JONC)', 'abbr' => 'JCR', 'km' => -42.41],
+        ['id' => 'GVR', 'name' => 'Grandvillars (F) (GVIL)', 'abbr' => 'GVR', 'km' => -39.9],
+        ['id' => 'MOV', 'name' => 'Morvillars (F) (MORV)', 'abbr' => 'MOV', 'km' => -36.4],
+        ['id' => 'MUX', 'name' => 'Meroux TGV (METG)', 'abbr' => 'MUX', 'km' => -30.2],
+        ['id' => 'DJT', 'name' => 'Danjoutin (DAJO)', 'abbr' => 'DJT', 'km' => -25.01],
+        ['id' => 'BFT', 'name' => 'Belfort (BELF)', 'abbr' => 'BFT', 'km' => -23],
     ]
 ],
 'bure-casernes' => [
