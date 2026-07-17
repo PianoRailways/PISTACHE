@@ -3599,6 +3599,18 @@ $ROUTES = [
             ['id' => 'BUER', 'name' => 'Büren an der Aare', 'abbr' => 'BUER', 'km' => 109.6],
         ]
     ],
+    'arch' => [
+        'id' => 'arch',
+        'name' => 'Rüti - Arch - Solothurn',
+        'stations' => [
+            ['id' => 'BUER', 'name' => 'Büren an der Aare', 'abbr' => 'BUER', 'km' => -95.71],
+            ['id' => 'RTI', 'name' => 'Rüti bei Büren', 'abbr' => 'RTI', 'km' => -92.64],
+            ['id' => 'ARCH', 'name' => 'Arch', 'abbr' => 'ARCH', 'km' => -90.98],
+            ['id' => 'LE', 'name' => 'Leuzigen', 'abbr' => 'LE', 'km' => -88.2],
+            ['id' => 'LUE', 'name' => 'Lüsslingen', 'abbr' => 'LUE', 'km' => -84.2],
+            ['id' => 'SO', 'name' => 'Solothurn', 'abbr' => 'SO', 'km' => -80.29],
+        ]
+    ],
     'jurasüdfuss-gäu' => [
         'id' => 'jurasüdfuss-gäu',
         'name' => 'Jurasüdfuss / Gäu',
