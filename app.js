@@ -58,6 +58,31 @@ const colorRules = [
     { type: 'lessThan', key: 'number', filter: 4100, color: 'red' }
 ];
 
+// =========================================================================
+// HELPER FUNCTIONS
+// =========================================================================
+
+function timeToMinutes(timeStr) {
+    if (!timeStr) return null;
+    const parts = timeStr.split(':');
+    if (parts.length < 2) return null;
+    const h = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    return h * 60 + m;
+}
+
+function minutesToTime(totalMinutes) {
+    if (totalMinutes === null || isNaN(totalMinutes)) return '';
+    const positiveMinutes = (totalMinutes % 1440 + 1440) % 1440;
+    const h = Math.floor(positiveMinutes / 60);
+    const m = positiveMinutes % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+// =========================================================================
+// ROUTE & TRAIN SELECTION
+// =========================================================================
+
 function switchRoute() {
     const selector = document.getElementById('route_select');
     if (!selector) return;
@@ -137,6 +162,10 @@ function clearRow(stationId) {
 
     console.log(`Zeile für Station ${stationId} geleert`);
 }
+
+// =========================================================================
+// TRAIN LOADING & SAVING
+// =========================================================================
 
 async function loadTrain() {
     const trainNumberInput = document.getElementById('train_number').value.trim();
@@ -242,638 +271,19 @@ async function saveTimetable(e) {
     }
 }
 
-function timeToMinutes(timeStr) {
-    if (!timeStr) return null;
-    const parts = timeStr.split(':');
-    if (parts.length < 2) return null;
-    const h = parseInt(parts[0], 10);
-    const m = parseInt(parts[1], 10);
-    return h * 60 + m;
-}
-
-function minutesToTime(totalMinutes) {
-    if (totalMinutes === null || isNaN(totalMinutes)) return '';
-    const positiveMinutes = (totalMinutes % 1440 + 1440) % 1440;
-    const h = Math.floor(positiveMinutes / 60);
-    const m = positiveMinutes % 60;
-    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-}
-
-function recalcRow(stationId, type, trigger) {
-    const isFree = !document.getElementById('editor_panel').classList.contains('hidden') ? false : true;
-    const form = isFree ? document.getElementById('free_timetable_form') : document.getElementById('timetable_form');
-    
-    const stations = isFree ? freeEditorStations : (routesConfig[currentRouteId]?.stations || []);
-    const currentIndex = stations.findIndex(s => s.id === stationId);
-    if (currentIndex === -1) return;
-
-    const prefix = type === 'arr' ? 'arrival' : 'departure';
-    const istField = form.querySelector(`[name="stations[${stationId}][actual_${prefix}]"]`);
-    const sollField = form.querySelector(`[name="stations[${stationId}][${prefix}]"]`);
-    const delayField = document.getElementById(`delay_${type}_${stationId}`);
-    
-    if (trigger === 'delay') {
-        if (istField && sollField && delayField) {
-            const sollMin = timeToMinutes(sollField.value);
-            if (sollMin !== null) {
-                istField.value = minutesToTime(sollMin + parseInt(delayField.value || 0, 10));
-            }
-        }
-    } else if (trigger === 'time') {
-        if (istField && sollField && delayField) {
-            const sollMin = timeToMinutes(sollField.value);
-            const istMin = timeToMinutes(istField.value);
-            if (sollMin !== null && istMin !== null) {
-                delayField.value = istMin - sollMin;
-            }
-        }
-    }
-
-    if (type === 'arr' && trigger === 'time') {
-        const actualArrivalField = form.querySelector(`[name="stations[${stationId}][actual_arrival]"]`);
-        const actualDepartureField = form.querySelector(`[name="stations[${stationId}][actual_departure]"]`);
-        const sollDepartureField = form.querySelector(`[name="stations[${stationId}][departure]"]`);
-        const delayDepartureField = document.getElementById(`delay_dep_${stationId}`);
-        
-        if (actualArrivalField && actualDepartureField) {
-            const arrivalTime = timeToMinutes(actualArrivalField.value);
-            const departureTime = timeToMinutes(actualDepartureField.value);
-            
-            if (arrivalTime !== null && departureTime !== null && departureTime < arrivalTime) {
-                actualDepartureField.value = actualArrivalField.value;
-                if (sollDepartureField && delayDepartureField) {
-                    delayDepartureField.value = timeToMinutes(actualDepartureField.value) - timeToMinutes(sollDepartureField.value);
-                }
-            }
-        }
-    }
-
-    if (!isFree && typeof propagateForward === 'function') {
-        propagateForward(currentIndex + 1);
-    } else if (isFree && typeof propagateTravelTimeWithReserve === 'function') {
-        if (type === 'arr') {
-            // Eigene Zeile: gerade eingetragener Wert bleibt, Standzeit→Abfahrt wird mitberechnet
-            propagateTravelTimeWithReserve(currentIndex, true);
-        } else {
-            // Abfahrt wurde editiert: eigene Zeile bleibt unangetastet, ab der nächsten neu rechnen
-            propagateTravelTimeWithReserve(currentIndex + 1, false);
-        }
-    }
-}
-
-async function renderGraph() {
-    if (!currentRouteId || !routesConfig[currentRouteId]) return;
-    
-    const formData = new FormData();
-    formData.append('action', 'get_all_data');
-    formData.append('route_id', currentRouteId);
-
-    const res = await fetch('', { method: 'POST', body: formData });
-    let trains = await res.json();
-
-    updateTrainList(trains);
-
-    const canvas = document.getElementById('graphCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    let stations = routesConfig[currentRouteId].stations;
-    if (!stations || stations.length === 0) return;
-
-    // === SEGMENT-FILTERUNG (für Zuschauermodus) ===
-    if (typeof currentSegmentFrom !== 'undefined' && typeof currentSegmentTo !== 'undefined') {
-        let fromIndex = 0;
-        let toIndex = stations.length - 1;
-        
-        if (currentSegmentFrom) {
-            const idx = stations.findIndex(s => s.id === currentSegmentFrom);
-            if (idx !== -1) fromIndex = idx;
-        }
-        
-        if (currentSegmentTo) {
-            const idx = stations.findIndex(s => s.id === currentSegmentTo);
-            if (idx !== -1) toIndex = idx;
-        }
-        
-        // Gefilterte Stations-Liste
-        stations = stations.slice(fromIndex, toIndex + 1);
-        
-        // Auch Züge filtern
-        trains.forEach(train => {
-            const segmentStationIds = new Set(stations.map(s => s.id));
-            train.stops = train.stops.filter(stop => segmentStationIds.has(stop.station_id));
-        });
-    }
-
-    const startMin = timeToMinutes(document.getElementById('graph_start').value) ?? 240;
-    const endMin = timeToMinutes(document.getElementById('graph_end').value) ?? 720;
-    const totalVisibleMinutes = endMin - startMin;
-
-    const paddingTop = 50;
-    const paddingBottom = 40;
-    const paddingLeft = 50;
-    const paddingRight = 50;
-    
-    const graphWidth = canvas.width - paddingLeft - paddingRight;
-    const graphHeight = canvas.height - paddingTop - paddingBottom;
-
-    const minKm = stations[0].km;
-    const maxKm = stations[stations.length - 1].km;
-    const totalKm = maxKm - minKm;
-
-    function getX(km) {
-        return paddingLeft + ((km - minKm) / totalKm) * graphWidth;
-    }
-
-    function getY(minutes) {
-        if (minutes < startMin || minutes > endMin) return null;
-        return paddingTop + ((minutes - startMin) / totalVisibleMinutes) * graphHeight;
-    }
-
-    // Raster: Stunden- und 5-Minuten-Linien
-    ctx.lineWidth = 1;
-    ctx.fillStyle = '#64748b';
-    ctx.font = '10px sans-serif';
-    
-    // Runden auf das nächste 5-Minuten-Intervall im sichtbaren Bereich
-    const first5Min = Math.ceil(startMin / 5) * 5;
-
-    for (let m = first5Min; m <= endMin; m += 5) {
-        const y = getY(m);
-        if (y === null) continue;
-
-        // Unterscheidung zwischen voller Stunde (markant, durchgezogen) und 5-Minuten-Takt (fein, gestrichelt)
-        if (m % 60 === 0) {
-            ctx.strokeStyle = '#e2e8f0'; // Helles Grau für Stunden
-            ctx.lineWidth = 1;
-            ctx.setLineDash([]); // Durchgezogene Linie für volle Stunden
-        } else {
-            // Sichtbares, aber dezentes Grau für Zwischenlinien im Darkmode angepasst
-            ctx.strokeStyle = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)') ? '#334155' : '#cbd5e1';
-            ctx.lineWidth = 0.75;
-            ctx.setLineDash([4, 4]); // Gestrichelte Linie für die 5-Minuten-Schritte
-        }
-
-        // Horizontale Linie auf der exakten Höhe zeichnen
-        ctx.beginPath();
-        ctx.moveTo(paddingLeft, y);
-        ctx.lineTo(paddingLeft + graphWidth, y);
-        ctx.stroke();
-        
-        // Beschriftung formatieren
-        let timeString = '';
-        if (m % 60 === 0) {
-            timeString = `${Math.floor(m / 60)}:00`; // Volle Stunde, z.B. "12:00"
-        } else {
-            timeString = `:${String(m % 60).padStart(2, '0')}`; // Nur Minuten, z.B. ":05"
-        }
-
-        // Text links und rechts auf der exakten Höhe platzieren
-        ctx.textAlign = 'right';
-        ctx.fillText(timeString, paddingLeft - 10, y + 4);
-        ctx.textAlign = 'left';
-        ctx.fillText(timeString, paddingLeft + graphWidth + 10, y + 4);
-    }
-
-    // Linienstil für die nachfolgenden Zeichnungen (Bahnhöfe, Züge, Zeitlinie) zurücksetzen
-    ctx.setLineDash([]);
-
-    // Raster: Bahnhofslinien
-    stations.forEach((st, index) => {
-        const x = getX(st.km);
-        const isDarkMode = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)');
-        
-        ctx.strokeStyle = isDarkMode ? '#334155' : '#cbd5e1';
-        ctx.beginPath();
-        ctx.moveTo(x, paddingTop);
-        ctx.lineTo(x, paddingTop + graphHeight);
-        ctx.stroke();
-
-        // Abbr. direkt über dem Canvas
-        ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
-        ctx.font = 'bold 8px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(st.abbr, x, paddingTop - 5);
-        
-        // Name + km: alle OBEN, aber unterschiedlich hoch versetzt
-        ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
-        ctx.font = '8px sans-serif';
-        
-        const isOddStation = index % 2 === 0; // 0,2,4... oben hoch / 1,3,5... oben tiefer
-        
-        let textY;
-        if (isOddStation) {
-            // Ungerade: weiter oben
-            textY = paddingTop - 40;
-        } else {
-            // Gerade: etwas tiefer (aber immer noch oben)
-            textY = paddingTop - 25;
-        }
-        
-        // Kleine Linie vom Text zur Abbr
-        ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(x, textY + 10);
-        ctx.lineTo(x, paddingTop - 10);
-        ctx.stroke();
-        
-        // Name
-        ctx.fillText(st.name, x, textY);
-        // km
-        ctx.fillText(`km ${st.km}`, x, textY + 8);
-    });
-
-    // Sammle alle Zuglinien-Segmente für Hover-Tooltip
-    const trainSegments = [];
-
-    trains.forEach((train) => {
-        const baseColor = getTrainColor(train.train_number, train.name);
-        
-        const validStops = train.stops
-            .map(stop => {
-                const st = stations.find(s => s.id === stop.station_id);
-                return st ? { stop, km: st.km } : null;
-            })
-            .filter(item => item !== null);
-
-        if (validStops.length < 2) return;
-
-        validStops.sort((a, b) => {
-            const timeA = timeToMinutes(a.stop.departure || a.stop.arrival);
-            const timeB = timeToMinutes(b.stop.departure || b.stop.arrival);
-            return timeA - timeB;
-        });
-
-        const sollPoints = [];
-        validStops.forEach(item => {
-            const x = getX(item.km);
-            const arrMin = timeToMinutes(item.stop.arrival);
-            const depMin = timeToMinutes(item.stop.departure);
-
-            if (arrMin !== null) sollPoints.push({ x, y: getY(arrMin) });
-            if (depMin !== null) sollPoints.push({ x, y: getY(depMin) });
-        });
-
-        const istPoints = [];
-        validStops.forEach(item => {
-            const x = getX(item.km);
-            const arrMin = timeToMinutes(item.stop.actual_arrival || item.stop.arrival);
-            const depMin = timeToMinutes(item.stop.actual_departure || item.stop.departure);
-
-            if (arrMin !== null) istPoints.push({ x, y: getY(arrMin) });
-            if (depMin !== null) istPoints.push({ x, y: getY(depMin) });
-        });
-
-        function drawPointChain(points) {
-            let started = false;
-            ctx.beginPath();
-            points.forEach(p => {
-                if (p.y === null) {
-                    started = false; 
-                    return;
-                }
-                if (!started) {
-                    ctx.moveTo(p.x, p.y);
-                    started = true;
-                } else {
-                    ctx.lineTo(p.x, p.y);
-                }
-            });
-            ctx.stroke();
-        }
-
-        ctx.strokeStyle = baseColor;
-        ctx.globalAlpha = 0.5; 
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([4, 4]); 
-        drawPointChain(sollPoints);
-
-        ctx.globalAlpha = 1.0; 
-        ctx.lineWidth = 2.5;
-        ctx.setLineDash([]); 
-        drawPointChain(istPoints);
-
-        // === ZUGNUMMER & BADGES ZWISCHEN DEN ABSCHNITTEN ZEICHNEN ===
-        ctx.font = 'bold 11px sans-serif';
-        ctx.textAlign = 'left';
-
-        const trainNum = train.train_number;
-
-        // 1. Verspätung für den Zug ermitteln (wird einheitlich im Badge angezeigt)
-        let delayText = '';
-        const firstStop = validStops[0];
-        if (firstStop) {
-            const sollDep = timeToMinutes(firstStop.stop.departure || firstStop.stop.arrival);
-            const istDep = timeToMinutes(firstStop.stop.actual_departure || firstStop.stop.actual_arrival);
-            if (sollDep !== null && istDep !== null) {
-                const delay = istDep - sollDep;
-                if (delay !== 0) {
-                    delayText = `${delay > 0 ? '+' : ''}${delay}`;
-                }
-            }
-        }
-
-        // 2. Breiten im Voraus berechnen
-        const trainNumWidth = ctx.measureText(trainNum).width;
-        const spacing = 4; // Abstand zwischen Zugnummer und Verspätungs-Badge
-        const paddingX = 4; // Innerer Abstand des Badges (links/rechts)
-        let delayWidth = 0;
-        if (delayText) {
-            delayWidth = ctx.measureText(delayText).width;
-        }
-        const totalWidth = trainNumWidth + (delayText ? spacing + delayWidth + (paddingX * 2) : 0);
-
-        // 3. Jedes Segment der Ist-Linie prüfen und bei ausreichendem Abstand beschriften
-        for (let i = 0; i < istPoints.length - 1; i++) {
-            const p1 = istPoints[i];
-            const p2 = istPoints[i + 1];
-
-            // Nur zeichnen, wenn beide Punkte im sichtbaren Canvas-Bereich liegen
-            if (p1.y !== null && p2.y !== null) {
-                // Die Y-Pixelwerte wieder in Minuten umrechnen, um die zeitliche Differenz zu bestimmen
-                const time1 = startMin + ((p1.y - paddingTop) / graphHeight) * totalVisibleMinutes;
-                const time2 = startMin + ((p2.y - paddingTop) / graphHeight) * totalVisibleMinutes;
-                
-                if (Math.abs(time2 - time1) >= 3) {
-                    // Mittelpunkt des aktuellen Segments bestimmen
-                    const midX = (p1.x + p2.x) / 2;
-                    const midY = (p1.y + p2.y) / 2;
-
-                    // Startpunkt für die Zentrierung des Gesamtelements (Text + Badge)
-                    const startX = midX - (totalWidth / 2);
-                    const textY = midY - 8; // Leicht über dem Liniensegment positionieren
-
-                    // Zugnummer zeichnen
-                    ctx.fillStyle = baseColor;
-                    ctx.fillText(trainNum, startX, textY);
-
-                    // Verspätungs-Badge zeichnen (falls Verspätung vorhanden)
-                    if (delayText) {
-                        const badgeX = startX + trainNumWidth + spacing;
-                        const badgeWidth = delayWidth + (paddingX * 2);
-                        const badgeHeight = 14;
-                        const badgeY = textY - 10;
-
-                        // Grauer Hintergrund (hier an den Darkmode-Wert #0f172a angepasst)
-                        ctx.fillStyle = '#0f172a';
-                        
-                        ctx.beginPath();
-                        if (typeof ctx.roundRect === 'function') {
-                            ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 3);
-                        } else {
-                            ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
-                        }
-                        ctx.fill();
-
-                        // Verspätungstext über den Hintergrund legen (in Originalfarbe des Zuges)
-                        ctx.fillStyle = baseColor;
-                        ctx.fillText(delayText, badgeX + paddingX, textY);
-                    }
-                }
-            }
-        }
-
-        // Cache für Tooltip Hit-Testing
-        trainSegments.push({
-            train: train,
-            points: istPoints  // Nutze IST-Linie für Hover (sichtbare Linie)
-        });
-    });
-
-    // Tooltip aktivieren
-    if (!canvasTooltip && canvas) {
-        canvasTooltip = new CanvasTooltip(canvas);
-    }
-    if (canvasTooltip) {
-        canvasTooltip.cacheTrainSegments(trainSegments);
-    }
-    
-    ctx.globalAlpha = 1.0;
-    ctx.setLineDash([]);
-
-// Gelbe/Rote "JETZT"-Zeitlinie innerhalb von renderGraph
-(function drawCurrentTimeLine() {
-    const basis = document.getElementById('time_basis')?.value || 'instanz1';
-    let stsMinutes = 0;
-
-    if (basis === 'manual') {
-        const now = new Date();
-        const pcMinutes = now.getHours() * 60 + now.getMinutes();
-        const offsetInput = document.getElementById('sts_offset');
-        const offset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
-        stsMinutes = ((pcMinutes + offset) % 1440 + 1440) % 1440;
-    } else {
-        stsMinutes = getDynamicSTSTime(basis);
-    }
-
-    const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
-
-    if (y >= paddingTop && y <= paddingTop + graphHeight) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.strokeStyle = '#FFDE15'; 
-        ctx.lineWidth = 2;
-        ctx.setLineDash([6, 4]);
-        
-        ctx.moveTo(paddingLeft, y);
-        ctx.lineTo(paddingLeft + graphWidth, y);
-        ctx.stroke();
-
-        ctx.fillStyle = '#FFDE15';
-        ctx.font = 'bold 11px sans-serif';
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-        
-        const displayHours = Math.floor(stsMinutes / 60);
-        const displayMinutes = stsMinutes % 60;
-        const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
-        
-        ctx.fillText(timeString, paddingLeft - 10, y);
-        ctx.restore();
-    }
-})();
-}
-function getDynamicSTSTime(instanz) {
-    // Fixer Referenzpunkt aus deinem Live-Abgleich
-    const refReal = new Date('2026-06-27T21:41:00');
-    const now = new Date();
-    
-    // Vergangene Echtzeit-Minuten seit der Referenz
-    const elapsedMinutes = Math.floor((now - refReal) / 60000);
-    
-    // STS-Instanzen laufen von 05:00 bis 21:00 Uhr = 16 Stunden (960 Minuten)
-    const instanzDuration = 960; 
-    const instanzStartMinutes = 300; // 05:00 Uhr in Tagesminuten
-    
-    // Deine gemessenen STS-Minuten seit Instanzstart (05:00) am Referenzpunkt:
-    // Instanz 1 war um 16:41 Uhr (= 701 Min seit 05:00)
-    // Instanz 2 war um 06:41 Uhr (= 101 Min seit 05:00)
-    const refMinutesSinceStart = (instanz === 'instanz1') ? 701 : 101;
-    
-    // Aktuelle Minuten innerhalb des 16-Stunden-Rhythmus berechnen
-    let currentMinutesSinceStart = (refMinutesSinceStart + elapsedMinutes) % instanzDuration;
-    if (currentMinutesSinceStart < 0) {
-        currentMinutesSinceStart += instanzDuration;
-    }
-    
-    // Rückgabe als absolute Tagesminuten (z.B. 1001 für 16:41 Uhr)
-    return instanzStartMinutes + currentMinutesSinceStart;
-}
-
-function updateTrainList(trains) {
-    const listContainer = document.getElementById('active_train_list');
-    if (!listContainer) return;
-    listContainer.innerHTML = '';
-
-    if (trains.length === 0) {
-        listContainer.innerHTML = '<li style="font-weight:normal; color:#94a3b8; cursor:default; background:none; border:none;">Keine Züge erfasst</li>';
-        return;
-    }
-
-    trains.forEach(train => {
-        const li = document.createElement('li');
-        li.setAttribute('onclick', `loadTrainByNumber(${train.train_number})`);
-        li.innerHTML = `
-            <span>Zug ${train.train_number}</span>
-            <span class="delete-btn" onclick="deleteTrain(event, ${train.id})">×</span>
-        `;
-        listContainer.appendChild(li);
-    });
-}
-
-function loadTrainByNumber(num) {
-    const input = document.getElementById('train_number');
-    if (input) {
-        input.value = num;
-        loadTrain();
-    }
-}
-
-async function deleteTrain(event, trainId) {
-    event.stopPropagation(); 
-    if (!confirm('Zug und zugehörigen Fahrplan wirklich löschen?')) return;
-
-    const formData = new FormData();
-    formData.append('action', 'delete_train');
-    formData.append('train_id', trainId);
-
-    const res = await fetch('', { method: 'POST', body: formData });
-    const data = await res.json();
-
-    if (data.success) {
-        if (document.getElementById('current_train_id').value == trainId) {
-            document.getElementById('editor_panel').classList.add('hidden');
-        }
-        renderGraph(); 
-    } else {
-        alert('Fehler beim Löschen');
-    }
-}
-
-function deleteCurrentTrain() {
-    const trainId = document.getElementById('current_train_id').value;
-    const trainNum = document.getElementById('current_train_num').innerText;
-
-    if (!trainId) {
-        alert('Kein Zug zum Löschen ausgewählt.');
-        return;
-    }
-
-    if (confirm(`Möchtest du den Zug ${trainNum} wirklich unwiderruflich löschen?`)) {
-        const formData = new FormData();
-        formData.append('action', 'delete_train');
-        formData.append('train_id', trainId);
-
-        fetch('', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(`Zug ${trainNum} wurde gelöscht.`);
-                window.location.reload();
-            } else {
-                alert('Fehler beim Löschen: ' + (data.error || 'Unbekannter Fehler'));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Verbindungsfehler beim Löschen des Zuges.');
-        });
-    }
-}
-
-function getTrainColor(trainNumber, trainName) {
-    const num = parseInt(trainNumber, 10);
-    const name = trainName || "";
-
-    for (const rule of colorRules) {
-        if (rule.key === 'name') {
-            if (rule.type === 'contains' && name.includes(rule.filter)) return colorMap[rule.color];
-            if (rule.type === 'startsWith' && name.startsWith(rule.filter)) return colorMap[rule.color];
-        } else if (rule.key === 'number') {
-            if (rule.type === 'greaterThan' && num > rule.filter) return colorMap[rule.color];
-            if (rule.type === 'lessThan' && num < rule.filter) return colorMap[rule.color];
-        }
-    }
-    return '#64748b';
-}
-
-function getSimTime() {
-    const now = new Date();
-    const offsetInput = document.getElementById('sts_offset');
-    const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
-
-    const totalMinutes = (now.getHours() * 60) + now.getMinutes() + simOffset;
-    const simMinutes = ((totalMinutes % 1440) + 1440) % 1440;
-    
-    const h = Math.floor(simMinutes / 60);
-    const m = simMinutes % 60;
-    
-    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-}
-
-function setNow(stationId, fieldName) {
-    const form = document.getElementById('timetable_form');
-    const timeString = getSimTime(); 
-    
-    const field = form.querySelector(`[name="stations[${stationId}][${fieldName}]"]`);
-    if (field) {
-        field.value = timeString;
-        const type = fieldName.includes('arrival') ? 'arr' : 'dep';
-        recalcRow(stationId, type, 'time');
-    }
-    
-    saveTimetableAuto();
-}
-
-async function saveTimetableAuto() {
-    const formData = new FormData(document.getElementById('timetable_form'));
-    formData.append('action', 'save_timetable');
-    formData.append('train_id', document.getElementById('current_train_id').value);
-
-    try {
-        const res = await fetch('', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (data.success) {
-            renderGraph();
-            console.log("Auto-Save erfolgreich");
-        }
-    } catch (e) {
-        console.error("Auto-Save Fehler:", e);
-    }
-}
+// =========================================================================
+// PROPAGATION MIT DISPO-KRITERIUM-SCHUTZ (OPTIMIERT)
+// =========================================================================
 
 /**
- * propagateForward() - Normal Editor mit Standzeitabbau
+ * propagateForward() - Optimiert für Dispo-Kriterien & Standzeit-Abbau
  * 
- * Propagiert Verspätung nach vorne mit:
+ * Propagiert Verspätung/Verfrühung ab startIndex bis zum Ende,
+ * unter Berücksichtigung von:
  * - 7% Fahrtzeit-Reserve
  * - Standzeitabbau (außer bei R-Flag)
- * - Schutz vor Dispo-Kriterien
+ * - D/A-Flag für Verfrühungen erlaubt
+ * - Dispo-Kriterium (X/V/C): Halte werden übersprungen (geschützt)
  */
 function propagateForward(startIndex) {
     const form = document.getElementById('timetable_form');
@@ -883,11 +293,12 @@ function propagateForward(startIndex) {
         return;
     }
 
-    // Starte von der vorherigen Station
+    console.log(`🔄 Propagiere ab Index ${startIndex}`);
+
+    // Sammle State der vorherigen Station
     let prevDepMin = null;
     let prevSollDepMin = null;
 
-    // Suche die letzte gültige Abfahrt vor startIndex
     for (let i = startIndex - 1; i >= 0; i--) {
         const sollDep = form.querySelector(`[name="stations[${stations[i].id}][departure]"]`)?.value;
         const istDep = form.querySelector(`[name="stations[${stations[i].id}][actual_departure]"]`)?.value;
@@ -909,9 +320,15 @@ function propagateForward(startIndex) {
 
         if (!sollArrStr && !sollDepStr) continue;
 
-        // 🔒 SCHUTZ: Dispo-Kriterium prüfen
+        // 🔒 DISPO-KRITERIUM-SCHUTZ: Zeile überspringen
         if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
-            console.log(`🔒 GESCHÜTZT (Dispo): ${stId} → wird übersprungen`);
+            console.log(`🔒 DISPO-KRITERIUM: ${stId} (${flags}) → wird übersprungen`);
+            // Aber: Falls bereits Ist-Werte gesetzt sind, nutze diese für nächste Zeile
+            const protIstDep = timeToMinutes(form.querySelector(`[name="stations[${stId}][actual_departure]"]`)?.value);
+            if (protIstDep !== null) {
+                prevDepMin = protIstDep;
+                prevSollDepMin = timeToMinutes(sollDepStr);
+            }
             continue;
         }
 
@@ -935,9 +352,8 @@ function propagateForward(startIndex) {
             }
 
             if (sollFahrtzeit > 0) {
-                // 7% Reserve
+                // 7% Reserve: nie schneller als 93% der Soll-Fahrtzeit
                 const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
-                // Ist-Fahrzeit (aus Soll-Fahrzeit + Differenz der Abfahrten)
                 const istFahrtzeit = Math.max(minFahrtzeit, sollFahrtzeit);
                 
                 istArrMin = prevDepMin + istFahrtzeit;
@@ -956,8 +372,10 @@ function propagateForward(startIndex) {
             delayArrField.value = istArrMin - sollArrMin;
         }
 
+        if (istArrMin === null) continue;
+
         // ========== STANDZEIT-VERWALTUNG & ABFAHRT ==========
-        if (istArrMin !== null && sollDepMin !== null) {
+        if (sollDepMin !== null) {
             // Soll-Standzeit
             let sollStandzeit = 0;
             if (sollArrMin !== null) {
@@ -976,7 +394,14 @@ function propagateForward(startIndex) {
             const actualBraking = Math.min(Math.max(0, arrivalDelay), availableBraking);
 
             // Ist-Abfahrt = Soll-Abfahrt + (Ankunftsversp. - Abbremsung)
-            const remainingDelay = Math.max(0, arrivalDelay - actualBraking);
+            let remainingDelay = Math.max(0, arrivalDelay - actualBraking);
+            
+            // D/A-Flag erlaubt Verfrühung?
+            const allowsEarly = /\b(D|A)\b/i.test(flags);
+            if (!allowsEarly) {
+                remainingDelay = Math.max(0, remainingDelay);
+            }
+
             const istDepMin = sollDepMin + remainingDelay;
 
             if (istDepField) istDepField.value = minutesToTime(istDepMin);
@@ -994,6 +419,86 @@ function propagateForward(startIndex) {
         }
     }
 }
+
+// =========================================================================
+// RECALC ROW MIT DISPO-SCHUTZ
+// =========================================================================
+
+function recalcRow(stationId, type, trigger) {
+    const isFree = !document.getElementById('editor_panel').classList.contains('hidden') ? false : true;
+    const form = isFree ? document.getElementById('free_timetable_form') : document.getElementById('timetable_form');
+    
+    const stations = isFree ? freeEditorStations : (routesConfig[currentRouteId]?.stations || []);
+    const currentIndex = stations.findIndex(s => s.id === stationId);
+    if (currentIndex === -1) return;
+
+    const prefix = type === 'arr' ? 'arrival' : 'departure';
+    const istField = form.querySelector(`[name="stations[${stationId}][actual_${prefix}]"]`);
+    const sollField = form.querySelector(`[name="stations[${stationId}][${prefix}]"]`);
+    const delayField = document.getElementById(`delay_${type}_${stationId}`);
+    
+    // Grundlegende Delay-Berechnung
+    if (trigger === 'delay') {
+        if (istField && sollField && delayField) {
+            const sollMin = timeToMinutes(sollField.value);
+            if (sollMin !== null) {
+                istField.value = minutesToTime(sollMin + parseInt(delayField.value || 0, 10));
+            }
+        }
+    } else if (trigger === 'time') {
+        if (istField && sollField && delayField) {
+            const sollMin = timeToMinutes(sollField.value);
+            const istMin = timeToMinutes(istField.value);
+            if (sollMin !== null && istMin !== null) {
+                delayField.value = istMin - sollMin;
+            }
+        }
+    }
+
+    // Prüfe Dispo-Kriterium: falls vorhanden, keine Propagation
+    const flagsField = form.querySelector(`[name="stations[${stationId}][flags]"]`);
+    if (flagsField) {
+        const flags = flagsField.value || '';
+        if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
+            console.log(`🔒 Station ${stationId} hat Dispo-Kriterium → keine Propagation`);
+            return; // Stop: keine Propagation für geschützte Halte
+        }
+    }
+
+    if (type === 'arr' && trigger === 'time') {
+        const actualArrivalField = form.querySelector(`[name="stations[${stationId}][actual_arrival]"]`);
+        const actualDepartureField = form.querySelector(`[name="stations[${stationId}][actual_departure]"]`);
+        const sollDepartureField = form.querySelector(`[name="stations[${stationId}][departure]"]`);
+        const delayDepartureField = document.getElementById(`delay_dep_${stationId}`);
+        
+        if (actualArrivalField && actualDepartureField) {
+            const arrivalTime = timeToMinutes(actualArrivalField.value);
+            const departureTime = timeToMinutes(actualDepartureField.value);
+            
+            if (arrivalTime !== null && departureTime !== null && departureTime < arrivalTime) {
+                actualDepartureField.value = actualArrivalField.value;
+                if (sollDepartureField && delayDepartureField) {
+                    delayDepartureField.value = timeToMinutes(actualDepartureField.value) - timeToMinutes(sollDepartureField.value);
+                }
+            }
+        }
+    }
+
+    // Triggere Propagation
+    if (!isFree && typeof propagateForward === 'function') {
+        propagateForward(currentIndex + 1);
+    } else if (isFree && typeof propagateTravelTimeWithReserve === 'function') {
+        if (type === 'arr') {
+            propagateTravelTimeWithReserve(currentIndex, true);
+        } else {
+            propagateTravelTimeWithReserve(currentIndex + 1, false);
+        }
+    }
+}
+
+// =========================================================================
+// TRAIN LINK / CASCADE
+// =========================================================================
 
 async function saveTrainLink() {
     const trainId = document.getElementById('current_train_id').value;
@@ -1026,25 +531,21 @@ async function saveTrainLink() {
     }
 }
 
-// ========================================================================
-// PROPAGATION MIT 7%-RESERVE & STANDZEIT-BERÜCKSICHTIGUNG
-// ========================================================================
+// =========================================================================
+// PROPAGATION MIT 7%-RESERVE & STANDZEIT-BERÜCKSICHTIGUNG (FREE EDITOR)
+// =========================================================================
 
 /**
- * propagateTravelTimeWithReserve() - Free Editor Version (Rewrite)
+ * propagateTravelTimeWithReserve() - Free Editor Version (mit Dispo-Schutz)
  * 
  * Rechnet die Fahrt ab startIndex GARANTIERT komplett neu durch,
- * unabhängig davon, was vorher in den Feldern der Folgestationen stand.
- * Der Zustand (Ist-Abfahrt/Soll-Abfahrt der Vorstation) wird explizit
- * durch die Schleife mitgeführt statt bei jeder Zeile neu aus dem DOM geraten.
- * 
- * @param {number} startIndex - ab welcher Station neu gerechnet wird
- * @param {boolean} preserveFirstArrival - true = die Ist-Ankunft an startIndex
- *   wurde gerade vom Nutzer selbst eingetragen und wird übernommen statt überschrieben
+ * unter Berücksichtigung von Dispo-Kriterien.
  */
 function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = false) {
     const form = document.getElementById('free_timetable_form');
-    if (!form) return;
+    if (!form || !freeEditorStations || freeEditorStations.length === 0) return;
+
+    console.log(`🔄 Free Propagate ab Index ${startIndex}, preserveFirst=${preserveFirstArrival}`);
 
     const getVal = (stId, field) => form.querySelector(`[name="stations[${stId}][${field}]"]`)?.value || '';
     const setVal = (stId, field, val) => {
@@ -1077,10 +578,9 @@ function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = f
 
         if (!sollArrStr && !sollDepStr) continue;
 
-        // 🔒 Dispo-Kriterium: Zeile nicht anfassen, aber Kette ab ihrer (manuell/dispo
-        // gesetzten) Ist-Abfahrt fortsetzen, damit die NÄCHSTE Station korrekt rechnet
+        // 🔒 DISPO-KRITERIUM-SCHUTZ
         if (/^(X|V|C[4-7]?)\((\d+)\)/i.test(flags.trim())) {
-            console.log(`🔒 GESCHÜTZT: Halt ${stId} hat Dispo-Kriterium (${flags}) → wird übersprungen`);
+            console.log(`🔒 DISPO: ${stId} → übersprungen`);
             const protIstDep = timeToMinutes(getVal(stId, 'actual_departure'));
             prevIstDepMin = protIstDep !== null ? protIstDep : sollDepMin;
             prevSollDepMin = sollDepMin;
@@ -1090,13 +590,11 @@ function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = f
         // ========== ANKUNFT ==========
         let istArrMin;
         if (i === startIndex && preserveFirstArrival) {
-            // Das ist die Zeile, die der Nutzer gerade selbst editiert hat → Wert übernehmen
             istArrMin = timeToMinutes(getVal(stId, 'actual_arrival'));
             if (istArrMin === null) istArrMin = sollArrMin;
         } else if (prevIstDepMin !== null && prevSollDepMin !== null && sollArrMin !== null) {
             const sollFahrtzeit = sollArrMin - prevSollDepMin;
             if (sollFahrtzeit > 0) {
-                // 7% Reserve: nie schneller als 93% der Soll-Fahrtzeit
                 const minFahrtzeit = Math.round(sollFahrtzeit * 0.93);
                 const istFahrtzeit = Math.max(minFahrtzeit, sollFahrtzeit);
                 istArrMin = prevIstDepMin + istFahrtzeit;
@@ -1108,28 +606,23 @@ function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = f
             istArrMin = prevIstDepMin;
             setVal(stId, 'actual_arrival', minutesToTime(istArrMin));
         } else {
-            // Keine Vorgänger-Info vorhanden → bestehenden Wert beibehalten, sonst Soll
             istArrMin = timeToMinutes(getVal(stId, 'actual_arrival'));
             if (istArrMin === null) istArrMin = sollArrMin;
         }
 
         if (istArrMin === null) continue;
 
-        // ========== STANDZEIT-VERWALTUNG ==========
-        // Soll-Standzeit
+        // ========== STANDZEIT ==========
         let sollStandzeit = 0;
         if (sollArrMin !== null && sollDepMin !== null && sollDepMin >= sollArrMin) {
             sollStandzeit = sollDepMin - sollArrMin;
         }
 
-        // R-Flag prüfen (reservierte Standzeit)
         const hasRFlag = /R/i.test(flags);
         const minStandzeit = hasRFlag ? 2 : 0;
 
-        // Verspätung bei Ankunft
         const arrivalDelay = (sollArrMin !== null) ? (istArrMin - sollArrMin) : 0;
 
-        // Verfügbare Abbremsung = Soll-Standzeit - minimale Standzeit
         const availableBraking = Math.max(0, sollStandzeit - minStandzeit);
         const actualBraking = Math.min(Math.max(0, arrivalDelay), availableBraking);
 
@@ -1144,7 +637,6 @@ function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = f
         setVal(stId, 'actual_departure', minutesToTime(istDepMin));
         if (sollDepMin !== null) setDelay(stId, 'dep', istDepMin - sollDepMin);
 
-        // Zustand für nächste Iteration mitgeben
         prevIstDepMin = istDepMin;
         prevSollDepMin = sollDepMin !== null ? sollDepMin : sollArrMin;
 
@@ -1154,9 +646,10 @@ function propagateTravelTimeWithReserve(startIndex = 0, preserveFirstArrival = f
     }
 }
 
-// ========================================================================
-// FREIER EDITOR FUNKTIONEN
-// ========================================================================
+// =========================================================================
+// FREE EDITOR FUNKTIONEN
+// =========================================================================
+
 let freeEditorStations = [];
 
 function initializeAllStationsList() {
@@ -1415,10 +908,6 @@ async function saveFreeTimetable(e) {
         return;
     }
     
-    // Propagation läuft jetzt live bei jeder Eingabe (siehe recalcRow).
-    // Ein erneuter Voll-Durchlauf hier würde manuell angepasste, spätere
-    // Verspätungen wieder überschreiben – daher bewusst entfernt.
-    
     const formData = new FormData(document.getElementById('free_timetable_form'));
     formData.append('action', 'save_timetable');
     formData.append('train_id', trainId);
@@ -1428,7 +917,6 @@ async function saveFreeTimetable(e) {
         const data = await res.json();
         
         if (data.success) {
-            //alert('Fahrplan gespeichert!');
             closeFreeEditor();
         } else {
             alert('Fehler beim Speichern: ' + (data.error || 'Unbekannter Fehler'));
@@ -1436,5 +924,517 @@ async function saveFreeTimetable(e) {
     } catch (err) {
         console.error('Fehler beim Speichern:', err);
         alert('Verbindungsfehler beim Speichern');
+    }
+}
+
+// =========================================================================
+// GRAFISCHER FAHRPLAN (BILDFAHRPLAN)
+// =========================================================================
+
+async function renderGraph() {
+    if (!currentRouteId || !routesConfig[currentRouteId]) return;
+    
+    const formData = new FormData();
+    formData.append('action', 'get_all_data');
+    formData.append('route_id', currentRouteId);
+
+    const res = await fetch('', { method: 'POST', body: formData });
+    let trains = await res.json();
+
+    updateTrainList(trains);
+
+    const canvas = document.getElementById('graphCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let stations = routesConfig[currentRouteId].stations;
+    if (!stations || stations.length === 0) return;
+
+    // === SEGMENT-FILTERUNG (für Zuschauermodus) ===
+    if (typeof currentSegmentFrom !== 'undefined' && typeof currentSegmentTo !== 'undefined') {
+        let fromIndex = 0;
+        let toIndex = stations.length - 1;
+        
+        if (currentSegmentFrom) {
+            const idx = stations.findIndex(s => s.id === currentSegmentFrom);
+            if (idx !== -1) fromIndex = idx;
+        }
+        
+        if (currentSegmentTo) {
+            const idx = stations.findIndex(s => s.id === currentSegmentTo);
+            if (idx !== -1) toIndex = idx;
+        }
+        
+        stations = stations.slice(fromIndex, toIndex + 1);
+        
+        trains.forEach(train => {
+            const segmentStationIds = new Set(stations.map(s => s.id));
+            train.stops = train.stops.filter(stop => segmentStationIds.has(stop.station_id));
+        });
+    }
+
+    const startMin = timeToMinutes(document.getElementById('graph_start').value) ?? 240;
+    const endMin = timeToMinutes(document.getElementById('graph_end').value) ?? 720;
+    const totalVisibleMinutes = endMin - startMin;
+
+    const paddingTop = 50;
+    const paddingBottom = 40;
+    const paddingLeft = 50;
+    const paddingRight = 50;
+    
+    const graphWidth = canvas.width - paddingLeft - paddingRight;
+    const graphHeight = canvas.height - paddingTop - paddingBottom;
+
+    const minKm = stations[0].km;
+    const maxKm = stations[stations.length - 1].km;
+    const totalKm = maxKm - minKm;
+
+    function getX(km) {
+        return paddingLeft + ((km - minKm) / totalKm) * graphWidth;
+    }
+
+    function getY(minutes) {
+        if (minutes < startMin || minutes > endMin) return null;
+        return paddingTop + ((minutes - startMin) / totalVisibleMinutes) * graphHeight;
+    }
+
+    // Raster: Stunden- und 5-Minuten-Linien
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px sans-serif';
+    
+    const first5Min = Math.ceil(startMin / 5) * 5;
+
+    for (let m = first5Min; m <= endMin; m += 5) {
+        const y = getY(m);
+        if (y === null) continue;
+
+        if (m % 60 === 0) {
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]);
+        } else {
+            ctx.strokeStyle = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)') ? '#334155' : '#cbd5e1';
+            ctx.lineWidth = 0.75;
+            ctx.setLineDash([4, 4]);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(paddingLeft + graphWidth, y);
+        ctx.stroke();
+        
+        let timeString = '';
+        if (m % 60 === 0) {
+            timeString = `${Math.floor(m / 60)}:00`;
+        } else {
+            timeString = `:${String(m % 60).padStart(2, '0')}`;
+        }
+
+        ctx.textAlign = 'right';
+        ctx.fillText(timeString, paddingLeft - 10, y + 4);
+        ctx.textAlign = 'left';
+        ctx.fillText(timeString, paddingLeft + graphWidth + 10, y + 4);
+    }
+
+    ctx.setLineDash([]);
+
+    // Raster: Bahnhofslinien
+    stations.forEach((st, index) => {
+        const x = getX(st.km);
+        const isDarkMode = (window.getComputedStyle(document.body).backgroundColor === 'rgb(15, 23, 42)');
+        
+        ctx.strokeStyle = isDarkMode ? '#334155' : '#cbd5e1';
+        ctx.beginPath();
+        ctx.moveTo(x, paddingTop);
+        ctx.lineTo(x, paddingTop + graphHeight);
+        ctx.stroke();
+
+        ctx.fillStyle = isDarkMode ? '#f1f5f9' : '#1e293b';
+        ctx.font = 'bold 8px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(st.abbr, x, paddingTop - 5);
+        
+        ctx.fillStyle = isDarkMode ? '#94a3b8' : '#64748b';
+        ctx.font = '8px sans-serif';
+        
+        const isOddStation = index % 2 === 0;
+        
+        let textY;
+        if (isOddStation) {
+            textY = paddingTop - 40;
+        } else {
+            textY = paddingTop - 25;
+        }
+        
+        ctx.strokeStyle = isDarkMode ? '#475569' : '#cbd5e1';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(x, textY + 10);
+        ctx.lineTo(x, paddingTop - 10);
+        ctx.stroke();
+        
+        ctx.fillText(st.name, x, textY);
+        ctx.fillText(`km ${st.km}`, x, textY + 8);
+    });
+
+    const trainSegments = [];
+
+    trains.forEach((train) => {
+        const baseColor = getTrainColor(train.train_number, train.name);
+        
+        const validStops = train.stops
+            .map(stop => {
+                const st = stations.find(s => s.id === stop.station_id);
+                return st ? { stop, km: st.km } : null;
+            })
+            .filter(item => item !== null);
+
+        if (validStops.length < 2) return;
+
+        validStops.sort((a, b) => {
+            const timeA = timeToMinutes(a.stop.departure || a.stop.arrival);
+            const timeB = timeToMinutes(b.stop.departure || b.stop.arrival);
+            return timeA - timeB;
+        });
+
+        const sollPoints = [];
+        validStops.forEach(item => {
+            const x = getX(item.km);
+            const arrMin = timeToMinutes(item.stop.arrival);
+            const depMin = timeToMinutes(item.stop.departure);
+
+            if (arrMin !== null) sollPoints.push({ x, y: getY(arrMin) });
+            if (depMin !== null) sollPoints.push({ x, y: getY(depMin) });
+        });
+
+        const istPoints = [];
+        validStops.forEach(item => {
+            const x = getX(item.km);
+            const arrMin = timeToMinutes(item.stop.actual_arrival || item.stop.arrival);
+            const depMin = timeToMinutes(item.stop.actual_departure || item.stop.departure);
+
+            if (arrMin !== null) istPoints.push({ x, y: getY(arrMin) });
+            if (depMin !== null) istPoints.push({ x, y: getY(depMin) });
+        });
+
+        function drawPointChain(points) {
+            let started = false;
+            ctx.beginPath();
+            points.forEach(p => {
+                if (p.y === null) {
+                    started = false; 
+                    return;
+                }
+                if (!started) {
+                    ctx.moveTo(p.x, p.y);
+                    started = true;
+                } else {
+                    ctx.lineTo(p.x, p.y);
+                }
+            });
+            ctx.stroke();
+        }
+
+        ctx.strokeStyle = baseColor;
+        ctx.globalAlpha = 0.5; 
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]); 
+        drawPointChain(sollPoints);
+
+        ctx.globalAlpha = 1.0; 
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash([]); 
+        drawPointChain(istPoints);
+
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'left';
+
+        const trainNum = train.train_number;
+
+        let delayText = '';
+        const firstStop = validStops[0];
+        if (firstStop) {
+            const sollDep = timeToMinutes(firstStop.stop.departure || firstStop.stop.arrival);
+            const istDep = timeToMinutes(firstStop.stop.actual_departure || firstStop.stop.actual_arrival);
+            if (sollDep !== null && istDep !== null) {
+                const delay = istDep - sollDep;
+                if (delay !== 0) {
+                    delayText = `${delay > 0 ? '+' : ''}${delay}`;
+                }
+            }
+        }
+
+        const trainNumWidth = ctx.measureText(trainNum).width;
+        const spacing = 4;
+        const paddingX = 4;
+        let delayWidth = 0;
+        if (delayText) {
+            delayWidth = ctx.measureText(delayText).width;
+        }
+        const totalWidth = trainNumWidth + (delayText ? spacing + delayWidth + (paddingX * 2) : 0);
+
+        for (let i = 0; i < istPoints.length - 1; i++) {
+            const p1 = istPoints[i];
+            const p2 = istPoints[i + 1];
+
+            if (p1.y !== null && p2.y !== null) {
+                const time1 = startMin + ((p1.y - paddingTop) / graphHeight) * totalVisibleMinutes;
+                const time2 = startMin + ((p2.y - paddingTop) / graphHeight) * totalVisibleMinutes;
+                
+                if (Math.abs(time2 - time1) >= 3) {
+                    const midX = (p1.x + p2.x) / 2;
+                    const midY = (p1.y + p2.y) / 2;
+
+                    const startX = midX - (totalWidth / 2);
+                    const textY = midY - 8;
+
+                    ctx.fillStyle = baseColor;
+                    ctx.fillText(trainNum, startX, textY);
+
+                    if (delayText) {
+                        const badgeX = startX + trainNumWidth + spacing;
+                        const badgeWidth = delayWidth + (paddingX * 2);
+                        const badgeHeight = 14;
+                        const badgeY = textY - 10;
+
+                        ctx.fillStyle = '#0f172a';
+                        
+                        ctx.beginPath();
+                        if (typeof ctx.roundRect === 'function') {
+                            ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 3);
+                        } else {
+                            ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
+                        }
+                        ctx.fill();
+
+                        ctx.fillStyle = baseColor;
+                        ctx.fillText(delayText, badgeX + paddingX, textY);
+                    }
+                }
+            }
+        }
+
+        trainSegments.push({
+            train: train,
+            points: istPoints
+        });
+    });
+
+    if (!canvasTooltip && canvas) {
+        canvasTooltip = new CanvasTooltip(canvas);
+    }
+    if (canvasTooltip) {
+        canvasTooltip.cacheTrainSegments(trainSegments);
+    }
+    
+    ctx.globalAlpha = 1.0;
+    ctx.setLineDash([]);
+
+    // Gelbe/Rote "JETZT"-Zeitlinie innerhalb von renderGraph
+    (function drawCurrentTimeLine() {
+        const basis = document.getElementById('time_basis')?.value || 'instanz1';
+        let stsMinutes = 0;
+
+        if (basis === 'manual') {
+            const now = new Date();
+            const pcMinutes = now.getHours() * 60 + now.getMinutes();
+            const offsetInput = document.getElementById('sts_offset');
+            const offset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+            stsMinutes = ((pcMinutes + offset) % 1440 + 1440) % 1440;
+        } else {
+            stsMinutes = getDynamicSTSTime(basis);
+        }
+
+        const y = paddingTop + ((stsMinutes - startMin) / totalVisibleMinutes) * graphHeight;
+
+        if (y >= paddingTop && y <= paddingTop + graphHeight) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.strokeStyle = '#FFDE15'; 
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            
+            ctx.moveTo(paddingLeft, y);
+            ctx.lineTo(paddingLeft + graphWidth, y);
+            ctx.stroke();
+
+            ctx.fillStyle = '#FFDE15';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            
+            const displayHours = Math.floor(stsMinutes / 60);
+            const displayMinutes = stsMinutes % 60;
+            const timeString = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
+            
+            ctx.fillText(timeString, paddingLeft - 10, y);
+            ctx.restore();
+        }
+    })();
+}
+
+function getDynamicSTSTime(instanz) {
+    const refReal = new Date('2026-06-27T21:41:00');
+    const now = new Date();
+    
+    const elapsedMinutes = Math.floor((now - refReal) / 60000);
+    
+    const instanzDuration = 960;
+    const instanzStartMinutes = 300;
+    
+    const refMinutesSinceStart = (instanz === 'instanz1') ? 701 : 101;
+    
+    let currentMinutesSinceStart = (refMinutesSinceStart + elapsedMinutes) % instanzDuration;
+    if (currentMinutesSinceStart < 0) {
+        currentMinutesSinceStart += instanzDuration;
+    }
+    
+    return instanzStartMinutes + currentMinutesSinceStart;
+}
+
+function updateTrainList(trains) {
+    const listContainer = document.getElementById('active_train_list');
+    if (!listContainer) return;
+    listContainer.innerHTML = '';
+
+    if (trains.length === 0) {
+        listContainer.innerHTML = '<li style="font-weight:normal; color:#94a3b8; cursor:default; background:none; border:none;">Keine Züge erfasst</li>';
+        return;
+    }
+
+    trains.forEach(train => {
+        const li = document.createElement('li');
+        li.setAttribute('onclick', `loadTrainByNumber(${train.train_number})`);
+        li.innerHTML = `
+            <span>Zug ${train.train_number}</span>
+            <span class="delete-btn" onclick="deleteTrain(event, ${train.id})">×</span>
+        `;
+        listContainer.appendChild(li);
+    });
+}
+
+function loadTrainByNumber(num) {
+    const input = document.getElementById('train_number');
+    if (input) {
+        input.value = num;
+        loadTrain();
+    }
+}
+
+async function deleteTrain(event, trainId) {
+    event.stopPropagation(); 
+    if (!confirm('Zug und zugehörigen Fahrplan wirklich löschen?')) return;
+
+    const formData = new FormData();
+    formData.append('action', 'delete_train');
+    formData.append('train_id', trainId);
+
+    const res = await fetch('', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+        if (document.getElementById('current_train_id').value == trainId) {
+            document.getElementById('editor_panel').classList.add('hidden');
+        }
+        renderGraph(); 
+    } else {
+        alert('Fehler beim Löschen');
+    }
+}
+
+function deleteCurrentTrain() {
+    const trainId = document.getElementById('current_train_id').value;
+    const trainNum = document.getElementById('current_train_num').innerText;
+
+    if (!trainId) {
+        alert('Kein Zug zum Löschen ausgewählt.');
+        return;
+    }
+
+    if (confirm(`Möchtest du den Zug ${trainNum} wirklich unwiderruflich löschen?`)) {
+        const formData = new FormData();
+        formData.append('action', 'delete_train');
+        formData.append('train_id', trainId);
+
+        fetch('', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Zug ${trainNum} wurde gelöscht.`);
+                window.location.reload();
+            } else {
+                alert('Fehler beim Löschen: ' + (data.error || 'Unbekannter Fehler'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Verbindungsfehler beim Löschen des Zuges.');
+        });
+    }
+}
+
+function getTrainColor(trainNumber, trainName) {
+    const num = parseInt(trainNumber, 10);
+    const name = trainName || "";
+
+    for (const rule of colorRules) {
+        if (rule.key === 'name') {
+            if (rule.type === 'contains' && name.includes(rule.filter)) return colorMap[rule.color];
+            if (rule.type === 'startsWith' && name.startsWith(rule.filter)) return colorMap[rule.color];
+        } else if (rule.key === 'number') {
+            if (rule.type === 'greaterThan' && num > rule.filter) return colorMap[rule.color];
+            if (rule.type === 'lessThan' && num < rule.filter) return colorMap[rule.color];
+        }
+    }
+    return '#64748b';
+}
+
+function getSimTime() {
+    const now = new Date();
+    const offsetInput = document.getElementById('sts_offset');
+    const simOffset = offsetInput ? parseInt(offsetInput.value || 0, 10) : 0;
+
+    const totalMinutes = (now.getHours() * 60) + now.getMinutes() + simOffset;
+    const simMinutes = ((totalMinutes % 1440) + 1440) % 1440;
+    
+    const h = Math.floor(simMinutes / 60);
+    const m = simMinutes % 60;
+    
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+function setNow(stationId, fieldName) {
+    const form = document.getElementById('timetable_form');
+    const timeString = getSimTime(); 
+    
+    const field = form.querySelector(`[name="stations[${stationId}][${fieldName}]"]`);
+    if (field) {
+        field.value = timeString;
+        const type = fieldName.includes('arrival') ? 'arr' : 'dep';
+        recalcRow(stationId, type, 'time');
+    }
+    
+    saveTimetableAuto();
+}
+
+async function saveTimetableAuto() {
+    const formData = new FormData(document.getElementById('timetable_form'));
+    formData.append('action', 'save_timetable');
+    formData.append('train_id', document.getElementById('current_train_id').value);
+
+    try {
+        const res = await fetch('', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            renderGraph();
+            console.log("Auto-Save erfolgreich");
+        }
+    } catch (e) {
+        console.error("Auto-Save Fehler:", e);
     }
 }
