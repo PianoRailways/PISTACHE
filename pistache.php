@@ -136,6 +136,141 @@ function calculateEffectiveDelay(
 }
 
 // =========================================================================
+// ROBUSTE ZUGSUCHE: ZID + FALLBACK-KETTE
+// =========================================================================
+
+/**
+ * findTrain()
+ * 
+ * Robuste Zugsuche mit 3-stufigem Fallback:
+ * 1. Direkter ZID-Match (normal case)
+ * 2. Alte ZID in zid_mapping (nach ZID-Wechsel)
+ * 3. Composite Key (Station + jüngster bekannter Zug dort) als letzter Ausweg
+ * 
+ * Wenn Stufe 3 erfolgreich ist, wird die neue ZID ins Feld geschrieben (smart update).
+ */
+function findTrain($db, $sts_zid, $station_abbr, $delay) {
+    global $ROUTES;
+    
+    write_log("🔍 ZUGSUCHE START: ZID=$sts_zid, Station=$station_abbr");
+    
+    // ======== STUFE 1: Direkter ZID-Match ========
+    $stmt = $db->prepare("SELECT id, route_id, train_number, sts_zid FROM trains WHERE sts_zid = ? LIMIT 1");
+    $stmt->execute([$sts_zid]);
+    $train = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($train) {
+        write_log("   ✅ STUFE 1: ZID=$sts_zid direkt gefunden");
+        return $train;
+    }
+    write_log("   ⚠️ STUFE 1: ZID=$sts_zid nicht direkt gefunden");
+    
+    // ======== STUFE 2: Alte ZID in zid_mapping Tabelle ========
+    try {
+        $stmt = $db->prepare("
+            SELECT new_zid FROM zid_mapping 
+            WHERE old_zid = ? 
+            ORDER BY created_at DESC 
+            LIMIT 1
+        ");
+        $stmt->execute([$sts_zid]);
+        $mapping = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($mapping) {
+            $new_zid = $mapping['new_zid'];
+            write_log("   ℹ️ STUFE 2: ZID-Mapping gefunden: $sts_zid → $new_zid");
+            
+            $stmt = $db->prepare("SELECT id, route_id, train_number, sts_zid FROM trains WHERE sts_zid = ? LIMIT 1");
+            $stmt->execute([$new_zid]);
+            $train = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($train) {
+                write_log("   ✅ STUFE 2: Zug mit neuer ZID=$new_zid gefunden");
+                return $train;
+            }
+            write_log("   ⚠️ STUFE 2: Neue ZID $new_zid nicht in DB");
+        }
+    } catch (Exception $e) {
+        write_log("   ⚠️ STUFE 2: zid_mapping-Tabelle existiert nicht oder Fehler");
+    }
+    
+    // ======== STUFE 3: Composite-Key Fallback ========
+    // Station + jüngster bekannter Zug
+    
+    // Finde Station-ID
+    $station_id = null;
+    $plugin_abbr = strtoupper(trim($station_abbr));
+    
+    foreach ($ROUTES as $rid => $route) {
+        foreach ($route['stations'] as $st) {
+            if (strtoupper(trim($st['abbr'])) === $plugin_abbr) {
+                $station_id = $st['id'];
+                break 2;
+            }
+        }
+    }
+    
+    if (!$station_id) {
+        write_log("   ❌ STUFE 3: Station $plugin_abbr nicht in routes.php");
+        return null;
+    }
+    
+    write_log("   📍 Station $plugin_abbr → ID: $station_id");
+    
+    // Alle Züge die diese Station anfahren (neueste zuerst)
+    $stmt = $db->prepare("
+        SELECT DISTINCT t.id, t.route_id, t.train_number, t.sts_zid
+        FROM timetable tt
+        JOIN trains t ON tt.train_id = t.id
+        WHERE tt.station_id = ?
+        ORDER BY t.id DESC
+        LIMIT 10
+    ");
+    $stmt->execute([$station_id]);
+    $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if (empty($candidates)) {
+        write_log("   ❌ STUFE 3: Keine Züge für Station $station_id");
+        return null;
+    }
+    
+    write_log("   🔎 STUFE 3: " . count($candidates) . " Kandidat(en) an Station $station_id");
+    
+    // Wähle jenen mit aktuellem/jüngstem sts_zid
+    $best_train = null;
+    foreach ($candidates as $cand) {
+        if (!empty($cand['sts_zid'])) {
+            $best_train = $cand;
+            break;
+        }
+        if ($best_train === null) {
+            $best_train = $cand;
+        }
+    }
+    
+    if ($best_train) {
+        write_log("   ✅ STUFE 3: Fallback erfolgreich");
+        write_log("      Zug: {$best_train['train_number']} (Route: {$best_train['route_id']}, alte ZID: {$best_train['sts_zid']})");
+        write_log("      SMART UPDATE: ZID {$best_train['sts_zid']} → $sts_zid");
+        
+        // Smart Update: Neue ZID speichern
+        try {
+            $stmt = $db->prepare("UPDATE trains SET sts_zid = ? WHERE id = ?");
+            $stmt->execute([$sts_zid, $best_train['id']]);
+            write_log("      ✅ ZID-Update erfolgreich");
+        } catch (Exception $e) {
+            write_log("      ⚠️ ZID-Update fehlgeschlagen: {$e->getMessage()}");
+        }
+        
+        $best_train['sts_zid'] = $sts_zid;
+        return $best_train;
+    }
+    
+    write_log("   ❌ STUFE 3: Keine Kandidaten");
+    return null;
+}
+
+// =========================================================================
 // PLUGIN-UPDATE MIT PROPAGATION
 // =========================================================================
 
@@ -172,13 +307,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $track_number = null;
         }
 
-        // 1. Finde Zug
-        $stmt = $db->prepare("SELECT id, route_id, train_number, sts_zid FROM trains WHERE sts_zid = ?");
-        $stmt->execute([$sts_zid]);
-        $train = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        // 1. Finde Zug (mit robustem Fallback)
+        $train = findTrain($db, $sts_zid, $raw_gleis, $delay);
         if (!$train) {
-            echo json_encode(['success' => false, 'message' => "ZID $sts_zid nicht verknüpft."]);
+            write_log("FEHLER: Zug konnte mit keiner Methode gefunden werden.");
+            echo json_encode(['success' => false, 'message' => "Zug mit ZID $sts_zid nicht gefunden (alle Fallbacks fehlgeschlagen). Fahrplan ggfs. nicht geladen?"]);
             exit;
         }
 
