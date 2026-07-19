@@ -1,43 +1,23 @@
 /* ============================================================================
-   Farbvariablen für automatischen Light/Dark-Mode-Wechsel
+   Farbvariablen - Nachtmodus (Dark Mode) Only
    ============================================================================ */
 :root {
-    --bg-main: #f4f6f9;
-    --bg-panel: #ffffff;
-    --bg-input: #ffffff;
-    --bg-th: #f8fafc;
-    --text-main: #333333;
-    --text-heading: #1e293b;
-    --border: #cbd5e1;
-    --border-table: #e2e8f0;
-    --accent: #2563eb;
-    --accent-hover: #1d4ed8;
-    --list-hover: #eff6ff;
-    --list-border-hover: #3b82f6;
-    --canvas-bg: #ffffff;
+    --bg-main: #0f172a;
+    --bg-panel: #1e293b;
+    --bg-input: #0f172a;
+    --bg-th: #1e293b;
+    --text-main: #cbd5e1;
+    --text-heading: #f1f5f9;
+    --border: #475569;
+    --border-table: #334155;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --list-hover: #1e293b;
+    --list-border-hover: #60a5fa;
+    --canvas-bg: #1e293b;
     --danger: #ef4444;
     --info-bg: #0f172a;
     --info-border: #0ea5e9;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-main: #0f172a;
-        --bg-panel: #1e293b;
-        --bg-input: #0f172a;
-        --bg-th: #1e293b;
-        --text-main: #cbd5e1;
-        --text-heading: #f1f5f9;
-        --border: #475569;
-        --border-table: #334155;
-        --accent: #3b82f6;
-        --accent-hover: #60a5fa;
-        --list-hover: #1e293b;
-        --list-border-hover: #60a5fa;
-        --canvas-bg: #1e293b;
-        --info-bg: #0f172a;
-        --info-border: #0ea5e9;
-    }
 }
 
 /* ============================================================================
