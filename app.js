@@ -1153,28 +1153,7 @@ async function renderGraph() {
 
         const trainNum = train.train_number;
 
-        let delayText = '';
-        const firstStop = validStops[0];
-        if (firstStop) {
-            const sollDep = timeToMinutes(firstStop.stop.departure || firstStop.stop.arrival);
-            const istDep = timeToMinutes(firstStop.stop.actual_departure || firstStop.stop.actual_arrival);
-            if (sollDep !== null && istDep !== null) {
-                const delay = istDep - sollDep;
-                if (delay !== 0) {
-                    delayText = `${delay > 0 ? '+' : ''}${delay}`;
-                }
-            }
-        }
-
-        const trainNumWidth = ctx.measureText(trainNum).width;
-        const spacing = 4;
-        const paddingX = 4;
-        let delayWidth = 0;
-        if (delayText) {
-            delayWidth = ctx.measureText(delayText).width;
-        }
-        const totalWidth = trainNumWidth + (delayText ? spacing + delayWidth + (paddingX * 2) : 0);
-
+        // Pro Abschnitt den Delay des aktuellen Halts berechnen
         for (let i = 0; i < istPoints.length - 1; i++) {
             const p1 = istPoints[i];
             const p2 = istPoints[i + 1];
@@ -1184,6 +1163,36 @@ async function renderGraph() {
                 const time2 = startMin + ((p2.y - paddingTop) / graphHeight) * totalVisibleMinutes;
                 
                 if (Math.abs(time2 - time1) >= 3) {
+                    // Finde den Halt, der diesem Segment entspricht
+                    // Nutze das sollPoints Array um herauszufinden welcher Halt das ist
+                    let delayText = '';
+                    
+                    // Der Halt-Index entspricht ungefähr i/2 (da wir Ankunft UND Abfahrt haben)
+                    const stopIndex = Math.floor(i / 2);
+                    if (stopIndex < validStops.length) {
+                        const stop = validStops[stopIndex].stop;
+                        
+                        // Nutze actual_departure falls vorhanden, sonst actual_arrival
+                        const istMin = timeToMinutes(stop.actual_departure || stop.actual_arrival);
+                        const sollMin = timeToMinutes(stop.departure || stop.arrival);
+                        
+                        if (istMin !== null && sollMin !== null) {
+                            const delay = istMin - sollMin;
+                            if (delay !== 0) {
+                                delayText = `${delay > 0 ? '+' : ''}${delay}`;
+                            }
+                        }
+                    }
+
+                    const trainNumWidth = ctx.measureText(trainNum).width;
+                    const spacing = 4;
+                    const paddingX = 4;
+                    let delayWidth = 0;
+                    if (delayText) {
+                        delayWidth = ctx.measureText(delayText).width;
+                    }
+                    const totalWidth = trainNumWidth + (delayText ? spacing + delayWidth + (paddingX * 2) : 0);
+
                     const midX = (p1.x + p2.x) / 2;
                     const midY = (p1.y + p2.y) / 2;
 
