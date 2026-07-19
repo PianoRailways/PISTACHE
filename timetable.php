@@ -652,12 +652,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if ($action === 'get_audit_log') {
-        $stmt = $db->query("SELECT train_number, username, strftime('%H:%M:%S', timestamp) as zeit FROM audit_log ORDER BY id DESC LIMIT 10");
-        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-        exit;
-    }
-
     if ($action === 'get_routes') {
         echo json_encode($ROUTES);
         exit;
@@ -856,53 +850,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <!-- Grafischer Fahrplan -->
-    <div class="panel">
-        <h2>Grafischer Fahrplan</h2>
-        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
-            <label>Zeitfenster von: <input type="time" id="graph_start" value="11:30" onchange="renderGraph()"></label>
-            <label>bis: <input type="time" id="graph_end" value="15:00" onchange="renderGraph()"></label>
-            
-            <label style="margin-left: auto;">
-                Zeitbasis:
-                <select id="time_basis" onchange="renderGraph()" style="width: 150px;">
-                    <option value="manual">Manuell (PC-Zeit)</option>
-                    <option value="instanz1">STS Instanz 1 (16:41)</option>
-                    <option value="instanz2">STS Instanz 2 (06:41)</option>
-                </select>
-            </label>
-            
-            <label>
-                STS-Offset (min):
-                <input type="number" id="sts_offset" value="0" style="width: 60px;" onchange="renderGraph()">
-            </label>
-        </div>
-        
-        <div id="active_trains_section" style="margin-bottom: 15px; padding: 10px; background: var(--bg-th); border-radius: 4px; max-height: 200px; overflow-y: auto;">
-            <h4 style="margin-top: 0;">Aktive Züge</h4>
-            <ul id="active_train_list" style="list-style: none; padding: 0; margin: 0;">
-            </ul>
-        </div>
 
-        <canvas id="graphCanvas" width="1200" height="800" style="border: 1px solid var(--border); border-radius: 4px; max-width: 100%;"></canvas>
-    </div>
-
-    <!-- Audit-Log -->
-    <div class="panel">
-        <h2>Audit-Log (letzte 10 Änderungen)</h2>
-        <div id="audit_log_container" style="max-height: 300px; overflow-y: auto;">
-            <table id="audit_log_table" style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background-color: var(--bg-th); position: sticky; top: 0;">
-                        <th style="padding: 8px; text-align: left; border-bottom: 1px solid var(--border);">Zug</th>
-                        <th style="padding: 8px; text-align: left; border-bottom: 1px solid var(--border);">Disponent</th>
-                        <th style="padding: 8px; text-align: left; border-bottom: 1px solid var(--border);">Zeit</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
 
     <!-- Keyboard Shortcuts Legende -->
     <div id="keyboard_legend" style="position: fixed; bottom: 20px; right: 20px; background: rgba(30, 30, 30, 0.95); color: #fff; padding: 12px 16px; border-radius: 6px; font-size: 12px; font-family: monospace; border: 1px solid #555; z-index: 9999; line-height: 1.6;">
@@ -932,36 +880,7 @@ function selectExistingTrain(trainNumber) {
 
 document.addEventListener('DOMContentLoaded', () => {
     switchRoute();
-    loadAuditLog();
-    // Audit-Log alle 5 Sekunden aktualisieren
-    setInterval(loadAuditLog, 5000);
 });
-
-function loadAuditLog() {
-    fetch('', {
-        method: 'POST',
-        body: new FormData(Object.assign(document.createElement('form'), {
-            elements: [
-                { name: 'action', value: 'get_audit_log' }
-            ]
-        }))
-    })
-    .then(r => r.json())
-    .then(logs => {
-        const tbody = document.querySelector('#audit_log_table tbody');
-        tbody.innerHTML = '';
-        logs.forEach(log => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="padding: 8px; border-bottom: 1px solid var(--border);">${log.train_number}</td>
-                <td style="padding: 8px; border-bottom: 1px solid var(--border);">${log.username}</td>
-                <td style="padding: 8px; border-bottom: 1px solid var(--border);">${log.zeit}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-    })
-    .catch(e => console.error("Audit-Log Fehler:", e));
-}
 
 function filterRoutes() {
     const filterValue = document.getElementById('route_filter').value.toLowerCase();
