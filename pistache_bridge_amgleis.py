@@ -44,10 +44,10 @@ class LoopStats:
         print(f"   ├─ Vorlauf (von Info): {self.invisible_trains}")
         print(f"   └─ Lokal (Vorgängerzug): {self.local_trains}")
         print()
-        print(f"   Updates gesendet:      {self.updates_sent} 🎉")
-        print(f"   Updates übersprungen:  {self.updates_skipped} ⊘ (Traffic gespart: {self.updates_skipped * 100 // max(1, self.updates_sent + self.updates_skipped)}%)")
+        print(f"   Updates gesendet:      {self.updates_sent}")
+        print(f"   Updates übersprungen:  {self.updates_skipped} (Traffic gespart: {self.updates_skipped * 100 // max(1, self.updates_sent + self.updates_skipped)}%)")
         print()
-        print(f"   Fehler insgesamt:      {self.errors} ❌")
+        print(f"   Fehler insgesamt:      {self.errors}")
         print(f"   RCS-Verbindungsfehler: {self.rcs_failures}")
         print("="*70 + "\n")
 # ==========================================
