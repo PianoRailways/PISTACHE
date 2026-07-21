@@ -1761,7 +1761,7 @@ $ROUTES = [
             ['id' => 'LUT', 'name' => 'Lutterbach', 'abbr' => 'LUT', 'km' => 102.5],
             ['id' => 'MD', 'name' => 'Dornach', 'abbr' => 'MD', 'km' => 105.1],
             ['id' => 'MSE', 'name' => 'Mulhouse Ville', 'abbr' => 'MSE', 'km' => 108.3],
-            ['id' => 'RHE', 'name' => 'Risheim', 'abbr' => 'RHE', 'km' => 113.7],
+            ['id' => 'RHE', 'name' => 'Rixheim', 'abbr' => 'RHE', 'km' => 113.7],
             ['id' => 'HAB', 'name' => 'Habsheim', 'abbr' => 'HAB', 'km' => 115.2],
             ['id' => 'SEZ', 'name' => 'Sierentz', 'abbr' => 'SEZ', 'km' => 124.9],
             ['id' => 'BTW', 'name' => 'Bartehnheim', 'abbr' => 'BTW', 'km' => 128.1],
