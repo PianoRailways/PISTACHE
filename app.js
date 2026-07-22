@@ -32,7 +32,6 @@ const colorRules = [
     { type: 'contains', key: 'name', filter: 'INV', color: 'green' },
     { type: 'contains', key: 'name', filter: 'LIS', color: 'green' },
     { type: 'greaterThan', key: 'number', filter: 96999, color: 'magenta' },
-    { type: 'greaterThan', key: 'number', filter: 95999, color: 'night' },
     { type: 'greaterThan', key: 'number', filter: 89999, color: 'OrangeSBB' },
     { type: 'greaterThan', key: 'number', filter: 87999, color: 'sky' },
     { type: 'greaterThan', key: 'number', filter: 87599, color: 'red125' },
